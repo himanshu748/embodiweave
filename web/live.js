@@ -82,6 +82,7 @@ function paint(s) {
     li.append(details); list.append(li);
   }
   $("#answerPanel").hidden = !s.answer;
+  $("#answerPanel h3").textContent = s.answer_source === "compiled_live_graph_evidence" ? "Measured lineage report" : "Model explanation";
   renderAnswer(s.answer || "");
   if (receiptUrl) URL.revokeObjectURL(receiptUrl);
   receiptUrl = URL.createObjectURL(new Blob([JSON.stringify(s, null, 2)], { type: "application/json" }));

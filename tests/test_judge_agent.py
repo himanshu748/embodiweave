@@ -70,6 +70,15 @@ def test_dispatch_refuses_unbounded_tools_and_arguments(public_agent):
             J.execute(name, args)
 
 
+def test_lineage_report_uses_overall_recorded_verdict_not_model_interpretation():
+    row = {"decision":"d1", "origin":"parent", "candidate":"longer-child", "intervention":"longer", "verdict":"rejected"}
+    report = J._lineage_report([{"result":{"queries":[{"template":"search_lineage", "graph_revision":10, "rows":[row, row]}]}}])
+    assert report.count("Overall validation gate: rejected") == 1
+    assert "does not mean every suite failed" in report
+    assert "longer-child" in report and "Graph revision: 10" in report
+    assert J._lineage_report([{"result":{"error":"graph unavailable"}}]) is None
+
+
 @pytest.mark.parametrize("finish", ["stop", "length"])
 def test_live_loop_selects_tools_then_reports_actual_model(public_agent, monkeypatch, finish):
     owner = J.visitor(None)

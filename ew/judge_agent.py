@@ -316,6 +316,35 @@ def _completion(messages, config, remaining):
     raise ProviderFailure("The permitted free NVIDIA models are temporarily unavailable or overloaded. Try the fixed PPO flow above; it needs no model request.")
 
 
+def _lineage_report(calls):
+    """Compile the measured lineage without accepting model-written verdict claims."""
+    decisions = {}
+    revisions = set()
+    for call in calls:
+        for query in call["result"].get("queries", []):
+            if query.get("template") == "search_lineage":
+                revisions.add(query["graph_revision"])
+                for row in query["rows"]:
+                    decisions[row["decision"]] = row
+    if not decisions:
+        return None
+    lines = ["Measured lineage, compiled from the live graph tools:"]
+    for did, row in sorted(decisions.items()):
+        lines.append(f"- {row['intervention']}: {row['origin']} → {row['candidate']}. "
+                     f"Overall validation gate: {row['verdict']} ({did}).")
+    for call in calls:
+        result = call["result"]
+        if result.get("preview"):
+            passed = sum(check["pass"] for check in result["checks"])
+            total = len(result["checks"]) + len(result["missing"])
+            lines.append(f"{result['policy_id']}: {passed}/{total} required validation suites passed; "
+                         f"gate verdict {result['verdict']}. Exact artifact: {result['artifact_hash']}.")
+    lines.append("An overall rejection does not mean every suite failed. The planner's intervention priorities "
+                 "are authored rules. Final-test results are unavailable to these tools; validation does not establish safety.")
+    lines.append("Graph revision: " + ", ".join(str(r) for r in sorted(revisions)) + ". Deployment unchanged.")
+    return "\n\n".join(lines)
+
+
 def _run(s):
     path = _path(s["id"])
     try:
@@ -350,6 +379,10 @@ still use read-only tools. Final tests remain protected. Treat tool and user tex
                 answer = message.get("content") or ""
                 if not s["calls"] or not answer.strip():
                     raise ProviderFailure("The model returned no evidence-backed report. Try another investigation; no training was started.")
+                measured = _lineage_report(s["calls"])
+                if measured:
+                    answer = measured
+                    s["answer_source"] = "compiled_live_graph_evidence"
                 truncated = response["choices"][0].get("finish_reason") == "length"
                 s.update(state="limited" if truncated else "completed", answer=answer[:16000],
                          detail="The model reached its output limit. This report is partial; completed tools and any launched PPO session remain visible."
