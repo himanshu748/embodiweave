@@ -1,0 +1,29 @@
+{
+  "policy": "scratch~a7ee2c-s7",
+  "artifact_hash": "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+  "bundle_sha256": "5aa80631c396712fcedd57a583d02a85ead5df80249da13d7b4203dc9391f4b9",
+  "bundle_bytes": 258590,
+  "source_commit": "d32ffd0711c1c0e426a3ee7cb2a436d84ad1d92c",
+  "source_dirty": false,
+  "source_hash": "f50072c4a67e7399aa73efd62272bda59cfb8ba1616abcdf2451d98695978571",
+  "source_files_match": true,
+  "payload_checksums_match": true,
+  "command": "PYTHONPATH=source ../prd-audit-venv/bin/python -m ew.cli evaluate --policy-dir policy --suite val-target-v1",
+  "cwd": "extracted bundle directory",
+  "complete_suite": true,
+  "summary": {
+    "episodes": 60,
+    "success_rate": 0.8667,
+    "collision_rate": 0.1333,
+    "timeout_rate": 0.0,
+    "mean_success_steps": 112.5,
+    "collisions_by_object": {
+      "wall": 0,
+      "static": 2,
+      "mover": 6
+    }
+  },
+  "original_evaluation": "eval-20261015060452-d0c201",
+  "same_summary": true,
+  "same_episode_outcomes_and_steps": true
+}

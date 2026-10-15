@@ -31,7 +31,9 @@ Sonnet MCP run provides the recorded runtime evidence. Benchmark experiments wer
 New `repro-v2` exports contain Python source, source metadata, dependency lock and payload checksums.
 The two historical bundles remain unchanged because recorded traces cite their old hashes. Training
 source was not captured for those historical policies; the new exports explicitly label it unknown.
-New training manifests record source identity. Saved-artifact evaluation is reproducible; bitwise identical
+New training manifests record source identity. The recorded checkpoint’s new-format bundle was also extracted and evaluated from its own embedded source on all 60 val-target-v1 seeds. Every episode outcome and step count matched the original record, with 0.8667 success and 0.1333 collision. All payload checksums and source hashes matched (`export-verification.json`).
+
+Saved-artifact evaluation is reproducible; bitwise identical
 retraining across different hardware is not promised.
 
 ## Remaining limitations
@@ -40,4 +42,4 @@ Software simulation, a small checkpoint library and three seeds per benchmark ar
 full test threshold; the featured checkpoint was rejected. No demonstrated efficiency or physical safety
 claim. Eligibility of disclosed pre-event planning documents remains the organizer’s judgment.
 
-The final deployment identity, service plan and live endpoint checks are recorded in the release receipt.
+The owner’s Render CLI confirmed service `srv-db88bfhsrm7s73dp7aeg` remains on the free plan. The final deployment identity and endpoint checks are supplied in the release receipt alongside this revision.
