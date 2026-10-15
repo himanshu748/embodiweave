@@ -78,7 +78,7 @@ def test_promotion_requires_exact_artifact_evidence(world):
     p = service.promote("G-b")
     assert p["verdict"] == "insufficient_evidence" and len(p["missing"]) == 4
     # evidence on the PARENT does not count for the child
-    service.evaluate("G-a", "val-target-v1", n_episodes=3)
+    service.evaluate("G-a", "val-target-v1")
     assert "val-target-v1" in service.promote("G-b")["missing"]
     # a forged evaluation with another hash is ignored by the evidence query
     forged = records.write("evaluation", {"policy_id": "G-b", "artifact_hash": "0" * 64, "suite_id": "val-target-v1",
@@ -88,7 +88,7 @@ def test_promotion_requires_exact_artifact_evidence(world):
     ingest.evaluation(forged)
     assert "val-target-v1" in service.promote("G-b")["missing"]
     for s in ("val-target-v1", "val-open-v1", "val-static-v1", "val-crossing-v1"):
-        service.evaluate("G-b", s, n_episodes=3)
+        service.evaluate("G-b", s)
     p = service.promote("G-b")
     assert p["verdict"] == "rejected" and not p["missing"]
     assert all(c["evaluation_id"] != forged["id"] for c in p["checks"])
@@ -108,12 +108,22 @@ def test_agent_tool_guards(world):
     assert json.loads(lines[-1])["tool"] == "start_training" and json.loads(lines[-1])["error"]
 
 
+def test_smoke_evaluations_cannot_rank_or_promote(world):
+    service.train_run("G-smoke", family="open", budget_steps=TINY, seed=91)
+    for suite in ("val-target-v1", "val-open-v1", "val-static-v1", "val-crossing-v1"):
+        service.evaluate("G-smoke", suite, n_episodes=1)
+    assert "G-smoke" in service.record_decision(service.target_request(budget=TINY))["needs_evaluation"]
+    assert service.promote("G-smoke")["verdict"] == "insufficient_evidence"
+    # This test's child is outside the normal library catalog for subsequent decisions.
+    db.rw("MATCH (r:Run)-[:PRODUCED]->(p:Policy {id:'G-smoke'}) SET r.kind='smoke-test'")
+
+
 def test_stale_decision_refused(world):
     req = {**service.target_request(budget=TINY), "candidate_run_kinds": ["library"]}
     d = service.record_decision(req)
     if d["action"] != "train_from_parent":
         for pid in d["needs_evaluation"]:
-            service.evaluate(pid, "val-target-v1", n_episodes=3)
+            service.evaluate(pid, "val-target-v1")
         d = service.record_decision(req)
     # new measured evidence: three failed trials for the selected parent make it lose its place
     sel = d["selected"]
@@ -122,3 +132,16 @@ def test_stale_decision_refused(world):
                                threshold_id="thr-target-1", budget_steps=TINY, seed=s)
     out = T.start_training(decision_id=d["id"], seed=5)
     assert "stale decision" in out.get("error", "")
+
+
+def test_recovery_preserves_already_recorded_trial(world, monkeypatch):
+    params = dict(parent_id="G-a", child_id="G-a~crash-s98", target_family="static_crossing",
+                  threshold_id="thr-target-1", budget=TINY, seed=98, recipe="ppo-r1",
+                  trial_id="trial-already-recorded")
+    job, _ = jobs.submit("transfer_trial", params)
+    job.update(state="running", worker_pid=999999999, progress={"steps":8})
+    jobs._save(job)
+    records.write("trial", {"id":params["trial_id"], "status":"failed", "note":"retained original"})
+    jobs.recover()
+    assert records.read("trial",params["trial_id"])["note"] == "retained original"
+    assert jobs.get(job["id"])["state"] == "interrupted"

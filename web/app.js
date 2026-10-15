@@ -357,7 +357,7 @@ async function renderJobs() {
       if (r.evaluation_id) card.append(el("div", {}, el("span", { class: "chip", onclick: () => inspect(r.evaluation_id) }, r.evaluation_id), ` ${pct(r.summary.success_rate)} ok / ${pct(r.summary.collision_rate)} coll`));
       if (r.child_policy_id) {
         card.append(el("div", { class: "row" },
-          el("button", { onclick: async () => { for (const s of ["val-open-v1", "val-static-v1", "val-crossing-v1"]) await api("/api/evaluate", { method: "POST", body: JSON.stringify({ policy_id: r.child_policy_id, suite_id: s }) }); renderJobs(); } }, "Evaluate retained behaviours"),
+          el("button", { class: "needs-worker", disabled: S.readonly || null, title: S.readonly ? READONLY_WHY : null, onclick: async () => { for (const s of ["val-open-v1", "val-static-v1", "val-crossing-v1"]) await api("/api/evaluate", { method: "POST", body: JSON.stringify({ policy_id: r.child_policy_id, suite_id: s }) }); renderJobs(); } }, "Evaluate retained behaviours"),
           el("button", { class: "needs-worker", disabled: S.readonly || null, title: S.readonly ? READONLY_WHY : null, onclick: async (ev) => { const p = await api(`/api/promote/${r.child_policy_id}`, { method: "POST" }); ev.target.after(el("div", { class: p.verdict === "promoted" ? "ok" : "bad" }, `${p.verdict}: ${p.reasons.join("; ") || "all gates passed"}`)); } }, "Request promotion"),
           el("button", { class: "needs-worker", disabled: S.readonly || null, title: S.readonly ? READONLY_WHY : null, onclick: async (ev) => { const b = await api(`/api/export/${r.child_policy_id}`, { method: "POST" }); ev.target.after(el("a", { href: b.download }, ` download bundle (sha256 ${short(b.sha256, 12)})`)); } }, "Export"),
           el("button", { onclick: () => { $("#evalB").value = r.final_evaluation_id; loadReplay("B", r.final_evaluation_id); } }, "Replay as After")));
@@ -370,6 +370,23 @@ async function renderJobs() {
 
 // ---------------- agent traces ----------------
 async function loadTraces() {
+  const cfg = await api("/api/agent/config");
+  const start = $("#agentStart"), consent = $("#agentConsent");
+  $("#agentAvailability").textContent = cfg.enabled ? `Ready: ${cfg.provider}. API usage may be billed by your provider.` : cfg.reason;
+  consent.disabled = !cfg.enabled;
+  const update = () => { start.disabled = !cfg.enabled || !consent.checked; };
+  consent.onchange = update; update();
+  start.onclick = (e) => busy(e.target, async () => {
+    const session = await api("/api/agent/start", { method: "POST", body: JSON.stringify({ consent: consent.checked }) });
+    $("#agentSession").textContent = `${session.id}: ${session.state}. Training progress is in Jobs.`;
+    const poll = async () => {
+      const result = await api(`/api/agent/sessions/${session.id}`);
+      $("#agentSession").textContent = `${session.id}: ${result.state}`;
+      if (result.state === "running") setTimeout(() => poll().catch(() => { $("#agentSession").textContent = "Session status unavailable. Check Jobs or refresh."; }), 3000);
+      else if (result.trace_id) { await loadTraces(); $("#traceSel").value = result.trace_id; await renderTrace(result.trace_id); }
+    };
+    await poll();
+  });
   const ts = await api("/api/agent_traces"); const sel = $("#traceSel"); sel.innerHTML = "";
   for (const t of ts.slice().reverse()) sel.append(el("option", { value: t.id }, `${t.recorded_at.slice(11, 19)} ${t.mode} · ${t.n_calls} tool calls`));
   if (sel.value) renderTrace(sel.value); else $("#trace").innerHTML = "<li class='empty'>No agent sessions yet.</li>";

@@ -4,26 +4,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EmbodiWeave</title>
-<meta name="description" content="A FalkorDB graph decides how to fix a failing robot policy: where to start training, whether to train at all, and whether the result may ship.">
+<meta name="description" content="A robot fails. FalkorDB evidence chooses its next training experiment. Watch real simulator replays, inspect live Cypher and see why the safety gate rejected the result.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Ccircle cx=%278%27 cy=%278%27 r=%276%27 fill=%27%23ea580c%27/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
-<link rel="stylesheet" href="landing.css">
+<link rel="stylesheet" href="landing.css?v=prd2">
 <script>
   // Motion is opt-in: content is visible by default and only animates when the visitor allows motion.
-  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("motion");
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches && new URLSearchParams(location.search).get("motion") !== "reduce") document.documentElement.classList.add("motion");
 </script>
 </head>
 <body>
+<a class="skip" href="#heroTitle">Skip to content</a>
 <header class="nav">
   <a class="brand" href="./"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="var(--robot)"/><path d="M10 10 L16 7" stroke="var(--paper)" stroke-width="2.2" stroke-linecap="round"/></svg>EmbodiWeave</a>
   <nav aria-label="Sections">
     <a href="#live">Live graph</a>
-    <a href="#loop">How it works</a>
+    <a href="guide.html">Judge guide</a>
     <a href="#results">Results</a>
-    <a href="#agent">Live agent</a>
-    <a href="#graph">Graph model</a>
+    <a href="#graph">Why FalkorDB</a>
     <a href="https://github.com/himanshu748/embodiweave">GitHub</a>
     <a class="btn small" href="studio.html">Open studio</a>
   </nav>
@@ -33,13 +33,12 @@
 <section class="hero" aria-labelledby="heroTitle">
   <div class="hero-copy">
     <p class="eyebrow e1">GraphHacks 2026 · Track 1 · built on FalkorDB</p>
-    <h1 id="heroTitle" class="e1">The robot hit a pedestrian. <span class="hl">A graph chose the fix.</span></h1>
-    <p class="lede e3">In a 2D robot simulator, the deployed navigation policy collides in 48% of target episodes. An LLM agent
-      queries a <b>FalkorDB</b> graph of checkpoints, contracts, evaluations, failures and past training trials, picks where to
-      start training (or decides to start from scratch), runs real PPO and asks a promotion gate whether the result may ship.</p>
+    <h1 id="heroTitle" class="e1">A robot fails.<br><span class="hl">The graph chooses what to try next.</span></h1>
+    <p class="lede e3">Robot training should remember what failed. An agent queries <b>FalkorDB</b> to choose a checkpoint or start from scratch, runs real PPO, then checks whether the result is safe to deploy.</p>
+    <p class="hero-verdict e3"><span class="tag rec">Recorded outcome</span> Fewer collisions. Still unsafe. <b>Deployment rejected.</b></p>
     <div class="ctas e3">
-      <a class="btn" href="studio.html">Open the studio <span aria-hidden="true" class="arrow">→</span></a>
-      <a class="btn ghost" href="#live">Query the graph live</a>
+      <a class="btn" href="studio.html">Explore the evidence <span aria-hidden="true" class="arrow">→</span></a>
+      <a class="btn ghost" href="guide.html">Start the judge walkthrough</a>
     </div>
     <a class="live e4" href="#live" aria-live="polite"><span class="dot" id="liveDot"></span><span id="liveText">Connecting to FalkorDB</span></a>
   </div>
@@ -87,6 +86,10 @@
   <div class="stat"><span class="label">Promotion gate</span><span class="num bad" id="gate">Rejected</span><span class="cap" id="gateCap">3 of 4 suites failed, deployed policy kept</span></div>
 </section>
 
+<section class="judge-route reveal" aria-label="A short route through the demo">
+  <div><p class="eyebrow">Your 90 second route</p><h2>Follow one decision.<br>Inspect every claim.</h2></div>
+  <ol><li><a href="#live"><span>01 / Live</span><b>Run the agent’s graph queries</b><small>Real FalkorDB rows, returned now</small></a></li><li><a href="#decide"><span>02 / Recorded</span><b>See why it chose scratch</b><small>Same contract, target and budget</small></a></li><li><a href="#agent"><span>03 / Recorded</span><b>Read the rejected gate verdict</b><small>The deployed checkpoint stays put</small></a></li></ol>
+</section>
 <section id="live" class="band console-band reveal" aria-labelledby="liveTitle">
   <div class="band-head">
     <div>
@@ -137,7 +140,7 @@
 
 <section id="loop" class="band reveal">
   <p class="eyebrow">How it works</p>
-  <h2>Six bounded steps from failure to a gated fix</h2>
+  <h2>Six bounded steps from failure to a tested decision</h2>
   <p class="sub">The LLM picks each tool call over MCP. Trusted code enforces contracts, budgets and the gate, and every outcome is written back to the graph.</p>
   <ol class="loop">
     <li><span class="n">1</span><b>Observe</b><span>Measured failures of the deployed policy. Authored hypotheses stay labelled as hypotheses.</span></li>
@@ -164,7 +167,7 @@
 </section>
 
 <section id="agent" class="band reveal">
-  <p class="eyebrow">Live agent run</p>
+  <p class="eyebrow">Recorded runtime agent</p>
   <h2>A real LLM ran the loop, and the gate said no</h2>
   <p class="sub" id="agentSub">Loading the latest recorded agent trace</p>
   <ol class="steps" id="agentSteps"></ol>
@@ -201,10 +204,10 @@ RETURN pid AS policy_id, t.id AS trial_id,
     <div>
       <h3>Why a graph</h3>
       <ul class="facts">
-        <li><b>Transfer history is conditional.</b> A past trial only counts if its target family, recipe, budget, threshold and contract all match, which is a multi-hop pattern, not a row filter.</li>
+        <li><b>Transfer history is conditional.</b> A past trial only counts if its target family, recipe, budget, threshold and contract all match, a relationship traversal through the evidence graph.</li>
         <li><b>Contracts gate reuse.</b> A checkpoint with a different ray order is rejected before ranking, with the differing fields named.</li>
         <li><b>Every decision is provenance.</b> The decision records the graph revision and the exact queries it read, so it can be replayed.</li>
-        <li><b>All 10 agent query templates are read-only</b> and run through GRAPH.RO_QUERY, so the agent cannot write the graph.</li>
+        <li><b>All 12 graph query templates are read-only</b> and run through GRAPH.RO_QUERY, so the agent cannot write the graph.</li>
       </ul>
     </div>
   </div>
@@ -219,8 +222,8 @@ RETURN pid AS policy_id, t.id AS trial_id,
 
 <footer>
   <span>EmbodiWeave · MIT licensed · FalkorDB is the primary database · everything shown is a software simulation</span>
-  <span>Built during GraphHacks 2026 with an AI coding assistant, disclosed in the README</span>
+  <span>GraphHacks 2026 · <a href="guide.html">Judge guide, video and local setup</a> · <a href="?motion=reduce">Use still replay</a> · AI assistance disclosed in the README</span>
 </footer>
-<script type="module" src="landing.js"></script>
+<script type="module" src="landing.js?v=prd2"></script>
 </body>
 </html>

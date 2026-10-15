@@ -6,7 +6,7 @@ const $ = (s) => document.querySelector(s);
 const pct = (x) => (x == null ? "n/a" : `${Math.round(x * 100)}%`);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const get = (u) => fetch(u).then((r) => (r.ok ? r.json() : Promise.reject(new Error(`${u}: ${r.status}`))));
-const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+const reduced = () => (matchMedia("(prefers-reduced-motion: reduce)").matches || new URLSearchParams(location.search).get("motion") === "reduce");
 
 // ---------- live status ----------
 async function live() {

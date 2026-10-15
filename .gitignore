@@ -7,3 +7,6 @@ logs/*.pid
 logs/*.err
 artifacts/jobs/worker.heartbeat
 logs/*.out
+
+artifacts/jobs/.*.lock
+artifacts/agent_sessions/

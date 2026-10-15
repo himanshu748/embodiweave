@@ -12,7 +12,7 @@ def world2():
     db.delete_graph("ew_test")
     ingest.init_world()
     service.train_run("V-a", family="open", budget_steps=TINY, seed=1)
-    service.evaluate("V-a", "val-target-v1", n_episodes=4)
+    service.evaluate("V-a", "val-target-v1")
     yield
     db.delete_graph("ew_test")
 

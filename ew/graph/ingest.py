@@ -12,6 +12,7 @@ from .. import records
 from ..contract import CONTRACTS, CONTRACT_V1
 from ..criteria import PROMOTION, THRESHOLDS
 from ..scenarios import FAMILIES, PROTECTED_ROLES, SUITES
+from ..validation import complete_evaluation, suite_fingerprint
 from . import db
 
 COMPETENCIES = {
@@ -59,11 +60,11 @@ def init_world(g: str | None = None) -> int:
               {"id": f.fid(), "n": f.name, "ns": f.n_static, "mv": f.mover, "ms": list(f.mover_speed),
                "mr": f.mover_radius, "mx": f.max_steps}, g)
     for s in SUITES.values():
-        db.rw("MERGE (s:Suite {id:$id}) SET s.version=$v, s.role=$role, s.episodes=$n, s.authored=true "
+        db.rw("MERGE (s:Suite {id:$id}) SET s.version=$v, s.role=$role, s.episodes=$n, s.fingerprint=$fp, s.authored=true "
               "WITH s MATCH (f:Family {id:$fid}), (c:Competency {id:$c}) "
               "MERGE (s)-[:DRAWS_FROM]->(f) MERGE (s)-[:EVALUATES]->(c)",
               {"id": s.suite_id, "v": s.version, "role": s.role, "n": len(s.seeds), "fid": s.family.fid(),
-               "c": s.competency}, g)
+               "c": s.competency, "fp": suite_fingerprint(s)}, g)
     for tid, t in THRESHOLDS.items():
         db.rw("MERGE (t:Threshold {id:$id}) SET t.min_success=$ms, t.max_collision=$mc, t.authored=true "
               "WITH t MATCH (s:Suite {id:$s}) MERGE (t)-[:MEASURED_ON]->(s)",
@@ -116,13 +117,16 @@ def evaluation(e: dict, g: str | None = None) -> None:
     if SUITES[e["suite_id"]].role in PROTECTED_ROLES:
         raise PermissionError("final-test evaluations are never written to the decision graph")
     s = e["summary"]
+    from ..artifacts import load_manifest
+    complete = complete_evaluation(e, load_manifest(e["policy_id"])["contract_id"])
     db.rw("MERGE (e:Evaluation {id:$id}) SET e.artifact_hash=$h, e.success_rate=$sr, e.collision_rate=$cr, "
           "e.timeout_rate=$tr, e.episodes=$n, e.mean_success_steps=$ms, e.contract_id=$cid, e.at=$at, "
-          "e.measured=true "
+          "e.measured=true, e.complete_suite=$complete, e.suite_fingerprint=$fp "
           "WITH e MATCH (p:Policy {id:$pid}), (s:Suite {id:$sid}) MERGE (e)-[:ASSESSED]->(p) MERGE (e)-[:ON_SUITE]->(s)",
           {"id": e["id"], "h": e["artifact_hash"], "sr": s["success_rate"], "cr": s["collision_rate"],
            "tr": s["timeout_rate"], "n": s["episodes"], "ms": s["mean_success_steps"], "cid": e["contract_id"],
-           "at": e["recorded_at"], "pid": e["policy_id"], "sid": e["suite_id"]}, g)
+           "at": e["recorded_at"], "pid": e["policy_id"], "sid": e["suite_id"],
+           "complete": complete, "fp": suite_fingerprint(SUITES[e["suite_id"]]) if complete else ""}, g)
     # Measured failure evidence, grouped by outcome/object, with episode indices into the eval record.
     for i_hit in ("mover", "static", "wall"):
         idx = [i for i, ep in enumerate(e["episodes"]) if ep["outcome"] == "collision" and ep.get("hit") == i_hit]

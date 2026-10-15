@@ -44,7 +44,7 @@ MATCH (s:Suite {id:$suite}) WHERE s.role = 'validation'
 UNWIND $ids AS pid
 MATCH (p:Policy {id:pid})
 OPTIONAL MATCH (e:Evaluation)-[:ASSESSED]->(p)
-WHERE (e)-[:ON_SUITE]->(s) AND e.artifact_hash = p.artifact_hash
+WHERE (e)-[:ON_SUITE]->(s) AND e.artifact_hash = p.artifact_hash AND e.complete_suite = true AND e.suite_fingerprint = s.fingerprint
 RETURN pid AS policy_id, p.artifact_hash AS artifact_hash, e.id AS evaluation_id,
        e.success_rate AS success_rate, e.collision_rate AS collision_rate, e.timeout_rate AS timeout_rate,
        e.episodes AS episodes, e.at AS at
@@ -79,7 +79,7 @@ UNWIND $trial_ids AS tid
 MATCH (t:Trial {id:tid})-[:PRODUCED]->(c:Policy)
 MATCH (s:Suite {id:$suite}) WHERE s.role = 'validation'
 OPTIONAL MATCH (e:Evaluation)-[:ASSESSED]->(c)
-WHERE (e)-[:ON_SUITE]->(s) AND e.artifact_hash = c.artifact_hash
+WHERE (e)-[:ON_SUITE]->(s) AND e.artifact_hash = c.artifact_hash AND e.complete_suite = true AND e.suite_fingerprint = s.fingerprint
 RETURN tid AS trial_id, c.id AS child_id, e.id AS evaluation_id, e.success_rate AS success_rate,
        e.collision_rate AS collision_rate, e.at AS at
 ORDER BY trial_id, at""",
@@ -106,7 +106,7 @@ MATCH (p:Policy {id:$policy})
 UNWIND $suites AS sid
 MATCH (s:Suite {id:sid}) WHERE s.role = 'validation'
 OPTIONAL MATCH (e:Evaluation)-[:ASSESSED]->(p)
-WHERE (e)-[:ON_SUITE]->(s) AND e.artifact_hash = $hash
+WHERE (e)-[:ON_SUITE]->(s) AND e.artifact_hash = $hash AND e.complete_suite = true AND e.suite_fingerprint = s.fingerprint
 RETURN sid AS suite_id, p.artifact_hash AS policy_hash, e.id AS evaluation_id, e.artifact_hash AS evaluated_hash,
        e.success_rate AS success_rate, e.collision_rate AS collision_rate, e.episodes AS episodes, e.at AS at
 ORDER BY suite_id, at""",

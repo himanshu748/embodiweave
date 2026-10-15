@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=prd2">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Ctext y=%2714%27 font-size=%2714%27%3E%E2%97%88%3C/text%3E%3C/svg%3E">
 </head>
 <body>
@@ -157,6 +157,14 @@
     </div>
 
     <div class="tabpanel hidden" id="tab-agent" role="tabpanel">
+      <section class="agent-launch" aria-labelledby="agentLaunchTitle">
+        <h3 id="agentLaunchTitle">Ask the agent</h3>
+        <p id="agentAvailability" class="hint" role="status">Checking local runtime availability</p>
+        <label class="consent"><input type="checkbox" id="agentConsent"> I authorize provider API usage and one 150,000-step PPO run (151,552 reserved rollout steps).</label>
+        <button id="agentStart" disabled>Run one agent investigation</button>
+        <p class="hint">Up to 12 model turns. The worker enforces quotas. Inspect or cancel training in Jobs. This is separate from the recorded trace below.</p>
+        <p id="agentSession" role="status"></p>
+      </section>
       <div class="row"><label class="inline grow">Session <select id="traceSel"></select></label><span id="traceMode" class="badge small"></span></div>
       <ol id="trace" class="trace"></ol>
     </div>
@@ -172,6 +180,6 @@
   <div id="inspKind"></div>
   <pre id="inspBody" class="code"></pre>
 </aside>
-<script src="app.js"></script>
+<script src="app.js?v=prd2"></script>
 </body>
 </html>

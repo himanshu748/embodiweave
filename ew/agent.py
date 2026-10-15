@@ -250,7 +250,7 @@ async def _run_chat(session_id: str, client, model: str, budget: int, max_out: i
 
 def main():
     mode = sys.argv[1] if len(sys.argv) > 1 else "deterministic"
-    sid = records.new_id("agent")
+    sid = os.environ.get("EW_AGENT_SESSION_ID") or records.new_id("agent")
     t0 = time.time()
     if mode == "llm":  # pick the provider whose key is configured: OpenRouter, then Groq, then Anthropic
         mode = ("llm-openrouter" if os.environ.get("OPENROUTER_API_KEY")

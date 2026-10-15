@@ -62,13 +62,18 @@ def load_manifest(policy_id: str) -> dict:
 def verify_policy(policy_id: str, expected_hash: str | None = None) -> str:
     """Recompute the artifact hash; raise if files are missing or the hash does not match."""
     d = policy_dir(policy_id)
+    return verify_directory(d, expected_hash)
+
+
+def verify_directory(d: Path, expected_hash: str | None = None) -> str:
+    d = Path(d)
     for n in ("model.zip", "vecnormalize.pkl", "manifest.json"):
         if not (d / n).exists():
-            raise FileNotFoundError(f"{policy_id}: missing {n}")
+            raise FileNotFoundError(f"{d.name}: missing {n}")
     h = artifact_hash(d)
-    m = load_manifest(policy_id)
+    m = json.loads((d / "manifest.json").read_text())
     if h != m["artifact_hash"]:
-        raise ValueError(f"{policy_id}: artifact hash mismatch vs manifest")
+        raise ValueError(f"{d.name}: artifact hash mismatch vs manifest")
     if expected_hash and h != expected_hash:
-        raise ValueError(f"{policy_id}: artifact hash {h[:12]} != expected {expected_hash[:12]}")
+        raise ValueError(f"{d.name}: artifact hash {h[:12]} != expected {expected_hash[:12]}")
     return h

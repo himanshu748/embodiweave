@@ -19,14 +19,11 @@ from . import artifacts
 from .contract import CONTRACT_V1, PolicyContract, get_contract
 from .env import DYNAMICS_VERSION, REWARD_VERSION, EmbodiNavEnv
 from .scenarios import FAMILIES, Family, Suite, generate_layout
+from .recipes import RECIPES, reserved_steps
+from .provenance import source_snapshot
 
 torch.set_num_threads(1)
 
-RECIPES = {
-    "ppo-r1": dict(n_envs=8, n_steps=256, batch_size=256, n_epochs=5, learning_rate=3e-4,
-                   gamma=0.99, gae_lambda=0.95, clip_range=0.2, ent_coef=0.0,
-                   net_arch=[64, 64]),
-}
 
 
 def runtime_versions() -> dict:
@@ -87,6 +84,7 @@ def train(policy_id: str, *, family: Family | str, budget_steps: int, seed: int,
     """
     fam = FAMILIES[family] if isinstance(family, str) else family
     rc = RECIPES[recipe]
+    reservation = reserved_steps(budget_steps, recipe)
     if parent_id:
         pm = artifacts.load_manifest(parent_id)
         artifacts.verify_policy(parent_id)
@@ -124,6 +122,8 @@ def train(policy_id: str, *, family: Family | str, budget_steps: int, seed: int,
     model.learn(total_timesteps=budget_steps, callback=cb, reset_num_timesteps=True, progress_bar=False)
     wall = time.time() - t0
     consumed = int(model.num_timesteps)
+    if consumed > reservation:
+        raise RuntimeError("optimizer exceeded its reserved rollout budget")
     w1 = torch.nn.utils.parameters_to_vector(model.policy.parameters()).detach()
     if validation and (not schedule or schedule[-1]["steps"] != consumed):
         evaluator(consumed, model)
@@ -135,6 +135,7 @@ def train(policy_id: str, *, family: Family | str, budget_steps: int, seed: int,
         "parent_id": parent_id, "run_id": run_id, "contract_id": contract.contract_id,
         "robot": contract.robot.name, "family": fam.name, "family_id": fam.fid(), "recipe": recipe,
         "recipe_params": rc, "seed": seed, "budget_steps": budget_steps, "consumed_steps": consumed,
+        "reserved_steps": reservation, "source": source_snapshot(),
         "status": "cancelled" if cb.cancelled else "completed", "wall_s": round(wall, 2),
         "weight_delta_l2": float(torch.norm(w1 - w0)), "runtime": runtime_versions(),
         "created_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
@@ -192,11 +193,11 @@ def evaluate_live(model, venv: VecNormalize, contract, suite: Suite) -> dict:
     return {"summary": summarize(eps)}
 
 
-def load_policy(policy_id: str, expected_hash: str | None = None):
-    h = artifacts.verify_policy(policy_id, expected_hash)
-    m = artifacts.load_manifest(policy_id)
+def load_policy(policy_id: str, expected_hash: str | None = None, policy_path: Path | None = None):
+    d = Path(policy_path) if policy_path else artifacts.policy_dir(policy_id)
+    h = artifacts.verify_directory(d, expected_hash)
+    m = json.loads((d / "manifest.json").read_text())
     contract = get_contract(m["contract_id"])
-    d = artifacts.policy_dir(policy_id)
     dummy = DummyVecEnv([lambda: EmbodiNavEnv("open", contract)])
     vn = VecNormalize.load(str(d / "vecnormalize.pkl"), dummy)
     vn.training, vn.norm_reward = False, False
@@ -205,13 +206,14 @@ def load_policy(policy_id: str, expected_hash: str | None = None):
 
 
 def evaluate_policy(policy_id: str, family: Family, seeds, record: bool = False,
-                    expected_hash: str | None = None, eval_contract: PolicyContract | None = None) -> dict:
+                    expected_hash: str | None = None, eval_contract: PolicyContract | None = None,
+                    policy_path: Path | None = None) -> dict:
     """Reload the saved artifact from disk and evaluate it on fixed layouts.
 
     eval_contract defaults to the policy's own contract. Passing a different one runs the policy
     in an environment with other semantics (used only to demonstrate why mismatches are rejected).
     """
-    model, vn, contract, m, h = load_policy(policy_id, expected_hash)
+    model, vn, contract, m, h = load_policy(policy_id, expected_hash, policy_path)
     env_contract = eval_contract or contract
 
     def fn(o):

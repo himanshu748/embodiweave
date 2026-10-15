@@ -10,7 +10,7 @@ import time
 from pathlib import Path
 
 import numpy as np
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -333,6 +333,40 @@ def agent_traces():
     return [{"id": t["id"], "mode": t["mode"], "recorded_at": t["recorded_at"], "wall_s": t["wall_s"],
              "n_calls": len(t.get("calls") or [x for x in t.get("transcript", []) if "tool" in x])}
             for t in records.all_of("agent_trace")]
+
+
+@app.get("/api/agent/config")
+def agent_config():
+    from . import agent_sessions
+    if STATIC_MODE:
+        return {"enabled": False, "reason": "This public demo shows recorded agent runs. Launch a new agent in the local studio."}
+    return agent_sessions.configuration()
+
+
+class AgentStartReq(BaseModel):
+    consent: bool = False
+
+
+@app.post("/api/agent/start")
+def agent_start(r: AgentStartReq, request: Request):
+    from . import agent_sessions
+    if request.client.host not in ("127.0.0.1", "::1", "testclient"):
+        raise HTTPException(403, "Runtime agent launches are available only from the local studio")
+    if not _worker_alive()["alive"]:
+        raise HTTPException(409, "Start the local training worker before launching an agent")
+    try:
+        return agent_sessions.start(r.consent)
+    except PermissionError as exc:
+        raise HTTPException(403, str(exc))
+
+
+@app.get("/api/agent/sessions/{sid}")
+def agent_session(sid: str):
+    from . import agent_sessions
+    try:
+        return agent_sessions.status(sid)
+    except (ValueError, FileNotFoundError):
+        raise HTTPException(404, "Agent session not found")
 
 
 @app.get("/api/agent_traces/{tid}")

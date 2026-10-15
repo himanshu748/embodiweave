@@ -13,6 +13,7 @@ from .contract import CONTRACT_V1, PolicyContract, get_contract
 from .criteria import THRESHOLDS, meets
 from .graph import db, ingest
 from .scenarios import FAMILIES, PROTECTED_ROLES, SPENT_FINAL_TESTS, SUITES, Family
+from .validation import complete_evaluation
 
 rl = _LazyModule("ew.rl")  # torch loads only when training or evaluating
 
@@ -169,7 +170,12 @@ def promote(policy_id: str, rule: str = "promo-1", graph: str | None = None) -> 
     rows = {}
     for r in q.dicts():
         if r["evaluation_id"]:
-            rows[r["suite_id"]] = r  # newest wins (ordered by time)
+            if records.exists("evaluation", r["evaluation_id"]):
+                ev = records.read("evaluation", r["evaluation_id"])
+                if (ev["policy_id"] == policy_id and ev["artifact_hash"] == h
+                        and complete_evaluation(ev, m["contract_id"])):
+                    rows[r["suite_id"]] = {**r, "success_rate": ev["summary"]["success_rate"],
+                                            "collision_rate": ev["summary"]["collision_rate"]}
         if r["policy_hash"] != h:
             reasons.append("graph artifact hash differs from files on disk")
     used, missing, checks = [], [], []
@@ -208,7 +214,7 @@ def export_bundle(policy_id: str) -> dict:
     artifacts.verify_policy(policy_id, m["artifact_hash"])
     out_dir = artifacts.ROOT / "exports"
     out_dir.mkdir(parents=True, exist_ok=True)
-    path = out_dir / f"{policy_id}-{m['artifact_hash'][:12]}.zip"
+    path = out_dir / f"{policy_id}-{m['artifact_hash'][:12]}-repro-v2.zip"
     root = Path(__file__).resolve().parent.parent
     rel = {"runs": [r for r in records.all_of("run") if r.get("child_policy_id") == policy_id],
            "evaluations": [e for e in records.all_of("evaluation") if e["policy_id"] == policy_id],
@@ -220,6 +226,8 @@ def export_bundle(policy_id: str) -> dict:
                         "steps": cur["consumed_steps"], "seed": cur["seed"]})
         cur = artifacts.load_manifest(cur["parent_id"]) if cur.get("parent_id") else None
     contract = get_contract(m["contract_id"]).describe()
+    from .provenance import source_snapshot
+    source = source_snapshot()
     with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as z:
         d = artifacts.policy_dir(policy_id)
         for n in ("model.zip", "vecnormalize.pkl", "manifest.json"):
@@ -227,16 +235,23 @@ def export_bundle(policy_id: str) -> dict:
         z.writestr("contract.json", json.dumps(contract, indent=1, default=list))
         z.writestr("records.json", json.dumps(rel, indent=1, default=str))
         z.writestr("lineage.json", json.dumps(lineage, indent=1))
+        z.writestr("source.json", json.dumps({"export_source": source, "training_source": m.get("source"),
+                        "historical_note": "Training source was not captured for historical artifacts" if not m.get("source") else None}, indent=2))
+        for file in sorted((root / "ew").rglob("*.py")):
+            z.write(file, "source/" + str(file.relative_to(root)))
         lock = root / "requirements.lock"
         if lock.exists():
             z.write(lock, "requirements.lock")
         z.writestr("REPRODUCE.md", (
             f"# Reproduce {policy_id}\n\nartifact_hash (sha256 over model.zip + vecnormalize.pkl digests): {m['artifact_hash']}\n\n"
-            "```\npip install -r requirements.lock\npython -m ew.cli evaluate --policy-dir policy --suite val-target-v1\n```\n"
+            "```\npython3.13 -m venv .venv\n.venv/bin/pip install -r requirements.lock\n"
+            "PYTHONPATH=source .venv/bin/python -m ew.cli evaluate --policy-dir policy --suite val-target-v1\n```\n"
             f"Training: recipe {m['recipe']} seed {m['seed']} steps {m['consumed_steps']} on family {m['family']} "
             f"from parent {m.get('parent_id') or 'scratch'}. Runtime: {json.dumps(m['runtime'])}.\n"
             "Bitwise identical retraining is not promised across hardware or package versions; evaluation of the\n"
             "saved artifact on the same suite seeds is deterministic on the same package set.\n"))
+        z.writestr("checksums.json", json.dumps({name: hashlib.sha256(z.read(name)).hexdigest()
+                                               for name in z.namelist()}, indent=2))
     sha = hashlib.sha256(path.read_bytes()).hexdigest()
     return {"path": str(path), "sha256": sha, "policy_id": policy_id, "artifact_hash": m["artifact_hash"],
             "lineage": lineage, "bytes": path.stat().st_size}

@@ -1,7 +1,8 @@
 # Gate evidence log
 
-All commands ran in the Claude Code cloud container described in `gate0/readiness.md`
-(x86_64, 4 CPU, 15.7 GiB, no GPU). Nothing here ran on the user's Mac.
+The original gate commands below ran in the Claude Code cloud container described in `gate0/readiness.md`
+(x86_64, 4 CPU, 15.7 GiB, no GPU). Later macOS acceptance fixes and browser checks are recorded separately
+in `prd-fixes/VERIFICATION.md`; historical results below are preserved.
 
 ## Gate 1: environment and reloadable PPO (2026-10-15, 09:25 to 09:37 IST)
 
@@ -109,3 +110,8 @@ evaluation; Live, Recorded and What-if badges; graph-down banner; keyboard focus
 | Document dates and AI disclosure | `README.md` Documents, dates and AI disclosure; `gate0/readiness.md` |
 | Fresh-clone run | 15 Oct: `git clone https://github.com/himanshu748/embodiweave` at bd2129c, new Python 3.13 venv, `pip install -r requirements.lock` (exit 0), `pytest -q` -> 37 passed in 88.6 s. With `tests/test_hosted.py` and the export test added: 39 passed |
 | Demo video | not yet recorded (owner) |
+
+
+## PRD acceptance revision
+
+See [the verification receipt](prd-fixes/VERIFICATION.md) for the portable macOS setup, 63 tests, complete-suite guards, atomic resource reservation, executable exports, browser QA and demo film. Earlier missing-video and Mac-not-tested notes describe their original checkpoint.

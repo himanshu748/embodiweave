@@ -1,0 +1,50 @@
+[
+  {
+    "page": "landing",
+    "height": 800,
+    "scroll": 360,
+    "width": 360
+  },
+  {
+    "page": "landing",
+    "height": 1024,
+    "scroll": 768,
+    "width": 768
+  },
+  {
+    "page": "landing",
+    "height": 1000,
+    "scroll": 1440,
+    "width": 1440
+  },
+  {
+    "page": "guide",
+    "scroll": 360,
+    "width": 360
+  },
+  {
+    "page": "guide",
+    "scroll": 768,
+    "width": 768
+  },
+  {
+    "page": "guide",
+    "scroll": 1440,
+    "width": 1440
+  },
+  {
+    "page": "studio",
+    "scroll": 360,
+    "width": 360
+  },
+  {
+    "page": "studio",
+    "scroll": 768,
+    "width": 768
+  },
+  {
+    "page": "studio",
+    "scroll": 1440,
+    "width": 1440
+  }
+]

@@ -1,40 +1,37 @@
-# Demo script (about 3 minutes)
+# Demo film and extended walkthrough
 
-Recorded against the local studio (`bash scripts/start.sh`, then http://127.0.0.1:8000). Every number
-on screen comes from stored records; say "simulated robot" at least once.
+The shipped [60 second film](https://embodiweave.onrender.com/media/embodiweave-demo.mp4) is an edited
+walkthrough captured from the running application through the Codex in-app browser. It uses actual
+simulator replay frames, live database query responses, the recorded decision/gate and the agent trace
+viewer. Captions and a choreographed pointer explain the sequence. No new training run is depicted.
 
-1. **The failure (0:00-0:25).** Arena replay, Before = deployed P-static-b on val-target-v1. Play an
-   episode where it hits the crossing mover. Point at the meta line: 37% success, 48% collision on 60
-   matched episodes, 21 of 29 collisions with the mover.
-2. **What the graph knows (0:25-0:55).** Decision tab. Read the explanation of the latest decision:
-   rule ew-select-3, scratch ranked first. Show the ranked rows: each parent's trials as red crosses,
-   scratch with two green ticks, children scores. Open Rejected: P-mirror has the same tensor shape
-   but a different ray order, so it is rejected with the differing field.
-3. **The Cypher (0:55-1:20).** Evidence tab. Expand `candidate_eligibility` and `scratch_trials`;
-   show params, returned record ids and the graph revision. Mention GRAPH.RO_QUERY: these reads cannot
-   write.
-4. **The graph view (1:20-1:40).** Graph tab: the decision node, SELECTED edge to the scratch Origin,
-   REJECTED edge to P-mirror, trials hanging off each parent. Click a trial to show its immutable record.
-5. **Acting (1:40-2:05).** Seed field, Launch training. Jobs tab shows the queued job and real step
-   progress. (Optional: Cancel to show cancellation.) Say that the worker re-runs the rule before it
-   starts and refuses a stale decision.
-6. **What-if (2:05-2:25).** Open What-if, add two hypothetical successful trials for P-static-b, Run.
-   The ranking flips and is labelled hypothetical; production revision is unchanged; Launch is disabled.
-7. **Did it help? (2:25-3:00).** Results tab. exp-1: the first rule chose among parents only and was
-   no better than baselines; scratch won. exp-2 and exp-3 on fresh test suites: the graph chose
-   scratch, about 0.70 test success against 0.37 to 0.39 for the latest or best-validation checkpoint,
-   on every paired seed. Close on the honest caveats: three seeds, no arm met the full collision limit.
+| Time | Evidence |
+|---|---|
+| 00–11 | Same recorded seed 1300032: deployed collision at step 51, new checkpoint goal at step 112 |
+| 11–21 | Actual live FalkorDB conditional parent-trial query; 27 rows, none reached threshold |
+| 21–30 | Actual live scratch-history query; Cypher, parameters and returned rows |
+| 30–43 | Recorded ew-select-3 ranking and rejected promotion; 1 of 4 suites passed |
+| 43–52 | Studio runtime agent trace, public launch restriction and local consent control |
+| 52–60 | Judge guide and local reproduction route |
 
-Agent tab: show trace `agent-20261015060343-b9e6bc` (OpenRouter, `anthropic/claude-sonnet-5.5`, 8 turns). It
-is a real LLM run: the model chose every tool call, the rule chose scratch, PPO missed the threshold and the
-gate rejected the checkpoint (target 0.87 success but 0.13 collisions against a 0.10 limit). Say that the
-rejection is the system working. Do not present the deterministic trace as an LLM run.
+Recorded decision: `deci-20261015060348-a7ee2c`. Promotion: `prom-20261015060506-9a3c7a`.
+Agent: `agent-20261015060343-b9e6bc`, OpenRouter `anthropic/claude-sonnet-5.5`, 8 model turns, 13 tool calls,
+94 seconds. New checkpoint artifact hash: `556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa`.
 
-## 30-second opening for the hosted site (https://embodiweave.onrender.com)
+The live graph contains evidence appended after the featured decision. Live row counts can therefore
+differ from the recorded decision’s ranking. The decision’s queries and revision remain inspectable.
 
-1. Hero: let the two replays play. "Same seed. The deployed policy hits the pedestrian at step 51, the
-   checkpoint the agent trained reaches the goal."
-2. The dark Live card under it: "This just queried FalkorDB. Fine-tuning a parent: 0 of 27 matching trials
-   ever reached the threshold. From scratch: 2 of 12. That is why the agent trained from scratch."
-3. Scroll to Live from FalkorDB, click questions 2 and 5 to show the Cypher, params and returned rows.
-4. Scroll to From rows to a decision: the ranked options and the four gate checks that rejected it.
+## Extended interactive walkthrough
+
+1. Open the landing replay and switch 3D / Top view. Aggregate target metrics come from 60 episodes.
+2. Run parent and scratch trial queries. Compare their exact target, contract, recipe, threshold and budget.
+3. Inspect the frozen ranking, semantic rejection of P-mirror and all four promotion checks.
+4. Open Studio → Evidence and Graph. Trace the records, not just the summary.
+5. Open What-if, add hypothetical successful parent trials, run it and inspect the unchanged production
+   fingerprint. Training from a hypothetical decision is disabled.
+6. Locally, enable a provider and `EW_ALLOW_LLM=1`, consent in Agent and launch one investigation.
+   Jobs shows actual progress and cancellation. Public Render never launches this work.
+7. Export a checkpoint and run the bundle’s own `REPRODUCE.md` command. New bundles contain source,
+   source hashes, dependencies and checksums. Smoke subsets cannot pass full validation.
+8. Close with limitations: software simulation, three seeds, no full benchmark threshold met and no
+   demonstrated efficiency or real-world safety advantage.

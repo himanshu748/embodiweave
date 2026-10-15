@@ -11,15 +11,19 @@ Jobs are small mutable state files (operational status); their outcomes are immu
 from __future__ import annotations
 
 import hashlib
+import fcntl
 import json
 import os
 import signal
 import sys
 import time
 import traceback
+import tempfile
+from contextlib import contextmanager
 from pathlib import Path
 
 from . import artifacts, records
+from .recipes import reserved_steps
 
 JOBS = artifacts.ROOT / "jobs"
 MAX_JOB_STEPS = int(os.environ.get("EW_MAX_JOB_STEPS", "200000"))
@@ -31,13 +35,27 @@ class QuotaExceeded(RuntimeError):
     pass
 
 
+@contextmanager
+def _lock(name="queue", blocking=True):
+    """OS lock shared by API threads, API processes, and worker processes."""
+    JOBS.mkdir(parents=True, exist_ok=True)
+    with open(JOBS / f".{name}.lock", "a") as handle:
+        fcntl.flock(handle, fcntl.LOCK_EX | (0 if blocking else fcntl.LOCK_NB))
+        try:
+            yield
+        finally:
+            fcntl.flock(handle, fcntl.LOCK_UN)
+
+
 def _p(job_id: str) -> Path:
     return JOBS / f"{job_id}.json"
 
 
 def _save(job: dict) -> None:
     JOBS.mkdir(parents=True, exist_ok=True)
-    tmp = _p(job["id"]).with_suffix(".tmp")
+    fd, name = tempfile.mkstemp(prefix=job["id"], suffix=".tmp", dir=JOBS)
+    os.close(fd)
+    tmp = Path(name)
     tmp.write_text(json.dumps(job, indent=1, default=str))
     os.replace(tmp, _p(job["id"]))
 
@@ -56,7 +74,10 @@ def steps_used() -> int:
     tot = 0
     for j in all_jobs():
         if j["kind"] == "transfer_trial":
-            tot += j.get("consumed_steps") or (j["params"]["budget"] if j["state"] in ("queued", "running") else 0)
+            if j["state"] in ("queued", "running", "failed", "interrupted"):
+                tot += j.get("reserved_steps") or reserved_steps(j["params"]["budget"], j["params"].get("recipe", "ppo-r1"))
+            else:
+                tot += j.get("consumed_steps") or 0
     return tot
 
 
@@ -66,28 +87,50 @@ def idem_key(kind: str, params: dict) -> str:
 
 def submit(kind: str, params: dict, requested_by: str = "api") -> tuple[dict, bool]:
     """Returns (job, created). Duplicate submissions return the existing job (created=False)."""
+    with _lock():
+        return _submit(kind, params, requested_by)
+
+
+def _submit(kind, params, requested_by):
+    if kind not in ("transfer_trial", "evaluate"):
+        raise ValueError("unsupported job kind")
     key = idem_key(kind, params)
     for j in all_jobs():
-        if j["idem_key"] == key and j["state"] not in ("failed", "interrupted"):
+        if j["idem_key"] == key:
             return j, False
+    limit = os.environ.get("EW_AGENT_TRAINING_LIMIT")
+    if kind == "transfer_trial" and limit is not None:
+        launched = sum(j["kind"] == kind and j.get("requested_by") == requested_by for j in all_jobs())
+        if launched >= int(limit):
+            raise QuotaExceeded("This agent session has already used its one authorized training job")
+    reservation = 0
     if kind == "transfer_trial":
         b = int(params["budget"])
-        if b > MAX_JOB_STEPS:
-            raise QuotaExceeded(f"budget {b} exceeds per-job cap {MAX_JOB_STEPS}")
-        if steps_used() + b > STEP_QUOTA:
+        reservation = reserved_steps(b, params.get("recipe", "ppo-r1"))
+        if reservation > MAX_JOB_STEPS:
+            raise QuotaExceeded(f"budget {b} reserves {reservation} rollout steps, exceeding per-job cap {MAX_JOB_STEPS}")
+        if steps_used() + reservation > STEP_QUOTA:
             raise QuotaExceeded(f"step quota {STEP_QUOTA} would be exceeded ({steps_used()} used)")
     job = {"id": records.new_id("job"), "kind": kind, "params": params, "idem_key": key, "state": "queued",
            "submitted_at": time.time(), "requested_by": requested_by, "progress": None, "result": None,
-           "error": None, "consumed_steps": None}
+           "error": None, "consumed_steps": None, "reserved_steps": reservation}
     _save(job)
     return job, True
 
 
 def cancel(job_id: str) -> dict:
+    with _lock():
+        return _cancel(job_id)
+
+
+def _cancel(job_id):
     j = get(job_id)
     if j["state"] == "queued":
         j["state"] = "cancelled"
         j["error"] = "cancelled before start"
+        j["consumed_steps"] = 0
+        if j["kind"] == "transfer_trial" and not records.exists("trial", j["params"]["trial_id"]):
+            _record_incomplete_trial(j, "cancelled")
         _save(j)
     elif j["state"] == "running":
         (JOBS / f"{job_id}.cancel").write_text("1")
@@ -97,6 +140,8 @@ def cancel(job_id: str) -> dict:
 
 
 def _pid_alive(pid: int) -> bool:
+    if not isinstance(pid, int) or pid <= 0:
+        return False
     try:
         os.kill(pid, 0)
         return True
@@ -125,6 +170,8 @@ def _record_incomplete_trial(j: dict, status: str) -> None:
     from .graph import db, ingest
     from .scenarios import FAMILIES
     p = j["params"]
+    if records.exists("trial", p["trial_id"]):
+        return  # A crash after persisting the outcome must not rewrite immutable evidence.
     thr = THRESHOLDS[p["threshold_id"]]
     fam = FAMILIES[p["target_family"]]
     if p["parent_id"]:
@@ -182,12 +229,33 @@ def _run(j: dict) -> None:
 
 
 def work_once() -> dict | None:
+    try:
+        with _lock("worker", blocking=False):
+            return _work_once()
+    except BlockingIOError:
+        return None
+
+
+def _work_once() -> dict | None:
+    with _lock():
+        return_claim = _claim()
+    if return_claim is None:
+        return None
+    j = return_claim
+    return _execute(j)
+
+
+def _claim():
     queued = [j for j in all_jobs() if j["state"] == "queued"]
     if not queued:
         return None
     j = queued[0]
     j["state"], j["worker_pid"], j["started_at"] = "running", os.getpid(), time.time()
     _save(j)
+    return j
+
+
+def _execute(j):
     try:
         _run(j)
     except Exception as e:  # noqa: BLE001
@@ -211,13 +279,21 @@ def _heartbeat(stop):
 
 
 def main() -> None:
+    try:
+        with _lock("worker", blocking=False):
+            _main()
+    except BlockingIOError:
+        raise SystemExit("An EmbodiWeave worker already owns this artifact store")
+
+
+def _main():
     import threading
     print("worker recovered:", recover(), flush=True)
     stop = {"v": False}
     signal.signal(signal.SIGTERM, lambda *a: stop.update(v=True))
     threading.Thread(target=_heartbeat, args=(stop,), daemon=True).start()
     while not stop["v"]:
-        if work_once() is None:
+        if _work_once() is None:
             time.sleep(1.0)
 
 

@@ -67,7 +67,7 @@ def test_missing_validation_requires_evaluation_then_ranks_all(world):
     d = service.record_decision(req())
     assert d["action"] == "evaluate_candidates" and set(d["needs_evaluation"]) == {"T-a", "T-b"}
     for pid in d["needs_evaluation"]:
-        service.evaluate(pid, "val-target-v1", n_episodes=6)
+        service.evaluate(pid, "val-target-v1")
     d2 = service.record_decision(req())
     assert d2["action"] == "train_from_parent"
     assert {c["policy_id"] for c in d2["ranking"]} == {"T-a", "T-b"}
@@ -142,3 +142,26 @@ def test_export_bundle_contains_reloadable_artifact(world):
                 "records.json", "lineage.json", "REPRODUCE.md"} <= names
         lineage = [x["policy_id"] for x in __import__("json").loads(z.read("lineage.json"))]
     assert lineage == ["T-b", "T-a"]
+
+
+def test_export_reproduction_command_runs(world, tmp_path):
+    import hashlib
+    import json
+    import os
+    import subprocess
+    import sys
+    import zipfile
+    out = service.export_bundle("T-b")
+    with zipfile.ZipFile(out["path"]) as z:
+        checksums = json.loads(z.read("checksums.json"))
+        assert all(hashlib.sha256(z.read(name)).hexdigest() == digest for name, digest in checksums.items())
+        assert json.loads(z.read("source.json"))["export_source"]["source_hash"]
+        z.extractall(tmp_path)
+    env = {**os.environ, "PYTHONPATH": str(tmp_path / "source")}
+    result = subprocess.run([sys.executable, "-m", "ew.cli", "evaluate", "--policy-dir", "policy",
+        "--suite", "val-target-v1", "--episodes", "2"], cwd=tmp_path, env=env, capture_output=True, text=True, timeout=90)
+    assert result.returncode == 0, result.stderr
+    actual = json.loads(result.stdout)
+    expected = rl.evaluate_policy("T-b", SUITES["val-target-v1"].family, SUITES["val-target-v1"].seeds[:2])
+    assert actual["episodes"] == expected["episodes"] and actual["artifact_hash"] == expected["artifact_hash"]
+    assert not actual["complete_suite"]
