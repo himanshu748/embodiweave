@@ -11,3 +11,5 @@ logs/*.out
 artifacts/jobs/.*.lock
 artifacts/agent_sessions/
 artifacts/judge_sessions/
+
+artifacts/public_training/

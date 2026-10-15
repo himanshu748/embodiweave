@@ -2,7 +2,7 @@
 
 **GraphHacks 2026, Track 1: Agents That Act on Connected Data.** FalkorDB is the primary database.
 
-**Live demo:** [embodiweave.onrender.com](https://embodiweave.onrender.com) (free tier, the first load can take up to a minute) · **[Try the live agent](https://embodiweave.onrender.com/live.html)** · **License:** MIT · **Demo video:** [60 second walkthrough](https://embodiweave.onrender.com/media/embodiweave-demo.mp4) · [Judge guide](https://embodiweave.onrender.com/guide.html)
+**Live demo:** [EmbodiWeave on AWS](https://embodiweave.52.202.25.181.sslip.io) (always-on AWS Lightsail; 2 GB RAM, $12/month bundle) · **[Try the live agent](https://embodiweave.52.202.25.181.sslip.io/live.html)** · **License:** MIT · **Demo video:** [60 second walkthrough](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo.mp4) · [Judge guide](https://embodiweave.52.202.25.181.sslip.io/guide.html)
 
 EmbodiWeave turns robot failures into evidence-backed training decisions. A simulated mobile robot
 fails a new mission (static obstacles plus a crossing pedestrian). An agent queries a FalkorDB graph of
@@ -15,16 +15,19 @@ Everything is a software simulation. No physical robot is involved.
 
 ## Start here: a judge’s walkthrough
 
-1. [Watch the recorded paired replay](https://embodiweave.onrender.com): seed 1300032, deployed collision at step 51, new checkpoint goal at step 112. A good episode is not a passed gate.
-2. **[Ask the live agent](https://embodiweave.onrender.com/live.html)**: choose a sample brief or write a question. A real model selects tools against live FalkorDB, proposes a fresh adaptation plan and previews the exact-artifact gate. Each call exposes its arguments, Cypher, evidence and latency. You can also [run Cypher directly](https://embodiweave.onrender.com/#live).
-3. [Inspect selection and the gate](https://embodiweave.onrender.com/#decide): scratch wins the recorded ranking; target collisions remain 13%, over the 10% limit. Three of four suites fail. Promotion is rejected.
-4. [Open the studio](https://embodiweave.onrender.com/studio.html): browse the real Sonnet MCP trace, replay different episodes, inspect evidence, and try an isolated What-if.
-5. [Watch the demo film](https://embodiweave.onrender.com/guide.html#film), then reproduce locally below.
+1. [Watch the recorded paired replay](https://embodiweave.52.202.25.181.sslip.io): seed 1300032, deployed collision at step 51, new checkpoint goal at step 112. A good episode is not a passed gate.
+2. **[Ask the live agent](https://embodiweave.52.202.25.181.sslip.io/live.html)**: choose a sample brief or write a question. A real model selects tools against live FalkorDB, proposes a fresh adaptation plan and previews the exact-artifact gate. Each call exposes its arguments, Cypher, evidence and latency. You can also [run Cypher directly](https://embodiweave.52.202.25.181.sslip.io/#live).
+3. [Inspect selection and the gate](https://embodiweave.52.202.25.181.sslip.io/#decide): scratch wins the recorded ranking; target collisions remain 13%, over the 10% limit. Three of four suites fail. Promotion is rejected.
+4. [Open the studio](https://embodiweave.52.202.25.181.sslip.io/studio.html): browse the real Sonnet MCP trace, replay different episodes, inspect evidence, and try an isolated What-if.
+5. **[Run full PPO on the webpage](https://embodiweave.52.202.25.181.sslip.io/live.html#training)**: confirm the small CPU trial, choose a seed and run. Watch graph selection, real weight updates, 180 validation episodes, the gate verdict, replay and checkpoint download. No installation or judge API key.
+6. [Watch the demo film](https://embodiweave.52.202.25.181.sslip.io/guide.html#film), then reproduce locally below.
 
 **Evidence boundaries:** Live means a current query or fresh LLM investigation against running FalkorDB.
-The public agent computes a plan and gate preview; it does not train or deploy. Recorded means stored PPO,
-simulator or original Sonnet execution evidence. What-if means a labelled sandbox copy. New PPO training,
-scenario evaluation and the full training agent require the local stack.
+The live page can run a new bounded 4,096-step PPO trial, all 180 canonical validation episodes, the trusted
+gate and a reproducible checkpoint export. The agent can launch this flow only with a separate training opt-in.
+Recorded means stored PPO, simulator or original Sonnet execution evidence. What-if means a labelled sandbox
+copy. Larger budgets, custom scenario evaluation and the unrestricted local experiment workflow use the local stack.
+Neither public workflow changes deployed weights.
 The demo film is an edited browser walkthrough, with captions and a choreographed pointer. Its replay
 frames and interface states were captured from the running app. It does not show a new training run.
 
@@ -191,7 +194,7 @@ Live LLM runs (15 Oct, traces in `artifacts/records/agent_trace/`):
 
 ## Try the public live agent
 
-Open [live.html](https://embodiweave.onrender.com/live.html), choose an example or write a question, consent
+Open [live.html](https://embodiweave.52.202.25.181.sslip.io/live.html), choose an example or write a question, consent
 to sending the question and public evidence to the displayed provider, and run. No judge API key or account
 is needed. The server owns the key; it is never returned in config, tool results or receipts.
 
@@ -200,7 +203,7 @@ run. The model selects `inspect_mission`, `query_evidence`, `propose_adaptation`
 Reads execute named `GRAPH.RO_QUERY` templates. The same frozen selection rule computes the adaptation
 plan; the same trusted gate validates complete canonical evaluations of the exact artifact. Planning and
 gate checks are previews with no graph or deployment writes. No arbitrary Cypher, paths, shell, network
-tools, training, evaluation jobs or final-test outcomes are available to this public loop.
+tools or final-test outcomes are available to this public loop. A separate page opt-in adds only `run_ppo_flow`: no arguments, one fixed 4,096-step trial, seed 7, using the trusted workflow below.
 
 The receipt shows the actual model(s) returned by the provider, selected tools, arguments, returned rows or
 record IDs, exact Cypher, revision, latency, token usage and final report. A model failure, turn limit,
@@ -210,15 +213,16 @@ Gate calls also read complete matched target evaluations for the candidate and d
 rate differences, and render the measured gate table directly. A checkpoint can have fewer collisions
 than deployment while still failing the gate's absolute ceiling; missing baseline evidence stays unknown.
 
-**Free hosting limits:** one active investigation, at most 6 model turns, 10 tool calls, 1,200 output tokens
+**Public agent limits:** one active investigation, at most 6 model turns, 10 tool calls, 1,200 output tokens
 per turn and two minutes per session; 20 shared starts per UTC day, 4 per browser per hour. Failed attempts
 count. Browser cookies isolate receipts; another visitor cannot list or fetch your session. Reloading
-resumes your current receipt. Sessions and allowances are ephemeral on free Render and reset on restart;
-they are not a durable billing cap. OpenRouter is fixed to `nvidia/nemotron-3-ultra-550b-a55b:free`, routed only
+resumes your current receipt. AWS mounts receipts and records on a persistent Docker volume. Running sessions become interrupted on API restart;
+completed receipts and quotas survive. On an optional free Render deployment, its ephemeral filesystem can reset these allowances.
+These application quotas are not a cloud billing cap. OpenRouter is fixed to `nvidia/nemotron-3-ultra-550b-a55b:free`, routed only
 to NVIDIA with no paid or provider fallback. Your OpenRouter privacy settings must permit NVIDIA. A Groq
 key can instead use `llama-3.3-70b-versatile`. Provider free quotas can be lower than the app allowance.
-The server needs `EW_PUBLIC_AGENT=1` and `OPENROUTER_API_KEY` (or `GROQ_API_KEY`) in Render Environment.
-Run one uvicorn process. No new hosted dependencies or torch are required.
+The server needs `EW_PUBLIC_AGENT=1` and `OPENROUTER_API_KEY` (or `GROQ_API_KEY`) in the private server environment.
+Run one uvicorn process. The CPU-only PyTorch stack runs in a separate short-lived worker, without provider or AWS credentials.
 
 ## Ask the full training agent locally
 
@@ -275,7 +279,7 @@ on 16379 and `EW_FALKOR_PORT=16379 .venv/bin/python -m pytest -q`.
 
 ### Reproduce an exported checkpoint
 
-In the local studio use Export, or call `ew.service.export_bundle(policy_id)`. A [new-format bundle of the recorded checkpoint](https://embodiweave.onrender.com/api/download/scratch~a7ee2c-s7-556ec083bc85-repro-v2.zip) is available for direct download. New bundles end in
+In the local studio use Export, or call `ew.service.export_bundle(policy_id)`. A [new-format bundle of the recorded checkpoint](https://embodiweave.52.202.25.181.sslip.io/api/download/scratch~a7ee2c-s7-556ec083bc85-repro-v2.zip) is available for direct download. New bundles end in
 `-repro-v2.zip` and include the checkpoint, normalization, semantic contract, evidence, Python source,
 source commit and per-file hashes, dependencies, and checksums of every payload entry. Extract one, then:
 
@@ -339,18 +343,63 @@ templates the recorded agent run used (`failure_inspection`, `relevant_trials`, 
 `GET /api/live/overview` (node and edge counts), `GET /api/live/query/{failure|transfer|scratch|decision|gate}` and
 `GET /api/live/featured` (the recorded decision ranking and gate checks). All go through `GRAPH.RO_QUERY`.
 
-`Dockerfile` builds the hosted studio: the pinned FalkorDB image plus the FastAPI studio, without torch or the
-worker. The bounded live agent uses remote inference. On boot it rebuilds the graph from the committed records, so the hosted graph
-matches this repository. Browsing, decisions and what-ifs work there; training, evaluation, promotion and export
-return 403 and run on the full local setup (`scripts/start.sh`). The public agent's config/start/status endpoints
-are `/api/judge/config`, `/api/judge/start` and `/api/judge/sessions/{id}`. The landing page is `web/index.html`,
-the live agent is `web/live.html`, the judge guide is `web/guide.html`, and the
-studio is `web/studio.html`. Dynamic measurements come from records or live queries; the guide identifies
-the specific recorded run it describes. `design/design.md` is the committed shared visual guide.
+`Dockerfile` pins FalkorDB plus the CPU-only PyTorch, Gymnasium, Stable-Baselines3 and FastAPI stack.
+The API imports no torch; a single disposable CPU subprocess handles each public trial. The graph is rebuilt
+from immutable records at boot. AWS mounts those records and new checkpoints on a persistent Docker volume.
+Redis binds only to container loopback; only Caddy's HTTPS/HTTP ports are public. The dedicated server has
+2 GB RAM, 2 vCPUs (burstable), 60 GB disk and a $12/month bundle including public IPv4. No ALB, NAT gateway,
+managed database or paid model is needed. Free model quotas still apply. AWS uptime is not a guarantee of availability.
 
+### New public PPO flow
+
+`POST /api/public-training/start` accepts only consent and an integer seed (0–99999). It fixes the recipe to
+`ppo-r1` and the budget to **4,096 environment steps** (two 2,048-step rollouts). This is a demonstration
+budget, not the recorded 150,000-step experiment or evidence of a safety/efficiency advantage.
+
+1. Query live FalkorDB and record the actual 4,096-budget selection. Revalidate before training.
+2. Train from the selected immutable parent or fresh random weights; save a new checkpoint and weight delta.
+3. Reload that exact artifact and run **all 180 episodes** in `val-target-v1` (60), `val-open-v1` (40),
+   `val-static-v1` (40), `val-crossing-v1` (40). Final tests remain unavailable.
+4. Record the conditioned Trial and exact-artifact `promo-1` verdict. Rejection remains rejection;
+   even a passing gate does not switch the public deployed policy.
+5. Export weights, normalization, contract, immutable evidence, source, dependency lock and SHA-256 checksums.
+   Replay is available in Studio and the bundle downloads from the live page.
+
+Limits: one active public PPO process, eight starts per UTC day, two per browser/hour, eight minutes maximum.
+Failed/cancelled starts count. Cancellation is checked at each training environment step and between validation
+suites; a running suite may finish first. Timeout terminates the owned CPU subprocess. Partial work is never
+labelled a completed flow. Quotas use browser cookies and a single-process deployment; they are demo limits,
+not protection against a determined attacker. Worker outcomes are marked `judge_demo` and never enter the
+library checkpoint catalog; budget conditioning keeps these trials separate from the 150k benchmarks.
+
+The fixed workflow button needs no LLM. With a separate opt-in, the real model can call `run_ppo_flow` to
+launch it; the model receipt links to its pending worker session. Worker status, not model prose, establishes
+completion. `GET /api/public-training/sessions/{id}` and its `/bundle` route require the owning browser cookie.
+Generic `/api/train`, `/api/evaluate`, `/api/promote` and worker endpoints remain blocked on the public service.
+
+### AWS deployment
+
+The deployed service uses the public source, `scripts/hosted.sh`, `scripts/aws-run.sh` and `deploy/Caddyfile`.
+On the dedicated Lightsail Ubuntu host, install Docker and Git, clone this repo, build the image, and run:
+
+```sh
+# /opt/embodiweave/runtime.env is private, mode 0600, never committed:
+# EW_PUBLIC_AGENT=1, OPENROUTER_API_KEY=..., EW_PUBLIC_URL=https://your-host
+sudo docker build -t embodiweave:$(git rev-parse --short=12 HEAD) .
+sudo EW_PUBLIC_HOST=your-host ./scripts/aws-run.sh
 ```
-docker build -t embodiweave . && docker run -p 8000:8000 embodiweave
-```
+
+The AWS firewall permits 80/443 publicly and restricts SSH to the administrator's IP. The application receives
+no AWS credentials. Volumes persist on the instance; this is not an off-instance backup. The `sslip.io` hostname
+uses public DNS mapping to the attached static IP. Caddy obtains and renews HTTPS certificates. Container restart
+policies recover from process/host restarts; one instance is not high availability. Keep/download evidence before
+deleting it. Stopping a Lightsail instance does **not** stop its bundle billing: delete the instance and release
+unused static IPs when finished. See [AWS billing](https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-frequently-asked-questions-faq-billing-and-account-management.html).
+
+The former [free Render deployment](https://embodiweave.onrender.com) may still serve the earlier investigation-only
+version; use the AWS URL above for the complete public training flow. The landing page is `web/index.html`,
+live execution is `web/live.html`, the judge guide is `web/guide.html`, and the studio is `web/studio.html`.
+`design/design.md` is the committed shared visual guide.
 
 ## License
 

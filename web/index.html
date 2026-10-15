@@ -38,7 +38,7 @@
     <p class="lede e3">Robot training should remember what failed. An agent queries <b>FalkorDB</b> to choose a checkpoint or start from scratch, runs real PPO, then checks whether the result is safe to deploy.</p>
     <p class="hero-verdict e3"><span class="tag rec">Recorded outcome</span> Fewer collisions. Still unsafe. <b>Deployment rejected.</b></p>
     <div class="ctas e3">
-      <a class="btn" href="live.html">Try the live agent <span aria-hidden="true" class="arrow">→</span></a>
+      <a class="btn" href="live.html#training">Train a new checkpoint <span aria-hidden="true" class="arrow">→</span></a>
       <a class="btn ghost" href="guide.html">Start the judge walkthrough</a>
     </div>
     <a class="live e4" href="#live" aria-live="polite"><span class="dot" id="liveDot"></span><span id="liveText">Connecting to FalkorDB</span></a>
@@ -89,7 +89,7 @@
 
 <section class="judge-route reveal" aria-label="A short route through the demo">
   <div><p class="eyebrow">Your 90 second route</p><h2>Follow one decision.<br>Inspect every claim.</h2></div>
-  <ol><li><a href="live.html"><span>01 / Live</span><b>Give the agent a question</b><small>Fresh model calls and FalkorDB evidence</small></a></li><li><a href="#decide"><span>02 / Recorded</span><b>See why it chose scratch</b><small>Same contract, target and budget</small></a></li><li><a href="#agent"><span>03 / Recorded</span><b>Read the rejected gate verdict</b><small>The deployed checkpoint stays put</small></a></li></ol>
+  <ol><li><a href="live.html"><span>01 / Live</span><b>Run a new PPO trial</b><small>Graph → training → validation → gate → export</small></a></li><li><a href="#decide"><span>02 / Recorded</span><b>See why it chose scratch</b><small>Same contract, target and budget</small></a></li><li><a href="#agent"><span>03 / Recorded</span><b>Read the rejected gate verdict</b><small>The deployed checkpoint stays put</small></a></li></ol>
 </section>
 <section id="live" class="band console-band reveal" aria-labelledby="liveTitle">
   <div class="band-head">

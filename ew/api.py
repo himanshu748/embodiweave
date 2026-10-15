@@ -13,7 +13,7 @@ import numpy as np
 from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from . import agent_tools as T
 from . import _LazyModule, artifacts, jobs, records, service, whatif
@@ -29,9 +29,8 @@ WEB = Path(__file__).resolve().parent.parent / "web"
 STATIC_MODE = os.environ.get("EW_STATIC", "0") == "1"
 
 
-# Hosted demo (EW_STATIC=1): no worker, no torch. Reads, decisions and sandboxed what-ifs work; anything that
-# trains, evaluates, promotes or exports is refused with a pointer to the local setup.
-READONLY_ALLOWED_POSTS = {"/api/decide", "/api/whatif", "/api/judge/start"}
+# Hosted mode permits only the separately bounded public PPO workflow; generic worker actions stay private.
+READONLY_ALLOWED_POSTS = {"/api/decide", "/api/whatif", "/api/judge/start", "/api/public-training/start", "/api/public-training/cancel"}
 
 
 @app.middleware("http")
@@ -355,6 +354,7 @@ def judge_config(request: Request, response: Response):
 class JudgeStartReq(BaseModel):
     question: str
     consent: bool = False
+    training_consent: bool = False
 
 
 @app.post("/api/judge/start")
@@ -369,7 +369,7 @@ def judge_start(r: JudgeStartReq, request: Request, response: Response):
         raise HTTPException(403, "Open the live agent page before starting an investigation.")
     response.headers["Cache-Control"] = "no-store"
     try:
-        return J.start(r.question, r.consent, token)
+        return J.start(r.question, r.consent, token, training_consent=r.training_consent)
     except J.Limited as exc:
         raise HTTPException(429, str(exc))
     except PermissionError as exc:
@@ -386,6 +386,81 @@ def judge_session(sid: str, request: Request, response: Response):
         return J.status(sid, request.cookies.get(J.COOKIE))
     except FileNotFoundError:
         raise HTTPException(404, "Investigation not found in this browser session.")
+
+
+
+def _judge_token(request):
+    from urllib.parse import urlparse
+    from . import judge_agent as J
+    origin = request.headers.get("origin")
+    if origin and urlparse(origin).netloc != request.headers.get("host"):
+        raise HTTPException(403, "Use this site's own demo page.")
+    token = request.cookies.get(J.COOKIE)
+    if token != J.visitor(token):
+        raise HTTPException(403, "Open the live demo before starting a trial.")
+    return token
+
+
+@app.get("/api/public-training/config")
+def public_training_config(response: Response):
+    from . import public_training as P
+    response.headers["Cache-Control"] = "no-store"
+    return P.configuration()
+
+
+class PublicTrainReq(BaseModel):
+    consent: bool = False
+    seed: int = Field(default=7, strict=True, ge=0, lt=100000)
+
+
+@app.post("/api/public-training/start")
+def public_training_start(r: PublicTrainReq, request: Request, response: Response):
+    from . import public_training as P
+    token = _judge_token(request)
+    response.headers["Cache-Control"] = "no-store"
+    try:
+        return P.start(token, r.seed, r.consent)
+    except P.Limited as exc:
+        raise HTTPException(429, str(exc))
+    except PermissionError as exc:
+        raise HTTPException(403, str(exc))
+    except ValueError as exc:
+        raise HTTPException(400, str(exc))
+
+
+class PublicCancelReq(BaseModel):
+    session_id: str
+
+
+@app.post("/api/public-training/cancel")
+def public_training_cancel(r: PublicCancelReq, request: Request):
+    from . import public_training as P
+    try:
+        return P.cancel(r.session_id, _judge_token(request))
+    except FileNotFoundError:
+        raise HTTPException(404, "Trial not found in this browser session.")
+
+
+@app.get("/api/public-training/sessions/{sid}")
+def public_training_status(sid: str, request: Request, response: Response):
+    from . import public_training as P
+    from .judge_agent import COOKIE
+    response.headers["Cache-Control"] = "no-store"
+    try:
+        return P.status(sid, request.cookies.get(COOKIE))
+    except FileNotFoundError:
+        raise HTTPException(404, "Trial not found in this browser session.")
+
+
+@app.get("/api/public-training/sessions/{sid}/bundle")
+def public_training_bundle(sid: str, request: Request):
+    from . import public_training as P
+    from .judge_agent import COOKIE
+    try:
+        p = P.bundle(sid, request.cookies.get(COOKIE))
+        return FileResponse(p, filename=p.name, headers={"Cache-Control": "no-store"})
+    except FileNotFoundError:
+        raise HTTPException(404, "Completed bundle not found in this browser session.")
 
 
 class AgentStartReq(BaseModel):

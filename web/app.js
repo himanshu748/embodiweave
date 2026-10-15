@@ -47,7 +47,7 @@ function setGraphDown(detail) {
 // The hosted studio has no worker or torch. Controls that would train or evaluate are disabled with a reason,
 // so nothing on screen is a dead button.
 const WORKER_ONLY = ["#btnTrain", "#btnEvalMissing", "#scRun"];
-const READONLY_WHY = "Hosted demo: training and evaluation run on the local setup (scripts/start.sh)";
+const READONLY_WHY = "Use Live agent → Run full PPO flow for bounded public training. Generic worker actions require the local stack.";
 function enterReadonly() {
   S.readonly = true;
   document.body.classList.add("readonly");
@@ -70,7 +70,7 @@ async function pollStatus() {
     } else { g.textContent = "FalkorDB down"; g.className = "badge down"; setGraphDown("ping failed"); }
     const w = $("#workerBadge");
     if (s.hosted_readonly && !S.readonly) enterReadonly();
-    if (s.hosted_readonly) { w.textContent = "Training runs locally"; w.className = "badge"; }
+    if (s.hosted_readonly) { w.textContent = "Public PPO on Live agent page"; w.className = "badge"; }
     else if (!s.worker.alive) { w.textContent = "Worker offline"; w.className = "badge down"; }
     else if (s.worker.running.length) { w.textContent = "Worker running 1 job"; w.className = "badge busy"; }
     else { w.textContent = "Worker idle"; w.className = "badge up"; }
@@ -528,7 +528,8 @@ async function init() {
   const dep = S.status?.deployed_policy, tgt = S.evals.filter((e) => e.suite_id === "val-target-v1");
   const children = tgt.filter((e) => e.policy_id.includes("~"));
   const before = tgt.filter((e) => e.policy_id === dep).pop();
-  const after = (prefix && children.filter((e) => e.policy_id.startsWith(prefix)).pop()) || children.pop();
+  const requestedPolicy = new URLSearchParams(location.search).get("policy");
+  const after = (requestedPolicy && tgt.filter((e) => e.policy_id === requestedPolicy).pop()) || (prefix && children.filter((e) => e.policy_id.startsWith(prefix)).pop()) || children.pop();
   if (before) { $("#evalA").value = before.id; await loadReplay("A", before.id); }
   if (after) { $("#evalB").value = after.id; await loadReplay("B", after.id); }
   try { await loadDecisions(); } catch (_) {}

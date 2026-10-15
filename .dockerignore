@@ -6,3 +6,5 @@ logs
 artifacts/agent_sessions
 artifacts/judge_sessions
 artifacts/jobs/.*.lock
+
+artifacts/public_training/

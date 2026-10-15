@@ -23,7 +23,7 @@ async function connect() {
     $("#limits").textContent = `Up to ${config.max_turns} model turns, ${config.max_tools} tool calls and 2 minutes. One investigation at a time; ${config.daily_runs} shared starts per UTC day, ${config.visitor_hourly} per browser per hour. Allowances reset if the free service restarts.`;
     ready();
   } catch (_) {
-    $("#availability").textContent = "Could not connect. Free Render may be waking up. Reconnect in a moment.";
+    $("#availability").textContent = "Could not connect. Reconnect in a moment.";
     $("#retryConnection").hidden = false;
   }
 }
@@ -32,6 +32,7 @@ function summarize(call) {
   if (r.error) return r.error;
   if (r.preview) return `Gate preview for ${r.policy_id}: ${r.verdict}. ${r.checks.filter((c) => c.pass).length}/${r.checks.length + r.missing.length} required validation suites passed${r.missing.length ? `; ${r.missing.length} missing` : ""}. Deployment unchanged.`;
   if (r.action) return `Fresh plan: ${r.selected || r.action.replaceAll("_", " ")} at revision ${r.graph_revision}. ${r.action === "train_from_scratch" ? "Fresh random weights, no parent. " : ""}No training started.`;
+  if (r.training_session_id) return `Real PPO workflow ${r.state}. Follow the separate training panel for measured results.`;
   const qs = r.queries || [];
   return qs.map((q) => `${q.template}: ${q.row_count} rows · rev ${q.graph_revision} · ${q.ms} ms`).join(" / ");
 }
@@ -59,6 +60,7 @@ function gateValues(result) {
 }
 function paint(s) {
   currentId = s.id;
+  if (s.training_session_id) followTraining(s.training_session_id);
   $("#runState").textContent = s.state;
   $("#runStatus").textContent = s.detail;
   $("#runMeta").textContent = `${s.id} · ${s.turns}/${config?.max_turns || 6} model turns · ${s.calls.length} tool calls` + (s.models.length ? `\n${s.models.join(", ")}` : "");
@@ -122,10 +124,56 @@ $("#resume").addEventListener("click", () => { if (currentId) poll(currentId, ++
 $("#investigationForm").addEventListener("submit", async (e) => {
   e.preventDefault(); active = true; ready(); $("#startError").textContent = "";
   try {
-    const s = await request("/api/judge/start", { method: "POST", body: JSON.stringify({ question: $("#question").value, consent: $("#consent").checked }) });
+    const s = await request("/api/judge/start", { method: "POST", body: JSON.stringify({ question: $("#question").value, consent: $("#consent").checked, training_consent: $("#agentTrainingConsent").checked }) });
     $("#toolTrace").replaceChildren(); $("#answerPanel").hidden = true;
     sessionStorage.setItem("ew_judge_session", s.id); paint(s);
     poll(s.id, ++pollVersion);
   } catch (e) { $("#startError").textContent = e.name === "AbortError" ? "The connection timed out. Reconnect and try again." : e.message; active = false; ready(); }
 });
 (async () => { await connect(); const id = sessionStorage.getItem("ew_judge_session"); if (id) { currentId = id; await poll(id, ++pollVersion); } })();
+
+let ppoConfig = null, ppoActive = false, ppoId = null, ppoVersion = 0;
+function ppoReady() { $("#ppoStart").disabled = ppoActive || !ppoConfig?.enabled || !$("#ppoConsent").checked; }
+function ppoPaint(s) {
+  ppoId = s.id; ppoActive = ["queued", "running", "cancelling"].includes(s.state);
+  $("#ppoState").textContent = `${s.phase} · ${s.state}`; $("#ppoStatus").textContent = s.detail;
+  $("#ppoProgress").value = s.consumed_steps; $("#ppoCancel").hidden = !ppoActive;
+  $("#ppoCancel").disabled = s.state === "cancelling";
+  $("#ppoMeta").textContent = `${s.id}\n${s.consumed_steps.toLocaleString()} / ${s.budget.toLocaleString()} PPO steps · ${s.evaluations.length}/4 validation suites` +
+    (s.parent_id !== undefined ? `\nInitialization: ${s.parent_id || "fresh random weights"} · seed ${s.seed}` : "") +
+    (s.artifact_hash ? `\nNew artifact: ${s.artifact_hash}\nWeight change L2: ${s.weight_delta_l2}` : "");
+  $("#ppoGate").replaceChildren();
+  if (s.gate) { const verdict = document.createElement("strong"); verdict.textContent = `Gate: ${s.gate.verdict} · deployment unchanged`; $("#ppoGate").append(verdict, gateValues(s.gate)); }
+  $("#ppoLinks").hidden = s.state !== "completed";
+  if (s.state === "completed") { $("#ppoDownload").href = `/api/public-training/sessions/${encodeURIComponent(s.id)}/bundle`; $("#ppoReplay").href = `studio.html?policy=${encodeURIComponent(s.policy_id)}`; }
+  $("#ppoDetails").hidden = false; $("#ppoReceipt").textContent = JSON.stringify(s, null, 2); ppoReady();
+}
+async function pollTraining(id, version) {
+  if (version !== ppoVersion) return;
+  try {
+    const s = await request(`/api/public-training/sessions/${encodeURIComponent(id)}`);
+    if (version !== ppoVersion) return;
+    ppoPaint(s); $("#ppoResume").hidden = true;
+    if (ppoActive) setTimeout(() => pollTraining(id, version), 2000);
+  } catch (e) { $("#ppoStatus").textContent = `Status unavailable: ${e.message}`; $("#ppoResume").hidden = false; }
+}
+function followTraining(id) { if (ppoId === id) return; ppoId = id; sessionStorage.setItem("ew_ppo_session", id); pollTraining(id, ++ppoVersion); }
+$("#ppoConsent").addEventListener("change", ppoReady);
+$("#ppoResume").addEventListener("click", () => { if (ppoId) pollTraining(ppoId, ++ppoVersion); });
+$("#ppoForm").addEventListener("submit", async (e) => {
+  e.preventDefault(); ppoActive = true; ppoReady(); $("#ppoError").textContent = "";
+  try {
+    const s = await request("/api/public-training/start", {method:"POST",body:JSON.stringify({seed:Number($("#ppoSeed").value),consent:$("#ppoConsent").checked})});
+    ppoPaint(s); sessionStorage.setItem("ew_ppo_session", s.id); pollTraining(s.id, ++ppoVersion);
+  } catch(e) { $("#ppoError").textContent = e.message; ppoActive = false; ppoReady(); }
+});
+$("#ppoCancel").addEventListener("click", async () => {
+  try { ppoPaint(await request("/api/public-training/cancel", {method:"POST",body:JSON.stringify({session_id:ppoId})})); }
+  catch(e) { $("#ppoError").textContent = e.message; }
+});
+(async () => {
+  try { ppoConfig = await request("/api/public-training/config"); $("#ppoState").textContent = ppoConfig.enabled ? "CPU ready" : "Unavailable";
+    $("#ppoLimits").textContent = ppoConfig.enabled ? `One trial at a time · ${ppoConfig.daily_runs} shared starts per UTC day · ${ppoConfig.visitor_hourly} per browser/hour · eight-minute limit. No model key needed for this button. Download your evidence after completion.` : ppoConfig.reason;
+    ppoReady(); const id = sessionStorage.getItem("ew_ppo_session"); if (id) followTraining(id);
+  } catch(e) { $("#ppoStatus").textContent = "CPU service unavailable. Reconnect or reload to try again."; }
+})();
