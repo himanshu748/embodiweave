@@ -22,7 +22,7 @@
 <p class="fine">More steps give PPO more time to learn. A longer run can still fail the deployment checks.</p>
 <label for="ppoSeed">Training seed</label><input type="number" id="ppoSeed" min="0" max="99999" step="1" value="7" required>
 <button class="btn" id="ppoStart" disabled>Start training</button><button class="btn ghost" id="ppoCancel" type="button" hidden>Stop training</button>
-<p class="fine" id="ppoLimits">One run at a time. Runs stop after eight minutes.</p><p class="error" id="ppoError" role="alert"></p>
+<p class="fine" id="ppoLimits">One run at a time. Runs stop after eight minutes.</p><p class="error" id="ppoError" role="alert"></p><p class="fine"><a href="evidence.html">Trainer busy or short on time? Follow the recorded judge walkthrough →</a></p>
 <details class="run-explainer"><summary>What counts as a pass?</summary><p>The target test requires at least 80% success and at most 10% collisions. Three tests for earlier tasks must also pass. Finishing training saves a checkpoint even when it fails these checks.</p><p>The deployed policy remains <code>P-static-b</code>. The saved results show each threshold and measurement.</p></details>
 </form></div>
 <div class="ppo-result"><p id="ppoStatus" role="status">Choose a budget and start training.</p><progress id="ppoProgress" max="61440" value="0" aria-label="PPO training steps"></progress><p class="fine" id="ppoMeta"></p>
@@ -45,7 +45,7 @@
     <label class="live-consent"><input id="agentTrainingConsent" type="checkbox"><span>Also let the agent launch one 60,000-step training run (seed 7) when I ask it to train.</span></label>
     <button class="btn" id="start" disabled>Ask agent <span aria-hidden="true">→</span></button>
     <button class="btn ghost" type="button" id="retryConnection" hidden>Reconnect</button>
-    <p id="startError" class="error" role="alert"></p>
+    <p id="startError" class="error" role="alert"></p><p class="fine"><a href="evidence.html">Model busy? Inspect the measured attempts and live graph directly →</a></p>
   </form>
   <div class="run-boundaries"><b>What runs here</b><p>The agent reads FalkorDB and explains the evidence. With your training consent, it can start a 60,000-step run. Watch that run in the simulator above.</p><p id="limits">Up to 6 model turns, 10 tool calls and 2 minutes. One investigation runs at a time.</p><p><a href="#training">Back to simulator</a> · <a href="./#agent">Recorded Sonnet training run</a> · <a href="guide.html#reproduce">Run full training locally</a></p></div>
 </div>

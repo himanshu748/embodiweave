@@ -7,7 +7,8 @@ async function request(path, options = {}) {
   try {
     const response = await fetch(path, { ...options, headers: { "Content-Type": "application/json" }, signal: controller.signal });
     const result = await response.json();
-    if (!response.ok) throw new Error(result.detail || "The request failed. Please retry.");
+    if (!response.ok) throw new Error(typeof result.detail === "string" ? result.detail :
+      Array.isArray(result.detail) ? result.detail.map(x => x.msg).join(". ") : "The request failed. Please retry.");
     return result;
   } finally { clearTimeout(timer); }
 }

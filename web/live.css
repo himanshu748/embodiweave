@@ -56,3 +56,13 @@ textarea { display: block; resize: vertical; width: 100%; min-height: 150px; pad
 @media(max-width:800px) { .run-workspace { grid-template-columns:minmax(0,1fr); gap:24px; }.arena-stage { aspect-ratio:1.15; } }
 
 #ppoStart, #ppoCancel { display:block; width:100%; margin-top:14px; }
+
+.evidence-intro { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(270px,.8fr); gap:48px; align-items:center; }
+.evidence-intro h1 { font-size:clamp(36px,4.6vw,62px); }
+.evidence-flow { list-style:none; padding:0 0 0 20px; margin:0; border-left:1px solid var(--line); }
+.evidence-flow li { position:relative; padding:16px 16px 22px 22px; }
+.evidence-flow li::before { content:""; position:absolute; width:11px; height:11px; border:2px solid var(--bad); background:var(--paper); border-radius:50%; left:-27px; top:22px; }
+.evidence-flow li.promoted::before { border-color:var(--ok); background:var(--ok); }
+.evidence-flow b { display:block; font:600 18px var(--display); }.evidence-flow span { display:block; font:12px/1.7 var(--mono); margin-top:6px; }
+#attempts article { padding:20px 0 28px; border-bottom:1px solid var(--line); } #attempts article h3 { font:600 25px var(--display); } #attempts article p { max-width:760px; line-height:1.7; } #attempts pre, #queryReceipt { max-height:360px; overflow:auto; overflow-wrap:anywhere; white-space:pre-wrap; font-size:12px; }
+@media(max-width:800px) { .evidence-intro { grid-template-columns:minmax(0,1fr); gap:28px; }.evidence-flow { margin-left:8px; } }
