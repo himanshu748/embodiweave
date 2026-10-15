@@ -91,14 +91,21 @@ def test_failed_trial_recorded_without_invented_steps(world):
         records.write("trial", t)
 
 
-def test_final_test_protected(world):
+def test_final_test_protected(world, monkeypatch):
     with pytest.raises(PermissionError):
         service.evaluate("T-a", "test-target-v2")
     with pytest.raises(PermissionError, match="spent"):
         service.evaluate("T-a", "test-target-v1", final_test_runner=True, n_episodes=2)
-    rec = service.evaluate("T-a", "test-target-v2", final_test_runner=True, n_episodes=2, experiment_id="exp-2")
+    # Exercise authorization without running any protected episode in CI.
+    class InferenceBlocked(Exception):
+        pass
+    def blocked(*args, **kwargs):
+        raise InferenceBlocked
+    monkeypatch.setattr(service.rl, "evaluate_policy", blocked)
+    with pytest.raises(InferenceBlocked):
+        service.evaluate("T-a", "test-target-v2", final_test_runner=True, experiment_id="exp-2")
     with pytest.raises(PermissionError):
-        ingest.evaluation(rec)
+        ingest.evaluation({"suite_id": "test-target-v2"})
     rows = db.ro("MATCH (e:Evaluation)-[:ON_SUITE]->(s:Suite {role:'final_test'}) RETURN count(e)")[1]
     assert rows[0][0] == 0
     with pytest.raises(PermissionError):
