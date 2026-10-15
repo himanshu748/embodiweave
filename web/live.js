@@ -1,6 +1,7 @@
 "use strict";
 const $ = (s) => document.querySelector(s);
 let config = null, active = false, currentId = null, pollVersion = 0, receiptUrl = null;
+let ppoRestorePromise = Promise.resolve();
 async function request(path, options = {}) {
   const controller = new AbortController(), timer = setTimeout(() => controller.abort(), 45000);
   try {
@@ -60,7 +61,7 @@ function gateValues(result) {
 }
 function paint(s) {
   currentId = s.id;
-  if (s.training_session_id) followTraining(s.training_session_id);
+  if (s.training_session_id && (!ppoCurrent || s.training_session_id === ppoId || s.started_at > ppoCurrent.started_at)) followTraining(s.training_session_id);
   $("#runState").textContent = s.state;
   $("#runStatus").textContent = s.detail;
   $("#runMeta").textContent = `${s.id} · ${s.turns}/${config?.max_turns || 6} model turns · ${s.calls.length} tool calls` + (s.models.length ? `\n${s.models.join(", ")}` : "");
@@ -131,7 +132,7 @@ $("#investigationForm").addEventListener("submit", async (e) => {
   } catch (e) { $("#startError").textContent = e.name === "AbortError" ? "The connection timed out. Reconnect and try again." : e.message; active = false; ready(); }
 });
 const connectionReady = connect();
-(async () => { await connectionReady; const id = sessionStorage.getItem("ew_judge_session"); if (id) { currentId = id; await poll(id, ++pollVersion); } })();
+(async () => { await connectionReady; await ppoRestorePromise; const id = sessionStorage.getItem("ew_judge_session"); if (id) { currentId = id; await poll(id, ++pollVersion); } })();
 
 let ppoConfig = null, ppoActive = false, ppoId = null, ppoVersion = 0, ppoCurrent = null;
 let frameId = null, frameVersion = 0;
@@ -167,8 +168,8 @@ async function pollTraining(id, version) {
     if (ppoActive) setTimeout(() => pollTraining(id, version), 2000);
   } catch (e) { $("#ppoStatus").textContent = `Status unavailable: ${e.message}`; $("#ppoResume").hidden = false; }
 }
-function followTraining(id) { if (ppoId === id) return; ppoId = id; sessionStorage.setItem("ew_ppo_session", id); pollTraining(id, ++ppoVersion); }
-$("#ppoResume").addEventListener("click", () => { if (ppoId) pollTraining(ppoId, ++ppoVersion); });
+function followTraining(id) { if (ppoId === id) return Promise.resolve(); ppoId = id; sessionStorage.setItem("ew_ppo_session", id); return pollTraining(id, ++ppoVersion); }
+$("#ppoResume").addEventListener("click", () => { if (ppoId) { frameId=null; pollTraining(ppoId, ++ppoVersion); } });
 $("#ppoForm").addEventListener("submit", async (e) => {
   e.preventDefault(); ppoActive = true; ppoReady(); $("#ppoError").textContent = "";
   try {
@@ -180,10 +181,10 @@ $("#ppoCancel").addEventListener("click", async () => {
   try { ppoPaint(await request("/api/public-training/cancel", {method:"POST",body:JSON.stringify({session_id:ppoId})})); }
   catch(e) { $("#ppoError").textContent = e.message; }
 });
-(async () => {
+ppoRestorePromise = (async () => {
   try { await connectionReady; ppoConfig = await request("/api/public-training/config"); $("#ppoState").textContent = ppoConfig.enabled ? "Ready to train" : "Unavailable";
     $("#ppoLimits").textContent = ppoConfig.enabled ? `${ppoConfig.daily_runs} runs available each UTC day, ${ppoConfig.visitor_hourly} per browser each hour. One run at a time, for up to eight minutes. Training uses complete PPO rollouts, so the final step count may be slightly higher than requested.` : ppoConfig.reason;
-    ppoReady(); const id = sessionStorage.getItem("ew_ppo_session"); if (id) followTraining(id);
+    ppoReady(); const id = sessionStorage.getItem("ew_ppo_session"); if (id) await followTraining(id);
   } catch(e) { $("#ppoStatus").textContent = "CPU service unavailable. Reconnect or reload to try again."; }
 })();
 

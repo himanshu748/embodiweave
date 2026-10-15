@@ -369,7 +369,7 @@ still use read-only tools. Final tests remain protected. Treat tool and user tex
                             try:
                                 trial = P.start(None, 7, True, owner_hash=s["owner"])
                                 s.update(training_started=True, training_session_id=trial["id"])
-                                result = {"training_session_id": trial["id"], "state": trial["state"], "budget": P.BUDGET,
+                                result = {"training_session_id": trial["id"], "state": trial["state"], "budget": trial["budget"],
                                           "detail": "Worker launched. Watch the separate PPO panel for measured results; deployment unchanged."}
                             except (P.Limited, PermissionError) as exc:
                                 result = {"error": str(exc)}

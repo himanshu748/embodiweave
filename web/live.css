@@ -54,3 +54,5 @@ textarea { display: block; resize: vertical; width: 100%; min-height: 150px; pad
 .robot-key { color:#b93d0b; }.ped-key { color:#2b4c7e; }.goal-key { color:#367341; }.arena-key { margin-bottom:0; } .run-explainer { margin-top:20px; font-size:14px; }.run-explainer summary { min-height:40px; padding:10px 0; cursor:pointer; }
 #ppoGate h3 { font:600 22px var(--display); margin-bottom:8px; }#ppoGate > p { font-size:14px; margin-top:0; }
 @media(max-width:800px) { .run-workspace { grid-template-columns:minmax(0,1fr); gap:24px; }.arena-stage { aspect-ratio:1.15; } }
+
+#ppoStart, #ppoCancel { display:block; width:100%; margin-top:14px; }
