@@ -28,26 +28,29 @@ COOKIE = "ew_judge_visitor"
 _threads: dict[str, threading.Thread] = {}
 FREE_NVIDIA_MODELS = ("nvidia/nemotron-3-ultra-550b-a55b:free", "nvidia/nemotron-3-super-120b-a12b:free")
 FEATURED_CHILD = "scratch~a7ee2c-s7"
+VALIDATION_CHILD = "search-20261015185749-4a6581"
 SYSTEM = """You are EmbodiWeave's public robotics evidence agent. Investigate the user's question by choosing tools.
 Use live FalkorDB evidence before answering. Tools execute named GRAPH.RO_QUERY templates; you cannot issue Cypher.
 The frozen ew-select-3 rule, not your intuition, ranks compatible parents and scratch from matched trial evidence.
 You may propose a new adaptation plan and preview the exact-artifact promotion gate. Neither trains nor deploys.
-The deployed policy is P-static-b; the recorded Sonnet child is scratch~a7ee2c-s7. Call inspect_mission for context.
-For a general investigation, inspect the mission, propose_adaptation at 150000, and check_checkpoint on that child.
+The deployed policy is P-static-b; the original Sonnet child is scratch~a7ee2c-s7.
+The newer validation-search child is search-20261015185749-4a6581. It is a separate deterministic search,
+not an LLM discovery. Call inspect_mission, query_evidence on search_lineage, and check_checkpoint on the newer
+child for questions about the latest result. For original scratch-versus-parent questions, propose_adaptation
+uses the historical ew-select-3 protocol. Do not conflate that protocol with search-v1 or claim training superiority.
 For specific questions choose only relevant tools. You have at most 6 model turns and 10 calls. Gather in parallel
 when useful and finish in under 150 words, using short paragraphs or bullets, never Markdown tables.
 Cite exact policy/evaluation/trial IDs and graph revision from results.
 Separate measured outcomes, authored hypotheses, rule estimates and your interpretation. A plan is not a new PPO run.
-Training and all replay frames are recorded. The new checkpoint improved target success but failed overall promotion.
+The original Sonnet child improved target success but failed promotion. Newer checkpoint verdicts must be checked.
 Training from scratch ALWAYS means fresh random weights, no parent and a new integer RNG seed chosen at training
 start. A historical Trial is evidence for the estimate, NEVER a checkpoint, seed, or initialization artifact.
 Do not recommend reusing a scratch child when the rule selects train_from_scratch. Use training_initialization
 from the tool verbatim for the next step. Do not turn authored hypotheses into measured causal explanations.
 propose_adaptation ALREADY computes the plan; repeating it cannot create a checkpoint or reveal a new hash.
-There is NO new child, new artifact hash, or new evaluation in a public investigation. To obtain those requires
-a separate real training job on the full local stack, followed by all four canonical validation suites and
-only then the gate. Never tell the judge a plan creates a child or that check_checkpoint evaluates a new policy.
-After reporting the completed tools, finish with that local-training boundary. Do not ask to propose again.
+There is NO new child, new artifact hash, or new evaluation from a read-only investigation. The separate Start
+training button on this webpage launches real PPO, all four validation suites and the gate. Never tell the judge
+a plan creates a child or that check_checkpoint evaluates a new policy. Do not ask to propose again.
 Use comparison_to_deployed for improvements or regressions. A negative collision_delta means FEWER collisions,
 even when the candidate still fails a maximum-collision threshold. Never infer a regression from a failed gate.
 ew-select-3 selects a training initialization. promo-1 is the separate promotion gate. Do not conflate them.
@@ -65,8 +68,8 @@ def _spec(name, description, properties=None, required=None):
 
 TOOLS = [
     _spec("inspect_mission", "Read current mission requirements, deployed checkpoint failure evidence, and semantic contract."),
-    _spec("query_evidence", "Read live graph evidence. topics: eligibility (compatible library), lineage, parent_trials, scratch_trials, failures.",
-          {"topic": {"type": "string", "enum": ["eligibility", "lineage", "parent_trials", "scratch_trials", "failures"]}}, ["topic"]),
+    _spec("query_evidence", "Read live validation evidence. search_lineage explains the two latest graph-selected attempts; other topics cover the original library protocol.",
+          {"topic": {"type": "string", "enum": ["eligibility", "lineage", "parent_trials", "scratch_trials", "failures", "search_lineage"]}}, ["topic"]),
     _spec("propose_adaptation", "Compute a fresh adaptation plan from live graph evidence using frozen ew-select-3. No training or graph writes.",
           {"budget": {"type": "integer", "enum": [60000, 150000]}}, ["budget"]),
     _spec("check_checkpoint", "Preview the trusted promotion gate against complete validation of an exact checkpoint hash. No deployment changes.",
@@ -194,7 +197,7 @@ def execute(name, args):
         raise ValueError("Invalid tool arguments")
     req = {**service.target_request(budget=150000), "candidate_run_kinds": ["library"]}
     if name == "inspect_mission":
-        return {"deployed_policy": "P-static-b", "recorded_child": FEATURED_CHILD,
+        return {"deployed_policy": "P-static-b", "recorded_child": FEATURED_CHILD, "latest_validation_child": VALIDATION_CHILD,
                 "contract": CONTRACT_V1.contract_id, "request": req,
                 "queries": [_query("mission_requirements", {"mission": req["mission"]}),
                             _query("failure_inspection", {"evaluation": _deployed_evaluation()})]}
@@ -207,7 +210,8 @@ def execute(name, args):
                   "lineage": ("candidate_ancestry", {"ids": ids}),
                   "parent_trials": ("relevant_trials", params),
                   "scratch_trials": ("scratch_trials", {k: v for k, v in params.items() if k != "ids"}),
-                  "failures": ("failure_inspection", {"evaluation": _deployed_evaluation()})}
+                  "failures": ("failure_inspection", {"evaluation": _deployed_evaluation()}),
+                  "search_lineage": ("search_lineage", {"rule": "search-v1"})}
         if not isinstance(topic, str) or topic not in topics:
             raise ValueError("Unknown evidence topic")
         return {"queries": [_query(*topics[topic])]}
@@ -222,7 +226,7 @@ def execute(name, args):
                                             "parent_policy_id": d["selected"], "training_seed": None,
                                             "note": "A new integer RNG seed is chosen at local training start. Historical trial IDs are evidence only, never seeds or initialization artifacts."},
                 "new_checkpoint": None, "new_artifact_hash": None,
-                "next_step": "This plan is complete. A separate training job on the full local stack must produce a new checkpoint, then run all four canonical validation suites before previewing its gate. Repeating this plan does not create a child or a hash.",
+                "next_step": "This plan is complete. Use Start training on the live webpage for a separate bounded real PPO run and validation. Repeating this plan does not create a child or a hash.",
                 "queries": [{k: v for k, v in q.items() if k not in ("rows", "header")} for q in queries]}
     policy = args["policy_id"]
     known = {r["id"] for r in Q.run("policy_lineage_graph", {}).dicts()}
