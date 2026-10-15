@@ -73,6 +73,54 @@ RETURN p.id, p.artifact_hash, s.id, e.id, e.success_rate, e.collision_rate
 
 The backend also verifies the model and normalization hashes and reconciles the immutable episode records. Partial, custom, stale-hash or incompatible-contract evidence cannot promote a checkpoint. Final-test outcomes never enter the planning graph. The thresholds, suite definitions and promotion implementation were unchanged for these attempts.
 
+## MuJoCo sim-to-sim transfer
+
+**The same saved 2D-trained checkpoints, unchanged, running in contact physics.**
+No policy was trained or tuned in MuJoCo. Each checkpoint ran the same 40 fresh
+seeds in each of four suites, **160 episodes per checkpoint, 480 total**.
+
+| Checkpoint | Open | Static | Crossing | Target (static + crossing) |
+|---|---|---|---|---|
+| Deployed `P-static-b` | 40 / 0 / 0 | 16 / 12 / 12 | 30 / 10 / 0 | 7 / 24 / 9 |
+| Original scratch | 35 / 0 / 5 | 37 / 1 / 2 | 30 / 9 / 1 | 34 / 4 / 2 |
+| Graph-selected rehearsal | 40 / 0 / 0 | 37 / 3 / 0 | 32 / 8 / 0 | 37 / 3 / 0 |
+
+Cells are **goals / collisions / timeouts out of 40**, not percentages. Rehearsal
+has fewer target collisions (3/40, 7.5%) than the deployed policy (24/40, 60%),
+but still collides in **8/40 crossing episodes (20%)**. This small transfer
+study is not a safety certificate or another promo-1 gate. The existing
+validation and held-out results above remain unchanged; production still uses
+`P-static-b`.
+
+FalkorDB stores these as separate `Suite` nodes with `role='sim2sim'` and
+`physics='mujoco'`, exact-artifact `Evaluation` nodes and collision `Failure`
+nodes. This query answers which recorded lineage holds up when physics changes:
+
+```cypher
+MATCH (p:Policy)<-[:ASSESSED]-(e:Evaluation)-[:ON_SUITE]->(s:Suite)
+WHERE s.role = 'sim2sim' AND s.physics = 'mujoco'
+  AND e.artifact_hash = p.artifact_hash AND e.complete_suite = true
+  AND e.suite_fingerprint = s.fingerprint
+OPTIONAL MATCH (p)-[:DERIVED_FROM*1..8]->(ancestor:Policy)
+RETURN p.id, s.id, e.episodes, e.success_rate, e.collision_rate,
+       collect(DISTINCT ancestor.id) AS lineage
+ORDER BY s.id, p.id
+```
+
+[Run the live transfer query](https://embodiweave.52.202.25.181.sslip.io/api/transfer/mujoco)
+· [Results and exact artifact hashes](evidence/mujoco-v1/summary.json)
+· [Frozen protocol and seeds](evidence/mujoco-v1/protocol.json)
+· [Checksums](evidence/mujoco-v1/checksums.json)
+· [Observation mapping and known mismatches](docs/mujoco-transfer.md).
+
+The robot is a torque-limited differential drive with gravity, inertia, friction
+and physical contacts. Pedestrians are scripted kinematic capsules. Sensor
+height, slip, finite acceleration and substep collision detection differ from
+the original ideal 2D unicycle. The optional CPU stack is pinned in
+`requirements-mujoco.txt`; run `python -m sim.mujoco.evaluate` after installing
+it and the main requirements. The hosted service reads recorded transfer
+evidence; live browser PPO continues to train in the original 2D simulator.
+
 ## Architecture
 
 ```mermaid

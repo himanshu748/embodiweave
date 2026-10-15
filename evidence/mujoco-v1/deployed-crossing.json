@@ -1,0 +1,1315 @@
+{
+  "artifact_hash": "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+  "contract_id": "ew-contract-1:2f013b6f4849",
+  "episodes": [
+    {
+      "goal_distance": 0.24769516964988236,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.321532846750332,
+          1.6549592468234469
+        ],
+        "movers": [
+          [
+            2.1462225958160683,
+            0.7005902436458706,
+            0.5448741048981743,
+            0.6745672934987771,
+            0.5
+          ]
+        ],
+        "start": [
+          1.0280169564001338,
+          7.546214249275446,
+          0.2712546131584703
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "9395b6da275c33d9a848206cd7274cd4698b510682a3c863c140689dd679aef1",
+      "outcome": "success",
+      "seconds": 11.90000000000046,
+      "seed": 5102000,
+      "steps": 119,
+      "trajectory": "trajectories/deployed-crossing-5102000.npz",
+      "trajectory_sha256": "2169c210ba7370caef989495604c3f9a186d6d8cd67b2b019f9255cce27734ab"
+    },
+    {
+      "goal_distance": 0.20831320727307026,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.800389303661252,
+          8.818281114803218
+        ],
+        "movers": [
+          [
+            6.943558472010597,
+            4.269182339520599,
+            -0.29208668903241486,
+            0.7303413092204051,
+            0.5
+          ]
+        ],
+        "start": [
+          1.3915817847810472,
+          5.855263645370834,
+          0.16051295353569395
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "11fd55fb02c7a1ac41e03488993628e54800916dad053ee4edd9601b48b39642",
+      "outcome": "success",
+      "seconds": 9.900000000000148,
+      "seed": 5102001,
+      "steps": 99,
+      "trajectory": "trajectories/deployed-crossing-5102001.npz",
+      "trajectory_sha256": "2e02975a8af1f44cdfdcc913115aa691e3f1da9b34617a47692070a01e4152ac"
+    },
+    {
+      "goal_distance": 0.2645456556629841,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.597045927432868,
+          6.893454466075198
+        ],
+        "movers": [
+          [
+            3.701070957141942,
+            9.0011002453965,
+            0.251931183060381,
+            -0.6298242054292162,
+            0.5
+          ]
+        ],
+        "start": [
+          1.525601189821294,
+          4.0648597195800065,
+          -0.5125156607079229
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "8deb541a51154a32b816d4167265d0441c3f9fada66cca318d43c36bbbfe768d",
+      "outcome": "success",
+      "seconds": 8.199999999999882,
+      "seed": 5102002,
+      "steps": 82,
+      "trajectory": "trajectories/deployed-crossing-5102002.npz",
+      "trajectory_sha256": "7bb0899cfad0cdaddb209a62b849d56e460e3f060046f840bd9b850f609aa429"
+    },
+    {
+      "goal_distance": 3.9872842367855736,
+      "hit": "mover",
+      "layout": {
+        "goal": [
+          8.607600580964231,
+          4.298007940162408
+        ],
+        "movers": [
+          [
+            3.8099707067882247,
+            1.884848225381563,
+            0.20132965633418964,
+            0.6991079337761744,
+            0.5
+          ]
+        ],
+        "start": [
+          1.4472513717861664,
+          6.360050975105485,
+          0.5748217289879294
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "6e29b8d9f396aea2649a54d6065d1c1cceb86241910a7bf4f4f1c44823738601",
+      "outcome": "collision",
+      "seconds": 4.204999999999933,
+      "seed": 5102003,
+      "steps": 43,
+      "trajectory": "trajectories/deployed-crossing-5102003.npz",
+      "trajectory_sha256": "610a0744b7f68cf5c9f7b3345e16c8dbb86c2548f20440da8e3c6bcdd46bc915"
+    },
+    {
+      "goal_distance": 0.2155011542146002,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.704211046968553,
+          1.6348973758377507
+        ],
+        "movers": [
+          [
+            4.721329192003197,
+            0.55,
+            0.11255541488410829,
+            0.6719893278806887,
+            0.5
+          ]
+        ],
+        "start": [
+          0.9500300566563653,
+          2.9336904105479906,
+          0.2451928202937239
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "9b14d22a670e32c2caa5b9c884967dbd0f400c58022db37fc204fdbdf93e2771",
+      "outcome": "success",
+      "seconds": 8.299999999999898,
+      "seed": 5102004,
+      "steps": 83,
+      "trajectory": "trajectories/deployed-crossing-5102004.npz",
+      "trajectory_sha256": "c6c4e1663e549d9363a672ee0675df39f18b454f572f7a4a3ea5527386cb92bc"
+    },
+    {
+      "goal_distance": 0.27108074897022394,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.358672060209589,
+          1.3560789846457082
+        ],
+        "movers": [
+          [
+            4.933820767470309,
+            0.55,
+            -0.02739915292567782,
+            0.6923714257712344,
+            0.5
+          ]
+        ],
+        "start": [
+          1.4096241933202671,
+          1.0810849307234642,
+          0.891015353911609
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "5863410d36299955842308752b2b8dc6215a45ba4dab6f1bcf8027c5a79db323",
+      "outcome": "success",
+      "seconds": 7.499999999999862,
+      "seed": 5102005,
+      "steps": 75,
+      "trajectory": "trajectories/deployed-crossing-5102005.npz",
+      "trajectory_sha256": "3acff3b2772b16603817dc979a45514d14f088abffe7ca640e8dd4f889c7e363"
+    },
+    {
+      "goal_distance": 5.167634660330555,
+      "hit": "mover",
+      "layout": {
+        "goal": [
+          8.724571104787582,
+          1.1653837546883041
+        ],
+        "movers": [
+          [
+            3.404741998691401,
+            0.55,
+            0.22670096962122901,
+            0.641769877219977,
+            0.5
+          ]
+        ],
+        "start": [
+          1.648988633473779,
+          3.6647865216586206,
+          -1.2966035786882442
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "7d7257310739a11f97a24e453e6e7135ce3e25cee4276be0a75aca17303b76b4",
+      "outcome": "collision",
+      "seconds": 3.009999999999958,
+      "seed": 5102006,
+      "steps": 31,
+      "trajectory": "trajectories/deployed-crossing-5102006.npz",
+      "trajectory_sha256": "572caaa93a9667285bb0235d1ff9ad70b9e2ea900f263bfc8b03242eb7ec9894"
+    },
+    {
+      "goal_distance": 0.20749460326185998,
+      "hit": null,
+      "layout": {
+        "goal": [
+          9.153337610338014,
+          1.788488541974334
+        ],
+        "movers": [
+          [
+            5.838646317070682,
+            8.31243232462591,
+            0.0509617323631709,
+            -0.9236233472595078,
+            0.5
+          ]
+        ],
+        "start": [
+          1.4728620740928218,
+          1.364711533888336,
+          0.8487525173604802
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "dd4606f5777a7af5f950000ae01210edac4fab015cbf75832267a1c8a892d453",
+      "outcome": "success",
+      "seconds": 8.299999999999898,
+      "seed": 5102007,
+      "steps": 83,
+      "trajectory": "trajectories/deployed-crossing-5102007.npz",
+      "trajectory_sha256": "ce87e8e3ba91de9df6231fb65fb7457837351bb77f6f630d8a110009f6668ed6"
+    },
+    {
+      "goal_distance": 0.2859899330616936,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.922677719591574,
+          7.423959461224816
+        ],
+        "movers": [
+          [
+            7.87754181884453,
+            0.6274193084618469,
+            -0.4264316475295732,
+            0.6362392230794318,
+            0.5
+          ]
+        ],
+        "start": [
+          1.6450889273266682,
+          2.5462435547648417,
+          -0.1132542521158384
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "0d0fab5dc7e473552ddfdc8878ae49139cb44e8dd40833ad227540674318136d",
+      "outcome": "success",
+      "seconds": 9.200000000000038,
+      "seed": 5102008,
+      "steps": 92,
+      "trajectory": "trajectories/deployed-crossing-5102008.npz",
+      "trajectory_sha256": "4add0177555ab5d847f2f6ee754052c6103ea48cf221297d844a44a57c5a8c2f"
+    },
+    {
+      "goal_distance": 0.25693770443113495,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.527018045646445,
+          1.8333378793530803
+        ],
+        "movers": [
+          [
+            6.236873187294872,
+            0.55,
+            -0.08563783122700268,
+            0.8061489622908944,
+            0.5
+          ]
+        ],
+        "start": [
+          1.0180992557679964,
+          1.0356595964244724,
+          -0.49555138452079034
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "06c793761d56cd2f9888d6974ddfccdd3b72367d2920938a7744036e768de4f9",
+      "outcome": "success",
+      "seconds": 7.899999999999854,
+      "seed": 5102009,
+      "steps": 79,
+      "trajectory": "trajectories/deployed-crossing-5102009.npz",
+      "trajectory_sha256": "c785331db09044f0c10fa16adba253012f8015e026d2d9b69b0499ddb3e660e8"
+    },
+    {
+      "goal_distance": 4.030236741735952,
+      "hit": "mover",
+      "layout": {
+        "goal": [
+          8.684231088876592,
+          2.5281166874450607
+        ],
+        "movers": [
+          [
+            8.373390666485596,
+            8.060734540749346,
+            -0.4399928862281042,
+            -0.5555577111457511,
+            0.5
+          ]
+        ],
+        "start": [
+          1.5323930096041125,
+          8.192258891223425,
+          -1.3983333007846532
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "b1bfc18dd86a7ae6a515ea202337c8f00a461eaf5d317391829dfa169e2047cc",
+      "outcome": "collision",
+      "seconds": 5.644999999999902,
+      "seed": 5102010,
+      "steps": 57,
+      "trajectory": "trajectories/deployed-crossing-5102010.npz",
+      "trajectory_sha256": "c0be0ec33f797a4170e39b5fa032f90beb3f7e9a9f06b497a824f1bc605b4292"
+    },
+    {
+      "goal_distance": 0.2128760128118833,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.321565520945054,
+          2.3331388846491743
+        ],
+        "movers": [
+          [
+            2.6090735227890267,
+            1.1893942664816337,
+            0.5193328205281692,
+            0.5800034125937042,
+            0.5
+          ]
+        ],
+        "start": [
+          0.945906345171071,
+          8.93727568770693,
+          0.05685870740162102
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "3a666bb480dad15e942b299cb491a744b0e2d5c4f61ce4aa7976d9a7e03af592",
+      "outcome": "success",
+      "seconds": 11.800000000000445,
+      "seed": 5102011,
+      "steps": 118,
+      "trajectory": "trajectories/deployed-crossing-5102011.npz",
+      "trajectory_sha256": "5b8dd6df76976f996efbc94c2efc2afc73420a5e6b3c3f5889b058f3cf414f55"
+    },
+    {
+      "goal_distance": 0.24296713776334145,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.287116675644468,
+          4.269292214517022
+        ],
+        "movers": [
+          [
+            5.220619405961725,
+            8.550660706413806,
+            -0.01294952567995085,
+            -0.8227553596925807,
+            0.5
+          ]
+        ],
+        "start": [
+          1.2017762531428438,
+          4.38080992956012,
+          -0.7743340764928662
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "f2d26548ff6b46c5ab8a6a6f0c9fc50cfec4aea93abc2a66241011c95907ba79",
+      "outcome": "success",
+      "seconds": 7.59999999999986,
+      "seed": 5102012,
+      "steps": 76,
+      "trajectory": "trajectories/deployed-crossing-5102012.npz",
+      "trajectory_sha256": "c87da54e1d02222bcb52100c3bca5de16959dee9bec5a9fa7f5a390ab7578cfa"
+    },
+    {
+      "goal_distance": 3.7122735895922405,
+      "hit": "mover",
+      "layout": {
+        "goal": [
+          8.407086354418425,
+          8.813675775249378
+        ],
+        "movers": [
+          [
+            9.102892313895307,
+            2.2625685387536043,
+            -0.4455410222098668,
+            0.5988919120018278,
+            0.5
+          ]
+        ],
+        "start": [
+          0.8711601762677612,
+          3.207381575201649,
+          1.6339258420691427
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "7c66b68c970b7b3f9187094385dcbcad95206e9b16bb520469ed8f2e2965e4f3",
+      "outcome": "collision",
+      "seconds": 6.68999999999988,
+      "seed": 5102013,
+      "steps": 67,
+      "trajectory": "trajectories/deployed-crossing-5102013.npz",
+      "trajectory_sha256": "c11dba9e952c2e70f23449b9e5d189e14f34b213098ad2d6d0d501c681519a3f"
+    },
+    {
+      "goal_distance": 0.23701333592370916,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.251654104945677,
+          5.277236808373953
+        ],
+        "movers": [
+          [
+            7.1546422302148445,
+            9.45,
+            -0.3957054291335476,
+            -0.843895086661003,
+            0.5
+          ]
+        ],
+        "start": [
+          1.7447202838329674,
+          8.32836138621063,
+          -0.7984930187447524
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "06fb7d972165c7a3d185c563c49bc7b5e95d084cac75584f4da259e8b7b04b8f",
+      "outcome": "success",
+      "seconds": 8.69999999999996,
+      "seed": 5102014,
+      "steps": 87,
+      "trajectory": "trajectories/deployed-crossing-5102014.npz",
+      "trajectory_sha256": "4a59831eebb8b9a57d69dc87d0e17c190dc3a6a2e2cbd96e18949b92dcf6ecb3"
+    },
+    {
+      "goal_distance": 0.2919633643179465,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.585531439227044,
+          2.7935358947587083
+        ],
+        "movers": [
+          [
+            6.167781753611222,
+            0.55,
+            -0.09665146861957526,
+            0.9736103628090085,
+            0.5
+          ]
+        ],
+        "start": [
+          1.5486845353813021,
+          2.094979661497641,
+          -0.16921510925141311
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "68e56ead7e35d4b177c2f59944aff77894d8ce6777cb109130f6a3b0e4a80a5d",
+      "outcome": "success",
+      "seconds": 7.199999999999869,
+      "seed": 5102015,
+      "steps": 72,
+      "trajectory": "trajectories/deployed-crossing-5102015.npz",
+      "trajectory_sha256": "528bf1848f4f6eb9d666e4de69eef50701352b06afcfc4de00ea958ebd92bcf6"
+    },
+    {
+      "goal_distance": 5.797000779392136,
+      "hit": "mover",
+      "layout": {
+        "goal": [
+          9.119689466527403,
+          8.911029074630926
+        ],
+        "movers": [
+          [
+            2.1737684379615536,
+            8.926807498501784,
+            0.524144733899489,
+            -0.7828026567153705,
+            0.5
+          ]
+        ],
+        "start": [
+          1.3795371536162557,
+          3.728420099572924,
+          0.10170339816160462
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "c62517878959c45fdd6f13028c992a5dbae59cc8414212660a69543fc2731934",
+      "outcome": "collision",
+      "seconds": 3.85499999999994,
+      "seed": 5102016,
+      "steps": 39,
+      "trajectory": "trajectories/deployed-crossing-5102016.npz",
+      "trajectory_sha256": "3c2c2be82b00dc9e2e36b6e10eb89e7b5681fd37fd0724e2fbf5219034b8997d"
+    },
+    {
+      "goal_distance": 0.2681440194368482,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.761119117548018,
+          2.4788152666474144
+        ],
+        "movers": [
+          [
+            2.9727805806592027,
+            0.55,
+            0.3910443222608291,
+            0.6348758683824276,
+            0.5
+          ]
+        ],
+        "start": [
+          1.6306500823672718,
+          6.870743783899685,
+          -0.26294197724953045
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "029e5c5911a91a00cd6afe1730a0e2dc016b8226016f948047d69c1a358f7ee3",
+      "outcome": "success",
+      "seconds": 8.69999999999996,
+      "seed": 5102017,
+      "steps": 87,
+      "trajectory": "trajectories/deployed-crossing-5102017.npz",
+      "trajectory_sha256": "dead0c29f9f7f9c64e5ae1eface045b272efad6f0ac73972b81a96f96df6a2ad"
+    },
+    {
+      "goal_distance": 0.2694224593767069,
+      "hit": null,
+      "layout": {
+        "goal": [
+          9.013320069791174,
+          3.106067236604914
+        ],
+        "movers": [
+          [
+            6.600349622626553,
+            9.22561032444133,
+            -0.1833561108598335,
+            -0.7304795181709012,
+            0.5
+          ]
+        ],
+        "start": [
+          1.0138577138691565,
+          5.113995275743097,
+          -0.7874552696936011
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "512c40ea88a17d3df54c5b8e08d61330111e6395db26cda2e766bf30d7b6dbea",
+      "outcome": "success",
+      "seconds": 8.599999999999945,
+      "seed": 5102018,
+      "steps": 86,
+      "trajectory": "trajectories/deployed-crossing-5102018.npz",
+      "trajectory_sha256": "6753015ef9a74e6b345ec68f1eed3ec0042bf210dac652dc7175af4bfde4c2e4"
+    },
+    {
+      "goal_distance": 0.27542485297190455,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.559780187763533,
+          7.201548881529623
+        ],
+        "movers": [
+          [
+            5.740417929539832,
+            9.45,
+            0.024173469482053723,
+            -0.686305495611521,
+            0.5
+          ]
+        ],
+        "start": [
+          1.6519627312582912,
+          6.9582375347020164,
+          -0.555322455869143
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "a1c92e6ee41e91d362b832c676c737d0907e83dfec028491cefc0157b6e2b058",
+      "outcome": "success",
+      "seconds": 9.200000000000038,
+      "seed": 5102019,
+      "steps": 92,
+      "trajectory": "trajectories/deployed-crossing-5102019.npz",
+      "trajectory_sha256": "6d6c4d25c602361f756077e16782e63320e8ee22b5b561c9d13e4e08a9057164"
+    },
+    {
+      "goal_distance": 0.2847589241039585,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.923476591775847,
+          3.894788852346613
+        ],
+        "movers": [
+          [
+            3.615132034810655,
+            0.55,
+            0.19674415078341748,
+            0.9442651677347955,
+            0.5
+          ]
+        ],
+        "start": [
+          1.368089895806805,
+          5.469005703853147,
+          0.15171806919584604
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "f597a6803773ffa7aab16d06176f379762713c246faba5418081bb123779bf91",
+      "outcome": "success",
+      "seconds": 7.999999999999852,
+      "seed": 5102020,
+      "steps": 80,
+      "trajectory": "trajectories/deployed-crossing-5102020.npz",
+      "trajectory_sha256": "ba18ce3f5f84140d3db3c9279b0aaf9414ae622a589e07796d3b64061a188c84"
+    },
+    {
+      "goal_distance": 0.21250893012559288,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.99525215213506,
+          2.820788287575847
+        ],
+        "movers": [
+          [
+            4.064444255983775,
+            0.7595451027722389,
+            0.3050891279279616,
+            0.5266538747481913,
+            0.5
+          ]
+        ],
+        "start": [
+          1.5062489735335147,
+          7.159147043412809,
+          -0.3690859889507434
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "aa1772212a9d20fb31141e078e0ae0f75c6cca03f2c99ecb645aa48b037c7d8b",
+      "outcome": "success",
+      "seconds": 9.500000000000085,
+      "seed": 5102021,
+      "steps": 95,
+      "trajectory": "trajectories/deployed-crossing-5102021.npz",
+      "trajectory_sha256": "8a4ad85ccc0302131368f56fa4266cc12865d5fae0e882f28f06c700d3d46ccd"
+    },
+    {
+      "goal_distance": 0.22823711573327946,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.594233902676606,
+          7.522580369144074
+        ],
+        "movers": [
+          [
+            7.18638303341021,
+            1.2031013603361727,
+            -0.347786314608798,
+            0.8590499016054358,
+            0.5
+          ]
+        ],
+        "start": [
+          1.415941307913934,
+          4.616448930154874,
+          0.9980552572364316
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "24edbf55dd6e690bf1b23a866c2dd2f57837e561ecdd6d3c2f8a9cfc68537e1b",
+      "outcome": "success",
+      "seconds": 8.399999999999913,
+      "seed": 5102022,
+      "steps": 84,
+      "trajectory": "trajectories/deployed-crossing-5102022.npz",
+      "trajectory_sha256": "573688df30f322ffec4d72d8f1e9322f44af20db1e7ee7cc59e88e4222e49c20"
+    },
+    {
+      "goal_distance": 0.2730405184935415,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.730491039929786,
+          8.064739219473388
+        ],
+        "movers": [
+          [
+            8.895072337459236,
+            0.55,
+            -0.4751351119963913,
+            0.7574775189971741,
+            0.5
+          ]
+        ],
+        "start": [
+          1.1635132825796028,
+          3.318279114660437,
+          1.068536419237263
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "d5f59d183de020ae0be2effb047d5714d9b2696e7df5a19e289d548f57397c32",
+      "outcome": "success",
+      "seconds": 9.40000000000007,
+      "seed": 5102023,
+      "steps": 94,
+      "trajectory": "trajectories/deployed-crossing-5102023.npz",
+      "trajectory_sha256": "890b3c3c1cb352a275736ca8fbb9be90bff3094481b83646e448279a7c10ab43"
+    },
+    {
+      "goal_distance": 0.2374054178228411,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.303097895422619,
+          2.775343483465794
+        ],
+        "movers": [
+          [
+            5.714078657549235,
+            6.9724109917455905,
+            -0.007757476193899109,
+            -0.6771315053961484,
+            0.5
+          ]
+        ],
+        "start": [
+          1.7311539197105354,
+          2.8506341744659105,
+          0.28997194522218783
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "d5309b678b128f2addf0d4f0ae22e6ebf7a99e17b7b098dc1fa04d9d75210f35",
+      "outcome": "success",
+      "seconds": 6.799999999999877,
+      "seed": 5102024,
+      "steps": 68,
+      "trajectory": "trajectories/deployed-crossing-5102024.npz",
+      "trajectory_sha256": "9b5439ed0650f597d1617241ba4a618b7090bb0b6ffd614141e6c4eedb11cc95"
+    },
+    {
+      "goal_distance": 4.763999724568827,
+      "hit": "mover",
+      "layout": {
+        "goal": [
+          8.551493174343648,
+          4.792508424966717
+        ],
+        "movers": [
+          [
+            3.6803313555707615,
+            6.975248914793453,
+            0.1427351167691872,
+            -0.8171155835968855,
+            0.5
+          ]
+        ],
+        "start": [
+          0.9540789052421893,
+          3.4653793937584823,
+          -0.6234425099741786
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "3fd4c62cb22ea442691ea2b122edf1b130c5d23e1be5f561b88c3a873e5b8ea6",
+      "outcome": "collision",
+      "seconds": 3.37999999999995,
+      "seed": 5102025,
+      "steps": 34,
+      "trajectory": "trajectories/deployed-crossing-5102025.npz",
+      "trajectory_sha256": "2282679e9a81db6c8772d27ea4f55cfb3bb877f6aaa04356ee848c73066346fb"
+    },
+    {
+      "goal_distance": 0.2656884040889956,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.529257961228105,
+          7.517610816186611
+        ],
+        "movers": [
+          [
+            2.9624718080830257,
+            8.969645002069994,
+            0.22242497019860513,
+            -0.687198638078629,
+            0.5
+          ]
+        ],
+        "start": [
+          1.1372258472697205,
+          5.12503837563093,
+          0.32933849836298346
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "dcf6a30f492a9650fc65835c611b0467913834fff862802c9882b7ceb637b8b1",
+      "outcome": "success",
+      "seconds": 8.099999999999866,
+      "seed": 5102026,
+      "steps": 81,
+      "trajectory": "trajectories/deployed-crossing-5102026.npz",
+      "trajectory_sha256": "90175fcafd64634ff8db19888a91c0a5a11ac5430ad808282159993db39dae5d"
+    },
+    {
+      "goal_distance": 0.23790285574146283,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.352581862330196,
+          8.496233229647945
+        ],
+        "movers": [
+          [
+            4.313915470366389,
+            9.45,
+            0.13146269534660374,
+            -0.7578147541243726,
+            0.5
+          ]
+        ],
+        "start": [
+          1.14522107495827,
+          7.245928890379526,
+          0.8258488029720487
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "94ff842bb4732e068c763ba6c276bb061f0443ff1c1d83c8f7a95d3047b6af3f",
+      "outcome": "success",
+      "seconds": 9.500000000000085,
+      "seed": 5102027,
+      "steps": 95,
+      "trajectory": "trajectories/deployed-crossing-5102027.npz",
+      "trajectory_sha256": "b843f84f5625e1b06d1862b99c7bbccda227a0874909574e1959b94a668dde47"
+    },
+    {
+      "goal_distance": 0.2562908692285967,
+      "hit": null,
+      "layout": {
+        "goal": [
+          9.140645558456656,
+          3.2906405114054227
+        ],
+        "movers": [
+          [
+            4.21193457022448,
+            0.55,
+            0.06032656664205638,
+            0.9295485731532894,
+            0.5
+          ]
+        ],
+        "start": [
+          0.9647321134416482,
+          3.8212473043643165,
+          0.7555277443297885
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "54eb9a153fce32927d2b07ff608b598de4dde7315d6043d4436c7c4611c4cabe",
+      "outcome": "success",
+      "seconds": 10.400000000000226,
+      "seed": 5102028,
+      "steps": 104,
+      "trajectory": "trajectories/deployed-crossing-5102028.npz",
+      "trajectory_sha256": "eca6046e964db5f793b821a9e9423a085a9a05d4b7547ca28fd47b99bab64415"
+    },
+    {
+      "goal_distance": 0.29768745486653286,
+      "hit": null,
+      "layout": {
+        "goal": [
+          9.192413528512219,
+          2.8915499472185013
+        ],
+        "movers": [
+          [
+            6.869079055343455,
+            7.810044912648369,
+            -0.1396418130883285,
+            -0.6843477776217171,
+            0.5
+          ]
+        ],
+        "start": [
+          1.3076303609097442,
+          4.5004474308323985,
+          -0.4527509400719447
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "579225c7b787f092ce75666dbc4c50b4e7dfd10248381016fd1bdc381e7fb1c3",
+      "outcome": "success",
+      "seconds": 8.399999999999913,
+      "seed": 5102029,
+      "steps": 84,
+      "trajectory": "trajectories/deployed-crossing-5102029.npz",
+      "trajectory_sha256": "8eb0c909d20ba0bb57cbc770b8d3e72fa5467b2c20cfb9993b5d0bbd983f82ce"
+    },
+    {
+      "goal_distance": 4.543819425728371,
+      "hit": "mover",
+      "layout": {
+        "goal": [
+          8.76139991551845,
+          6.181849766729359
+        ],
+        "movers": [
+          [
+            2.416907371487924,
+            7.115520524906675,
+            0.5254385389711616,
+            -0.7176944332716734,
+            0.5
+          ]
+        ],
+        "start": [
+          1.7243983278164552,
+          1.0299192771414072,
+          0.29013673755832076
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "f7c021d455650bef2b527a65bed937ceaccfc31e8b00b550ba429c7cc67d6431",
+      "outcome": "collision",
+      "seconds": 4.514999999999926,
+      "seed": 5102030,
+      "steps": 46,
+      "trajectory": "trajectories/deployed-crossing-5102030.npz",
+      "trajectory_sha256": "99daf96d24ddcc3ac2af363c6ce038150703c81df05ac57e19981eb140de0001"
+    },
+    {
+      "goal_distance": 3.216380081662765,
+      "hit": "mover",
+      "layout": {
+        "goal": [
+          8.231994915610729,
+          8.30867856133408
+        ],
+        "movers": [
+          [
+            4.45594246214751,
+            3.587064334217506,
+            0.09500712445132926,
+            0.987867161348473,
+            0.5
+          ]
+        ],
+        "start": [
+          1.5108369983501633,
+          8.955079121739953,
+          -0.462269779021989
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "26d42b4540de458167aa0c3ddce4e1a0ac22aa53348bc0ed0d734eb5cb76e681",
+      "outcome": "collision",
+      "seconds": 3.9299999999999384,
+      "seed": 5102031,
+      "steps": 40,
+      "trajectory": "trajectories/deployed-crossing-5102031.npz",
+      "trajectory_sha256": "2cbddb22651e9383c9060e817be7794691eb5aa50393ccf7cc17ab9db8c1212d"
+    },
+    {
+      "goal_distance": 5.409121421579812,
+      "hit": "mover",
+      "layout": {
+        "goal": [
+          8.310653243893041,
+          3.2234292049501425
+        ],
+        "movers": [
+          [
+            5.791466141305433,
+            8.104686721366805,
+            -0.38718197472224175,
+            -0.5467831922139977,
+            0.5
+          ]
+        ],
+        "start": [
+          0.9089867082938549,
+          8.464614205324523,
+          -0.875551620811111
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "334b09de057a751522031ee370d27b1ee143965245b6d6b98053362820352f92",
+      "outcome": "collision",
+      "seconds": 4.099999999999935,
+      "seed": 5102032,
+      "steps": 41,
+      "trajectory": "trajectories/deployed-crossing-5102032.npz",
+      "trajectory_sha256": "0e403255cba9630acd8cb893701dfef7593efcfd47a0b829e931391cd0017106"
+    },
+    {
+      "goal_distance": 0.2205125340319837,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.74794003946669,
+          7.175477029810636
+        ],
+        "movers": [
+          [
+            0.55,
+            9.45,
+            0.606302347834391,
+            -0.7233209478739931,
+            0.5
+          ]
+        ],
+        "start": [
+          1.4345808339031125,
+          1.0452704183163677,
+          0.8037562785363896
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "e084fb6d99e35aaa2b055034739969d9f5c3f147d4250980fb869b6f372c8ec3",
+      "outcome": "success",
+      "seconds": 9.900000000000148,
+      "seed": 5102033,
+      "steps": 99,
+      "trajectory": "trajectories/deployed-crossing-5102033.npz",
+      "trajectory_sha256": "89ff7eaba0e1076dce903416ec0508f38c8c3217ac3dfa257300f712cf1b19bf"
+    },
+    {
+      "goal_distance": 0.20883510411359435,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.891478265330493,
+          6.678789612197709
+        ],
+        "movers": [
+          [
+            6.859112371385999,
+            9.45,
+            -0.14252621768627344,
+            -0.9518588892622085,
+            0.5
+          ]
+        ],
+        "start": [
+          0.8467303373154571,
+          7.8833667899222295,
+          -0.8967385405251915
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "f4cc1e4a88f282946495e1e13d6f1eda571dc4f6c9b1011b08a9be683f2dd8b5",
+      "outcome": "success",
+      "seconds": 8.599999999999945,
+      "seed": 5102034,
+      "steps": 86,
+      "trajectory": "trajectories/deployed-crossing-5102034.npz",
+      "trajectory_sha256": "870e03dcdd367036f92fda057077bc48e86f3b05a635fda9c563918e484d09c6"
+    },
+    {
+      "goal_distance": 0.25569523100625907,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.584238540791594,
+          2.4273876600323154
+        ],
+        "movers": [
+          [
+            7.309554210507138,
+            9.45,
+            -0.26123912268744764,
+            -0.9567196972172255,
+            0.5
+          ]
+        ],
+        "start": [
+          1.5615414726498615,
+          4.344985077872983,
+          0.7671069377964348
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "3c2a8d10e18d2ef200d069c7e2468ee115dd545497bf5c5f37f9656501ca8958",
+      "outcome": "success",
+      "seconds": 8.099999999999866,
+      "seed": 5102035,
+      "steps": 81,
+      "trajectory": "trajectories/deployed-crossing-5102035.npz",
+      "trajectory_sha256": "10c56339415003b48e7404f893f5e33bdfc6c1d4d8f098da623826aacc1e30b7"
+    },
+    {
+      "goal_distance": 0.28252434464713727,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.547884820861418,
+          5.713640912636175
+        ],
+        "movers": [
+          [
+            1.8210521736939906,
+            6.377530629790398,
+            0.4759535363043297,
+            -0.7270715622174218,
+            0.5
+          ]
+        ],
+        "start": [
+          1.5494098147842175,
+          1.1323189342037008,
+          -0.45895931246238963
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "397fd69701d772ca466e7fde1d09453b808d47a006f67a7a93aeae081297893d",
+      "outcome": "success",
+      "seconds": 9.100000000000023,
+      "seed": 5102036,
+      "steps": 91,
+      "trajectory": "trajectories/deployed-crossing-5102036.npz",
+      "trajectory_sha256": "6cd2b244863364080dc802bd47aa22431bd22690485dd192d961f39c036a1b22"
+    },
+    {
+      "goal_distance": 4.020022625084183,
+      "hit": "mover",
+      "layout": {
+        "goal": [
+          8.910925295674256,
+          4.371005031628073
+        ],
+        "movers": [
+          [
+            4.498054356135563,
+            6.919167564889612,
+            0.1411587096052846,
+            -0.6501632677033743,
+            0.5
+          ]
+        ],
+        "start": [
+          1.2074500474012186,
+          2.6984826368092616,
+          1.0845582406332606
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "84648813b17711064d74dafd1ae6f3f7391132b2fe9bf9f42fa731d1a89e42f2",
+      "outcome": "collision",
+      "seconds": 4.619999999999924,
+      "seed": 5102037,
+      "steps": 47,
+      "trajectory": "trajectories/deployed-crossing-5102037.npz",
+      "trajectory_sha256": "40d2288b86f0917c7f2f63ea2d638132d9b726054712f599121c8a206f593d3e"
+    },
+    {
+      "goal_distance": 0.2887680852974363,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.2919241407091,
+          5.050191879548552
+        ],
+        "movers": [
+          [
+            2.7497770834066597,
+            2.5721599746246167,
+            0.42205099769198484,
+            0.8107658680551802,
+            0.5
+          ]
+        ],
+        "start": [
+          1.7421493383534492,
+          8.45973228931317,
+          -0.22111643808256937
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "466f7ebf00a7849e8d33deca8e7d0dd873f464a6a6e6fcdf01bad6c273bee142",
+      "outcome": "success",
+      "seconds": 7.699999999999858,
+      "seed": 5102038,
+      "steps": 77,
+      "trajectory": "trajectories/deployed-crossing-5102038.npz",
+      "trajectory_sha256": "3d5c4b6154ea7c7ab02be7f21fa3ebaf892d03cdfc73b92f6a900043f87cfa55"
+    },
+    {
+      "goal_distance": 0.28059932954852945,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.582874242673554,
+          8.006713680088524
+        ],
+        "movers": [
+          [
+            6.010466995074633,
+            1.7153040974764608,
+            -0.4412684147706156,
+            0.8563589114491056,
+            0.5
+          ]
+        ],
+        "start": [
+          1.2095186884130595,
+          4.207338355713202,
+          0.44549971686390516
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "f2428b298d0db1c18e22fac7875e812f6c2d2062404190aabdcd380a235188db",
+      "outcome": "success",
+      "seconds": 8.599999999999945,
+      "seed": 5102039,
+      "steps": 86,
+      "trajectory": "trajectories/deployed-crossing-5102039.npz",
+      "trajectory_sha256": "7be195ea4ddd999823cb1b1d7e5fb72bfd3d0a454cb4ea2bd4df6de7d3340295"
+    }
+  ],
+  "family": "crossing",
+  "id": "mj1-deployed-crossing-eef89a9a248e",
+  "label": "deployed",
+  "physics": "mujoco",
+  "policy_id": "P-static-b",
+  "protocol_hash": "b00c7044344d92cd233f4db11d154d0677d04076147f07eacceea40d06783ec9",
+  "role": "sim2sim",
+  "runtime": {
+    "machine": "arm64",
+    "mujoco": "3.3.7",
+    "python": "3.13.15"
+  },
+  "suite_fingerprint": "ef9ad8a1e337c820cb44eaec40801892a448171dc2a852cdabd94da03a34bdb9",
+  "suite_id": "sim2sim-mujoco-v1-crossing",
+  "summary": {
+    "collision": 10,
+    "collision_rate": 0.25,
+    "collisions_by_object": {
+      "mover": 10,
+      "static": 0,
+      "wall": 0
+    },
+    "episodes": 40,
+    "success": 30,
+    "success_rate": 0.75,
+    "timeout": 0,
+    "timeout_rate": 0.0
+  },
+  "wall_s": 2.557
+}

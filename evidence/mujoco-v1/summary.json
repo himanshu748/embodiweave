@@ -1,0 +1,269 @@
+{
+  "protocol_hash": "b00c7044344d92cd233f4db11d154d0677d04076147f07eacceea40d06783ec9",
+  "results": [
+    {
+      "artifact_hash": "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+      "family": "open",
+      "id": "mj1-deployed-open-eef89a9a248e",
+      "label": "deployed",
+      "policy_id": "P-static-b",
+      "suite_id": "sim2sim-mujoco-v1-open",
+      "summary": {
+        "collision": 0,
+        "collision_rate": 0.0,
+        "collisions_by_object": {
+          "mover": 0,
+          "static": 0,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 40,
+        "success_rate": 1.0,
+        "timeout": 0,
+        "timeout_rate": 0.0
+      }
+    },
+    {
+      "artifact_hash": "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+      "family": "static",
+      "id": "mj1-deployed-static-eef89a9a248e",
+      "label": "deployed",
+      "policy_id": "P-static-b",
+      "suite_id": "sim2sim-mujoco-v1-static",
+      "summary": {
+        "collision": 12,
+        "collision_rate": 0.3,
+        "collisions_by_object": {
+          "mover": 0,
+          "static": 12,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 16,
+        "success_rate": 0.4,
+        "timeout": 12,
+        "timeout_rate": 0.3
+      }
+    },
+    {
+      "artifact_hash": "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+      "family": "crossing",
+      "id": "mj1-deployed-crossing-eef89a9a248e",
+      "label": "deployed",
+      "policy_id": "P-static-b",
+      "suite_id": "sim2sim-mujoco-v1-crossing",
+      "summary": {
+        "collision": 10,
+        "collision_rate": 0.25,
+        "collisions_by_object": {
+          "mover": 10,
+          "static": 0,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 30,
+        "success_rate": 0.75,
+        "timeout": 0,
+        "timeout_rate": 0.0
+      }
+    },
+    {
+      "artifact_hash": "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+      "family": "static_crossing",
+      "id": "mj1-deployed-static_crossing-eef89a9a248e",
+      "label": "deployed",
+      "policy_id": "P-static-b",
+      "suite_id": "sim2sim-mujoco-v1-static_crossing",
+      "summary": {
+        "collision": 24,
+        "collision_rate": 0.6,
+        "collisions_by_object": {
+          "mover": 11,
+          "static": 13,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 7,
+        "success_rate": 0.175,
+        "timeout": 9,
+        "timeout_rate": 0.225
+      }
+    },
+    {
+      "artifact_hash": "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+      "family": "open",
+      "id": "mj1-original-open-556ec083bc85",
+      "label": "original",
+      "policy_id": "scratch~a7ee2c-s7",
+      "suite_id": "sim2sim-mujoco-v1-open",
+      "summary": {
+        "collision": 0,
+        "collision_rate": 0.0,
+        "collisions_by_object": {
+          "mover": 0,
+          "static": 0,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 35,
+        "success_rate": 0.875,
+        "timeout": 5,
+        "timeout_rate": 0.125
+      }
+    },
+    {
+      "artifact_hash": "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+      "family": "static",
+      "id": "mj1-original-static-556ec083bc85",
+      "label": "original",
+      "policy_id": "scratch~a7ee2c-s7",
+      "suite_id": "sim2sim-mujoco-v1-static",
+      "summary": {
+        "collision": 1,
+        "collision_rate": 0.025,
+        "collisions_by_object": {
+          "mover": 0,
+          "static": 1,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 37,
+        "success_rate": 0.925,
+        "timeout": 2,
+        "timeout_rate": 0.05
+      }
+    },
+    {
+      "artifact_hash": "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+      "family": "crossing",
+      "id": "mj1-original-crossing-556ec083bc85",
+      "label": "original",
+      "policy_id": "scratch~a7ee2c-s7",
+      "suite_id": "sim2sim-mujoco-v1-crossing",
+      "summary": {
+        "collision": 9,
+        "collision_rate": 0.225,
+        "collisions_by_object": {
+          "mover": 9,
+          "static": 0,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 30,
+        "success_rate": 0.75,
+        "timeout": 1,
+        "timeout_rate": 0.025
+      }
+    },
+    {
+      "artifact_hash": "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+      "family": "static_crossing",
+      "id": "mj1-original-static_crossing-556ec083bc85",
+      "label": "original",
+      "policy_id": "scratch~a7ee2c-s7",
+      "suite_id": "sim2sim-mujoco-v1-static_crossing",
+      "summary": {
+        "collision": 4,
+        "collision_rate": 0.1,
+        "collisions_by_object": {
+          "mover": 3,
+          "static": 1,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 34,
+        "success_rate": 0.85,
+        "timeout": 2,
+        "timeout_rate": 0.05
+      }
+    },
+    {
+      "artifact_hash": "b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565",
+      "family": "open",
+      "id": "mj1-rehearsal-open-b7e2fcc95869",
+      "label": "rehearsal",
+      "policy_id": "search-20261015185749-4a6581",
+      "suite_id": "sim2sim-mujoco-v1-open",
+      "summary": {
+        "collision": 0,
+        "collision_rate": 0.0,
+        "collisions_by_object": {
+          "mover": 0,
+          "static": 0,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 40,
+        "success_rate": 1.0,
+        "timeout": 0,
+        "timeout_rate": 0.0
+      }
+    },
+    {
+      "artifact_hash": "b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565",
+      "family": "static",
+      "id": "mj1-rehearsal-static-b7e2fcc95869",
+      "label": "rehearsal",
+      "policy_id": "search-20261015185749-4a6581",
+      "suite_id": "sim2sim-mujoco-v1-static",
+      "summary": {
+        "collision": 3,
+        "collision_rate": 0.075,
+        "collisions_by_object": {
+          "mover": 0,
+          "static": 3,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 37,
+        "success_rate": 0.925,
+        "timeout": 0,
+        "timeout_rate": 0.0
+      }
+    },
+    {
+      "artifact_hash": "b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565",
+      "family": "crossing",
+      "id": "mj1-rehearsal-crossing-b7e2fcc95869",
+      "label": "rehearsal",
+      "policy_id": "search-20261015185749-4a6581",
+      "suite_id": "sim2sim-mujoco-v1-crossing",
+      "summary": {
+        "collision": 8,
+        "collision_rate": 0.2,
+        "collisions_by_object": {
+          "mover": 8,
+          "static": 0,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 32,
+        "success_rate": 0.8,
+        "timeout": 0,
+        "timeout_rate": 0.0
+      }
+    },
+    {
+      "artifact_hash": "b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565",
+      "family": "static_crossing",
+      "id": "mj1-rehearsal-static_crossing-b7e2fcc95869",
+      "label": "rehearsal",
+      "policy_id": "search-20261015185749-4a6581",
+      "suite_id": "sim2sim-mujoco-v1-static_crossing",
+      "summary": {
+        "collision": 3,
+        "collision_rate": 0.075,
+        "collisions_by_object": {
+          "mover": 2,
+          "static": 1,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 37,
+        "success_rate": 0.925,
+        "timeout": 0,
+        "timeout_rate": 0.0
+      }
+    }
+  ]
+}

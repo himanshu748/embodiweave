@@ -13,6 +13,7 @@ RUN --mount=type=secret,id=ca,required=false python3 -m venv .venv \
 COPY ew ew
 COPY web web
 COPY artifacts artifacts
+COPY evidence/mujoco-v1 evidence/mujoco-v1
 COPY scripts/hosted.sh scripts/hosted.sh
 ENV EW_STATIC=1 PYTHONPATH=/app PORT=8000 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MALLOC_ARENA_MAX=2
 EXPOSE 8000

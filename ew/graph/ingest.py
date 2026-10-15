@@ -231,4 +231,6 @@ def rebuild(g: str | None = None) -> int:
         run(r, g)
     for p in records.all_of("promotion"):
         promotion(p, g)
+    from .transfer import ingest as transfer_ingest
+    transfer_ingest(graph=g, strict=False)
     return db.bump_revision("rebuild", g)

@@ -572,6 +572,13 @@ def search_lineage():
     return {**r.to_log(), "via": "GRAPH.RO_QUERY", "at": time.time()}
 
 
+@app.get("/api/transfer/mujoco")
+def mujoco_transfer():
+    r = Q.run("mujoco_transfer", {})
+    return {**r.to_log(), "via": "GRAPH.RO_QUERY", "at": time.time(), "role": "sim2sim",
+            "notice": "2D-trained checkpoints, unchanged weights. Transfer evidence is not a promotion gate."}
+
+
 @app.get("/api/live/query/{name}")
 def live_query(name: str):
     presets = _live_presets()

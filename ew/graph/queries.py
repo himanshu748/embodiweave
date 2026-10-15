@@ -12,6 +12,18 @@ from dataclasses import asdict, dataclass, field
 from . import db
 
 TEMPLATES = {
+    "mujoco_transfer": """
+MATCH (p:Policy)<-[:ASSESSED]-(e:Evaluation)-[:ON_SUITE]->(s:Suite)
+WHERE s.role = 'sim2sim' AND s.physics = 'mujoco'
+  AND e.artifact_hash = p.artifact_hash AND e.complete_suite = true
+  AND e.suite_fingerprint = s.fingerprint
+OPTIONAL MATCH (p)-[:DERIVED_FROM*1..8]->(ancestor:Policy)
+RETURN p.id AS policy_id, p.artifact_hash AS artifact_hash, s.id AS suite_id,
+       e.id AS evaluation_id, e.episodes AS episodes, e.success_rate AS success_rate,
+       e.collision_rate AS collision_rate, e.timeout_rate AS timeout_rate,
+       collect(DISTINCT ancestor.id) AS lineage
+ORDER BY suite_id, policy_id LIMIT 100""",
+
     "search_lineage": """
 MATCH (d:Decision {rule_version:$rule})-[:SELECTED]->(parent:Policy)
 MATCH (d)-[:LAUNCHED]->(r:Run)-[:PRODUCED]->(child:Policy)
