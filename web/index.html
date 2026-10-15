@@ -46,8 +46,14 @@
 
   <div class="hero-right">
   <figure class="replay e2" aria-labelledby="replayCap">
-    <div class="replay-top"><span class="tag rec">Recorded</span><span>Simulator replay, same layout and seed for both policies</span></div>
-    <div class="arenas">
+    <div class="replay-top"><span class="tag rec">Recorded</span><span>Simulator replay, same layout and seed for both policies</span>
+      <span class="viewtabs" role="group" aria-label="Replay view"><button type="button" data-view="3d" aria-pressed="true">3D</button><button type="button" data-view="top" aria-pressed="false">Top view</button></span></div>
+    <div class="stage3d" id="stage3d">
+      <div class="who"><p><i class="k depl"></i>Deployed <b id="lab3A" class="mono">P-static-b</b> <em id="out3A"></em></p>
+        <p><i class="k robot"></i>Agent's new checkpoint <b id="lab3B" class="mono">scratch~a7ee2c-s7</b> <em id="out3B"></em></p></div>
+      <p class="hint" aria-hidden="true">Drag to orbit</p>
+    </div>
+    <div class="arenas" id="arenas2d" hidden>
       <div class="arena-card">
         <div class="arena-head"><span>Deployed policy</span><b id="labA" class="mono">P-static-b</b></div>
         <svg id="arenaA" viewBox="0 0 100 100" role="img" aria-label="Recorded episode of the deployed policy colliding with the pedestrian"></svg>
@@ -64,7 +70,7 @@
       <span>Same layout, same seed <b id="seed" class="mono">1300032</b>. Recorded simulator states replayed, step <b id="step" class="mono">0</b>.</span>
       <button id="replayBtn" type="button" class="btn ghost small">Replay</button>
     </figcaption>
-    <p class="legend" aria-hidden="true"><i class="k robot"></i>robot <i class="k ped"></i>pedestrian <i class="k obs"></i>obstacle <i class="k goal"></i>goal</p>
+    <p class="legend">3D render of the stored simulator states with nothing added. Lidar rays are recomputed from each recorded pose using the simulator geometry.</p>
   </figure>
   <a class="heroq e4" href="#live" aria-labelledby="hqTitle">
     <span class="hq-top"><span class="tag live-tag"><i></i>Live</span><span id="hqTitle">FalkorDB, queried as this page loaded</span><span id="hqMs" class="mono"></span></span>
@@ -214,6 +220,6 @@ RETURN pid AS policy_id, t.id AS trial_id,
   <span>EmbodiWeave · MIT licensed · FalkorDB is the primary database · everything shown is a software simulation</span>
   <span>Built during GraphHacks 2026 with an AI coding assistant, disclosed in the README</span>
 </footer>
-<script src="landing.js"></script>
+<script type="module" src="landing.js"></script>
 </body>
 </html>

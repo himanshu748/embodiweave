@@ -38,6 +38,7 @@
       <div class="panel-head">
         <h2>Arena replay</h2>
         <span class="hint">Positions come from recorded simulator states of the selected evaluations</span>
+        <span class="viewtabs" role="group" aria-label="Arena view"><button type="button" data-view="3d" aria-pressed="false">3D</button><button type="button" data-view="top" aria-pressed="true">Top view</button></span>
       </div>
       <div class="arenas">
         <figure class="arena">
@@ -46,6 +47,7 @@
             <select id="evalA" aria-label="Before evaluation"></select>
           </figcaption>
           <canvas id="canA" width="460" height="460" aria-label="Before arena"></canvas>
+          <div class="stage3d" id="v3A" hidden></div>
           <div class="meta" id="metaA"></div>
         </figure>
         <figure class="arena">
@@ -54,6 +56,7 @@
             <select id="evalB" aria-label="After evaluation"></select>
           </figcaption>
           <canvas id="canB" width="460" height="460" aria-label="After arena"></canvas>
+          <div class="stage3d" id="v3B" hidden></div>
           <div class="meta" id="metaB"></div>
         </figure>
       </div>

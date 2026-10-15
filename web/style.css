@@ -132,3 +132,12 @@ select { max-width: 100%; }
 .hosted-note strong { color: var(--text); }
 button[disabled][title] { cursor: help; }
 .grid-form { align-items: start; }
+
+/* 3D arena (web/robot3d.js): recorded states only */
+[hidden] { display: none !important; }
+.viewtabs { margin-left: auto; display: inline-flex; border: 1px solid var(--line, #d6d2c6); border-radius: 8px; overflow: hidden; }
+.viewtabs button { font: 600 12px/1 "IBM Plex Mono", ui-monospace, monospace; padding: 8px 12px; min-height: 32px; border: 0; border-radius: 0;
+  background: transparent; color: var(--muted); cursor: pointer; }
+.viewtabs button[aria-pressed="true"] { background: var(--text, #1b2026); color: var(--bg, #f4f2ec); }
+.stage3d { position: relative; width: 100%; aspect-ratio: 1; border-radius: 8px; overflow: hidden; border: 1px solid var(--line, #d6d2c6); }
+.stage3d canvas { display: block; width: 100%; height: 100%; }

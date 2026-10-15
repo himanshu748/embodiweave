@@ -123,9 +123,37 @@ function drawArena(canvas, rep, ep, t) {
 function maxT() {
   return Math.max(...["A", "B"].map((s) => { const r = S.replays[s]; return r && r.episodes[S.ep] ? r.episodes[S.ep].trace.length - 1 : 0; }));
 }
+// 3D view: the same recorded states rendered by web/robot3d.js (loaded on demand)
+let R3 = null;
+const V3 = { A: null, B: null };
+function toEp(rep, i) {
+  const e = rep && rep.episodes[i];
+  if (!e) return null;
+  return { layout: e.layout, robot: e.trace.map((s) => s.robot), movers: e.trace.map((s) => s.movers), outcome: e.trace[e.trace.length - 1].outcome };
+}
+function draw3d(side) {
+  const rep = S.replays[side], key = rep ? `${rep.evaluation_id}:${S.ep}` : "";
+  if (V3[side]?.key !== key) {
+    V3[side]?.view.dispose(); V3[side] = null;
+    const ep = toEp(rep, S.ep);
+    if (ep) V3[side] = { key, view: new R3.Arena3D($("#v3" + side), [{ ep, body: side === "A" ? "#6b7480" : "#ea580c" }], { fit: 1.18 }) };
+  }
+  V3[side]?.view.setStep(S.t);
+}
+async function setArenaView(v) {
+  if (v === "3d" && !R3) {
+    try { R3 = await import("./robot3d.js"); if (!R3.webglOK()) throw new Error("no webgl"); }
+    catch { R3 = null; v = "top"; document.querySelector('.viewtabs [data-view="3d"]').disabled = true; }
+  }
+  S.view3d = v === "3d";
+  document.querySelectorAll(".viewtabs button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.view === v)));
+  for (const s of ["A", "B"]) { $("#can" + s).hidden = S.view3d; $("#v3" + s).hidden = !S.view3d; }
+  renderArena();
+  if (S.view3d) for (const s of ["A", "B"]) V3[s]?.view.resize();
+}
 function renderArena() {
-  drawArena($("#canA"), S.replays.A, S.ep, S.t);
-  drawArena($("#canB"), S.replays.B, S.ep, S.t);
+  if (S.view3d && R3) { try { draw3d("A"); draw3d("B"); } catch { setArenaView("top"); } }
+  else { drawArena($("#canA"), S.replays.A, S.ep, S.t); drawArena($("#canB"), S.replays.B, S.ep, S.t); }
   $("#scrub").max = maxT(); $("#scrub").value = S.t; $("#tLabel").textContent = `t=${S.t}`;
   for (const s of ["A", "B"]) {
     const r = S.replays[s], m = $("#meta" + s);
@@ -410,6 +438,8 @@ function wire() {
   $("#evalB").addEventListener("change", (e) => loadReplay("B", e.target.value));
   $("#episode").addEventListener("change", (e) => { S.ep = +e.target.value; S.t = 0; renderArena(); });
   $("#scrub").addEventListener("input", (e) => { S.t = +e.target.value; renderArena(); });
+  document.querySelectorAll(".viewtabs button").forEach((b) => b.addEventListener("click", () => setArenaView(b.dataset.view)));
+  setArenaView("3d");
   $("#speed").addEventListener("change", (e) => (S.speed = +e.target.value));
   const toggle = () => { S.playing = !S.playing; if (S.playing && S.t >= maxT()) S.t = 0; $("#play").textContent = S.playing ? "⏸" : "▶"; $("#play").setAttribute("aria-label", S.playing ? "Pause" : "Play"); };
   $("#play").addEventListener("click", toggle);

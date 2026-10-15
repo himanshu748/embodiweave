@@ -8,6 +8,7 @@
   --mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
 body { margin: 0; color: var(--ink); font: 400 16px/1.6 var(--text); background-color: var(--paper);
   /* engineering paper: the one depth device */
@@ -205,10 +206,29 @@ tbody tr:hover { background: var(--surface); }
 .tag.live-tag i { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
 .motion .tag.live-tag i { animation: pulse 1.6s var(--ease) infinite; }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
-.replay-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; font-size: 13px; color: var(--muted); }
+.replay-top { display: flex; align-items: center; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; font-size: 13px; color: var(--muted); }
 a.live { text-decoration: none; transition: border-color var(--t-quick) var(--ease); }
 a.live:hover { border-color: var(--ok); }
 .lede b { color: var(--ink); font-weight: 600; }
+
+/* 3D replay */
+.viewtabs { margin-left: auto; display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.viewtabs button { font: 600 12px/1 var(--mono); padding: 8px 12px; min-height: 32px; border: 0; background: var(--surface); color: var(--muted); cursor: pointer;
+  transition: background var(--t-quick) var(--ease), color var(--t-quick) var(--ease); }
+.viewtabs button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.stage3d { position: relative; aspect-ratio: 16 / 11; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--paper); }
+.stage3d canvas { display: block; width: 100%; height: 100%; }
+.stage3d .who { position: absolute; left: 10px; top: 10px; display: grid; gap: 4px; pointer-events: none; }
+.stage3d .who p { width: fit-content; margin: 0; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; color: var(--muted);
+  background: color-mix(in srgb, var(--surface) 88%, transparent); border: 1px solid var(--line); border-radius: 8px; padding: 5px 8px; }
+.stage3d .who b { color: var(--ink); font-weight: 500; }
+.stage3d .who em { font: 600 12px/1 var(--mono); font-style: normal; }
+.stage3d .who em.bad { color: var(--bad); } .stage3d .who em.ok { color: var(--ok); }
+.stage3d .hint { position: absolute; right: 10px; bottom: 8px; margin: 0; font: 500 11px/1 var(--mono); color: var(--muted); pointer-events: none; }
+.k.depl { background: #6b7480; }
+.tag3d { position: absolute; left: 0; top: 0; pointer-events: none; font: 600 10px/1 var(--mono); letter-spacing: .04em; text-transform: uppercase;
+  color: #fff; background: var(--c); padding: 3px 6px; border-radius: 4px; white-space: nowrap; will-change: transform; }
+.legend { display: block; }
 
 /* hero: live query card under the replay */
 .hero-right { display: grid; gap: 12px; min-width: 0; }
@@ -304,6 +324,10 @@ a.live:hover { border-color: var(--ok); }
   .hero .eyebrow, .hero h1, .hero .lede, .hero .ctas { margin-bottom: 0; }
 }
 @media (max-width: 640px) {
+  .stage3d { aspect-ratio: 4 / 3.4; }
+  .stage3d .who { top: auto; bottom: 8px; left: 8px; }
+  .stage3d .who p { font-size: 11px; padding: 4px 6px; }
+  .stage3d .who b, .stage3d .hint { display: none; }
   .qlist { grid-template-columns: minmax(0, 1fr); }
   .checks li { grid-template-columns: 22px minmax(0, 1fr) minmax(0, 1fr); }
   .checks li > span:nth-child(2) { grid-column: 2 / -1; }

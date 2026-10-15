@@ -1,5 +1,7 @@
 // Landing page. Every number comes from the studio API (records and live FalkorDB) or from
 // hero-replay.json, a trimmed copy of two stored simulator replays (scripts/make_hero_replay.py).
+import { Arena3D, webglOK } from "./robot3d.js";
+
 const $ = (s) => document.querySelector(s);
 const pct = (x) => (x == null ? "n/a" : `${Math.round(x * 100)}%`);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -183,15 +185,19 @@ function drawFrame(a, k) {
 }
 function outcomeText(ep, foot) {
   const steps = ep.robot.length - 1;
-  foot.className = "arena-foot " + (ep.outcome === "success" ? "ok" : "bad");
-  foot.textContent = ep.outcome === "collision" ? `Collision at step ${steps}` : ep.outcome === "success" ? `Reached goal at step ${steps}` : `${ep.outcome} at step ${steps}`;
+  const txt = ep.outcome === "collision" ? `Collision at step ${steps}` : ep.outcome === "success" ? `Reached goal at step ${steps}` : `${ep.outcome} at step ${steps}`;
+  for (const f of [foot, $(foot.id === "outA" ? "#out3A" : "#out3B")]) {
+    f.className = (f === foot ? "arena-foot " : "") + (ep.outcome === "success" ? "ok" : "bad");
+    f.textContent = txt;
+  }
 }
+let view3d = null;
 let raf = 0;
 function play(A, B) {
   cancelAnimationFrame(raf);
   const total = Math.max(A.ep.robot.length, B.ep.robot.length) - 1;
-  $("#outA").innerHTML = "&nbsp;"; $("#outB").innerHTML = "&nbsp;";
-  const finish = () => { $("#prog").style.width = "100%"; drawFrame(A, total); drawFrame(B, total); $("#step").textContent = total; outcomeText(A.ep, $("#outA")); outcomeText(B.ep, $("#outB")); };
+  $("#outA").innerHTML = "&nbsp;"; $("#outB").innerHTML = "&nbsp;"; $("#out3A").textContent = ""; $("#out3B").textContent = "";
+  const finish = () => { $("#prog").style.width = "100%"; drawFrame(A, total); drawFrame(B, total); view3d?.setStep(total); $("#step").textContent = total; outcomeText(A.ep, $("#outA")); outcomeText(B.ep, $("#outB")); };
   if (reduced()) return finish();
   const STEPS_PER_S = 24, t0 = performance.now();
   let shownA = false;
@@ -199,11 +205,23 @@ function play(A, B) {
     const k = Math.max(0, Math.floor(((now - t0) / 1000) * STEPS_PER_S));
     if (drawFrame(A, k) && !shownA) { outcomeText(A.ep, $("#outA")); shownA = true; }
     drawFrame(B, k);
+    view3d?.setStep(k);
     $("#step").textContent = Math.min(k, total);
     $("#prog").style.width = `${(Math.min(k, total) / total) * 100}%`;
     if (k < total) raf = requestAnimationFrame(tick); else finish();
   };
   raf = requestAnimationFrame(tick);
+}
+function setView(v, d) {
+  if (v === "3d" && !view3d) {
+    try {
+      view3d = new Arena3D($("#stage3d"), [{ ep: d.before, body: "#6b7480", tag: "Deployed" }, { ep: d.after, body: "#ea580c", tag: "New" }]);
+      view3d.setStep(+$("#step").textContent || 0);
+    } catch { v = "top"; document.querySelector('.viewtabs [data-view="3d"]').disabled = true; }
+  }
+  $("#stage3d").hidden = v !== "3d"; $("#arenas2d").hidden = v === "3d";
+  document.querySelectorAll(".viewtabs button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.view === v)));
+  if (v === "3d") view3d?.resize();
 }
 async function hero() {
   const btn = $("#replayBtn");
@@ -214,6 +232,9 @@ async function hero() {
     $("#labA").textContent = d.before.policy_id; $("#labB").textContent = d.after.policy_id;
     const A = buildArena($("#arenaA"), d.before), B = buildArena($("#arenaB"), d.after);
     drawFrame(A, 0); drawFrame(B, 0);
+    $("#lab3A").textContent = d.before.policy_id; $("#lab3B").textContent = d.after.policy_id;
+    setView(webglOK() ? "3d" : "top", d);
+    document.querySelectorAll(".viewtabs button").forEach((b) => b.addEventListener("click", () => setView(b.dataset.view, d)));
     btn.disabled = false;
     btn.addEventListener("click", () => play(A, B));
     // Play once when the replay is on screen; the visitor can replay it.

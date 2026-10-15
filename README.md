@@ -164,6 +164,11 @@ from recorded simulator states, scenario controls that run a real evaluation, ca
 rejection reasons, the Cypher evidence, a live graph view, jobs, agent traces and the results table.
 Badges show Recorded, Live or What-if, and a banner appears when the graph is unreachable.
 
+Both the landing page and the studio arena have a 3D view (`web/robot3d.js`, three.js r160 vendored in
+`web/vendor/`). It renders only stored simulator states: a two-wheeled robot whose wheel spin follows the recorded
+motion, the pedestrian as a walking person with its collision radius on the floor, and the 12 lidar rays recomputed
+from each recorded pose with the simulator's own ray geometry. A Top view toggle shows the plain 2D replay.
+
 The landing page (`web/index.html`) leads with the recorded simulator replay, a card that queries FalkorDB
 live on load, a console that re-runs five of the agent's read templates against the live graph, and the
 recorded decision ranking and gate checks.
@@ -215,7 +220,7 @@ Per-gate commands and outputs: [`evidence/GATES.md`](evidence/GATES.md). Readine
 
 ## Acknowledgements
 
-FalkorDB, Stable-Baselines3, Gymnasium, PyTorch, FastAPI, the Model Context Protocol Python SDK and the
+FalkorDB, Stable-Baselines3, Gymnasium, PyTorch, FastAPI, three.js, the Model Context Protocol Python SDK and the
 Anthropic Python SDK. License: MIT (see `LICENSE`).
 
 ## Hosted demo
