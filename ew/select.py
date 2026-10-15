@@ -20,6 +20,14 @@ Rule ew-select-1
      then lower median observed steps-to-threshold (reached trials only; none = last), then policy id.
   5. With no eligible candidate the action is train_from_scratch.
 Variant ew-select-1-nohist drops step 3 (p_reach fixed at the prior) for the no-history comparison.
+
+Rule ew-select-2 (frozen 2026-10-15 10:10 IST, after exp-1, before exp-2; exp-1 used ew-select-1)
+  Same as ew-select-1, plus "train from scratch" is an explicit option with its own conditioned
+  trials in the graph ((:Trial)-[:FROM_ORIGIN]->(:Origin {id:'scratch'}), same target family,
+  contract, recipe, threshold and budget). p_scratch = (reached + 1) / (completed + 2).
+  If p_scratch is strictly greater than the best parent's p_reach the action is train_from_scratch;
+  on a tie, reuse is kept. Motivation: exp-1 measured that warm starts from this library did not
+  reach the threshold (0/9) while scratch did in 1/3, and ew-select-1 had no way to act on that.
 """
 from __future__ import annotations
 
@@ -29,11 +37,12 @@ from . import artifacts
 from .criteria import THRESHOLDS
 from .graph import queries as Q
 
-RULE_VERSION = "ew-select-1"
+RULE_VERSION = "ew-select-2"
+RULES = ("ew-select-1", "ew-select-2")
 
 
 def decide(request: dict, graph_name: str | None = None, use_history: bool = True,
-           extra_exclude: set | None = None) -> dict:
+           extra_exclude: set | None = None, rule: str = RULE_VERSION) -> dict:
     """request keys: mission, robot, contract, target_family_id, threshold_id, recipe, budget."""
     thr = THRESHOLDS[request["threshold_id"]]
     suite = thr["suite_id"]
@@ -68,7 +77,9 @@ def decide(request: dict, graph_name: str | None = None, use_history: bool = Tru
                 reasons.append(f"artifact check failed: {e}")
         (rejected if reasons else eligible).append({**row, "reasons": reasons})
     ids = [c["policy_id"] for c in eligible]
-    base = {"rule_version": RULE_VERSION + ("" if use_history else "-nohist"), "request": request,
+    if rule not in RULES:
+        raise ValueError(f"unknown rule {rule}")
+    base = {"rule_version": rule + ("" if use_history else "-nohist"), "request": request,
             "suite_id": suite, "graph": graph_name or "ew", "graph_revision": elig.graph_revision,
             "requirements": req.dicts(),
             "rejected": [{"policy_id": r["policy_id"], "reasons": r["reasons"]} for r in rejected],
@@ -140,13 +151,35 @@ def decide(request: dict, graph_name: str | None = None, use_history: bool = Tru
            f"success {best['validation']['success_rate']:.2f} / collision {best['validation']['collision_rate']:.2f}.")
     if second:
         if second["sort_key"][0] != best["sort_key"][0]:
-            why += f" Beats {second['policy_id']} on transfer evidence ({second['p_reach']} vs {best['p_reach']})."
+            why += f" Beats {second['policy_id']} on transfer evidence ({best['p_reach']} vs {second['p_reach']})."
         elif second["sort_key"][1] != best["sort_key"][1]:
             why += f" Same transfer estimate as {second['policy_id']}; wins on matched validation ({best['validation']['score']} vs {second['validation']['score']})."
         else:
             why += f" Tie with {second['policy_id']} broken by {'steps-to-threshold' if not tie else 'policy id'}."
+    scratch = None
+    if rule == "ew-select-2" and use_history:
+        st = q("scratch_trials", {k: params[k] for k in ("threshold", "recipe", "budget", "family", "contract")})
+        sts = [r for r in st.dicts() if r["trial_id"]]
+        sdone = [t for t in sts if t["status"] == "completed"]
+        sreach = [t for t in sdone if t["reached"]]
+        ps = (len(sreach) + 1) / (len(sdone) + 2)
+        scratch = {"p_reach": round(ps, 4), "trials": sts, "n_completed": len(sdone), "n_reached": len(sreach),
+                   "p_basis": "prior Beta(1,1) (no applicable scratch trials)" if not sdone else
+                   f"{len(sreach)}/{len(sdone)} applicable scratch trials reached threshold"}
+        n_hyp = sum(1 for t in sdone if t.get("hypothetical"))
+        if n_hyp:
+            scratch["p_basis"] += f" (WHAT-IF: {n_hyp} hypothetical, not measured)"
+        if round(ps, 4) > best["p_reach"]:
+            return {**base, "action": "train_from_scratch", "selected": None, "ranking": ranking, "scratch_option": scratch,
+                    "non_applicable_trials": na.dicts(), "tie_broken_by_id": False,
+                    "evidence_trial_ids": [t["trial_id"] for c in ranking for t in c["trials"]] + [t["trial_id"] for t in sts],
+                    "evidence_eval_ids": [c["validation"]["evaluation_id"] for c in ranking],
+                    "explanation": f"Train from scratch: p_reach {scratch['p_reach']} ({scratch['p_basis']}) beats the best "
+                                   f"parent {best['policy_id']} at {best['p_reach']} ({best['p_basis']}). Reuse is not supported "
+                                   f"by the measured transfer history for this target, recipe and budget."}
+        why += f" Scratch option p_reach {scratch['p_reach']} ({scratch['p_basis']}) does not beat it."
     return {**base, "action": "train_from_parent", "selected": best["policy_id"], "ranking": ranking,
-            "non_applicable_trials": na.dicts(), "tie_broken_by_id": tie,
-            "evidence_trial_ids": [t["trial_id"] for c in ranking for t in c["trials"]],
+            "scratch_option": scratch, "non_applicable_trials": na.dicts(), "tie_broken_by_id": tie,
+            "evidence_trial_ids": [t["trial_id"] for c in ranking for t in c["trials"]] + [t["trial_id"] for t in (scratch or {}).get("trials", [])],
             "evidence_eval_ids": [c["validation"]["evaluation_id"] for c in ranking],
             "explanation": why}

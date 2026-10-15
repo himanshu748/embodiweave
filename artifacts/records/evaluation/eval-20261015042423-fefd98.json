@@ -1,0 +1,511 @@
+{
+ "artifact_hash": "af9b7f132a2fc4408f54625a474a49d4adc7c3d014572f9ac1f732b5d8e9ac32",
+ "contract_id": "ew-contract-1:2f013b6f4849",
+ "custom_family": false,
+ "episodes": [
+  {
+   "final_goal_dist": 3.2,
+   "hit": null,
+   "outcome": "timeout",
+   "return": 0.374,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 4.747,
+   "hit": "mover",
+   "outcome": "collision",
+   "return": -6.639,
+   "steps": 43
+  },
+  {
+   "final_goal_dist": 4.874,
+   "hit": "mover",
+   "outcome": "collision",
+   "return": -7.613,
+   "steps": 31
+  },
+  {
+   "final_goal_dist": 6.547,
+   "hit": "static",
+   "outcome": "collision",
+   "return": -8.809,
+   "steps": 18
+  },
+  {
+   "final_goal_dist": 1.596,
+   "hit": "static",
+   "outcome": "collision",
+   "return": -5.581,
+   "steps": 61
+  },
+  {
+   "final_goal_dist": 3.198,
+   "hit": null,
+   "outcome": "timeout",
+   "return": 3.271,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 4.166,
+   "hit": "mover",
+   "outcome": "collision",
+   "return": -7.518,
+   "steps": 30
+  },
+  {
+   "final_goal_dist": 0.283,
+   "hit": null,
+   "outcome": "success",
+   "return": 15.626,
+   "steps": 82
+  },
+  {
+   "final_goal_dist": 6.404,
+   "hit": "static",
+   "outcome": "collision",
+   "return": -16.729,
+   "steps": 157
+  },
+  {
+   "final_goal_dist": 5.866,
+   "hit": "mover",
+   "outcome": "collision",
+   "return": -13.387,
+   "steps": 119
+  },
+  {
+   "final_goal_dist": 6.756,
+   "hit": null,
+   "outcome": "timeout",
+   "return": -2.998,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 0.208,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.116,
+   "steps": 100
+  },
+  {
+   "final_goal_dist": 5.832,
+   "hit": "static",
+   "outcome": "collision",
+   "return": -9.389,
+   "steps": 73
+  },
+  {
+   "final_goal_dist": 7.015,
+   "hit": "mover",
+   "outcome": "collision",
+   "return": -16.193,
+   "steps": 189
+  },
+  {
+   "final_goal_dist": 4.958,
+   "hit": "mover",
+   "outcome": "collision",
+   "return": -7.257,
+   "steps": 35
+  },
+  {
+   "final_goal_dist": 0.226,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.6,
+   "steps": 106
+  },
+  {
+   "final_goal_dist": 3.514,
+   "hit": "mover",
+   "outcome": "collision",
+   "return": -6.593,
+   "steps": 55
+  },
+  {
+   "final_goal_dist": 5.076,
+   "hit": "mover",
+   "outcome": "collision",
+   "return": -7.991,
+   "steps": 28
+  },
+  {
+   "final_goal_dist": 0.244,
+   "hit": null,
+   "outcome": "success",
+   "return": 19.487,
+   "steps": 109
+  },
+  {
+   "final_goal_dist": 0.222,
+   "hit": null,
+   "outcome": "success",
+   "return": 14.956,
+   "steps": 84
+  },
+  {
+   "final_goal_dist": 7.54,
+   "hit": null,
+   "outcome": "timeout",
+   "return": -9.503,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 0.271,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.321,
+   "steps": 100
+  },
+  {
+   "final_goal_dist": 0.274,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.82,
+   "steps": 79
+  },
+  {
+   "final_goal_dist": 5.488,
+   "hit": "static",
+   "outcome": "collision",
+   "return": -11.534,
+   "steps": 192
+  },
+  {
+   "final_goal_dist": 0.285,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.241,
+   "steps": 102
+  },
+  {
+   "final_goal_dist": 3.862,
+   "hit": "mover",
+   "outcome": "collision",
+   "return": -6.084,
+   "steps": 46
+  },
+  {
+   "final_goal_dist": 2.645,
+   "hit": "mover",
+   "outcome": "collision",
+   "return": -5.074,
+   "steps": 58
+  },
+  {
+   "final_goal_dist": 4.187,
+   "hit": "mover",
+   "outcome": "collision",
+   "return": -5.772,
+   "steps": 55
+  },
+  {
+   "final_goal_dist": 7.308,
+   "hit": "static",
+   "outcome": "collision",
+   "return": -10.315,
+   "steps": 68
+  },
+  {
+   "final_goal_dist": 0.294,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.584,
+   "steps": 85
+  },
+  {
+   "final_goal_dist": 0.212,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.909,
+   "steps": 85
+  },
+  {
+   "final_goal_dist": 6.54,
+   "hit": null,
+   "outcome": "timeout",
+   "return": -4.464,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 7.345,
+   "hit": "static",
+   "outcome": "collision",
+   "return": -8.718,
+   "steps": 27
+  },
+  {
+   "final_goal_dist": 0.295,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.004,
+   "steps": 156
+  },
+  {
+   "final_goal_dist": 0.25,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.53,
+   "steps": 100
+  },
+  {
+   "final_goal_dist": 0.208,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.406,
+   "steps": 80
+  },
+  {
+   "final_goal_dist": 5.768,
+   "hit": "static",
+   "outcome": "collision",
+   "return": -9.065,
+   "steps": 20
+  },
+  {
+   "final_goal_dist": 6.518,
+   "hit": null,
+   "outcome": "timeout",
+   "return": -5.08,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 0.214,
+   "hit": null,
+   "outcome": "success",
+   "return": 15.888,
+   "steps": 82
+  },
+  {
+   "final_goal_dist": 4.176,
+   "hit": "mover",
+   "outcome": "collision",
+   "return": -5.591,
+   "steps": 53
+  },
+  {
+   "final_goal_dist": 0.27,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.551,
+   "steps": 90
+  },
+  {
+   "final_goal_dist": 0.231,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.247,
+   "steps": 109
+  },
+  {
+   "final_goal_dist": 7.211,
+   "hit": null,
+   "outcome": "timeout",
+   "return": -9.5,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 5.523,
+   "hit": "mover",
+   "outcome": "collision",
+   "return": -7.987,
+   "steps": 31
+  },
+  {
+   "final_goal_dist": 0.277,
+   "hit": null,
+   "outcome": "success",
+   "return": 15.872,
+   "steps": 109
+  },
+  {
+   "final_goal_dist": 0.224,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.3,
+   "steps": 86
+  },
+  {
+   "final_goal_dist": 0.233,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.13,
+   "steps": 87
+  },
+  {
+   "final_goal_dist": 0.26,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.563,
+   "steps": 95
+  },
+  {
+   "final_goal_dist": 6.455,
+   "hit": null,
+   "outcome": "timeout",
+   "return": -5.679,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 6.071,
+   "hit": "mover",
+   "outcome": "collision",
+   "return": -14.178,
+   "steps": 241
+  },
+  {
+   "final_goal_dist": 0.221,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.282,
+   "steps": 86
+  },
+  {
+   "final_goal_dist": 0.298,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.141,
+   "steps": 89
+  },
+  {
+   "final_goal_dist": 3.742,
+   "hit": "mover",
+   "outcome": "collision",
+   "return": -6.999,
+   "steps": 36
+  },
+  {
+   "final_goal_dist": 0.206,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.817,
+   "steps": 77
+  },
+  {
+   "final_goal_dist": 0.212,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.055,
+   "steps": 118
+  },
+  {
+   "final_goal_dist": 2.624,
+   "hit": "static",
+   "outcome": "collision",
+   "return": -8.083,
+   "steps": 185
+  },
+  {
+   "final_goal_dist": 6.4,
+   "hit": "mover",
+   "outcome": "collision",
+   "return": -9.789,
+   "steps": 127
+  },
+  {
+   "final_goal_dist": 0.242,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.472,
+   "steps": 108
+  },
+  {
+   "final_goal_dist": 3.807,
+   "hit": "mover",
+   "outcome": "collision",
+   "return": -6.724,
+   "steps": 40
+  },
+  {
+   "final_goal_dist": 0.22,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.703,
+   "steps": 121
+  }
+ ],
+ "family_id": "static_crossing@43ce902c",
+ "id": "eval-20261015042423-fefd98",
+ "kind": "evaluation",
+ "policy_id": "P-static-a~hist-s502",
+ "purpose": "trial-final:run-20261015042318-ea7fd8",
+ "recorded_at": "2026-10-15T04:24:23+0000",
+ "seeds": [
+  1300000,
+  1300001,
+  1300002,
+  1300003,
+  1300004,
+  1300005,
+  1300006,
+  1300007,
+  1300008,
+  1300009,
+  1300010,
+  1300011,
+  1300012,
+  1300013,
+  1300014,
+  1300015,
+  1300016,
+  1300017,
+  1300018,
+  1300019,
+  1300020,
+  1300021,
+  1300022,
+  1300023,
+  1300024,
+  1300025,
+  1300026,
+  1300027,
+  1300028,
+  1300029,
+  1300030,
+  1300031,
+  1300032,
+  1300033,
+  1300034,
+  1300035,
+  1300036,
+  1300037,
+  1300038,
+  1300039,
+  1300040,
+  1300041,
+  1300042,
+  1300043,
+  1300044,
+  1300045,
+  1300046,
+  1300047,
+  1300048,
+  1300049,
+  1300050,
+  1300051,
+  1300052,
+  1300053,
+  1300054,
+  1300055,
+  1300056,
+  1300057,
+  1300058,
+  1300059
+ ],
+ "suite_id": "val-target-v1",
+ "suite_role": "validation",
+ "suite_version": "1",
+ "summary": {
+  "collision_rate": 0.4333,
+  "collisions_by_object": {
+   "mover": 17,
+   "static": 9,
+   "wall": 0
+  },
+  "episodes": 60,
+  "mean_success_steps": 97.1,
+  "success_rate": 0.4333,
+  "timeout_rate": 0.1333
+ },
+ "wall_s": 3.06
+}

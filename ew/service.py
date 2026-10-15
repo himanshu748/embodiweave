@@ -12,7 +12,7 @@ from . import artifacts, records, rl
 from .contract import CONTRACT_V1, PolicyContract, get_contract
 from .criteria import THRESHOLDS, meets
 from .graph import db, ingest
-from .scenarios import FAMILIES, PROTECTED_ROLES, SUITES, Family
+from .scenarios import FAMILIES, PROTECTED_ROLES, SPENT_FINAL_TESTS, SUITES, Family
 
 REPLAYS = artifacts.ROOT / "replays"
 
@@ -51,17 +51,21 @@ def train_run(policy_id: str, *, family, budget_steps: int, seed: int, parent_id
 
 def evaluate(policy_id: str, suite_id: str, *, purpose: str = "", save_replay: bool = False,
              expected_hash: str | None = None, final_test_runner: bool = False, graph: str | None = None,
-             family_override: Family | None = None, n_episodes: int | None = None) -> dict:
+             family_override: Family | None = None, n_episodes: int | None = None,
+             experiment_id: str | None = None) -> dict:
     """Reload the saved artifact and evaluate it on a fixed, versioned suite."""
     s = SUITES[suite_id]
     if s.role in PROTECTED_ROLES and not final_test_runner:
         raise PermissionError(f"{suite_id} is a protected final-test suite")
+    spent_by = SPENT_FINAL_TESTS.get(suite_id)
+    if spent_by and experiment_id != spent_by:
+        raise PermissionError(f"{suite_id} was spent by {spent_by}; use a fresh final-test suite")
     fam = family_override or s.family
     seeds = s.seeds[:n_episodes] if n_episodes else s.seeds
     ev = rl.evaluate_policy(policy_id, fam, seeds, record=save_replay, expected_hash=expected_hash)
     episodes = [{k: v for k, v in ep.items() if k not in ("trace", "layout")} for ep in ev["episodes"]]
     rec = records.write("evaluation", {
-        "policy_id": policy_id, "artifact_hash": ev["artifact_hash"], "suite_id": suite_id,
+        "policy_id": policy_id, "artifact_hash": ev["artifact_hash"], "suite_id": suite_id, "experiment_id": experiment_id,
         "suite_role": s.role, "suite_version": s.version, "family_id": fam.fid(), "custom_family": family_override is not None,
         "seeds": list(seeds), "contract_id": ev["contract_id"], "summary": ev["summary"], "episodes": episodes,
         "purpose": purpose, "wall_s": ev["wall_s"]})
@@ -117,9 +121,8 @@ def transfer_trial(*, parent_id: str | None, child_id: str, target_family: str, 
         "schedule": sched, "status": status, "threshold_reached": reached,
         # None means: not reached within the observed budget; the true steps-to-threshold is unknown.
         "steps_to_threshold": stt, "final_evaluation_id": final_eval["id"], "decision_id": decision_id})
-    if parent_id:
-        ingest.trial(t, graph)
-        db.bump_revision(f"trial {t['id']}", graph)
+    ingest.trial(t, graph)
+    db.bump_revision(f"trial {t['id']}", graph)
     return {"trial": t, "run": run, "final_evaluation": final_eval}
 
 
@@ -131,14 +134,14 @@ def target_request(budget: int = 60_000, recipe: str = "ppo-r1", threshold_id: s
 
 
 def record_decision(request: dict, *, mode: str = "deterministic", graph: str | None = None,
-                    use_history: bool = True, agent_trace_id: str | None = None) -> dict:
+                    use_history: bool = True, agent_trace_id: str | None = None, rule: str | None = None) -> dict:
     """Run the frozen selection rule on graph evidence and persist the decision.
 
     mode: 'llm-agent' (an LLM tool call asked for it), 'deterministic' (scripted), 'what-if' (isolated copy).
     What-if decisions are written only to their isolated graph copy and are flagged in the record.
     """
     from . import select
-    d = select.decide(request, graph_name=graph, use_history=use_history)
+    d = select.decide(request, graph_name=graph, use_history=use_history, rule=rule or select.RULE_VERSION)
     d["mode"] = mode
     d["agent_trace_id"] = agent_trace_id
     rec = records.write("decision", d)

@@ -33,15 +33,17 @@ def _guard(graph_name: str):
         raise PermissionError("What-if interventions are only allowed on isolated ew_whatif_* copies")
 
 
-def add_hypothetical_trial(graph_name: str, parent_id: str, target_family_id: str, contract_id: str,
+def add_hypothetical_trial(graph_name: str, parent_id: str | None, target_family_id: str, contract_id: str,
                            threshold_id: str, recipe: str, budget: int, reached: bool,
                            steps_to_threshold: int | None = None) -> str:
     _guard(graph_name)
     tid = "hyp-trial-" + uuid.uuid4().hex[:6]
-    db.rw("MATCH (p:Policy {id:$pid}), (f:Family {id:$fid}), (c:Contract {id:$cid}) "
+    src = "(p:Origin {id:'scratch'})" if parent_id is None else "(p:Policy {id:$pid})"
+    rel = "FROM_ORIGIN" if parent_id is None else "FROM_PARENT"
+    db.rw(f"MATCH {src}, (f:Family {{id:$fid}}), (c:Contract {{id:$cid}}) "
           "CREATE (t:Trial {id:$id, status:'completed', threshold_id:$thr, recipe:$rec, budget:$b, consumed:$b, "
           "threshold_reached:$r, steps_to_threshold:$stt, hypothetical:true, measured:false}) "
-          "CREATE (t)-[:FROM_PARENT]->(p), (t)-[:TARGETS]->(f), (t)-[:UNDER_CONTRACT]->(c)",
+          f"CREATE (t)-[:{rel}]->(p), (t)-[:TARGETS]->(f), (t)-[:UNDER_CONTRACT]->(c)",
           {"pid": parent_id, "fid": target_family_id, "cid": contract_id, "id": tid, "thr": threshold_id,
            "rec": recipe, "b": budget, "r": reached, "stt": steps_to_threshold if reached else None}, graph_name)
     db.bump_revision(f"what-if hypothetical trial {tid}", graph_name)

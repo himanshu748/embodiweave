@@ -1,0 +1,7 @@
+deci-20261015043707-c7b96a train_from_scratch None
+Train from scratch: p_reach 0.4 (1/3 applicable scratch trials reached threshold) beats the best parent P-cross-a at 0.25 (0/2 applicable trials reached threshold). Reuse is not supported by the measured transfer history for this target, recipe and budget.
+P-cross-a 0.25 0/2 applicable trials reached threshold
+P-open-a 0.25 0/2 applicable trials reached threshold
+P-static-a 0.1429 0/5 applicable trials reached threshold
+P-static-b 0.125 0/6 applicable trials reached threshold
+0.4 1/3 applicable scratch trials reached threshold

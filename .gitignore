@@ -2,3 +2,7 @@
 __pycache__/
 *.pyc
 .pytest_cache/
+logs/*.log
+logs/*.pid
+logs/*.err
+artifacts/jobs/worker.heartbeat

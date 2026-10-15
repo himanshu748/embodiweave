@@ -49,7 +49,7 @@ def get(job_id: str) -> dict:
 def all_jobs() -> list[dict]:
     if not JOBS.exists():
         return []
-    return sorted((json.loads(p.read_text()) for p in JOBS.glob("*.json")), key=lambda j: j["submitted_at"])
+    return sorted((json.loads(p.read_text()) for p in JOBS.glob("job-*.json")), key=lambda j: j["submitted_at"])
 
 
 def steps_used() -> int:
@@ -127,7 +127,11 @@ def _record_incomplete_trial(j: dict, status: str) -> None:
     p = j["params"]
     thr = THRESHOLDS[p["threshold_id"]]
     fam = FAMILIES[p["target_family"]]
-    m = artifacts.load_manifest(p["parent_id"])
+    if p["parent_id"]:
+        m = artifacts.load_manifest(p["parent_id"])
+    else:
+        from .contract import CONTRACT_V1
+        m = {"artifact_hash": None, "contract_id": CONTRACT_V1.contract_id}
     t = records.write("trial", {
         "id": j["params"]["trial_id"], "parent_id": p["parent_id"], "parent_artifact_hash": m["artifact_hash"],
         "child_policy_id": None, "child_artifact_hash": None, "run_id": None, "target_family": fam.name,
@@ -198,10 +202,20 @@ def work_once() -> dict | None:
     return j
 
 
+def _heartbeat(stop):
+    hb = JOBS / "worker.heartbeat"
+    while not stop["v"]:
+        JOBS.mkdir(parents=True, exist_ok=True)
+        hb.write_text(str(os.getpid()))
+        time.sleep(3)
+
+
 def main() -> None:
+    import threading
     print("worker recovered:", recover(), flush=True)
     stop = {"v": False}
     signal.signal(signal.SIGTERM, lambda *a: stop.update(v=True))
+    threading.Thread(target=_heartbeat, args=(stop,), daemon=True).start()
     while not stop["v"]:
         if work_once() is None:
             time.sleep(1.0)

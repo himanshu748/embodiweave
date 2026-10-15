@@ -63,6 +63,17 @@ RETURN pid AS policy_id, t.id AS trial_id, t.status AS status, t.threshold_reach
        t.seed AS seed, child.id AS child_id, coalesce(t.hypothetical, false) AS hypothetical
 ORDER BY policy_id, trial_id""",
 
+    "scratch_trials": """
+MATCH (o:Origin {id:'scratch'})
+OPTIONAL MATCH (t:Trial)-[:FROM_ORIGIN]->(o)
+WHERE t.threshold_id = $threshold AND t.recipe = $recipe AND t.budget = $budget
+  AND (t)-[:TARGETS]->(:Family {id:$family})
+  AND (t)-[:UNDER_CONTRACT]->(:Contract {id:$contract})
+RETURN t.id AS trial_id, t.status AS status, t.threshold_reached AS reached,
+       t.steps_to_threshold AS steps_to_threshold, t.consumed AS consumed, t.seed AS seed,
+       coalesce(t.hypothetical, false) AS hypothetical
+ORDER BY trial_id""",
+
     "non_applicable_trials": """
 UNWIND $ids AS pid
 MATCH (t:Trial)-[:FROM_PARENT]->(p:Policy {id:pid})

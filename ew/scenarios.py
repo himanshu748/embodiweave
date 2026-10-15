@@ -140,7 +140,13 @@ SUITES = {
         Suite("val-crossing-v1", "1", "validation", FAMILIES["crossing"], _seeds(1_200_000, 40), "yield_dynamic"),
         Suite("val-target-v1", "1", "validation", FAMILIES["static_crossing"], _seeds(1_300_000, 60), "static_crossing_mission"),
         Suite("test-target-v1", "1", "final_test", FAMILIES["static_crossing"], _seeds(9_000_000, 100), "static_crossing_mission"),
+        # Added 2026-10-15 after exp-1 spent test-target-v1; disjoint seeds, same family and size.
+        Suite("test-target-v2", "1", "final_test", FAMILIES["static_crossing"], _seeds(9_100_000, 100), "static_crossing_mission"),
     ]
 }
+
+# A final-test suite is spent once an experiment has reported on it. Only that experiment may evaluate on it again
+# (to reproduce its own numbers); any changed method needs a fresh suite.
+SPENT_FINAL_TESTS = {"test-target-v1": "exp-1"}
 
 PROTECTED_ROLES = {"final_test"}

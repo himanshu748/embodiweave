@@ -1,0 +1,102 @@
+{
+ "budget_steps": 150000,
+ "child_artifact_hash": "603e93a01eaeabeb11cfcc8d9b28c4dfbdeb99645d0dfb4f0bc5fe58df87b1e4",
+ "child_policy_id": "P-static-b~hist-s502",
+ "consumed_steps": 151552,
+ "contract_id": "ew-contract-1:2f013b6f4849",
+ "decision_id": null,
+ "final_evaluation_id": "eval-20261015042530-4e0751",
+ "id": "trial-20261015042530-8d9fe7",
+ "kind": "trial",
+ "parent_artifact_hash": "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+ "parent_id": "P-static-b",
+ "recipe": "ppo-r1",
+ "recorded_at": "2026-10-15T04:25:30+0000",
+ "run_id": "run-20261015042423-828ba5",
+ "schedule": [
+  {
+   "collision_rate": 0.45,
+   "collisions_by_object": {
+    "mover": 20,
+    "static": 7,
+    "wall": 0
+   },
+   "episodes": 60,
+   "mean_success_steps": 96.8,
+   "steps": 37504,
+   "success_rate": 0.4333,
+   "suite_id": "val-target-v1",
+   "timeout_rate": 0.1167
+  },
+  {
+   "collision_rate": 0.4,
+   "collisions_by_object": {
+    "mover": 20,
+    "static": 4,
+    "wall": 0
+   },
+   "episodes": 60,
+   "mean_success_steps": 100.0,
+   "steps": 75000,
+   "success_rate": 0.4667,
+   "suite_id": "val-target-v1",
+   "timeout_rate": 0.1333
+  },
+  {
+   "collision_rate": 0.4,
+   "collisions_by_object": {
+    "mover": 21,
+    "static": 3,
+    "wall": 0
+   },
+   "episodes": 60,
+   "mean_success_steps": 94.2,
+   "steps": 112504,
+   "success_rate": 0.4333,
+   "suite_id": "val-target-v1",
+   "timeout_rate": 0.1667
+  },
+  {
+   "collision_rate": 0.4,
+   "collisions_by_object": {
+    "mover": 21,
+    "static": 3,
+    "wall": 0
+   },
+   "episodes": 60,
+   "mean_success_steps": 93.8,
+   "steps": 150000,
+   "success_rate": 0.4,
+   "suite_id": "val-target-v1",
+   "timeout_rate": 0.2
+  },
+  {
+   "collision_rate": 0.35,
+   "collisions_by_object": {
+    "mover": 19,
+    "static": 2,
+    "wall": 0
+   },
+   "episodes": 60,
+   "mean_success_steps": 99.5,
+   "steps": 151552,
+   "success_rate": 0.45,
+   "suite_id": "val-target-v1",
+   "timeout_rate": 0.2
+  }
+ ],
+ "seed": 502,
+ "status": "completed",
+ "steps_to_threshold": null,
+ "suite_id": "val-target-v1",
+ "target_family": "static_crossing",
+ "target_family_id": "static_crossing@43ce902c",
+ "threshold": {
+  "max_collision": 0.1,
+  "min_success": 0.8,
+  "suite_id": "val-target-v1"
+ },
+ "threshold_id": "thr-target-1",
+ "threshold_reached": false,
+ "validation_every": 37496
+}

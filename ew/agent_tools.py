@@ -94,7 +94,7 @@ def query_graph(template: str, params: dict) -> dict:
 
 @tool
 def propose_adaptation(budget: int = 150_000) -> dict:
-    """Apply the frozen selection rule (ew-select-1) to current FalkorDB evidence and record a decision."""
+    """Apply the frozen selection rule (ew-select-2: reuse a parent or train from scratch) to current FalkorDB evidence and record a decision."""
     if budget not in ALLOWED_BUDGETS:
         raise ValueError(f"budget must be one of {ALLOWED_BUDGETS}")
     req = {**service.target_request(budget=budget), "candidate_run_kinds": ["library"]}
@@ -122,20 +122,23 @@ def start_training(decision_id: str, seed: int) -> dict:
     d = records.read("decision", decision_id)
     if d["mode"] == "what-if":
         raise PermissionError("what-if decisions cannot launch training")
-    if d["action"] != "train_from_parent":
-        raise ValueError(f"decision action is {d['action']}, not train_from_parent")
+    if d["action"] not in ("train_from_parent", "train_from_scratch"):
+        raise ValueError(f"decision action is {d['action']}, not a training action")
     if not (0 <= int(seed) < 100_000):
         raise ValueError("seed out of range")
-    fresh = __import__("ew.select", fromlist=["decide"]).decide(d["request"])
-    if fresh["selected"] != d["selected"]:
-        raise RuntimeError(f"stale decision: current evidence selects {fresh['selected']}, not {d['selected']}; propose again")
+    fresh = __import__("ew.select", fromlist=["decide"]).decide(d["request"], rule=d["rule_version"].replace("-nohist", ""),
+                                                                 use_history=not d["rule_version"].endswith("-nohist"))
+    if (fresh["action"], fresh["selected"]) != (d["action"], d["selected"]):
+        now = fresh["selected"] or fresh["action"]
+        raise RuntimeError(f"stale decision: current evidence says {now}, not {d['selected'] or d['action']}; propose again")
     parent = d["selected"]
-    artifacts.verify_policy(parent)
-    child = f"{parent}~{decision_id[-6:]}-s{seed}"
+    if parent:
+        artifacts.verify_policy(parent)
+    child = f"{parent or 'scratch'}~{decision_id[-6:]}-s{seed}"
     params = {"parent_id": parent, "child_id": child, "trial_id": f"trial-{decision_id[-6:]}-s{seed}",
               "target_family": d["request"]["target_family"], "threshold_id": d["request"]["threshold_id"],
               "budget": d["request"]["budget"], "seed": int(seed), "recipe": d["request"]["recipe"],
-              "decision_id": decision_id, "purpose": "agent-launched adaptation"}
+              "decision_id": decision_id, "purpose": "agent-launched " + ("adaptation" if parent else "scratch training")}
     j, created = jobs.submit("transfer_trial", params, SESSION)
     return {"job_id": j["id"], "created": created, "state": j["state"], "parent": parent, "child_policy_id": child,
             "budget": params["budget"], "quota_used_steps": jobs.steps_used(), "quota_steps": jobs.STEP_QUOTA}

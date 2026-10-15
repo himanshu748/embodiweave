@@ -68,6 +68,7 @@ def init_world(g: str | None = None) -> int:
         db.rw("MERGE (t:Threshold {id:$id}) SET t.min_success=$ms, t.max_collision=$mc, t.authored=true "
               "WITH t MATCH (s:Suite {id:$s}) MERGE (t)-[:MEASURED_ON]->(s)",
               {"id": tid, "ms": t["min_success"], "mc": t["max_collision"], "s": t["suite_id"]}, g)
+    db.rw("MERGE (o:Origin {id:'scratch'}) SET o.meaning = 'no parent weights, fresh normalization', o.authored = true", None, g)
     for h in HYPOTHESES:
         db.rw("MERGE (h:Hypothesis {id:$id}) SET h.text=$t, h.about_hit=$a, h.authored=true, h.measured=false "
               "WITH h MATCH (c:Competency {id:$c}) MERGE (h)-[:SUGGESTS]->(c)",
@@ -142,13 +143,16 @@ def trial(t: dict, g: str | None = None) -> None:
     db.rw("MERGE (t:Trial {id:$id}) SET t.status=$st, t.threshold_id=$thr, t.threshold_reached=$reached, "
           "t.steps_to_threshold=$stt, t.budget=$b, t.consumed=$c, t.seed=$seed, t.recipe=$rec, "
           "t.schedule=$sched, t.measured=true, t.at=$at "
-          "WITH t MATCH (p:Policy {id:$pid}), (f:Family {id:$fid}), (s:Suite {id:$sid}), (c:Contract {id:$cid}) "
-          "MERGE (t)-[:FROM_PARENT]->(p) MERGE (t)-[:TARGETS]->(f) MERGE (t)-[:VALIDATED_ON]->(s) "
-          "MERGE (t)-[:UNDER_CONTRACT]->(c)",
+          "WITH t MATCH (f:Family {id:$fid}), (s:Suite {id:$sid}), (c:Contract {id:$cid}) "
+          "MERGE (t)-[:TARGETS]->(f) MERGE (t)-[:VALIDATED_ON]->(s) MERGE (t)-[:UNDER_CONTRACT]->(c)",
           {"id": t["id"], "st": t["status"], "thr": t["threshold_id"], "reached": t["threshold_reached"],
            "stt": t["steps_to_threshold"], "b": t["budget_steps"], "c": t["consumed_steps"], "seed": t["seed"],
            "rec": t["recipe"], "sched": json.dumps(t["schedule"]), "at": t["recorded_at"],
            "pid": t["parent_id"], "fid": t["target_family_id"], "sid": t["suite_id"], "cid": t["contract_id"]}, g)
+    if t.get("parent_id"):
+        db.rw("MATCH (t:Trial {id:$id}), (p:Policy {id:$pid}) MERGE (t)-[:FROM_PARENT]->(p)", {"id": t["id"], "pid": t["parent_id"]}, g)
+    else:
+        db.rw("MATCH (t:Trial {id:$id}) MERGE (o:Origin {id:'scratch'}) MERGE (t)-[:FROM_ORIGIN]->(o)", {"id": t["id"]}, g)
     if t.get("child_policy_id"):
         db.rw("MATCH (t:Trial {id:$id}), (p:Policy {id:$cp}) MERGE (t)-[:PRODUCED]->(p)",
               {"id": t["id"], "cp": t["child_policy_id"]}, g)
@@ -172,6 +176,8 @@ def decision(d: dict, g: str | None = None) -> None:
     if d.get("selected"):
         db.rw("MATCH (d:Decision {id:$id}), (p:Policy {id:$pid}) MERGE (d)-[:SELECTED]->(p)",
               {"id": d["id"], "pid": d["selected"]}, g)
+    elif d["action"] == "train_from_scratch":
+        db.rw("MATCH (d:Decision {id:$id}) MERGE (o:Origin {id:'scratch'}) MERGE (d)-[:SELECTED]->(o)", {"id": d["id"]}, g)
     for tid in d.get("evidence_trial_ids", []):
         db.rw("MATCH (d:Decision {id:$id}), (t:Trial {id:$t}) MERGE (d)-[:BASED_ON]->(t)", {"id": d["id"], "t": tid}, g)
     for eid in d.get("evidence_eval_ids", []):
@@ -207,7 +213,7 @@ def rebuild(g: str | None = None) -> int:
     for r in records.all_of("run"):
         run({**r, "decision_id": None}, g)
     for e in records.all_of("evaluation"):
-        if SUITES[e["suite_id"]].role not in PROTECTED_ROLES:
+        if e["suite_id"] in SUITES and SUITES[e["suite_id"]].role not in PROTECTED_ROLES and not e.get("custom_family"):
             evaluation(e, g)
     for t in records.all_of("trial"):
         trial(t, g)
