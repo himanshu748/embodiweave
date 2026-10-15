@@ -2,7 +2,7 @@
 
 An agent uses connected robot failures and checkpoint history in FalkorDB to choose what to train next, then checks the saved policy against a fixed deployment gate.
 
-**[Live demo](https://embodiweave.52.202.25.181.sslip.io) · [Judge walkthrough](https://embodiweave.52.202.25.181.sslip.io/evidence.html) · [60-second video](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo.mp4) · [Train in your browser](https://embodiweave.52.202.25.181.sslip.io/live.html#training)**
+**[Live demo](https://embodiweave.52.202.25.181.sslip.io) · [Judge walkthrough](https://embodiweave.52.202.25.181.sslip.io/evidence.html) · [2-minute film](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v2.mp4) · [Train in your browser](https://embodiweave.52.202.25.181.sslip.io/live.html#training)**
 
 [![Tests](https://github.com/himanshu748/embodiweave/actions/workflows/tests.yml/badge.svg)](https://github.com/himanshu748/embodiweave/actions/workflows/tests.yml)
 
@@ -113,6 +113,10 @@ ORDER BY s.id, p.id
 · [Checksums](evidence/mujoco-v1/checksums.json)
 · [Observation mapping and known mismatches](docs/mujoco-transfer.md).
 
+[![Real MuJoCo same-seed replay, illustrative episode 5103011](web/media/embodiweave-demo-v2.gif)](https://embodiweave.52.202.25.181.sslip.io/guide.html#film)
+
+The GIF is an illustrative recorded episode. Full-suite results are in the table above.
+
 The robot is a torque-limited differential drive with gravity, inertia, friction
 and physical contacts. Pedestrians are scripted kinematic capsules. Sensor
 height, slip, finite acceleration and substep collision detection differ from
@@ -144,7 +148,7 @@ flowchart LR
   Saved --> View[Live 2D / 3D simulator view]
 ```
 
-The simulator is a 2D unicycle robot with range rays and moving obstacles. The 3D view renders the same simulator states; it adds no physics. On AWS Lightsail, FalkorDB and the API share one persistent CPU server. A single bounded PPO subprocess runs at a time. Model credentials stay server-side and are excluded from the training subprocess environment.
+Training uses a 2D unicycle robot with range rays and moving obstacles. The separate MuJoCo study above adds physical contact dynamics for transfer evaluation. The 3D view renders the same simulator states; it adds no physics. On AWS Lightsail, FalkorDB and the API share one persistent CPU server. A single bounded PPO subprocess runs at a time. Model credentials stay server-side and are excluded from the training subprocess environment.
 
 ## Judge walkthrough
 
@@ -196,6 +200,14 @@ Bundles include saved model weights, normalization, contract, validation records
 - Existing historical benchmark protocols and revisions remain in the repository. The new confirmation was defined only after validation selection stopped because the older final suites were already spent. No existing suite was changed or reused.
 - The public trainer is shared and quota-limited; the free model provider can refuse or delay requests. Recorded evidence remains available when either is busy.
 - A validation promotion record does not automatically replace production weights. The deployed checkpoint remains unchanged.
+
+## Film and credits
+
+The v2 film is **119.23 seconds, 1920×1080 at 30 fps, 8.73 MB**. Robot motion comes from recorded MuJoCo states produced by the saved PPO checkpoints. Graph layouts, titles, camera moves, sensor overlays and learning-curve plots are editorial graphics backed by the evidence. No robot footage was keyframed or AI-generated.
+
+[Watch v2](https://embodiweave.52.202.25.181.sslip.io/guide.html#film) · [v1 fallback](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo.mp4) · [Timed script](docs/demo/SCRIPT.md) · [SRT](docs/demo/embodiweave-demo-v2.srt) · [YouTube upload notes](docs/demo/YOUTUBE.md) · [Voice receipts](evidence/film/voice-receipts.json).
+
+Narration: Deepgram Aura-2. Captions: Deepgram Nova-3. Music: “Cipher” by Kevin MacLeod (incompetech.com), [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/), edited and mixed under narration. [Full credits and reproduction steps](docs/demo/CREDITS.md).
 
 ## AI disclosure
 
