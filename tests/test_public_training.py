@@ -27,7 +27,7 @@ def test_public_api_consent_origin_seed_and_owner_boundaries(isolated):
     for seed in (-1, 100000, True, 1.5):
         assert c.post("/api/public-training/start", json={"consent": True, "seed": seed}).status_code == 422
     assert c.post("/api/public-training/start", headers={"Origin": "https://evil.invalid"}, json={"consent": True}).status_code == 403
-    trial = c.post("/api/public-training/start", json={"consent": True, "seed": 13}).json()
+    trial = c.post("/api/public-training/start", json={"consent": True, "seed": 13, "budget":4096}).json()
     assert trial["budget"] == 4096 and trial["seed"] == 13
     assert "owner" not in trial and "pid" not in trial
     sid = trial["id"]
@@ -54,9 +54,13 @@ def test_single_flight_restart_and_quotas(isolated):
     second = P.start(token, consent=True)
     P._processes.clear()
     P.status(second["id"], token)
-    with pytest.raises(P.Limited, match="two"):
+    for _ in range(P.VISITOR_HOURLY - 2):
+        extra = P.start(token, consent=True)
+        P._processes.clear()
+        P.status(extra["id"], token)
+    with pytest.raises(P.Limited, match="four"):
         P.start(token, consent=True)
-    for _ in range(P.DAILY_RUNS - 2):
+    for _ in range(P.DAILY_RUNS - P.VISITOR_HOURLY):
         t = J.visitor(None)
         s = P.start(t, consent=True)
         P._processes.clear()
@@ -104,3 +108,19 @@ def test_model_cannot_launch_ppo_without_training_consent(isolated, monkeypatch)
     assert result["training_started"] is False and result["training_session_id"] is None
     assert "error" in result["calls"][0]["result"]
     assert not list(P._root().glob("ppo-*.json"))
+
+
+def test_budget_allowlist_and_private_live_samples(isolated):
+    c, other = TestClient(api.app), TestClient(api.app)
+    c.get("/api/judge/config")
+    for budget in (1, True, 1000000, -1):
+        assert c.post("/api/public-training/start",json={"consent":True,"budget":budget}).status_code in (400,422)
+    s = c.post("/api/public-training/start",json={"consent":True,"budget":150000}).json()
+    assert s["budget"]==150000 and s["reserved_steps"]==151552
+    sid=s["id"]
+    # Frame files live in their own directory so later quota scans read only sessions.
+    P._frame_path(sid).write_text(json.dumps({"latest":2,"frames":[{"seq":1,"phase":"train"},{"seq":2,"phase":"validate"}]}))
+    result=c.get(f"/api/public-training/sessions/{sid}/frames?after=1")
+    assert result.status_code==200 and result.json()["frames"]==[{"seq":2,"phase":"validate"}]
+    assert other.get(f"/api/public-training/sessions/{sid}/frames").status_code==404
+    assert c.post("/api/public-training/start",json={"consent":True,"budget":4096}).json()["id"]==sid

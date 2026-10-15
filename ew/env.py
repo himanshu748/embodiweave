@@ -29,9 +29,10 @@ class EmbodiNavEnv(gym.Env):
     metadata = {"render_modes": []}
 
     def __init__(self, family: Family | str = "open", contract: PolicyContract = CONTRACT_V1,
-                 record: bool = False, layout: dict | None = None):
+                 record: bool = False, layout: dict | None = None, on_frame=None):
         self.family = FAMILIES[family] if isinstance(family, str) else family
         self.c = contract
+        self.on_frame, self.view_episode = on_frame, -1
         self.record = record
         self.fixed_layout = layout
         self._angles = np.array(contract.ray_angles())
@@ -109,6 +110,7 @@ class EmbodiNavEnv(gym.Env):
     def reset(self, *, seed: int | None = None, options: dict | None = None):
         super().reset(seed=seed)
         lay = (options or {}).get("layout") or self.fixed_layout or generate_layout(self.family, self.np_random)
+        self.view_episode += 1
         self.layout = lay
         self.pose = np.array(lay["start"], dtype=np.float64)
         self.goal = np.array(lay["goal"], dtype=np.float64)
@@ -121,6 +123,8 @@ class EmbodiNavEnv(gym.Env):
         # history reset: every slot holds the first frame of THIS episode
         self._hist = np.tile(f, (self.c.history, 1))
         self.trace = [self._state(None)] if self.record else []
+        if self.on_frame:
+            self.on_frame({"layout": self.layout, "frame": self._state(None), "episode": self.view_episode})
         return self._obs(), {"layout": lay}
 
     def step(self, action):
@@ -173,6 +177,8 @@ class EmbodiNavEnv(gym.Env):
         info = {"outcome": outcome, "t": self.t, "goal_dist": d, "hit": hit}
         if self.record:
             self.trace.append(self._state(outcome))
+        if self.on_frame:
+            self.on_frame({"layout": self.layout, "frame": self._state(outcome), "episode": self.view_episode})
         return self._obs(), float(r), terminated, truncated, info
 
     def _state(self, outcome):

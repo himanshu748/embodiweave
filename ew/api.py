@@ -411,6 +411,7 @@ def public_training_config(response: Response):
 class PublicTrainReq(BaseModel):
     consent: bool = False
     seed: int = Field(default=7, strict=True, ge=0, lt=100000)
+    budget: int = Field(default=60000, strict=True)
 
 
 @app.post("/api/public-training/start")
@@ -419,7 +420,7 @@ def public_training_start(r: PublicTrainReq, request: Request, response: Respons
     token = _judge_token(request)
     response.headers["Cache-Control"] = "no-store"
     try:
-        return P.start(token, r.seed, r.consent)
+        return P.start(token, r.seed, r.consent, budget=r.budget)
     except P.Limited as exc:
         raise HTTPException(429, str(exc))
     except PermissionError as exc:
@@ -450,6 +451,17 @@ def public_training_status(sid: str, request: Request, response: Response):
         return P.status(sid, request.cookies.get(COOKIE))
     except FileNotFoundError:
         raise HTTPException(404, "Trial not found in this browser session.")
+
+
+@app.get("/api/public-training/sessions/{sid}/frames")
+def public_training_frames(sid: str, request: Request, response: Response, after: int = 0):
+    from . import public_training as P
+    from .judge_agent import COOKIE
+    response.headers["Cache-Control"] = "no-store"
+    try:
+        return P.frames(sid, request.cookies.get(COOKIE), max(0, after))
+    except FileNotFoundError:
+        raise HTTPException(404, "Run not found in this browser.")
 
 
 @app.get("/api/public-training/sessions/{sid}/bundle")

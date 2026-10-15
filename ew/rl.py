@@ -33,10 +33,10 @@ def runtime_versions() -> dict:
             "dynamics": DYNAMICS_VERSION, "reward": REWARD_VERSION, "machine": platform.machine()}
 
 
-def make_vec(family: Family, contract: PolicyContract, n_envs: int, seed: int) -> DummyVecEnv:
+def make_vec(family: Family, contract: PolicyContract, n_envs: int, seed: int, on_frame=None) -> DummyVecEnv:
     def mk(i):
         def _f():
-            e = Monitor(EmbodiNavEnv(family, contract))
+            e = Monitor(EmbodiNavEnv(family, contract, on_frame=on_frame if i == 0 else None))
             e.reset(seed=seed * 1000 + i)
             return e
         return _f
@@ -76,7 +76,7 @@ def train(policy_id: str, *, family: Family | str, budget_steps: int, seed: int,
           parent_id: str | None = None, recipe: str = "ppo-r1", contract: PolicyContract | None = None,
           on_progress: Callable | None = None, should_cancel: Callable | None = None,
           validation: Suite | None = None, validation_every: int | None = None,
-          run_id: str | None = None) -> dict:
+          run_id: str | None = None, on_frame=None) -> dict:
     """Train PPO for budget_steps environment steps. Parent artifacts are read, never modified.
 
     Returns a result dict with status completed|cancelled, consumed steps, the new policy manifest
@@ -93,7 +93,7 @@ def train(policy_id: str, *, family: Family | str, budget_steps: int, seed: int,
             raise ValueError("contract mismatch between requested contract and parent")
         contract = pc
     contract = contract or CONTRACT_V1
-    venv = make_vec(fam, contract, rc["n_envs"], seed)
+    venv = make_vec(fam, contract, rc["n_envs"], seed, on_frame=on_frame)
     pdir = artifacts.policy_dir(parent_id) if parent_id else None
     if parent_id:
         venv = VecNormalize.load(str(pdir / "vecnormalize.pkl"), venv)
@@ -153,13 +153,16 @@ def suite_layouts(suite_or_family, seeds) -> list[dict]:
     return [generate_layout(fam, np.random.default_rng(s)) for s in seeds]
 
 
-def _run_episodes(policy_fn, contract, family, layouts, record):
+def _run_episodes(policy_fn, contract, family, layouts, record, on_frame=None, should_cancel=None):
     eps = []
-    for lay in layouts:
-        env = EmbodiNavEnv(family, contract, record=record)
+    for episode_index, lay in enumerate(layouts):
+        observer = (lambda sample, i=episode_index: on_frame({**sample, "episode": i})) if on_frame else None
+        env = EmbodiNavEnv(family, contract, record=record, on_frame=observer)
         obs, _ = env.reset(options={"layout": lay})
         done, ret = False, 0.0
         while not done:
+            if should_cancel and should_cancel():
+                raise InterruptedError("Evaluation cancelled")
             a = policy_fn(obs)
             obs, r, term, trunc, info = env.step(a)
             ret += r
@@ -207,7 +210,7 @@ def load_policy(policy_id: str, expected_hash: str | None = None, policy_path: P
 
 def evaluate_policy(policy_id: str, family: Family, seeds, record: bool = False,
                     expected_hash: str | None = None, eval_contract: PolicyContract | None = None,
-                    policy_path: Path | None = None) -> dict:
+                    policy_path: Path | None = None, on_frame=None, should_cancel=None) -> dict:
     """Reload the saved artifact from disk and evaluate it on fixed layouts.
 
     eval_contract defaults to the policy's own contract. Passing a different one runs the policy
@@ -219,7 +222,7 @@ def evaluate_policy(policy_id: str, family: Family, seeds, record: bool = False,
     def fn(o):
         return model.predict(vn.normalize_obs(o[None, :]).astype(np.float32), deterministic=True)[0][0]
     t0 = time.time()
-    eps = _run_episodes(fn, env_contract, family, suite_layouts(family, seeds), record)
+    eps = _run_episodes(fn, env_contract, family, suite_layouts(family, seeds), record, on_frame=on_frame, should_cancel=should_cancel)
     return {"policy_id": policy_id, "artifact_hash": h, "contract_id": env_contract.contract_id,
             "family_id": family.fid(), "seeds": list(seeds), "summary": summarize(eps),
             "episodes": eps, "wall_s": round(time.time() - t0, 2)}

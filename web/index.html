@@ -34,9 +34,9 @@
 <section class="hero" aria-labelledby="heroTitle">
   <div class="hero-copy">
     <p class="eyebrow e1">GraphHacks 2026 · Track 1 · built on FalkorDB</p>
-    <h1 id="heroTitle" class="e1">A robot fails.<br><span class="hl">The graph chooses what to try next.</span></h1>
-    <p class="lede e3">Robot training should remember what failed. An agent queries <b>FalkorDB</b> to choose a checkpoint or start from scratch, runs real PPO, then checks whether the result is safe to deploy.</p>
-    <p class="hero-verdict e3"><span class="tag rec">Recorded outcome</span> Fewer collisions. Still unsafe. <b>Deployment rejected.</b></p>
+    <h1 id="heroTitle" class="e1">A robot fails.<br><span class="hl">Choose its next training run.</span></h1>
+    <p class="lede e3">The agent queries <b>FalkorDB</b> for compatible checkpoints and past trials, trains a policy with PPO, then tests it on the target mission and three earlier tasks.</p>
+    <p class="hero-verdict e3"><span class="tag rec">Recorded outcome</span> 87% target success, 13% collisions. <b>Failed 3 of 4 deployment checks.</b></p>
     <div class="ctas e3">
       <a class="btn" href="live.html#training">Train a new checkpoint <span aria-hidden="true" class="arrow">→</span></a>
       <a class="btn ghost" href="guide.html">Start the judge walkthrough</a>

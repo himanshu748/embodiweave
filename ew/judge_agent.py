@@ -35,7 +35,7 @@ You may propose a new adaptation plan and preview the exact-artifact promotion g
 The deployed policy is P-static-b; the recorded Sonnet child is scratch~a7ee2c-s7. Call inspect_mission for context.
 For a general investigation, inspect the mission, propose_adaptation at 150000, and check_checkpoint on that child.
 For specific questions choose only relevant tools. You have at most 6 model turns and 10 calls. Gather in parallel
-when useful and finish in under 250 words, using short paragraphs or bullets, never Markdown tables.
+when useful and finish in under 150 words, using short paragraphs or bullets, never Markdown tables.
 Cite exact policy/evaluation/trial IDs and graph revision from results.
 Separate measured outcomes, authored hypotheses, rule estimates and your interpretation. A plan is not a new PPO run.
 Training and all replay frames are recorded. The new checkpoint improved target success but failed overall promotion.
@@ -318,10 +318,10 @@ def _run(s):
         config = configuration()
         system = SYSTEM
         if s.get("training_consent"):
-            config["tools"] = TOOLS + [_spec("run_ppo_flow", "Launch one real 4096-step CPU PPO trial from live graph selection, then 180 canonical validation episodes, trusted gate and export. Returns a pending session ID; follow its status on the webpage, never claim completion yet.")]
-            system = SYSTEM[:SYSTEM.index("There is NO new child")].replace("Training and all replay frames are recorded.", "The original Sonnet replay is recorded; the opted-in PPO trial produces new measurements.") + """The user explicitly consented to one small public PPO trial.
+            config["tools"] = TOOLS + [_spec("run_ppo_flow", "Launch one real 60000-step CPU PPO trial from live graph selection, then 180 canonical validation episodes, trusted gate and export. Returns a pending session ID; follow its status on the webpage, never claim completion yet.")]
+            system = SYSTEM[:SYSTEM.index("There is NO new child")].replace("Training and all replay frames are recorded.", "The original Sonnet replay is recorded; the opted-in PPO trial produces new measurements.") + """The user explicitly consented to one public PPO training run.
 Call run_ppo_flow once after inspect_mission when asked to train or run the complete flow. It has no arguments.
-This separate 4096-step budget is not the recorded 150000-step experiment. Its selection uses the actual 4096 budget.
+This run uses 60000 training steps. The worker selects its starting policy for that exact budget.
 The trusted worker performs graph selection, PPO, all 180 canonical validation episodes, gate and export.
 The tool returns a PENDING session, not a completed checkpoint or gate. Tell the judge to watch the PPO panel.
 Never infer new metrics before the worker finishes. Do not claim deployed weights changed. Other questions may

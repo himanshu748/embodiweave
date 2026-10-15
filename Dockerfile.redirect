@@ -1,0 +1,5 @@
+# The former free Render service forwards website visitors to the AWS deployment.
+FROM python:3.13-alpine
+WORKDIR /app
+COPY scripts/redirect.py .
+CMD ["python", "redirect.py"]

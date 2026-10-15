@@ -27,7 +27,7 @@ def _fam(f) -> Family:
 def train_run(policy_id: str, *, family, budget_steps: int, seed: int, parent_id: str | None = None,
               recipe: str = "ppo-r1", contract: PolicyContract | None = None, run_kind: str = "library",
               purpose: str = "", decision_id: str | None = None, run_id: str | None = None,
-              validation_suite: str | None = None, on_progress=None, should_cancel=None, graph: str | None = None) -> dict:
+              validation_suite: str | None = None, on_progress=None, should_cancel=None, graph: str | None = None, on_frame=None) -> dict:
     fam = _fam(family)
     run_id = run_id or records.new_id("run")
     val = SUITES[validation_suite] if validation_suite else None
@@ -36,7 +36,7 @@ def train_run(policy_id: str, *, family, budget_steps: int, seed: int, parent_id
     t0 = time.time()
     res = rl.train(policy_id, family=fam, budget_steps=budget_steps, seed=seed, parent_id=parent_id,
                    recipe=recipe, contract=contract, on_progress=on_progress, should_cancel=should_cancel,
-                   validation=val, run_id=run_id)
+                   validation=val, run_id=run_id, on_frame=on_frame)
     m = res["manifest"]
     rec = records.write("run", {
         "id": run_id, "run_kind": run_kind, "purpose": purpose, "parent_id": parent_id,
@@ -55,7 +55,7 @@ def train_run(policy_id: str, *, family, budget_steps: int, seed: int, parent_id
 def evaluate(policy_id: str, suite_id: str, *, purpose: str = "", save_replay: bool = False,
              expected_hash: str | None = None, final_test_runner: bool = False, graph: str | None = None,
              family_override: Family | None = None, n_episodes: int | None = None,
-             experiment_id: str | None = None) -> dict:
+             experiment_id: str | None = None, on_frame=None, should_cancel=None) -> dict:
     """Reload the saved artifact and evaluate it on a fixed, versioned suite."""
     s = SUITES[suite_id]
     if s.role in PROTECTED_ROLES and not final_test_runner:
@@ -65,7 +65,7 @@ def evaluate(policy_id: str, suite_id: str, *, purpose: str = "", save_replay: b
         raise PermissionError(f"{suite_id} was spent by {spent_by}; use a fresh final-test suite")
     fam = family_override or s.family
     seeds = s.seeds[:n_episodes] if n_episodes else s.seeds
-    ev = rl.evaluate_policy(policy_id, fam, seeds, record=save_replay, expected_hash=expected_hash)
+    ev = rl.evaluate_policy(policy_id, fam, seeds, record=save_replay, expected_hash=expected_hash, on_frame=on_frame, should_cancel=should_cancel)
     episodes = [{k: v for k, v in ep.items() if k not in ("trace", "layout")} for ep in ev["episodes"]]
     rec = records.write("evaluation", {
         "policy_id": policy_id, "artifact_hash": ev["artifact_hash"], "suite_id": suite_id, "experiment_id": experiment_id,

@@ -40,3 +40,17 @@ textarea { display: block; resize: vertical; width: 100%; min-height: 150px; pad
 .ppo-result { border-left: 1px solid var(--line); padding-left: 24px; }progress { width: 100%; height: 12px; accent-color: var(--accent); }
 #ppoMeta { white-space: pre-line; }#ppoStatus { margin-top: 0; }#ppoLinks { display: flex; flex-wrap: wrap; gap: 10px; }#ppoDetails summary { cursor: pointer; min-height: 44px; padding: 12px 0; }#ppoReceipt { overflow: auto; max-height: 340px; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; }
 @media(max-width:800px) { .ppo-grid { grid-template-columns: minmax(0,1fr); gap: 20px; }.ppo-result { padding: 20px 0 0; border-left: 0; border-top: 1px solid var(--line); } }
+.run-workspace { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(240px,.8fr); gap:28px; margin:24px 0; }
+.run-workspace > * { min-width:0; } .run-workspace select { width:100%; min-height:44px; padding:10px; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:6px; font:14px var(--text); }
+.run-workspace input[type=number] { width:140px; min-height:44px; padding:10px; border:1px solid var(--line); border-radius:6px; background:var(--paper); color:var(--ink); font:15px var(--mono); }
+.run-workspace .ppo-result { border-left:0; } .ppo-sheet > .ppo-result { border-left:0; border-top:1px solid var(--line); padding:20px 0 0; }
+.arena-toolbar { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+.arena-toolbar [role=group] { display:flex; gap:4px; } .run-arena button { border:1px solid var(--line); background:var(--paper); color:var(--ink); font:500 14px var(--text); padding:8px 12px; min-height:40px; border-radius:6px; cursor:pointer; }
+.run-arena button[aria-pressed=true] { color:var(--surface); background:var(--ink); } .run-arena button:disabled { opacity:.45; cursor:default; }
+.arena-stage { position:relative; width:100%; aspect-ratio:1.35; background:var(--paper); border:1px solid var(--line); overflow:hidden; border-radius:8px; }
+#arena2d { display:block; width:100%; height:100%; object-fit:contain; } #arena3d { position:absolute; inset:0; } #arena3d canvas { display:block; width:100%; height:100%; }
+.arena-step { position:absolute; right:10px; top:10px; background:var(--surface); padding:4px 8px; border:1px solid var(--line); border-radius:4px; font:12px var(--mono); pointer-events:none; }
+.arena-controls { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:10px; } #arenaSeek { flex:1; min-width:80px; min-height:40px; accent-color:var(--accent); } #arenaEpisode { width:100%; margin-top:8px; min-height:40px; font:13px var(--mono); }
+.robot-key { color:#b93d0b; }.ped-key { color:#2b4c7e; }.goal-key { color:#367341; }.arena-key { margin-bottom:0; } .run-explainer { margin-top:20px; font-size:14px; }.run-explainer summary { min-height:40px; padding:10px 0; cursor:pointer; }
+#ppoGate h3 { font:600 22px var(--display); margin-bottom:8px; }#ppoGate > p { font-size:14px; margin-top:0; }
+@media(max-width:800px) { .run-workspace { grid-template-columns:minmax(0,1fr); gap:24px; }.arena-stage { aspect-ratio:1.15; } }

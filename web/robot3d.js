@@ -83,10 +83,21 @@ export class Arena3D {
     r.domElement.setAttribute("aria-hidden", "true");
     container.appendChild(r.domElement);
     const s = this.scene = new THREE.Scene();
+    this.setEpisodes(eps);
+    this.drag();
+    this.ro = new ResizeObserver(() => this.resize()); this.ro.observe(container);
+    this.resize();
+    this.setStep(0);
+  }
+
+  setEpisodes(eps) {
+    for (const b of this.bots || []) b.tag?.remove();
+    this.scene.traverse((o) => { o.geometry?.dispose(); const ms = Array.isArray(o.material) ? o.material : [o.material]; ms.forEach(m => m?.dispose()); });
+    this.scene.clear(); this.eps = eps;
+    const s = this.scene;
     s.background = new THREE.Color(css("--paper", "#f4f2ec"));
     s.fog = new THREE.Fog(s.background, 18, 34);
-    this.camera = new THREE.PerspectiveCamera(34, 1, .1, 100);
-    this.az = -.3; this.el = .82; this.dist = 13.5;
+    if (!this.camera) { this.camera = new THREE.PerspectiveCamera(34, 1, .1, 100); this.az = -.3; this.el = .82; this.dist = 13.5; }
     s.add(new THREE.HemisphereLight("#ffffff", "#b8b2a2", 1.1));
     const sun = new THREE.DirectionalLight("#fff4e0", 2.1);
     sun.position.set(-6, 12, 7); sun.castShadow = true; sun.shadow.mapSize.set(1024, 1024);
@@ -104,12 +115,22 @@ export class Arena3D {
     this.moverTrack = longest.movers;
     this.people = longest.layout.movers.map((m) => { const p = buildPerson(css("--ped", "#2b4c7e")); s.add(p.g); return { ...p, r: m[4] }; });
     this.pedDist = this.moverTrack.map(() => 0);
-    for (let t = 1; t < this.moverTrack.length; t++) this.pedDist[t] = this.pedDist[t - 1] + Math.hypot(this.moverTrack[t][0][0] - this.moverTrack[t - 1][0][0], this.moverTrack[t][0][1] - this.moverTrack[t - 1][0][1]);
+    for (let t = 1; t < this.moverTrack.length; t++) this.pedDist[t] = this.pedDist[t - 1] + (this.moverTrack[t][0] ? Math.hypot(this.moverTrack[t][0][0] - this.moverTrack[t - 1][0][0], this.moverTrack[t][0][1] - this.moverTrack[t - 1][0][1]) : 0);
     this.discs = this.people.map((p) => { const d = new THREE.Mesh(new THREE.RingGeometry(p.r - .03, p.r, 48), new THREE.MeshBasicMaterial({ color: css("--ped", "#2b4c7e"), transparent: true, opacity: .45 })); d.rotation.x = -Math.PI / 2; d.position.y = .006; s.add(d); return d; });
-    this.drag();
-    this.ro = new ResizeObserver(() => this.resize()); this.ro.observe(container);
-    this.resize();
-    this.setStep(0);
+  }
+
+  updateEpisode(ep) {
+    // Same layout, new measured poses. Reuse the renderer and scene.
+    const b = this.bots[0]; b.ep = ep; this.eps[0].ep = ep;
+    b.trailG.dispose(); b.trailG = new THREE.BufferGeometry().setFromPoints(ep.robot.map(p => P(p[0], p[1], .012)));
+    b.trail.geometry = b.trailG; b.wl = [0]; b.wr = [0];
+    for (let t = 1; t < ep.robot.length; t++) {
+      const p = ep.robot[t - 1], q = ep.robot[t], f = (q[0]-p[0])*Math.cos(p[2])+(q[1]-p[1])*Math.sin(p[2]);
+      const da = Math.atan2(Math.sin(q[2]-p[2]),Math.cos(q[2]-p[2]));
+      b.wl.push(b.wl[t-1]+(f-da*TRACK/2)/WHEEL_R); b.wr.push(b.wr[t-1]+(f+da*TRACK/2)/WHEEL_R);
+    }
+    this.moverTrack = ep.movers; this.pedDist = ep.movers.map(() => 0);
+    for (let t = 1; t < ep.movers.length; t++) if (ep.movers[t][0]) this.pedDist[t] = this.pedDist[t-1]+Math.hypot(ep.movers[t][0][0]-ep.movers[t-1][0][0],ep.movers[t][0][1]-ep.movers[t-1][0][1]);
   }
 
   buildWorld(layout) {
@@ -194,7 +215,7 @@ export class Arena3D {
       });
       b.rayG.attributes.position.needsUpdate = b.rayG.attributes.color.needsUpdate = b.hitG.attributes.position.needsUpdate = true;
       b.rayL.visible = b.hits.visible = t < n || b.ep.outcome !== "success";
-      b.mark.visible = t === n; b.mark.position.set(b.bot.g.position.x, .008, b.bot.g.position.z);
+      b.mark.visible = t === n && !!b.ep.outcome; b.mark.position.set(b.bot.g.position.x, .008, b.bot.g.position.z);
     }
     this.render();
   }
@@ -238,5 +259,5 @@ export class Arena3D {
     }
   }
 
-  dispose() { this.ro.disconnect(); this.renderer.dispose(); this.renderer.domElement.remove(); }
+  dispose() { this.ro.disconnect(); this.scene.traverse(o => { o.geometry?.dispose(); (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => m?.dispose()); }); this.renderer.dispose(); this.renderer.domElement.remove(); }
 }

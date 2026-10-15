@@ -19,11 +19,11 @@ Everything is a software simulation. No physical robot is involved.
 2. **[Ask the live agent](https://embodiweave.52.202.25.181.sslip.io/live.html)**: choose a sample brief or write a question. A real model selects tools against live FalkorDB, proposes a fresh adaptation plan and previews the exact-artifact gate. Each call exposes its arguments, Cypher, evidence and latency. You can also [run Cypher directly](https://embodiweave.52.202.25.181.sslip.io/#live).
 3. [Inspect selection and the gate](https://embodiweave.52.202.25.181.sslip.io/#decide): scratch wins the recorded ranking; target collisions remain 13%, over the 10% limit. Three of four suites fail. Promotion is rejected.
 4. [Open the studio](https://embodiweave.52.202.25.181.sslip.io/studio.html): browse the real Sonnet MCP trace, replay different episodes, inspect evidence, and try an isolated What-if.
-5. **[Run full PPO on the webpage](https://embodiweave.52.202.25.181.sslip.io/live.html#training)**: confirm the small CPU trial, choose a seed and run. Watch graph selection, real weight updates, 180 validation episodes, the gate verdict, replay and checkpoint download. No installation or judge API key.
+5. **[Run full PPO on the webpage](https://embodiweave.52.202.25.181.sslip.io/live.html#training)**: choose a budget and seed, then click Start training. Watch graph selection, real weight updates, 180 validation episodes, the gate verdict, replay and checkpoint download. No installation or judge API key.
 6. [Watch the demo film](https://embodiweave.52.202.25.181.sslip.io/guide.html#film), then reproduce locally below.
 
 **Evidence boundaries:** Live means a current query or fresh LLM investigation against running FalkorDB.
-The live page can run a new bounded 4,096-step PPO trial, all 180 canonical validation episodes, the trusted
+The live page can run a PPO training run at 4,096, 60,000 or 150,000 requested steps, all 180 canonical validation episodes, the trusted
 gate and a reproducible checkpoint export. The agent can launch this flow only with a separate training opt-in.
 Recorded means stored PPO, simulator or original Sonnet execution evidence. What-if means a labelled sandbox
 copy. Larger budgets, custom scenario evaluation and the unrestricted local experiment workflow use the local stack.
@@ -203,7 +203,7 @@ run. The model selects `inspect_mission`, `query_evidence`, `propose_adaptation`
 Reads execute named `GRAPH.RO_QUERY` templates. The same frozen selection rule computes the adaptation
 plan; the same trusted gate validates complete canonical evaluations of the exact artifact. Planning and
 gate checks are previews with no graph or deployment writes. No arbitrary Cypher, paths, shell, network
-tools or final-test outcomes are available to this public loop. A separate page opt-in adds only `run_ppo_flow`: no arguments, one fixed 4,096-step trial, seed 7, using the trusted workflow below.
+tools or final-test outcomes are available to this public loop. A separate page opt-in adds only `run_ppo_flow`: no arguments, one 60,000-step run, seed 7, using the trusted workflow below.
 
 The receipt shows the actual model(s) returned by the provider, selected tools, arguments, returned rows or
 record IDs, exact Cypher, revision, latency, token usage and final report. A model failure, turn limit,
@@ -353,22 +353,24 @@ managed database or paid model is needed. Free model quotas still apply. AWS upt
 
 ### New public PPO flow
 
-`POST /api/public-training/start` accepts only consent and an integer seed (0–99999). It fixes the recipe to
-`ppo-r1` and the budget to **4,096 environment steps** (two 2,048-step rollouts). This is a demonstration
-budget, not the recorded 150,000-step experiment or evidence of a safety/efficiency advantage.
+`POST /api/public-training/start` accepts consent, an integer seed (0–99999), and one of three budgets:
+**4,096** steps for a quick test, **60,000** by default, or **150,000** for a longer run. The recipe remains
+`ppo-r1`; PPO rounds training to complete 2,048-step rollouts (61,440 and 151,552 actual steps for the two
+larger budgets). A longer run may still fail the deployment checks. The selection and Trial use the
+requested budget; the manifest and progress show actual consumed steps. These public trials are separate
+from the recorded experiment and do not establish a safety or efficiency advantage.
 
-1. Query live FalkorDB and record the actual 4,096-budget selection. Revalidate before training.
+1. Query live FalkorDB and record selection for the requested budget. Revalidate before training.
 2. Train from the selected immutable parent or fresh random weights; save a new checkpoint and weight delta.
 3. Reload that exact artifact and run **all 180 episodes** in `val-target-v1` (60), `val-open-v1` (40),
    `val-static-v1` (40), `val-crossing-v1` (40). Final tests remain unavailable.
 4. Record the conditioned Trial and exact-artifact `promo-1` verdict. Rejection remains rejection;
    even a passing gate does not switch the public deployed policy.
 5. Export weights, normalization, contract, immutable evidence, source, dependency lock and SHA-256 checksums.
-   Replay is available in Studio and the bundle downloads from the live page.
+   A 2D/3D simulator view is available during the run and for its saved replay. The bundle downloads from the live page.
 
-Limits: one active public PPO process, eight starts per UTC day, two per browser/hour, eight minutes maximum.
-Failed/cancelled starts count. Cancellation is checked at each training environment step and between validation
-suites; a running suite may finish first. Timeout terminates the owned CPU subprocess. Partial work is never
+Limits: one active public PPO process, 16 starts per UTC day, four per browser/hour, eight minutes maximum.
+Failed/cancelled starts count. Cancellation is checked at each training and validation environment step. Timeout terminates the owned CPU subprocess. Partial work is never
 labelled a completed flow. Quotas use browser cookies and a single-process deployment; they are demo limits,
 not protection against a determined attacker. Worker outcomes are marked `judge_demo` and never enter the
 library checkpoint catalog; budget conditioning keeps these trials separate from the 150k benchmarks.
@@ -377,6 +379,20 @@ The fixed workflow button needs no LLM. With a separate opt-in, the real model c
 launch it; the model receipt links to its pending worker session. Worker status, not model prose, establishes
 completion. `GET /api/public-training/sessions/{id}` and its `/bundle` route require the owning browser cookie.
 Generic `/api/train`, `/api/evaluate`, `/api/promote` and worker endpoints remain blocked on the public service.
+
+### Watching the simulator
+
+The live page polls the owner-protected `/api/public-training/sessions/{id}/frames` route. Environment
+callbacks emit actual robot, pedestrian and layout states before automatic episode reset. Training shows
+environment 1 of 8; validation labels its suite and episode. The server samples at most once every 150 ms
+and retains only 32 snapshots, so this is a live sample rather than a recording of every training step.
+Sampling does not change actions, rewards, dynamics or the evaluation seeds. The 3D view renders these
+same 2D states, without adding physics. Pause freezes the view while the worker continues. Reduced motion
+starts the view paused. Completed target episodes can be replayed, scrubbed and selected on the same page.
+
+Training completion and deployment approval have separate labels. A checkpoint is still downloadable after
+failed deployment checks. The target requires success >=80% and collisions <=10%; three retained suites
+must also pass. The gate code has no forced rejection or success path.
 
 ### AWS deployment
 
@@ -397,8 +413,8 @@ policies recover from process/host restarts; one instance is not high availabili
 deleting it. Stopping a Lightsail instance does **not** stop its bundle billing: delete the instance and release
 unused static IPs when finished. See [AWS billing](https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-frequently-asked-questions-faq-billing-and-account-management.html).
 
-The former [free Render deployment](https://embodiweave.onrender.com) may still serve the earlier investigation-only
-version; use the AWS URL above for the complete public training flow. The landing page is `web/index.html`,
+The former [Render URL](https://embodiweave.onrender.com) forwards visitors to AWS using `Dockerfile.redirect`.
+The full app and simulator run on AWS; the redirect service stays on Render’s free plan. The landing page is `web/index.html`,
 live execution is `web/live.html`, the judge guide is `web/guide.html`, and the studio is `web/studio.html`.
 `design/design.md` is the committed shared visual guide.
 

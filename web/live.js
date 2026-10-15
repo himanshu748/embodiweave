@@ -39,14 +39,14 @@ function summarize(call) {
 function gateValues(result) {
   const region = document.createElement("div"), table = document.createElement("table"), caption = document.createElement("caption");
   region.className = "gate-values"; region.tabIndex = 0; region.setAttribute("role", "region"); region.setAttribute("aria-label", "Measured promotion gate results");
-  caption.textContent = `Trusted ${result.rule} gate · artifact ${result.artifact_hash.slice(0, 12)}`; table.append(caption);
+  caption.textContent = "Deployment checks for this checkpoint"; table.append(caption);
   const head = document.createElement("tr");
-  for (const label of ["Validation suite", "Success / min", "Collision / max", "Gate"]) { const th = document.createElement("th"); th.textContent = label; th.scope = "col"; head.append(th); }
+  for (const label of ["Test suite", "Success / required", "Collisions / limit", "Result"]) { const th = document.createElement("th"); th.textContent = label; th.scope = "col"; head.append(th); }
   table.append(head);
   const percent = (x) => (100 * x).toFixed(1) + "%";
   for (const check of result.checks) {
     const row = document.createElement("tr");
-    for (const text of [check.suite_id, `${percent(check.success_rate)} / ${percent(check.min_success)}`, `${percent(check.collision_rate)} / ${percent(check.max_collision)}`, check.pass ? "Pass" : "Fail"]) { const td = document.createElement("td"); td.textContent = text; row.append(td); }
+    for (const text of [({"val-target-v1":"New mission", "val-open-v1":"Open arena", "val-static-v1":"Static obstacles", "val-crossing-v1":"Crossing pedestrian"}[check.suite_id] || check.suite_id), `${percent(check.success_rate)} / ${percent(check.min_success)}`, `${percent(check.collision_rate)} / ${percent(check.max_collision)}`, check.pass ? "Pass" : "Fail"]) { const td = document.createElement("td"); td.textContent = text; row.append(td); }
     table.append(row);
   }
   region.append(table);
@@ -133,18 +133,27 @@ $("#investigationForm").addEventListener("submit", async (e) => {
 const connectionReady = connect();
 (async () => { await connectionReady; const id = sessionStorage.getItem("ew_judge_session"); if (id) { currentId = id; await poll(id, ++pollVersion); } })();
 
-let ppoConfig = null, ppoActive = false, ppoId = null, ppoVersion = 0;
-function ppoReady() { $("#ppoStart").disabled = ppoActive || !ppoConfig?.enabled || !$("#ppoConsent").checked; }
+let ppoConfig = null, ppoActive = false, ppoId = null, ppoVersion = 0, ppoCurrent = null;
+let frameId = null, frameVersion = 0;
+const arenaReady = import("./live-arena.js").then(m => new m.RunArena());
+function ppoReady() { $("#ppoStart").disabled = ppoActive || !ppoConfig?.enabled; }
 function ppoPaint(s) {
+  attachRunView(s.id); ppoCurrent = s;
   ppoId = s.id; ppoActive = ["queued", "running", "cancelling"].includes(s.state);
-  $("#ppoState").textContent = `${s.phase} · ${s.state}`; $("#ppoStatus").textContent = s.detail;
-  $("#ppoProgress").value = s.consumed_steps; $("#ppoCancel").hidden = !ppoActive;
+  $("#ppoState").textContent = s.state === "completed" ? "Training finished" : s.state === "cancelled" ? "Stopped" : ({select:"Choosing checkpoint",train:"Training",validate:"Testing",gate:"Checking results"}[s.phase] || s.state); $("#ppoStatus").textContent = s.detail;
+  $("#ppoProgress").max = s.reserved_steps || s.budget; $("#ppoProgress").value = s.consumed_steps; $("#ppoCancel").hidden = !ppoActive;
   $("#ppoCancel").disabled = s.state === "cancelling";
-  $("#ppoMeta").textContent = `${s.id}\n${s.consumed_steps.toLocaleString()} / ${s.budget.toLocaleString()} PPO steps · ${s.evaluations.length}/4 validation suites` +
-    (s.parent_id !== undefined ? `\nInitialization: ${s.parent_id || "fresh random weights"} · seed ${s.seed}` : "") +
-    (s.artifact_hash ? `\nNew artifact: ${s.artifact_hash}\nWeight change L2: ${s.weight_delta_l2}` : "");
+  $("#ppoMeta").textContent = `${s.consumed_steps.toLocaleString()} steps trained · ${s.budget.toLocaleString()} requested · ${s.evaluations.length}/4 test suites complete` +
+    (s.parent_id !== undefined ? ` · Started from ${s.parent_id || "random weights"} · seed ${s.seed}` : "");
   $("#ppoGate").replaceChildren();
-  if (s.gate) { const verdict = document.createElement("strong"); verdict.textContent = `Gate: ${s.gate.verdict} · deployment unchanged`; $("#ppoGate").append(verdict, gateValues(s.gate)); }
+  if (s.gate) {
+    const passed = s.gate.checks.filter(c => c.pass).length;
+    const verdict = document.createElement("h3"), explanation = document.createElement("p");
+    verdict.textContent = s.gate.verdict === "promoted" ? "Passed deployment checks" : s.gate.verdict === "rejected" ? "Checkpoint not approved for deployment" : "More test results needed";
+    explanation.textContent = `${passed} of ${s.gate.checks.length+s.gate.missing.length} test suites passed. ` + (s.gate.verdict === "promoted" ? "This checkpoint is ready for review. " : "The checkpoint is saved with its measured results. ") + "The deployed policy remains P-static-b.";
+    $("#ppoGate").append(verdict, explanation, gateValues(s.gate));
+  }
+  $("#arenaReplay").disabled = s.state !== "completed";
   $("#ppoLinks").hidden = s.state !== "completed";
   if (s.state === "completed") { $("#ppoDownload").href = `/api/public-training/sessions/${encodeURIComponent(s.id)}/bundle`; $("#ppoReplay").href = `studio.html?policy=${encodeURIComponent(s.policy_id)}`; }
   $("#ppoDetails").hidden = false; $("#ppoReceipt").textContent = JSON.stringify(s, null, 2); ppoReady();
@@ -159,12 +168,11 @@ async function pollTraining(id, version) {
   } catch (e) { $("#ppoStatus").textContent = `Status unavailable: ${e.message}`; $("#ppoResume").hidden = false; }
 }
 function followTraining(id) { if (ppoId === id) return; ppoId = id; sessionStorage.setItem("ew_ppo_session", id); pollTraining(id, ++ppoVersion); }
-$("#ppoConsent").addEventListener("change", ppoReady);
 $("#ppoResume").addEventListener("click", () => { if (ppoId) pollTraining(ppoId, ++ppoVersion); });
 $("#ppoForm").addEventListener("submit", async (e) => {
   e.preventDefault(); ppoActive = true; ppoReady(); $("#ppoError").textContent = "";
   try {
-    const s = await request("/api/public-training/start", {method:"POST",body:JSON.stringify({seed:Number($("#ppoSeed").value),consent:$("#ppoConsent").checked})});
+    const s = await request("/api/public-training/start", {method:"POST",body:JSON.stringify({seed:Number($("#ppoSeed").value),budget:Number($("#ppoBudget").value),consent:true})});
     ppoPaint(s); sessionStorage.setItem("ew_ppo_session", s.id); pollTraining(s.id, ++ppoVersion);
   } catch(e) { $("#ppoError").textContent = e.message; ppoActive = false; ppoReady(); }
 });
@@ -173,8 +181,32 @@ $("#ppoCancel").addEventListener("click", async () => {
   catch(e) { $("#ppoError").textContent = e.message; }
 });
 (async () => {
-  try { await connectionReady; ppoConfig = await request("/api/public-training/config"); $("#ppoState").textContent = ppoConfig.enabled ? "CPU ready" : "Unavailable";
-    $("#ppoLimits").textContent = ppoConfig.enabled ? `One trial at a time · ${ppoConfig.daily_runs} shared starts per UTC day · ${ppoConfig.visitor_hourly} per browser/hour · eight-minute limit. No model key needed for this button. Download your evidence after completion.` : ppoConfig.reason;
+  try { await connectionReady; ppoConfig = await request("/api/public-training/config"); $("#ppoState").textContent = ppoConfig.enabled ? "Ready to train" : "Unavailable";
+    $("#ppoLimits").textContent = ppoConfig.enabled ? `${ppoConfig.daily_runs} runs available each UTC day, ${ppoConfig.visitor_hourly} per browser each hour. One run at a time, for up to eight minutes. Training uses complete PPO rollouts, so the final step count may be slightly higher than requested.` : ppoConfig.reason;
     ppoReady(); const id = sessionStorage.getItem("ew_ppo_session"); if (id) followTraining(id);
   } catch(e) { $("#ppoStatus").textContent = "CPU service unavailable. Reconnect or reload to try again."; }
 })();
+
+function attachRunView(id) {
+  if (frameId === id) return;
+  frameId = id; const version = ++frameVersion;
+  arenaReady.then(arena => { if (version !== frameVersion) return; arena.reset(); $("#arenaReplay").disabled = ppoCurrent?.id !== id || ppoCurrent?.state !== "completed"; pollFrames(id, 0, version); });
+}
+async function pollFrames(id, after, version, failures=0) {
+  if (version !== frameVersion) return;
+  try {
+    const data = await request(`/api/public-training/sessions/${encodeURIComponent(id)}/frames?after=${after}`);
+    if (version !== frameVersion) return;
+    const arena = await arenaReady; arena.ingest(data.frames);
+    if (data.finished) arena.finish();
+    if (!data.finished) setTimeout(() => pollFrames(id,data.latest,version),350);
+  } catch (_) {
+    if (version === frameVersion && failures < 8) setTimeout(() => pollFrames(id,after,version,failures+1),1500);
+    else if (version === frameVersion) $("#arenaCaption").textContent = "The simulator view disconnected. Reconnect to the run to try again.";
+  }
+}
+$("#arenaReplay").addEventListener("click", async () => {
+  if (!ppoCurrent?.replay_evaluation_id) return;
+  try { const replay = await request(`/api/replay/${encodeURIComponent(ppoCurrent.replay_evaluation_id)}`); (await arenaReady).loadReplay(replay); }
+  catch (e) { $("#arenaCaption").textContent = `Could not load the replay: ${e.message}`; }
+});
