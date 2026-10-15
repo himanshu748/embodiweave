@@ -1,0 +1,35 @@
+{
+ "id": "job-20261015060150-304cf1",
+ "kind": "evaluate",
+ "params": {
+  "policy_id": "scratch~424514-s7",
+  "suite_id": "val-open-v1",
+  "purpose": "agent evaluation"
+ },
+ "idem_key": "9bbf84a823961e23",
+ "state": "completed",
+ "submitted_at": 1792044110.9037724,
+ "requested_by": "agent-20261015055357-535ef1",
+ "progress": null,
+ "result": {
+  "evaluation_id": "eval-20261015060153-6f541c",
+  "summary": {
+   "episodes": 40,
+   "success_rate": 0.725,
+   "collision_rate": 0.0,
+   "timeout_rate": 0.275,
+   "mean_success_steps": 94.8,
+   "collisions_by_object": {
+    "wall": 0,
+    "static": 0,
+    "mover": 0
+   }
+  },
+  "artifact_hash": "dad3c121c416ebdff298946fe397822a6f0e3e7b3e58e85b888ad1d0d14ee458"
+ },
+ "error": null,
+ "consumed_steps": null,
+ "worker_pid": 966,
+ "started_at": 1792044111.507393,
+ "finished_at": 1792044113.6141422
+}

@@ -80,8 +80,9 @@ def inspect_mission() -> dict:
 @tool
 def query_graph(template: str, params: dict) -> dict:
     """Run one named read-only Cypher template (GRAPH.RO_QUERY). See AGENT_TEMPLATES for the allowed names."""
+    template = template.split("(")[0].strip()  # models often echo the "name(params)" form from the tool description
     if template not in AGENT_TEMPLATES:
-        raise PermissionError(f"template {template} not allowed")
+        raise PermissionError(f"template {template} not allowed; use one of {sorted(AGENT_TEMPLATES)}")
     for k, v in params.items():
         if not isinstance(v, (str, int, float, bool, list)):
             raise ValueError(f"param {k} has unsupported type")

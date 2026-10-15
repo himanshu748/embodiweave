@@ -1,0 +1,1604 @@
+{
+ "final_text": "**The adaptation did not produce a promotable policy. The promotion gate rejected the checkpoint `scratch~a7ee2c-s7`.**\n\n**Measured failure of the deployed policy (P-static-b, val-target-v1, 60 episodes)**\n- Success rate was 0.367 and collision rate was 0.483.\n- Of the collisions, 21 were with the mover and 8 with static obstacles. There were no wall collisions.\n- 9 episodes timed out.\n- The authored hypotheses are not measured causes. They say mover collisions *may* mean weak yielding and static collisions *may* mean weak static avoidance.\n\n**Parent selection (rule ew-select-3, decision `deci-20261015060348-a7ee2c`)**\n- The rule chose `train_from_scratch`. No existing checkpoint was selected as a parent.\n- Scratch had p_reach 0.2308 (2 of 11 applicable scratch trials reached threshold).\n- The checkpoints P-static-a, P-cross-a and P-open-a each had p_reach 0.1429 (0 of 5 trials reached threshold).\n- P-static-b had p_reach 0.0714 (0 of 12 trials).\n- P-mirror was rejected because its contract does not match (the ray order differs).\n- The decision listed no candidates needing evaluation, so I queued no extra matched validations.\n\n**Training (seed 7, 150k PPO steps, run once, no retry)**\n- The job produced the child `scratch~a7ee2c-s7`. It used 151,552 steps in total.\n- It did **not** reach the target threshold (`threshold_reached` was false).\n- Its final val-target-v1 result was a success rate of 0.867 and a collision rate of 0.133. Of those collisions, 2 were static and 6 were mover.\n\n**Retained-behaviour validation (40 episodes each)**\n\n| Suite | Success rate | Collision rate | Gate requirement | Result |\n|---|---|---|---|---|\n| val-open-v1 | 0.725 | 0.0 | success \u2265 0.9 | Fail. The other episodes timed out (27.5%). |\n| val-static-v1 | 0.95 | 0.025 | success \u2265 0.75, collisions \u2264 0.1 | Pass |\n| val-crossing-v1 | 0.725 | 0.175 | success \u2265 0.75, collisions \u2264 0.15 | Fail. All 7 collisions were with the mover. |\n\n**Promotion (`prom-20261015060506-9a3c7a`)**\n- Verdict: rejected. Three of the four suites failed.\n- val-target-v1 passed on success (0.87 against a minimum of 0.8) but failed on collisions (0.13 against a maximum of 0.1).\n- val-open-v1 and val-crossing-v1 failed as shown in the table above.\n\n**Evidence export**\n- Bundle: `scratch~a7ee2c-s7-556ec083bc85.zip`\n- sha256: `083a32973e5b1a9853ad62dae15a3eee5e60e913368ae531a13a60d935a50eda`\n- Artifact hash: `556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa`\n\nThe new checkpoint is much better than the deployed policy on the target suite (success 0.87 against 0.37). It still fails the gate, and P-static-b remains deployed. The mover collisions still appear in the target and crossing results. That fits the yielding hypothesis, but this run did not test that hypothesis.",
+ "id": "agent-20261015060343-b9e6bc",
+ "kind": "agent_trace",
+ "mode": "llm-agent",
+ "model": "anthropic/claude-sonnet-5.5",
+ "provider": "openrouter",
+ "recorded_at": "2026-10-15T06:05:16+0000",
+ "rejected_tool_calls": [],
+ "transcript": [
+  {
+   "args": {},
+   "result": {
+    "deployed_policy": "P-static-b",
+    "deployed_target_evaluation": {
+     "evaluation_id": "eval-20261015040917-9c0df8",
+     "summary": {
+      "collision_rate": 0.4833,
+      "collisions_by_object": {
+       "mover": 21,
+       "static": 8,
+       "wall": 0
+      },
+      "episodes": 60,
+      "mean_success_steps": 94.2,
+      "success_rate": 0.3667,
+      "timeout_rate": 0.15
+     }
+    },
+    "failure_evidence": [
+     {
+      "collision_rate": 0.4833,
+      "count": 21,
+      "episodes": [
+       1,
+       2,
+       6,
+       8,
+       9,
+       14,
+       16,
+       17,
+       23,
+       25,
+       26,
+       27,
+       32,
+       33,
+       34,
+       36,
+       39,
+       43,
+       52,
+       56,
+       58
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:collision:mover",
+      "hit": "mover",
+      "hypothesis": "Collisions with the moving obstacle MAY indicate weak yielding to dynamic obstacles. Authored hypothesis, not a measured cause.",
+      "hypothesis_id": "hyp-mover-yield",
+      "outcome": "collision",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": "yield_dynamic",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "collision_rate": 0.4833,
+      "count": 8,
+      "episodes": [
+       5,
+       10,
+       12,
+       13,
+       28,
+       31,
+       42,
+       49
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:collision:static",
+      "hit": "static",
+      "hypothesis": "Collisions with static obstacles MAY indicate weak static avoidance. Authored hypothesis.",
+      "hypothesis_id": "hyp-static-avoid",
+      "outcome": "collision",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": "avoid_static",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "collision_rate": 0.4833,
+      "count": 9,
+      "episodes": [
+       0,
+       3,
+       11,
+       20,
+       37,
+       41,
+       44,
+       48,
+       55
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:timeout",
+      "hit": null,
+      "hypothesis": null,
+      "hypothesis_id": null,
+      "outcome": "timeout",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": null,
+      "suite_id": "val-target-v1"
+     }
+    ],
+    "graph_revision": 14,
+    "mission": "static_crossing",
+    "note": "Failure rows are measured; hypothesis rows are authored and unverified.",
+    "requirements": [
+     {
+      "competency": "avoid_static",
+      "suite_id": "val-static-v1"
+     },
+     {
+      "competency": "reach_goal",
+      "suite_id": "val-open-v1"
+     },
+     {
+      "competency": "static_crossing_mission",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "competency": "yield_dynamic",
+      "suite_id": "val-crossing-v1"
+     }
+    ],
+    "robot": "ew-unicycle-r20"
+   },
+   "tool": "inspect_mission",
+   "turn": 0
+  },
+  {
+   "args": {
+    "params": {},
+    "template": "policy_lineage_graph"
+   },
+   "result": {
+    "cypher": "MATCH (p:Policy)\nOPTIONAL MATCH (p)-[:DERIVED_FROM]->(q:Policy)\nOPTIONAL MATCH (p)-[:USES_CONTRACT]->(c:Contract)\nRETURN p.id AS id, p.status AS status, p.family AS family, q.id AS parent, c.id AS contract",
+    "graph_revision": 14,
+    "row_count": 45,
+    "rows": [
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static",
+      "id": "P-static-a",
+      "parent": "P-open-a",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "crossing",
+      "id": "P-cross-a",
+      "parent": "P-open-a",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static+custom",
+      "id": "P-static-b",
+      "parent": "P-static-a",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "crossing",
+      "id": "P-static-a~cross-t1",
+      "parent": "P-static-a",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-static-b~tgt-s301",
+      "parent": "P-static-b",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-static-b~6fcae1-s7",
+      "parent": "P-static-b",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-open-a~hist-s501",
+      "parent": "P-open-a",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-cross-a~hist-s501",
+      "parent": "P-cross-a",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-cross-a~hist-s502",
+      "parent": "P-cross-a",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-open-a~hist-s502",
+      "parent": "P-open-a",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-static-a~hist-s502",
+      "parent": "P-static-a",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-static-a~hist-s501",
+      "parent": "P-static-a",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-static-b~hist-s501",
+      "parent": "P-static-b",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-static-b~hist-s502",
+      "parent": "P-static-b",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-static-a~cmp-s602",
+      "parent": "P-static-a",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-static-a~cmp-s601",
+      "parent": "P-static-a",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-static-a~cmp-s603",
+      "parent": "P-static-a",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-static-b~cmp-s602",
+      "parent": "P-static-b",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-static-b~cmp-s601",
+      "parent": "P-static-b",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-static-b~cmp-s603",
+      "parent": "P-static-b",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-cross-a~x2-s701",
+      "parent": "P-cross-a",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-cross-a~x2-s702",
+      "parent": "P-cross-a",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-cross-a~x2-s703",
+      "parent": "P-cross-a",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-static-b~x2-s701",
+      "parent": "P-static-b",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-static-b~x2-s703",
+      "parent": "P-static-b",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-static-b~x2-s702",
+      "parent": "P-static-b",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-open-a~x3-s801",
+      "parent": "P-open-a",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-open-a~x3-s802",
+      "parent": "P-open-a",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-open-a~x3-s803",
+      "parent": "P-open-a",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-static-b~x3-s801",
+      "parent": "P-static-b",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-static-b~x3-s802",
+      "parent": "P-static-b",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "P-static-b~x3-s803",
+      "parent": "P-static-b",
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "open",
+      "id": "P-open-a",
+      "parent": null,
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1m:6fad9cbfe838",
+      "family": "crossing",
+      "id": "P-mirror",
+      "parent": null,
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "scratch~cmp-s602",
+      "parent": null,
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "scratch~cmp-s601",
+      "parent": null,
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "scratch~cmp-s603",
+      "parent": null,
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "scratch~x2-s703",
+      "parent": null,
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "scratch~x2-s702",
+      "parent": null,
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "scratch~x2-s701",
+      "parent": null,
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "scratch~x3-s803",
+      "parent": null,
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "scratch~x3-s802",
+      "parent": null,
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "scratch~x3-s801",
+      "parent": null,
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "scratch~10715f-s7",
+      "parent": null,
+      "status": "completed"
+     },
+     {
+      "contract": "ew-contract-1:2f013b6f4849",
+      "family": "static_crossing",
+      "id": "scratch~424514-s7",
+      "parent": null,
+      "status": "completed"
+     }
+    ],
+    "template": "policy_lineage_graph"
+   },
+   "tool": "query_graph",
+   "turn": 1
+  },
+  {
+   "args": {
+    "budget": 150000
+   },
+   "result": {
+    "action": "train_from_scratch",
+    "decision_id": "deci-20261015060348-a7ee2c",
+    "explanation": "Selected scratch: p_reach 0.2308 (2/11 applicable scratch trials reached threshold), trial children score 0.5864 (n=11). Beats P-static-a: p_reach 0.1429 (0/5 applicable trials reached threshold), trial children score -0.03 (n=5) on transfer estimate.",
+    "graph_revision": 14,
+    "needs_evaluation": null,
+    "queries": [
+     {
+      "params": {
+       "mission": "static_crossing"
+      },
+      "returned_ids": [
+       "avoid_static",
+       "reach_goal",
+       "static_crossing_mission",
+       "val-crossing-v1",
+       "val-open-v1",
+       "val-static-v1",
+       "val-target-v1",
+       "yield_dynamic"
+      ],
+      "template": "mission_requirements"
+     },
+     {
+      "params": {
+       "contract": "ew-contract-1:2f013b6f4849",
+       "robot": "ew-unicycle-r20"
+      },
+      "returned_ids": [
+       "P-cross-a",
+       "P-cross-a~hist-s501",
+       "P-cross-a~hist-s502",
+       "P-cross-a~x2-s701",
+       "P-cross-a~x2-s702",
+       "P-cross-a~x2-s703",
+       "P-mirror",
+       "P-open-a",
+       "P-open-a~hist-s501",
+       "P-open-a~hist-s502",
+       "P-open-a~x3-s801",
+       "P-open-a~x3-s802",
+       "P-open-a~x3-s803",
+       "P-static-a",
+       "P-static-a~cmp-s601",
+       "P-static-a~cmp-s602",
+       "P-static-a~cmp-s603",
+       "P-static-a~cross-t1",
+       "P-static-a~hist-s501",
+       "P-static-a~hist-s502",
+       "P-static-b",
+       "P-static-b~6fcae1-s7",
+       "P-static-b~cmp-s601",
+       "P-static-b~cmp-s602",
+       "P-static-b~cmp-s603",
+       "P-static-b~hist-s501",
+       "P-static-b~hist-s502",
+       "P-static-b~tgt-s301",
+       "P-static-b~x2-s701",
+       "P-static-b~x2-s702",
+       "P-static-b~x2-s703",
+       "P-static-b~x3-s801",
+       "P-static-b~x3-s802",
+       "P-static-b~x3-s803",
+       "scratch~10715f-s7",
+       "scratch~424514-s7",
+       "scratch~cmp-s601",
+       "scratch~cmp-s602",
+       "scratch~cmp-s603",
+       "scratch~x2-s701",
+       "scratch~x2-s702",
+       "scratch~x2-s703",
+       "scratch~x3-s801",
+       "scratch~x3-s802",
+       "scratch~x3-s803"
+      ],
+      "template": "candidate_eligibility"
+     },
+     {
+      "params": {
+       "ids": [
+        "P-open-a",
+        "P-static-a",
+        "P-cross-a",
+        "P-static-b"
+       ]
+      },
+      "returned_ids": [
+       "P-cross-a",
+       "P-open-a",
+       "P-static-a",
+       "P-static-b",
+       "run-20261015040303-5486a3",
+       "run-20261015040331-2ce08c",
+       "run-20261015040413-21549a",
+       "run-20261015040548-a267ec"
+      ],
+      "template": "candidate_ancestry"
+     },
+     {
+      "params": {
+       "ids": [
+        "P-open-a",
+        "P-static-a",
+        "P-cross-a",
+        "P-static-b"
+       ],
+       "suite": "val-target-v1"
+      },
+      "returned_ids": [
+       "P-cross-a",
+       "P-open-a",
+       "P-static-a",
+       "P-static-b",
+       "eval-20261015040906-81b5d2",
+       "eval-20261015040909-861253",
+       "eval-20261015040914-b5aef7",
+       "eval-20261015040917-9c0df8"
+      ],
+      "template": "matched_validation"
+     },
+     {
+      "params": {
+       "budget": 150000,
+       "contract": "ew-contract-1:2f013b6f4849",
+       "family": "static_crossing@43ce902c",
+       "ids": [
+        "P-open-a",
+        "P-static-a",
+        "P-cross-a",
+        "P-static-b"
+       ],
+       "recipe": "ppo-r1",
+       "threshold": "thr-target-1"
+      },
+      "returned_ids": [
+       "P-cross-a",
+       "P-cross-a~hist-s501",
+       "P-cross-a~hist-s502",
+       "P-cross-a~x2-s701",
+       "P-cross-a~x2-s702",
+       "P-cross-a~x2-s703",
+       "P-open-a",
+       "P-open-a~hist-s501",
+       "P-open-a~hist-s502",
+       "P-open-a~x3-s801",
+       "P-open-a~x3-s802",
+       "P-open-a~x3-s803",
+       "P-static-a",
+       "P-static-a~cmp-s601",
+       "P-static-a~cmp-s602",
+       "P-static-a~cmp-s603",
+       "P-static-a~hist-s501",
+       "P-static-a~hist-s502",
+       "P-static-b",
+       "P-static-b~6fcae1-s7",
+       "P-static-b~cmp-s601",
+       "P-static-b~cmp-s602",
+       "P-static-b~cmp-s603",
+       "P-static-b~hist-s501",
+       "P-static-b~hist-s502",
+       "P-static-b~x2-s701",
+       "P-static-b~x2-s702",
+       "P-static-b~x2-s703",
+       "P-static-b~x3-s801",
+       "P-static-b~x3-s802",
+       "P-static-b~x3-s803",
+       "trial-20261015042250-29c66d",
+       "trial-20261015042315-15342e",
+       "trial-20261015042318-3b21fc",
+       "trial-20261015042347-eee6ff",
+       "trial-20261015042423-9f3a95",
+       "trial-20261015042423-dcf8b2",
+       "trial-20261015042453-26b36d",
+       "trial-20261015042530-8d9fe7",
+       "trial-20261015042742-e57d03",
+       "trial-20261015042743-37d3b9",
+       "trial-20261015042745-903207",
+       "trial-20261015042851-bac11e",
+       "trial-20261015042853-110017",
+       "trial-20261015042854-0a5abe",
+       "trial-6fcae1-s7",
+       "trial-exp2-P-cross-a-s701",
+       "trial-exp2-P-cross-a-s702",
+       "trial-exp2-P-cross-a-s703",
+       "trial-exp2-P-static-b-s701",
+       "trial-exp2-P-static-b-s702",
+       "trial-exp2-P-static-b-s703",
+       "trial-exp3-P-open-a-s801",
+       "trial-exp3-P-open-a-s802",
+       "trial-exp3-P-open-a-s803",
+       "trial-exp3-P-static-b-s801",
+       "trial-exp3-P-static-b-s802",
+       "trial-exp3-P-static-b-s803"
+      ],
+      "template": "relevant_trials"
+     },
+     {
+      "params": {
+       "budget": 150000,
+       "family": "static_crossing@43ce902c",
+       "ids": [
+        "P-open-a",
+        "P-static-a",
+        "P-cross-a",
+        "P-static-b"
+       ],
+       "recipe": "ppo-r1",
+       "threshold": "thr-target-1"
+      },
+      "returned_ids": [
+       "P-static-a",
+       "P-static-b",
+       "trial-20261015040704-e327c6",
+       "trial-20261015040948-bb36e2"
+      ],
+      "template": "non_applicable_trials"
+     },
+     {
+      "params": {
+       "budget": 150000,
+       "contract": "ew-contract-1:2f013b6f4849",
+       "family": "static_crossing@43ce902c",
+       "recipe": "ppo-r1",
+       "threshold": "thr-target-1"
+      },
+      "returned_ids": [
+       "trial-10715f-s7",
+       "trial-424514-s7",
+       "trial-exp1-scratch-s601",
+       "trial-exp1-scratch-s602",
+       "trial-exp1-scratch-s603",
+       "trial-exp2-scratch-s701",
+       "trial-exp2-scratch-s702",
+       "trial-exp2-scratch-s703",
+       "trial-exp3-scratch-s801",
+       "trial-exp3-scratch-s802",
+       "trial-exp3-scratch-s803"
+      ],
+      "template": "scratch_trials"
+     },
+     {
+      "params": {
+       "suite": "val-target-v1",
+       "trial_ids": [
+        "trial-20261015042423-9f3a95",
+        "trial-20261015042423-dcf8b2",
+        "trial-20261015042742-e57d03",
+        "trial-20261015042743-37d3b9",
+        "trial-20261015042745-903207",
+        "trial-20261015042315-15342e",
+        "trial-20261015042318-3b21fc",
+        "trial-exp2-P-cross-a-s701",
+        "trial-exp2-P-cross-a-s702",
+        "trial-exp2-P-cross-a-s703",
+        "trial-20261015042250-29c66d",
+        "trial-20261015042347-eee6ff",
+        "trial-exp3-P-open-a-s801",
+        "trial-exp3-P-open-a-s802",
+        "trial-exp3-P-open-a-s803",
+        "trial-20261015042453-26b36d",
+        "trial-20261015042530-8d9fe7",
+        "trial-20261015042851-bac11e",
+        "trial-20261015042853-110017",
+        "trial-20261015042854-0a5abe",
+        "trial-6fcae1-s7",
+        "trial-exp2-P-static-b-s701",
+        "trial-exp2-P-static-b-s702",
+        "trial-exp2-P-static-b-s703",
+        "trial-exp3-P-static-b-s801",
+        "trial-exp3-P-static-b-s802",
+        "trial-exp3-P-static-b-s803",
+        "trial-10715f-s7",
+        "trial-424514-s7",
+        "trial-exp1-scratch-s601",
+        "trial-exp1-scratch-s602",
+        "trial-exp1-scratch-s603",
+        "trial-exp2-scratch-s701",
+        "trial-exp2-scratch-s702",
+        "trial-exp2-scratch-s703",
+        "trial-exp3-scratch-s801",
+        "trial-exp3-scratch-s802",
+        "trial-exp3-scratch-s803"
+       ]
+      },
+      "returned_ids": [
+       "P-cross-a~hist-s501",
+       "P-cross-a~hist-s502",
+       "P-cross-a~x2-s701",
+       "P-cross-a~x2-s702",
+       "P-cross-a~x2-s703",
+       "P-open-a~hist-s501",
+       "P-open-a~hist-s502",
+       "P-open-a~x3-s801",
+       "P-open-a~x3-s802",
+       "P-open-a~x3-s803",
+       "P-static-a~cmp-s601",
+       "P-static-a~cmp-s602",
+       "P-static-a~cmp-s603",
+       "P-static-a~hist-s501",
+       "P-static-a~hist-s502",
+       "P-static-b~6fcae1-s7",
+       "P-static-b~cmp-s601",
+       "P-static-b~cmp-s602",
+       "P-static-b~cmp-s603",
+       "P-static-b~hist-s501",
+       "P-static-b~hist-s502",
+       "P-static-b~x2-s701",
+       "P-static-b~x2-s702",
+       "P-static-b~x2-s703",
+       "P-static-b~x3-s801",
+       "P-static-b~x3-s802",
+       "P-static-b~x3-s803",
+       "eval-20261015041745-ed2eb3",
+       "eval-20261015042250-025c19",
+       "eval-20261015042315-91b889",
+       "eval-20261015042318-2a593d",
+       "eval-20261015042347-4e9298",
+       "eval-20261015042423-d02841",
+       "eval-20261015042423-fefd98",
+       "eval-20261015042453-d69eaa",
+       "eval-20261015042530-4e0751",
+       "eval-20261015042637-6099d0",
+       "eval-20261015042638-a61529",
+       "eval-20261015042639-126f9f",
+       "eval-20261015042742-23a8d7",
+       "eval-20261015042743-b3ca92",
+       "eval-20261015042745-78f390",
+       "eval-20261015042851-d9d21c",
+       "eval-20261015042853-ec334e",
+       "eval-20261015042854-9d2b29",
+       "eval-20261015044105-433802",
+       "eval-20261015044105-c85c47",
+       "eval-20261015044106-eab718",
+       "eval-20261015044216-791fe9",
+       "eval-20261015044218-78aff5",
+       "eval-20261015044219-8d87f6",
+       "eval-20261015044316-456a97",
+       "eval-20261015044319-8b4639",
+       "eval-20261015044320-160f8f",
+       "eval-20261015044936-303170",
+       "eval-20261015044939-6578c6",
+       "eval-20261015044941-af7e46",
+       "eval-20261015045027-107d36",
+       "eval-20261015045032-114fe3",
+       "eval-20261015045033-f85066",
+       "eval-20261015045129-e4f694",
+       "eval-20261015045133-d6d940",
+       "eval-20261015045135-95d9fb",
+       "eval-20261015054707-2975e5",
+       "eval-20261015055630-1fb5fc",
+       "scratch~10715f-s7",
+       "scratch~424514-s7",
+       "scratch~cmp-s601",
+       "scratch~cmp-s602",
+       "scratch~cmp-s603",
+       "scratch~x2-s701",
+       "scratch~x2-s702",
+       "scratch~x2-s703",
+       "scratch~x3-s801",
+       "scratch~x3-s802",
+       "scratch~x3-s803",
+       "trial-10715f-s7",
+       "trial-20261015042250-29c66d",
+       "trial-20261015042315-15342e",
+       "trial-20261015042318-3b21fc",
+       "trial-20261015042347-eee6ff",
+       "trial-20261015042423-9f3a95",
+       "trial-20261015042423-dcf8b2",
+       "trial-20261015042453-26b36d",
+       "trial-20261015042530-8d9fe7",
+       "trial-20261015042742-e57d03",
+       "trial-20261015042743-37d3b9",
+       "trial-20261015042745-903207",
+       "trial-20261015042851-bac11e",
+       "trial-20261015042853-110017",
+       "trial-20261015042854-0a5abe",
+       "trial-424514-s7",
+       "trial-6fcae1-s7",
+       "trial-exp1-scratch-s601",
+       "trial-exp1-scratch-s602",
+       "trial-exp1-scratch-s603",
+       "trial-exp2-P-cross-a-s701",
+       "trial-exp2-P-cross-a-s702",
+       "trial-exp2-P-cross-a-s703",
+       "trial-exp2-P-static-b-s701",
+       "trial-exp2-P-static-b-s702",
+       "trial-exp2-P-static-b-s703",
+       "trial-exp2-scratch-s701",
+       "trial-exp2-scratch-s702",
+       "trial-exp2-scratch-s703",
+       "trial-exp3-P-open-a-s801",
+       "trial-exp3-P-open-a-s802",
+       "trial-exp3-P-open-a-s803",
+       "trial-exp3-P-static-b-s801",
+       "trial-exp3-P-static-b-s802",
+       "trial-exp3-P-static-b-s803",
+       "trial-exp3-scratch-s801",
+       "trial-exp3-scratch-s802",
+       "trial-exp3-scratch-s803"
+      ],
+      "template": "trial_outcomes"
+     }
+    ],
+    "ranking": [
+     {
+      "median_steps_to_threshold": null,
+      "n_completed": 5,
+      "n_not_reached_within_budget": 5,
+      "n_reached": 0,
+      "p_basis": "0/5 applicable trials reached threshold",
+      "p_reach": 0.1429,
+      "policy_id": "P-static-a",
+      "rank": 1,
+      "validation": {
+       "collision_rate": 0.65,
+       "episodes": 60,
+       "evaluation_id": "eval-20261015040909-861253",
+       "score": -0.4167,
+       "success_rate": 0.2333
+      }
+     },
+     {
+      "median_steps_to_threshold": null,
+      "n_completed": 5,
+      "n_not_reached_within_budget": 5,
+      "n_reached": 0,
+      "p_basis": "0/5 applicable trials reached threshold",
+      "p_reach": 0.1429,
+      "policy_id": "P-cross-a",
+      "rank": 2,
+      "validation": {
+       "collision_rate": 0.55,
+       "episodes": 60,
+       "evaluation_id": "eval-20261015040914-b5aef7",
+       "score": -0.5333,
+       "success_rate": 0.0167
+      }
+     },
+     {
+      "median_steps_to_threshold": null,
+      "n_completed": 5,
+      "n_not_reached_within_budget": 5,
+      "n_reached": 0,
+      "p_basis": "0/5 applicable trials reached threshold",
+      "p_reach": 0.1429,
+      "policy_id": "P-open-a",
+      "rank": 3,
+      "validation": {
+       "collision_rate": 0.9833,
+       "episodes": 60,
+       "evaluation_id": "eval-20261015040906-81b5d2",
+       "score": -0.9666,
+       "success_rate": 0.0167
+      }
+     },
+     {
+      "median_steps_to_threshold": null,
+      "n_completed": 12,
+      "n_not_reached_within_budget": 12,
+      "n_reached": 0,
+      "p_basis": "0/12 applicable trials reached threshold",
+      "p_reach": 0.0714,
+      "policy_id": "P-static-b",
+      "rank": 4,
+      "validation": {
+       "collision_rate": 0.4833,
+       "episodes": 60,
+       "evaluation_id": "eval-20261015040917-9c0df8",
+       "score": -0.1166,
+       "success_rate": 0.3667
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "policy_id": "P-mirror",
+      "reasons": [
+       "semantic contract mismatch (ew-contract-1m:6fad9cbfe838 vs ew-contract-1:2f013b6f4849; differs in ray_order)"
+      ]
+     },
+     {
+      "policy_id": "P-static-a~cross-t1",
+      "reasons": [
+       "outside requested catalog (run kind transfer_measurement)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~tgt-s301",
+      "reasons": [
+       "outside requested catalog (run kind transfer_trial)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~6fcae1-s7",
+      "reasons": [
+       "outside requested catalog (run kind transfer_trial)"
+      ]
+     },
+     {
+      "policy_id": "P-open-a~hist-s501",
+      "reasons": [
+       "outside requested catalog (run kind transfer_measurement)"
+      ]
+     },
+     {
+      "policy_id": "P-cross-a~hist-s501",
+      "reasons": [
+       "outside requested catalog (run kind transfer_measurement)"
+      ]
+     },
+     {
+      "policy_id": "P-cross-a~hist-s502",
+      "reasons": [
+       "outside requested catalog (run kind transfer_measurement)"
+      ]
+     },
+     {
+      "policy_id": "P-open-a~hist-s502",
+      "reasons": [
+       "outside requested catalog (run kind transfer_measurement)"
+      ]
+     },
+     {
+      "policy_id": "P-static-a~hist-s501",
+      "reasons": [
+       "outside requested catalog (run kind transfer_measurement)"
+      ]
+     },
+     {
+      "policy_id": "P-static-a~hist-s502",
+      "reasons": [
+       "outside requested catalog (run kind transfer_measurement)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~hist-s501",
+      "reasons": [
+       "outside requested catalog (run kind transfer_measurement)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~hist-s502",
+      "reasons": [
+       "outside requested catalog (run kind transfer_measurement)"
+      ]
+     },
+     {
+      "policy_id": "scratch~cmp-s602",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "scratch~cmp-s601",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "scratch~cmp-s603",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-a~cmp-s601",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-a~cmp-s602",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-a~cmp-s603",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~cmp-s602",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~cmp-s601",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~cmp-s603",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "scratch~x2-s701",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "scratch~x2-s702",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "scratch~x2-s703",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-cross-a~x2-s701",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-cross-a~x2-s702",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-cross-a~x2-s703",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~x2-s701",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~x2-s702",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~x2-s703",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "scratch~x3-s803",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "scratch~x3-s802",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "scratch~x3-s801",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-open-a~x3-s801",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-open-a~x3-s802",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-open-a~x3-s803",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~x3-s801",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~x3-s802",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~x3-s803",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "scratch~10715f-s7",
+      "reasons": [
+       "outside requested catalog (run kind transfer_trial)"
+      ]
+     },
+     {
+      "policy_id": "scratch~424514-s7",
+      "reasons": [
+       "outside requested catalog (run kind transfer_trial)"
+      ]
+     }
+    ],
+    "rule": "ew-select-3",
+    "selected": null
+   },
+   "tool": "propose_adaptation",
+   "turn": 1
+  },
+  {
+   "args": {
+    "decision_id": "deci-20261015060348-a7ee2c",
+    "seed": 7
+   },
+   "result": {
+    "budget": 150000,
+    "child_policy_id": "scratch~a7ee2c-s7",
+    "created": true,
+    "job_id": "job-20261015060350-74d164",
+    "parent": null,
+    "quota_steps": 3000000,
+    "quota_used_steps": 604656,
+    "state": "queued"
+   },
+   "tool": "start_training",
+   "turn": 2
+  },
+  {
+   "args": {
+    "job_id": "job-20261015060350-74d164",
+    "timeout_s": 240
+   },
+   "result": {
+    "consumed_steps": 151552,
+    "error": null,
+    "id": "job-20261015060350-74d164",
+    "kind": "transfer_trial",
+    "progress": {
+     "at": 1792044287.1922188,
+     "episodes": 1086,
+     "steps": 150000,
+     "train_success_recent": 0.79
+    },
+    "result": {
+     "child_artifact_hash": "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+     "child_policy_id": "scratch~a7ee2c-s7",
+     "final_evaluation_id": "eval-20261015060452-d0c201",
+     "run_id": "run-20261015060350-935b35",
+     "schedule": [
+      {
+       "collision_rate": 0.3167,
+       "collisions_by_object": {
+        "mover": 16,
+        "static": 3,
+        "wall": 0
+       },
+       "episodes": 60,
+       "mean_success_steps": 161.3,
+       "steps": 37504,
+       "success_rate": 0.6,
+       "suite_id": "val-target-v1",
+       "timeout_rate": 0.0833
+      },
+      {
+       "collision_rate": 0.25,
+       "collisions_by_object": {
+        "mover": 8,
+        "static": 7,
+        "wall": 0
+       },
+       "episodes": 60,
+       "mean_success_steps": 140.9,
+       "steps": 75000,
+       "success_rate": 0.75,
+       "suite_id": "val-target-v1",
+       "timeout_rate": 0.0
+      },
+      {
+       "collision_rate": 0.2333,
+       "collisions_by_object": {
+        "mover": 11,
+        "static": 3,
+        "wall": 0
+       },
+       "episodes": 60,
+       "mean_success_steps": 113.6,
+       "steps": 112504,
+       "success_rate": 0.7667,
+       "suite_id": "val-target-v1",
+       "timeout_rate": 0.0
+      },
+      {
+       "collision_rate": 0.15,
+       "collisions_by_object": {
+        "mover": 7,
+        "static": 2,
+        "wall": 0
+       },
+       "episodes": 60,
+       "mean_success_steps": 112.9,
+       "steps": 150000,
+       "success_rate": 0.85,
+       "suite_id": "val-target-v1",
+       "timeout_rate": 0.0
+      },
+      {
+       "collision_rate": 0.1333,
+       "collisions_by_object": {
+        "mover": 6,
+        "static": 2,
+        "wall": 0
+       },
+       "episodes": 60,
+       "mean_success_steps": 112.5,
+       "steps": 151552,
+       "success_rate": 0.8667,
+       "suite_id": "val-target-v1",
+       "timeout_rate": 0.0
+      }
+     ],
+     "steps_to_threshold": null,
+     "threshold_reached": false,
+     "trial_id": "trial-a7ee2c-s7",
+     "trial_status": "completed"
+    },
+    "state": "completed"
+   },
+   "tool": "wait_for_job",
+   "turn": 3
+  },
+  {
+   "args": {
+    "policy_id": "scratch~a7ee2c-s7",
+    "suite_id": "val-open-v1"
+   },
+   "result": {
+    "created": true,
+    "job_id": "job-20261015060457-9ea5f4",
+    "state": "queued"
+   },
+   "tool": "evaluate_checkpoint",
+   "turn": 4
+  },
+  {
+   "args": {
+    "policy_id": "scratch~a7ee2c-s7",
+    "suite_id": "val-static-v1"
+   },
+   "result": {
+    "created": true,
+    "job_id": "job-20261015060457-e022fc",
+    "state": "queued"
+   },
+   "tool": "evaluate_checkpoint",
+   "turn": 4
+  },
+  {
+   "args": {
+    "policy_id": "scratch~a7ee2c-s7",
+    "suite_id": "val-crossing-v1"
+   },
+   "result": {
+    "created": true,
+    "job_id": "job-20261015060457-8c2a7b",
+    "state": "queued"
+   },
+   "tool": "evaluate_checkpoint",
+   "turn": 4
+  },
+  {
+   "args": {
+    "job_id": "job-20261015060457-9ea5f4"
+   },
+   "result": {
+    "consumed_steps": null,
+    "error": null,
+    "id": "job-20261015060457-9ea5f4",
+    "kind": "evaluate",
+    "progress": null,
+    "result": {
+     "artifact_hash": "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+     "evaluation_id": "eval-20261015060459-f5f025",
+     "summary": {
+      "collision_rate": 0.0,
+      "collisions_by_object": {
+       "mover": 0,
+       "static": 0,
+       "wall": 0
+      },
+      "episodes": 40,
+      "mean_success_steps": 94.8,
+      "success_rate": 0.725,
+      "timeout_rate": 0.275
+     }
+    },
+    "state": "completed"
+   },
+   "tool": "wait_for_job",
+   "turn": 5
+  },
+  {
+   "args": {
+    "job_id": "job-20261015060457-e022fc"
+   },
+   "result": {
+    "consumed_steps": null,
+    "error": null,
+    "id": "job-20261015060457-e022fc",
+    "kind": "evaluate",
+    "progress": null,
+    "result": {
+     "artifact_hash": "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+     "evaluation_id": "eval-20261015060501-50061b",
+     "summary": {
+      "collision_rate": 0.025,
+      "collisions_by_object": {
+       "mover": 0,
+       "static": 1,
+       "wall": 0
+      },
+      "episodes": 40,
+      "mean_success_steps": 112.9,
+      "success_rate": 0.95,
+      "timeout_rate": 0.025
+     }
+    },
+    "state": "completed"
+   },
+   "tool": "wait_for_job",
+   "turn": 5
+  },
+  {
+   "args": {
+    "job_id": "job-20261015060457-8c2a7b"
+   },
+   "result": {
+    "consumed_steps": null,
+    "error": null,
+    "id": "job-20261015060457-8c2a7b",
+    "kind": "evaluate",
+    "progress": null,
+    "result": {
+     "artifact_hash": "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+     "evaluation_id": "eval-20261015060504-ae284d",
+     "summary": {
+      "collision_rate": 0.175,
+      "collisions_by_object": {
+       "mover": 7,
+       "static": 0,
+       "wall": 0
+      },
+      "episodes": 40,
+      "mean_success_steps": 115.5,
+      "success_rate": 0.725,
+      "timeout_rate": 0.1
+     }
+    },
+    "state": "completed"
+   },
+   "tool": "wait_for_job",
+   "turn": 5
+  },
+  {
+   "args": {
+    "policy_id": "scratch~a7ee2c-s7"
+   },
+   "result": {
+    "artifact_hash": "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+    "checks": [
+     {
+      "collision_rate": 0.1333,
+      "evaluation_id": "eval-20261015060452-d0c201",
+      "max_collision": 0.1,
+      "min_success": 0.8,
+      "pass": false,
+      "role": "target",
+      "success_rate": 0.8667,
+      "suite_id": "val-target-v1"
+     },
+     {
+      "collision_rate": 0.0,
+      "evaluation_id": "eval-20261015060459-f5f025",
+      "max_collision": 0.05,
+      "min_success": 0.9,
+      "pass": false,
+      "role": "retained",
+      "success_rate": 0.725,
+      "suite_id": "val-open-v1"
+     },
+     {
+      "collision_rate": 0.025,
+      "evaluation_id": "eval-20261015060501-50061b",
+      "max_collision": 0.1,
+      "min_success": 0.75,
+      "pass": true,
+      "role": "retained",
+      "success_rate": 0.95,
+      "suite_id": "val-static-v1"
+     },
+     {
+      "collision_rate": 0.175,
+      "evaluation_id": "eval-20261015060504-ae284d",
+      "max_collision": 0.15,
+      "min_success": 0.75,
+      "pass": false,
+      "role": "retained",
+      "success_rate": 0.725,
+      "suite_id": "val-crossing-v1"
+     }
+    ],
+    "id": "prom-20261015060506-9a3c7a",
+    "missing": [],
+    "policy_id": "scratch~a7ee2c-s7",
+    "reasons": [
+     "val-target-v1: success 0.87 (min 0.8), collision 0.13 (max 0.1)",
+     "val-open-v1: success 0.72 (min 0.9), collision 0.00 (max 0.05)",
+     "val-crossing-v1: success 0.72 (min 0.75), collision 0.17 (max 0.15)"
+    ],
+    "verdict": "rejected"
+   },
+   "tool": "request_promotion",
+   "turn": 6
+  },
+  {
+   "args": {
+    "policy_id": "scratch~a7ee2c-s7"
+   },
+   "result": {
+    "artifact_hash": "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+    "bundle": "scratch~a7ee2c-s7-556ec083bc85.zip",
+    "bytes": 195927,
+    "lineage": [
+     {
+      "artifact_hash": "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+      "family": "static_crossing",
+      "policy_id": "scratch~a7ee2c-s7",
+      "seed": 7,
+      "steps": 151552
+     }
+    ],
+    "policy_id": "scratch~a7ee2c-s7",
+    "sha256": "083a32973e5b1a9853ad62dae15a3eee5e60e913368ae531a13a60d935a50eda"
+   },
+   "tool": "export_evidence",
+   "turn": 6
+  },
+  {
+   "assistant_text": "**The adaptation did not produce a promotable policy. The promotion gate rejected the checkpoint `scratch~a7ee2c-s7`.**\n\n**Measured failure of the deployed policy (P-static-b, val-target-v1, 60 episodes)**\n- Success rate was 0.367 and collision rate was 0.483.\n- Of the collisions, 21 were with the mover and 8 with static obstacles. There were no wall collisions.\n- 9 episodes timed out.\n- The authored hypotheses are not measured causes. They say mover collisions *may* mean weak yielding and static collisions *may* mean weak static avoidance.\n\n**Parent selection (rule ew-select-3, decision `deci-20261015060348-a7ee2c`)**\n- The rule chose `train_from_scratch`. No existing checkpoint was selected as a parent.\n- Scratch had p_reach 0.2308 (2 of 11 applicable scratch trials reached threshold).\n- The checkpoints P-static-a, P-cross-a and P-open-a each had p_reach 0.1429 (0 of 5 trials reached threshold).\n- P-static-b had p_reach 0.0714 (0 of 12 trials).\n- P-mirror was rejected because its contract does not match (the ray order differs).\n- The decision listed no candidates needing evaluation, so I queued no extra matched validations.\n\n**Training (seed 7, 150k PPO steps, run once, no retry)**\n- The job produced the child `scratch~a7ee2c-s7`. It used 151,552 steps in total.\n- It did **not** reach the target threshold (`threshold_reached` was false).\n- Its final val-target-v1 result was a success rate of 0.867 and a collision rate of 0.133. Of those collisions, 2 were static and 6 were mover.\n\n**Retained-behaviour validation (40 episodes each)**\n\n| Suite | Success rate | Collision rate | Gate requirement | Result |\n|---|---|---|---|---|\n| val-open-v1 | 0.725 | 0.0 | success \u2265 0.9 | Fail. The other episodes timed out (27.5%). |\n| val-static-v1 | 0.95 | 0.025 | success \u2265 0.75, collisions \u2264 0.1 | Pass |\n| val-crossing-v1 | 0.725 | 0.175 | success \u2265 0.75, collisions \u2264 0.15 | Fail. All 7 collisions were with the mover. |\n\n**Promotion (`prom-20261015060506-9a3c7a`)**\n- Verdict: rejected. Three of the four suites failed.\n- val-target-v1 passed on success (0.87 against a minimum of 0.8) but failed on collisions (0.13 against a maximum of 0.1).\n- val-open-v1 and val-crossing-v1 failed as shown in the table above.\n\n**Evidence export**\n- Bundle: `scratch~a7ee2c-s7-556ec083bc85.zip`\n- sha256: `083a32973e5b1a9853ad62dae15a3eee5e60e913368ae531a13a60d935a50eda`\n- Artifact hash: `556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa`\n\nThe new checkpoint is much better than the deployed policy on the target suite (success 0.87 against 0.37). It still fails the gate, and P-static-b remains deployed. The mover collisions still appear in the target and crossing results. That fits the yielding hypothesis, but this run did not test that hypothesis.",
+   "turn": 7
+  }
+ ],
+ "usage": [
+  {
+   "input": 2371,
+   "model": "anthropic/claude-sonnet-5.5",
+   "output": 29,
+   "stop": "tool_calls",
+   "turn": 0
+  },
+  {
+   "input": 3399,
+   "model": "anthropic/claude-sonnet-5.5",
+   "output": 128,
+   "stop": "tool_calls",
+   "turn": 1
+  },
+  {
+   "input": 14351,
+   "model": "anthropic/claude-sonnet-5.5",
+   "output": 152,
+   "stop": "tool_calls",
+   "turn": 2
+  },
+  {
+   "input": 14535,
+   "model": "anthropic/claude-sonnet-5.5",
+   "output": 119,
+   "stop": "tool_calls",
+   "turn": 3
+  },
+  {
+   "input": 15481,
+   "model": "anthropic/claude-sonnet-5.5",
+   "output": 333,
+   "stop": "tool_calls",
+   "turn": 4
+  },
+  {
+   "input": 15976,
+   "model": "anthropic/claude-sonnet-5.5",
+   "output": 187,
+   "stop": "tool_calls",
+   "turn": 5
+  },
+  {
+   "input": 16943,
+   "model": "anthropic/claude-sonnet-5.5",
+   "output": 125,
+   "stop": "tool_calls",
+   "turn": 6
+  },
+  {
+   "input": 18009,
+   "model": "anthropic/claude-sonnet-5.5",
+   "output": 1195,
+   "stop": "stop",
+   "turn": 7
+  }
+ ],
+ "wall_s": 93.5
+}

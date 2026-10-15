@@ -140,7 +140,20 @@ export evidence), also served over MCP stdio by `ew/mcp_server.py`. Training run
 cancellation and restart recovery. `start_training` re-runs the rule and refuses a stale decision.
 
 `python -m ew.agent deterministic` runs the full loop over MCP with a scripted policy and is labelled
-"Deterministic rule run". `python -m ew.agent llm` runs the same loop with a real LLM choosing the tool calls: Groq (`GROQ_API_KEY`, model `EW_GROQ_MODEL`, default `auto`: the strongest known tool-calling model the account offers, recorded in the trace) or Claude (`ANTHROPIC_API_KEY`). **The LLM mode has not been run yet:** the Groq path is written but this build environment cannot reach api.groq.com. Deterministic runs are never shown as LLM runs.
+"Deterministic rule run". `python -m ew.agent llm` runs the same loop with a real LLM choosing the tool calls,
+using the first key it finds: OpenRouter (`OPENROUTER_API_KEY`, model `EW_OPENROUTER_MODEL`, default
+`anthropic/claude-sonnet-5.5`), Groq (`GROQ_API_KEY`, `EW_GROQ_MODEL`, default `auto`: the strongest known
+tool-calling model the account offers) or Claude (`ANTHROPIC_API_KEY`). The model is recorded in the trace.
+
+Live LLM runs (15 Oct, traces in `artifacts/records/agent_trace/`):
+- `agent-20261015060343-b9e6bc`, OpenRouter `anthropic/claude-sonnet-5.5`, 8 turns, 94 s: full loop. Rule
+  ew-select-3 chose train from scratch; PPO seed 7 / 150k did not reach threshold; target 0.87 success /
+  0.13 collisions (deployed policy: 0.37 / 0.48); retained suites open 0.725, static 0.95, crossing 0.725 /
+  0.175 collisions; promotion **rejected** by the gate, P-static-b stays deployed; evidence bundle exported.
+- `agent-20261015053827-2f1a08`, Groq free tier `openai/gpt-oss-120b`: same decision and training, but the
+  8000 tokens/min cap and repeated template-name mistakes used up its 40-turn budget before promotion.
+  A second Groq attempt (`agent_traces/agent-20261015055357-535ef1.jsonl`, 80-turn budget) was cut off by
+  Groq rate limits after its first evaluation and wrote no agent_trace record.
 
 ## Studio
 

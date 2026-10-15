@@ -1,0 +1,142 @@
+{
+ "artifact_hash": "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+ "checks": [
+  {
+   "collision_rate": 0.1333,
+   "evaluation_id": "eval-20261015060452-d0c201",
+   "max_collision": 0.1,
+   "min_success": 0.8,
+   "pass": false,
+   "role": "target",
+   "success_rate": 0.8667,
+   "suite_id": "val-target-v1"
+  },
+  {
+   "collision_rate": 0.0,
+   "evaluation_id": "eval-20261015060459-f5f025",
+   "max_collision": 0.05,
+   "min_success": 0.9,
+   "pass": false,
+   "role": "retained",
+   "success_rate": 0.725,
+   "suite_id": "val-open-v1"
+  },
+  {
+   "collision_rate": 0.025,
+   "evaluation_id": "eval-20261015060501-50061b",
+   "max_collision": 0.1,
+   "min_success": 0.75,
+   "pass": true,
+   "role": "retained",
+   "success_rate": 0.95,
+   "suite_id": "val-static-v1"
+  },
+  {
+   "collision_rate": 0.175,
+   "evaluation_id": "eval-20261015060504-ae284d",
+   "max_collision": 0.15,
+   "min_success": 0.75,
+   "pass": false,
+   "role": "retained",
+   "success_rate": 0.725,
+   "suite_id": "val-crossing-v1"
+  }
+ ],
+ "evaluation_ids": [
+  "eval-20261015060452-d0c201",
+  "eval-20261015060459-f5f025",
+  "eval-20261015060501-50061b",
+  "eval-20261015060504-ae284d"
+ ],
+ "id": "prom-20261015060506-9a3c7a",
+ "kind": "promotion",
+ "missing": [],
+ "policy_id": "scratch~a7ee2c-s7",
+ "query": {
+  "cypher": "MATCH (p:Policy {id:$policy})\nUNWIND $suites AS sid\nMATCH (s:Suite {id:sid}) WHERE s.role = 'validation'\nOPTIONAL MATCH (e:Evaluation)-[:ASSESSED]->(p)\nWHERE (e)-[:ON_SUITE]->(s) AND e.artifact_hash = $hash\nRETURN sid AS suite_id, p.artifact_hash AS policy_hash, e.id AS evaluation_id, e.artifact_hash AS evaluated_hash,\n       e.success_rate AS success_rate, e.collision_rate AS collision_rate, e.episodes AS episodes, e.at AS at\nORDER BY suite_id, at",
+  "graph": "ew",
+  "graph_revision": 21,
+  "header": [
+   "suite_id",
+   "policy_hash",
+   "evaluation_id",
+   "evaluated_hash",
+   "success_rate",
+   "collision_rate",
+   "episodes",
+   "at"
+  ],
+  "ms": 2.18,
+  "params": {
+   "hash": "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+   "policy": "scratch~a7ee2c-s7",
+   "suites": [
+    "val-target-v1",
+    "val-open-v1",
+    "val-static-v1",
+    "val-crossing-v1"
+   ]
+  },
+  "record_ids": [
+   "eval-20261015060452-d0c201",
+   "eval-20261015060459-f5f025",
+   "eval-20261015060501-50061b",
+   "eval-20261015060504-ae284d",
+   "val-crossing-v1",
+   "val-open-v1",
+   "val-static-v1",
+   "val-target-v1"
+  ],
+  "rows": [
+   [
+    "val-crossing-v1",
+    "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+    "eval-20261015060504-ae284d",
+    "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+    0.725,
+    0.175,
+    40,
+    "2026-10-15T06:05:04+0000"
+   ],
+   [
+    "val-open-v1",
+    "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+    "eval-20261015060459-f5f025",
+    "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+    0.725,
+    0.0,
+    40,
+    "2026-10-15T06:04:59+0000"
+   ],
+   [
+    "val-static-v1",
+    "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+    "eval-20261015060501-50061b",
+    "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+    0.95,
+    0.025,
+    40,
+    "2026-10-15T06:05:01+0000"
+   ],
+   [
+    "val-target-v1",
+    "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+    "eval-20261015060452-d0c201",
+    "556ec083bc8589363d034745bac670bf7e0afb17fedf138ea0fd8b8797066baa",
+    0.8667,
+    0.1333,
+    60,
+    "2026-10-15T06:04:52+0000"
+   ]
+  ],
+  "template": "promotion_evidence"
+ },
+ "reasons": [
+  "val-target-v1: success 0.87 (min 0.8), collision 0.13 (max 0.1)",
+  "val-open-v1: success 0.72 (min 0.9), collision 0.00 (max 0.05)",
+  "val-crossing-v1: success 0.72 (min 0.75), collision 0.17 (max 0.15)"
+ ],
+ "recorded_at": "2026-10-15T06:05:06+0000",
+ "rule": "promo-1",
+ "verdict": "rejected"
+}

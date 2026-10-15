@@ -1,6 +1,6 @@
 """Runtime agent: talks to the EmbodiWeave MCP server over stdio.
 
-  python -m ew.agent llm            # Anthropic model chooses tools (needs ANTHROPIC_API_KEY)
+  python -m ew.agent llm            # LLM chooses tools: OPENROUTER_API_KEY, else GROQ_API_KEY, else ANTHROPIC_API_KEY
   python -m ew.agent deterministic  # fixed scripted tool sequence, labelled deterministic, same MCP tools
 
 Both modes go through the real MCP protocol and the same bounded tools. Only 'llm' is an LLM run.
@@ -47,7 +47,7 @@ def _result(res) -> dict:
 def _server(session_id: str, mode: str) -> StdioServerParameters:
     env = {**os.environ, "EW_AGENT_SESSION": session_id, "EW_AGENT_MODE": mode,
            "PYTHONPATH": os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}
-    for k in ("ANTHROPIC_API_KEY", "GROQ_API_KEY"):  # the tool server never sees model credentials
+    for k in ("ANTHROPIC_API_KEY", "GROQ_API_KEY", "OPENROUTER_API_KEY"):  # the tool server never sees model credentials
         env.pop(k, None)
     return StdioServerParameters(command=sys.executable, args=["-m", "ew.mcp_server"], env=env)
 
@@ -158,14 +158,16 @@ def _fit(messages: list, budget: int = GROQ_CONTEXT_CHARS) -> list:
     return messages
 
 
-def _groq_create(client, budget: int, rejected: list, **kw):
-    """One completion, waiting out per-minute rate limits and shrinking the context if a request is too large."""
-    import groq
+def _chat_create(client, budget: int, rejected: list, **kw):
+    """One completion, waiting out per-minute rate limits and shrinking the context if a request is too large.
+    Works for any OpenAI-style client (Groq, OpenRouter): both raise APIStatusError with status_code and body."""
     for attempt in range(12):
         try:
             return client.chat.completions.create(messages=_fit(kw["messages"], budget),
                                                   **{k: v for k, v in kw.items() if k != "messages"})
-        except groq.APIStatusError as e:
+        except Exception as e:  # noqa: BLE001
+            if not hasattr(e, "status_code"):
+                raise
             body = getattr(e, "body", None) or {}
             err = body.get("error", body) if isinstance(body, dict) else {}
             if e.status_code == 400 and isinstance(err, dict) and err.get("code") == "tool_use_failed":
@@ -181,7 +183,7 @@ def _groq_create(client, budget: int, rejected: list, **kw):
                 raise
             wait = float(e.response.headers.get("retry-after", 0) or 0) or 15.0
             time.sleep(min(wait, 65.0))
-    raise SystemExit("Groq kept rate-limiting after 12 attempts")
+    raise SystemExit("provider kept rate-limiting after 12 attempts")
 
 
 async def run_groq(session_id: str) -> dict:
@@ -189,7 +191,24 @@ async def run_groq(session_id: str) -> dict:
     from groq import Groq
     client = Groq()  # reads GROQ_API_KEY
     available = {m.id for m in client.models.list().data}
-    model = pick_groq_model(available)
+    out = await _run_chat(session_id, client, pick_groq_model(available), GROQ_CONTEXT_CHARS, GROQ_MAX_OUTPUT,
+                          GROQ_RESULT_CHARS)
+    return {"provider": "groq", "models_offered": sorted(available), **out}
+
+
+OPENROUTER_MODEL = os.environ.get("EW_OPENROUTER_MODEL", "anthropic/claude-sonnet-5.5")
+
+
+async def run_openrouter(session_id: str) -> dict:
+    """Same MCP tools and loop through OpenRouter's OpenAI-compatible API. Paid per token, no tight per-minute cap."""
+    from openai import OpenAI
+    client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=os.environ["OPENROUTER_API_KEY"],
+                    default_headers={"X-Title": "EmbodiWeave"})
+    out = await _run_chat(session_id, client, OPENROUTER_MODEL, 120_000, 4096, 20_000)
+    return {"provider": "openrouter", **out}
+
+
+async def _run_chat(session_id: str, client, model: str, budget: int, max_out: int, result_chars: int) -> dict:
     transcript, usage, rejected = [], [], []
     async with stdio_client(_server(session_id, "llm-agent")) as (r, w):
         async with ClientSession(r, w) as s:
@@ -201,8 +220,8 @@ async def run_groq(session_id: str) -> dict:
                         {"role": "user", "content": "Investigate the failing deployed policy and run the failure-to-fix loop."}]
             final_text = ""
             for turn in range(MAX_TURNS):
-                resp = _groq_create(client, GROQ_CONTEXT_CHARS, rejected, model=model, messages=messages, tools=tools,
-                                    tool_choice="auto", max_completion_tokens=GROQ_MAX_OUTPUT)
+                resp = _chat_create(client, budget, rejected, model=model, messages=messages, tools=tools,
+                                    tool_choice="auto", max_completion_tokens=max_out)
                 ch = resp.choices[0]
                 usage.append({"turn": turn, "model": resp.model, "input": resp.usage.prompt_tokens,
                               "output": resp.usage.completion_tokens, "stop": ch.finish_reason})
@@ -225,18 +244,19 @@ async def run_groq(session_id: str) -> dict:
                         args, out = c.function.arguments, {"error": f"INVALID_JSON: {e}"}
                     transcript.append({"turn": turn, "tool": c.function.name, "args": args, "result": out})
                     messages.append({"role": "tool", "tool_call_id": c.id,
-                                     "content": json.dumps(out, default=str)[:GROQ_RESULT_CHARS]})
-    return {"provider": "groq", "model": model, "models_offered": sorted(available),
-            "rejected_tool_calls": rejected, "transcript": transcript, "usage": usage, "final_text": final_text}
+                                     "content": json.dumps(out, default=str)[:result_chars]})
+    return {"model": model, "rejected_tool_calls": rejected, "transcript": transcript, "usage": usage, "final_text": final_text}
 
 
 def main():
     mode = sys.argv[1] if len(sys.argv) > 1 else "deterministic"
     sid = records.new_id("agent")
     t0 = time.time()
-    if mode == "llm":  # pick the provider whose key is configured; Groq first, it is the project's chosen provider
-        mode = "llm-groq" if os.environ.get("GROQ_API_KEY") else "llm-anthropic"
-    runner = {"llm-groq": run_groq, "llm-anthropic": run_llm, "deterministic": run_deterministic}[mode]
+    if mode == "llm":  # pick the provider whose key is configured: OpenRouter, then Groq, then Anthropic
+        mode = ("llm-openrouter" if os.environ.get("OPENROUTER_API_KEY")
+                else "llm-groq" if os.environ.get("GROQ_API_KEY") else "llm-anthropic")
+    runner = {"llm-openrouter": run_openrouter, "llm-groq": run_groq, "llm-anthropic": run_llm,
+              "deterministic": run_deterministic}[mode]
     out = asyncio.run(runner(sid))
     rec = records.write("agent_trace", {"id": sid, "mode": "llm-agent" if mode.startswith("llm") else "deterministic",
                                         "wall_s": round(time.time() - t0, 1), **out})

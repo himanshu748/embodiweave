@@ -30,7 +30,8 @@ def inspect_mission() -> dict:
     return T.inspect_mission()
 
 
-@mcp.tool(description=f"Run one named read-only Cypher template on FalkorDB. Templates: {TEMPLATES}. "
+@mcp.tool(description=f"Run one named read-only Cypher template on FalkorDB. Pass the bare name as template and its parameters "
+                      f"in params. Templates and their params: {TEMPLATES}. "
                       "Every listed param is required. ids is a list of policy ids, contract is the contract_id and robot the robot "
                       "name from inspect_mission, suite a validation suite id, evaluation an evaluation id.")
 def query_graph(template: str, params: dict) -> dict:
