@@ -376,6 +376,8 @@ FEATURED_FAILURE_EVAL = os.environ.get("EW_FEATURED_FAILURE_EVAL", "eval-2026101
 
 
 def _live_presets() -> dict:
+    if not (records.exists("decision", FEATURED_DECISION) and records.exists("promotion", FEATURED_PROMOTION)):
+        raise HTTPException(404, "the featured agent run is not recorded in this artifacts directory")
     d = records.read("decision", FEATURED_DECISION)
     used = {q["template"]: q["params"] for q in d.get("queries", [])}
     pr = records.read("promotion", FEATURED_PROMOTION)
@@ -413,6 +415,7 @@ def live_query(name: str):
 @app.get("/api/live/featured")
 def live_featured():
     """The recorded decision and gate verdict the live console's questions come from."""
+    _live_presets()
     d = records.read("decision", FEATURED_DECISION)
     pr = records.read("promotion", FEATURED_PROMOTION)
     opts = [{"option": "scratch", **{k: d["scratch_option"].get(k) for k in ("p_reach", "p_basis", "trial_child_score", "n_completed", "n_reached")}}]

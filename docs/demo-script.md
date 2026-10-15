@@ -25,5 +25,16 @@ on screen comes from stored records; say "simulated robot" at least once.
    scratch, about 0.70 test success against 0.37 to 0.39 for the latest or best-validation checkpoint,
    on every paired seed. Close on the honest caveats: three seeds, no arm met the full collision limit.
 
-Do not present the Agent tab as an LLM run unless `python -m ew.agent llm` was actually run with an
-API key; the existing trace is labelled "Deterministic rule run".
+Agent tab: show trace `agent-20261015060343-b9e6bc` (OpenRouter, `anthropic/claude-sonnet-5.5`, 8 turns). It
+is a real LLM run: the model chose every tool call, the rule chose scratch, PPO missed the threshold and the
+gate rejected the checkpoint (target 0.87 success but 0.13 collisions against a 0.10 limit). Say that the
+rejection is the system working. Do not present the deterministic trace as an LLM run.
+
+## 30-second opening for the hosted site (https://embodiweave.onrender.com)
+
+1. Hero: let the two replays play. "Same seed. The deployed policy hits the pedestrian at step 51, the
+   checkpoint the agent trained reaches the goal."
+2. The dark Live card under it: "This just queried FalkorDB. Fine-tuning a parent: 0 of 27 matching trials
+   ever reached the threshold. From scratch: 2 of 12. That is why the agent trained from scratch."
+3. Scroll to Live from FalkorDB, click questions 2 and 5 to show the Cypher, params and returned rows.
+4. Scroll to From rows to a decision: the ranked options and the four gate checks that rejected it.

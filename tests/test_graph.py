@@ -131,3 +131,14 @@ def test_outage_stops_decisions(world, monkeypatch):
     with pytest.raises(db.GraphUnavailable):
         service.record_decision(req())
     monkeypatch.setattr(db, "_db", None)
+
+
+def test_export_bundle_contains_reloadable_artifact(world):
+    import zipfile
+    out = service.export_bundle("T-b")
+    with zipfile.ZipFile(out["path"]) as z:
+        names = set(z.namelist())
+        assert {"policy/model.zip", "policy/vecnormalize.pkl", "policy/manifest.json", "contract.json",
+                "records.json", "lineage.json", "REPRODUCE.md"} <= names
+        lineage = [x["policy_id"] for x in __import__("json").loads(z.read("lineage.json"))]
+    assert lineage == ["T-b", "T-a"]

@@ -83,3 +83,29 @@ Full write-up: `gate5/RESULTS.md`. Commands, in order:
 | v3 after exp-3 | `gate5/v3_decision_after_exp3.log` | train_from_scratch, p 0.27 (2/9) |
 
 Spent final-test suites are refused in code: v1 by exp-1, v2 by exp-2, v3 by exp-3.
+
+## Gate 3: agent loop (2026-10-15)
+
+| Check | Evidence | Observed |
+|---|---|---|
+| Worker idempotency, quota, cancellation, restart recovery, exact-artifact promotion, tool guards, stale decision refusal | `pytest tests/test_gate3.py` | 6 passed |
+| MCP stdio server with bounded tools | `ew/mcp_server.py`, `ew/agent_tools.py` | 11 tools; `query_graph` accepts only the 10 read templates, run through GRAPH.RO_QUERY |
+| Real runtime LLM, full loop | `artifacts/records/agent_trace/agent-20261015060343-b9e6bc.json`, `artifacts/agent_traces/agent-20261015060343-b9e6bc.jsonl` | OpenRouter `anthropic/claude-sonnet-5.5`, 8 turns, 94 s. Decision `deci-20261015060348-a7ee2c` train_from_scratch; trial reached threshold false; promotion `prom-20261015060506-9a3c7a` rejected (1 of 4 suites passed) |
+| Weaker provider, honestly reported | `agent-20261015053827-2f1a08` | Groq free tier ran out of its 40-turn budget before promotion; recorded as incomplete |
+
+## Gate 4: interactive studio
+
+Screenshots in `gate4/`. Replays are drawn from recorded simulator states; scenario controls run a real
+evaluation; Live, Recorded and What-if badges; graph-down banner; keyboard focus styles and reduced motion.
+
+## Gate 6: release
+
+| Item | Evidence |
+|---|---|
+| Public repo, MIT | https://github.com/himanshu748/embodiweave, `LICENSE` |
+| Live deploy (read-only hosted mode) | https://embodiweave.onrender.com, `Dockerfile`, `scripts/hosted.sh`; training, evaluation, promotion and export return 403 there (`tests/test_hosted.py`) |
+| Graph model and exact Cypher | `README.md` sections Graph model and Cypher the agent runs; `ew/graph/queries.py` |
+| Negative findings | `README.md` Limitations, `evidence/gate5/RESULTS.md` (exp-1) |
+| Document dates and AI disclosure | `README.md` Documents, dates and AI disclosure; `gate0/readiness.md` |
+| Fresh-clone run | 15 Oct: `git clone https://github.com/himanshu748/embodiweave` at bd2129c, new Python 3.13 venv, `pip install -r requirements.lock` (exit 0), `pytest -q` -> 37 passed in 88.6 s. With `tests/test_hosted.py` and the export test added: 39 passed |
+| Demo video | not yet recorded (owner) |

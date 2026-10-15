@@ -164,6 +164,10 @@ from recorded simulator states, scenario controls that run a real evaluation, ca
 rejection reasons, the Cypher evidence, a live graph view, jobs, agent traces and the results table.
 Badges show Recorded, Live or What-if, and a banner appears when the graph is unreachable.
 
+The landing page (`web/index.html`) leads with the recorded simulator replay, a card that queries FalkorDB
+live on load, a console that re-runs five of the agent's read templates against the live graph, and the
+recorded decision ranking and gate checks.
+
 ![Decision tab](evidence/gate4/studio-decision.png)
 
 ## Run it
@@ -173,7 +177,7 @@ Requirements: Linux or macOS with Docker, Python 3.13. No GPU needed (4 CPU core
 ```bash
 python3.13 -m venv .venv && .venv/bin/pip install -r requirements.lock
 bash scripts/start.sh                   # FalkorDB (pinned digest), worker, studio on 127.0.0.1:8000
-.venv/bin/python -m pytest -q           # 37 tests, needs FalkorDB on localhost:6379
+.venv/bin/python -m pytest -q           # 39 tests, needs FalkorDB on localhost:6379
 ```
 
 To rebuild the evidence from nothing: `scripts/build_library.py`, `scripts/gate2_demo.py`,
@@ -189,6 +193,11 @@ artifacts directory (`EW_ARTIFACTS=/path`).
 - The library is small (5 checkpoints) and was trained with short budgets, which is partly why reuse
   lost. A single-seed diagnostic suggests the parents' low exploration noise limits adaptation.
 - The selection rule was revised twice after seeing results; see `evidence/gate5/RESULTS.md`.
+- The live LLM agent run trained a checkpoint that cut collisions from 0.48 to 0.13 on the target suite but
+  still missed the 0.10 limit and lost ground on retained suites, so the gate rejected it. That rejection is
+  the correct outcome, not a demo of an improvement.
+- No demonstrated efficiency advantage is claimed: with three seeds the scratch-vs-warm-start gap is
+  consistent across paired seeds but not a statistical result, and no arm reached the full threshold.
 
 ## Evidence
 
@@ -207,7 +216,7 @@ Per-gate commands and outputs: [`evidence/GATES.md`](evidence/GATES.md). Readine
 ## Acknowledgements
 
 FalkorDB, Stable-Baselines3, Gymnasium, PyTorch, FastAPI, the Model Context Protocol Python SDK and the
-Anthropic Python SDK. License: not yet chosen by the owner.
+Anthropic Python SDK. License: MIT (see `LICENSE`).
 
 ## Hosted demo
 
