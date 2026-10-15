@@ -123,7 +123,21 @@ async def run_llm(session_id: str) -> dict:
     return {"provider": "anthropic", "model": MODEL, "transcript": transcript, "usage": usage, "final_text": final_text}
 
 
-GROQ_MODEL = os.environ.get("EW_GROQ_MODEL", "openai/gpt-oss-120b")
+GROQ_MODEL = os.environ.get("EW_GROQ_MODEL", "auto")
+# Strongest tool-calling families first. "auto" takes the first one the account offers and records which.
+GROQ_PREFERENCE = ("kimi-k2", "gpt-oss-120b", "llama-4-maverick", "qwen3-32b", "llama-3.3-70b", "gpt-oss-20b")
+
+
+def pick_groq_model(available: set[str], wanted: str = GROQ_MODEL) -> str:
+    if wanted != "auto":
+        if wanted not in available:
+            raise SystemExit(f"Groq model {wanted} not offered; set EW_GROQ_MODEL to one of {sorted(available)}")
+        return wanted
+    for fam in GROQ_PREFERENCE:
+        hits = sorted((m for m in available if fam in m), reverse=True)  # newest-looking id first
+        if hits:
+            return hits[0]
+    raise SystemExit(f"no known tool-calling model among {sorted(available)}; set EW_GROQ_MODEL")
 
 
 async def run_groq(session_id: str) -> dict:
@@ -131,8 +145,7 @@ async def run_groq(session_id: str) -> dict:
     from groq import Groq
     client = Groq()  # reads GROQ_API_KEY
     available = {m.id for m in client.models.list().data}
-    if GROQ_MODEL not in available:
-        raise SystemExit(f"Groq model {GROQ_MODEL} not offered; set EW_GROQ_MODEL to one of {sorted(available)}")
+    model = pick_groq_model(available)
     transcript, usage = [], []
     async with stdio_client(_server(session_id, "llm-agent")) as (r, w):
         async with ClientSession(r, w) as s:
@@ -144,7 +157,7 @@ async def run_groq(session_id: str) -> dict:
                         {"role": "user", "content": "Investigate the failing deployed policy and run the failure-to-fix loop."}]
             final_text = ""
             for turn in range(MAX_TURNS):
-                resp = client.chat.completions.create(model=GROQ_MODEL, messages=messages, tools=tools,
+                resp = client.chat.completions.create(model=model, messages=messages, tools=tools,
                                                       tool_choice="auto", max_completion_tokens=8000)
                 ch = resp.choices[0]
                 usage.append({"turn": turn, "model": resp.model, "input": resp.usage.prompt_tokens,
@@ -168,7 +181,7 @@ async def run_groq(session_id: str) -> dict:
                         args, out = c.function.arguments, {"error": f"INVALID_JSON: {e}"}
                     transcript.append({"turn": turn, "tool": c.function.name, "args": args, "result": out})
                     messages.append({"role": "tool", "tool_call_id": c.id, "content": json.dumps(out, default=str)[:20000]})
-    return {"provider": "groq", "model": GROQ_MODEL, "transcript": transcript, "usage": usage, "final_text": final_text}
+    return {"provider": "groq", "model": model, "models_offered": sorted(available), "transcript": transcript, "usage": usage, "final_text": final_text}
 
 
 def main():

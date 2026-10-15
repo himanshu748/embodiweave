@@ -140,7 +140,7 @@ export evidence), also served over MCP stdio by `ew/mcp_server.py`. Training run
 cancellation and restart recovery. `start_training` re-runs the rule and refuses a stale decision.
 
 `python -m ew.agent deterministic` runs the full loop over MCP with a scripted policy and is labelled
-"Deterministic rule run". `python -m ew.agent llm` runs the same loop with a real LLM choosing the tool calls: Groq (`GROQ_API_KEY`, model `EW_GROQ_MODEL`, default `openai/gpt-oss-120b`) or Claude (`ANTHROPIC_API_KEY`). **The LLM mode has not been run yet:** the Groq path is written but this build environment cannot reach api.groq.com. Deterministic runs are never shown as LLM runs.
+"Deterministic rule run". `python -m ew.agent llm` runs the same loop with a real LLM choosing the tool calls: Groq (`GROQ_API_KEY`, model `EW_GROQ_MODEL`, default `auto`: the strongest known tool-calling model the account offers, recorded in the trace) or Claude (`ANTHROPIC_API_KEY`). **The LLM mode has not been run yet:** the Groq path is written but this build environment cannot reach api.groq.com. Deterministic runs are never shown as LLM runs.
 
 ## Studio
 
