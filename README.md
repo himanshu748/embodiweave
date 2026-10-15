@@ -2,7 +2,7 @@
 
 **GraphHacks 2026, Track 1: Agents That Act on Connected Data.** FalkorDB is the primary database.
 
-**Live demo:** _Render URL goes here_ · **License:** MIT · **Demo video:** _link goes here_
+**Live demo:** [embodiweave.onrender.com](https://embodiweave.onrender.com) · **License:** MIT · **Demo video:** _link goes here_
 
 EmbodiWeave turns robot failures into evidence-backed training decisions. A simulated mobile robot
 fails a new mission (static obstacles plus a crossing pedestrian). An agent queries a FalkorDB graph of
