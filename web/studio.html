@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
-<link rel="stylesheet" href="style.css?v=prd2">
+<link rel="stylesheet" href="style.css?v=live1">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Ctext y=%2714%27 font-size=%2714%27%3E%E2%97%88%3C/text%3E%3C/svg%3E">
 </head>
 <body>
@@ -157,7 +157,8 @@
     </div>
 
     <div class="tabpanel hidden" id="tab-agent" role="tabpanel">
-      <section class="agent-launch" aria-labelledby="agentLaunchTitle">
+      <section class="agent-launch"><h3>Try a fresh live investigation</h3><p>A model chooses tools against the running FalkorDB graph. Inspect its evidence, adaptation plan and gate preview.</p><a class="btn primary" href="live.html">Ask the live agent →</a><p class="hint">No new PPO training or deployment changes. The recorded full training trace is below.</p></section>
+      <section class="agent-launch" id="localAgentLaunch" aria-labelledby="agentLaunchTitle">
         <h3 id="agentLaunchTitle">Ask the agent</h3>
         <p id="agentAvailability" class="hint" role="status">Checking local runtime availability</p>
         <label class="consent"><input type="checkbox" id="agentConsent"> I authorize provider API usage and one 150,000-step PPO run (151,552 reserved rollout steps).</label>
@@ -180,6 +181,6 @@
   <div id="inspKind"></div>
   <pre id="inspBody" class="code"></pre>
 </aside>
-<script src="app.js?v=prd2"></script>
+<script src="app.js?v=live1"></script>
 </body>
 </html>

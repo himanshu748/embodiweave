@@ -10,7 +10,7 @@ import time
 from pathlib import Path
 
 import numpy as np
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -31,7 +31,7 @@ STATIC_MODE = os.environ.get("EW_STATIC", "0") == "1"
 
 # Hosted demo (EW_STATIC=1): no worker, no torch. Reads, decisions and sandboxed what-ifs work; anything that
 # trains, evaluates, promotes or exports is refused with a pointer to the local setup.
-READONLY_ALLOWED_POSTS = {"/api/decide", "/api/whatif"}
+READONLY_ALLOWED_POSTS = {"/api/decide", "/api/whatif", "/api/judge/start"}
 
 
 @app.middleware("http")
@@ -341,6 +341,51 @@ def agent_config():
     if STATIC_MODE:
         return {"enabled": False, "reason": "This public demo shows recorded agent runs. Launch a new agent in the local studio."}
     return agent_sessions.configuration()
+
+
+@app.get("/api/judge/config")
+def judge_config(request: Request, response: Response):
+    from . import judge_agent as J
+    response.set_cookie(J.COOKIE, J.visitor(request.cookies.get(J.COOKIE)), httponly=True, samesite="strict",
+                        secure=request.headers.get("x-forwarded-proto", request.url.scheme) == "https", max_age=86400)
+    response.headers["Cache-Control"] = "no-store"
+    return J.configuration()
+
+
+class JudgeStartReq(BaseModel):
+    question: str
+    consent: bool = False
+
+
+@app.post("/api/judge/start")
+def judge_start(r: JudgeStartReq, request: Request, response: Response):
+    from urllib.parse import urlparse
+    from . import judge_agent as J
+    origin = request.headers.get("origin")
+    if origin and urlparse(origin).netloc != request.headers.get("host"):
+        raise HTTPException(403, "Open the live agent on this site's own page.")
+    token = request.cookies.get(J.COOKIE)
+    if token != J.visitor(token):
+        raise HTTPException(403, "Open the live agent page before starting an investigation.")
+    response.headers["Cache-Control"] = "no-store"
+    try:
+        return J.start(r.question, r.consent, token)
+    except J.Limited as exc:
+        raise HTTPException(429, str(exc))
+    except PermissionError as exc:
+        raise HTTPException(403, str(exc))
+    except ValueError as exc:
+        raise HTTPException(400, str(exc))
+
+
+@app.get("/api/judge/sessions/{sid}")
+def judge_session(sid: str, request: Request, response: Response):
+    from . import judge_agent as J
+    response.headers["Cache-Control"] = "no-store"
+    try:
+        return J.status(sid, request.cookies.get(J.COOKIE))
+    except FileNotFoundError:
+        raise HTTPException(404, "Investigation not found in this browser session.")
 
 
 class AgentStartReq(BaseModel):

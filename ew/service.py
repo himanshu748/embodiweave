@@ -153,8 +153,8 @@ def record_decision(request: dict, *, mode: str = "deterministic", graph: str | 
     return rec
 
 
-def promote(policy_id: str, rule: str = "promo-1", graph: str | None = None) -> dict:
-    """Trusted promotion gate. Binds to the exact artifact hash; evidence must be on that hash."""
+def promotion_preview(policy_id: str, rule: str = "promo-1", graph: str | None = None) -> dict:
+    """Run the exact gate without writing a promotion or changing deployment."""
     from .criteria import PROMOTION
     from .graph import queries as Q
     pr = PROMOTION[rule]
@@ -198,9 +198,14 @@ def promote(policy_id: str, rule: str = "promo-1", graph: str | None = None) -> 
         reasons.append("no evaluation of this exact artifact on: " + ", ".join(missing))
     elif reasons:
         verdict = "rejected"
-    rec = records.write("promotion", {"policy_id": policy_id, "artifact_hash": h, "rule": rule, "verdict": verdict,
+    return {"policy_id": policy_id, "artifact_hash": h, "rule": rule, "verdict": verdict,
                                       "reasons": reasons, "checks": checks, "missing": missing,
-                                      "evaluation_ids": used, "query": q.to_log()})
+                                      "evaluation_ids": used, "query": q.to_log()}
+
+
+def promote(policy_id: str, rule: str = "promo-1", graph: str | None = None) -> dict:
+    """Trusted promotion gate. Binds to the exact artifact hash; evidence must be on that hash."""
+    rec = records.write("promotion", promotion_preview(policy_id, rule, graph))
     ingest.promotion(rec, graph)
     db.bump_revision(f"promotion {rec['id']}", graph)
     return rec

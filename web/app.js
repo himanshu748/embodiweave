@@ -23,6 +23,14 @@ async function api(path, opts = {}) {
   return r.json();
 }
 
+async function busy(btn, fn) {
+  btn.disabled = true;
+  const text = btn.textContent;
+  btn.classList.add("loading");
+  try { await fn(); } catch (e) { alert(e.message); }
+  finally { btn.disabled = false; btn.classList.remove("loading"); btn.textContent = text; }
+}
+
 function setMode(m) {
   S.mode = m;
   const b = $("#modeBadge");
@@ -217,12 +225,15 @@ async function loadDecisions(selectId) {
   const sel = $("#decisionSel"); sel.innerHTML = "";
   for (const d of S.decisions.slice().reverse())
     sel.append(el("option", { value: d.id }, `${d.recorded_at.slice(11, 19)} ${d.mode} · ${d.action} → ${d.selected || "n/a"} · rev ${d.graph_revision}`));
-  if (selectId) sel.value = selectId;
+  // A new visitor always starts with measured production evidence, never another visitor's sandbox.
+  const production = S.decisions.filter((d) => d.mode !== "what-if");
+  sel.value = selectId || production.find((d) => d.id === "deci-20261015060348-a7ee2c")?.id || production.at(-1)?.id || "";
   if (sel.value) await selectDecision(sel.value);
   else { $("#decisionHead").innerHTML = "<div class='empty'>No decisions yet. Propose one with the rule.</div>"; }
 }
 async function selectDecision(id) {
   S.decision = await api(`/api/decisions/${id}`);
+  setMode(S.decision.mode === "what-if" ? "What-if" : "Recorded");
   renderDecision(); renderQueries(); if (!$("#tab-graph").classList.contains("hidden")) renderGraph();
 }
 function modeBadge(m) {
@@ -342,12 +353,14 @@ async function renderJobs() {
   const box = $("#jobs"); box.innerHTML = "";
   if (!js.length) { box.append(el("div", { class: "empty" }, "No jobs yet.")); return; }
   for (const j of js.slice(0, 25)) {
-    const budget = j.params.budget, steps = j.progress?.steps ?? j.consumed_steps ?? 0;
+    const budget = j.params.budget, terminal = !["queued", "running"].includes(j.state);
+    const steps = terminal ? (j.consumed_steps ?? 0) : (j.progress?.steps ?? 0);
+    const reserved = j.reserved_steps ?? budget;
     const card = el("div", { class: "job" },
       el("div", { class: "top" }, el("b", {}, `${j.kind.replace("_", " ")} · ${j.state}`), el("span", { class: "hint mono" }, j.id)),
       j.kind === "transfer_trial" ? el("div", {}, `${j.params.parent_id} → ${j.params.child_id} · seed ${j.params.seed}`) : el("div", {}, `${j.params.policy_id} on ${j.params.suite_id}`));
-    if (budget) card.append(el("div", { class: "bar", role: "progressbar", "aria-valuenow": steps, "aria-valuemax": budget }, el("i", { style: `width:${Math.min(100, 100 * steps / budget)}%` })),
-      el("div", { class: "hint" }, `${steps.toLocaleString()} / ${budget.toLocaleString()} env steps` + (j.progress?.train_success_recent != null ? ` · recent training-episode success ${pct(j.progress.train_success_recent)}` : "")));
+    if (budget) card.append(el("div", { class: "bar", role: "progressbar", "aria-valuenow": steps, "aria-valuemax": Math.max(reserved, steps) }, el("i", { style: `width:${Math.min(100, 100 * steps / reserved)}%` })),
+      el("div", { class: "hint" }, `${steps.toLocaleString()} actual env steps · ${budget.toLocaleString()} requested` + (j.reserved_steps ? ` · ${reserved.toLocaleString()} reserved` : "") + (j.progress?.train_success_recent != null ? ` · recent training-episode success ${pct(j.progress.train_success_recent)}` : "")));
     if (j.error) card.append(el("div", { class: "bad" }, j.error));
     if (j.result) {
       const r = j.result;
@@ -371,6 +384,7 @@ async function renderJobs() {
 // ---------------- agent traces ----------------
 async function loadTraces() {
   const cfg = await api("/api/agent/config");
+  $("#localAgentLaunch").hidden = !!S.readonly;
   const start = $("#agentStart"), consent = $("#agentConsent");
   $("#agentAvailability").textContent = cfg.enabled ? `Ready: ${cfg.provider}. API usage may be billed by your provider.` : cfg.reason;
   consent.disabled = !cfg.enabled;
@@ -463,7 +477,8 @@ function wire() {
   const ep = (d) => { const n = $("#episode").options.length; if (!n) return; S.ep = (S.ep + d + n) % n; $("#episode").value = S.ep; S.t = 0; renderArena(); };
   $("#prevEp").addEventListener("click", () => ep(-1)); $("#nextEp").addEventListener("click", () => ep(1));
   document.addEventListener("keydown", (e) => {
-    if (["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement.tagName)) return;
+    if (e.key === "Escape") { $("#inspector").classList.add("hidden"); return; }
+    if (e.target.closest('input, select, textarea, button, a, summary, [role="button"], [contenteditable="true"]')) return;
     if (e.key === " ") { e.preventDefault(); toggle(); }
     else if (e.key === "ArrowRight") { S.t = Math.min(maxT(), S.t + 1); renderArena(); }
     else if (e.key === "ArrowLeft") { S.t = Math.max(0, S.t - 1); renderArena(); }
@@ -472,7 +487,6 @@ function wire() {
   });
   $("#inspClose").addEventListener("click", () => $("#inspector").classList.add("hidden"));
   $("#decisionSel").addEventListener("change", (e) => { S.whatif = null; setMode("Recorded"); selectDecision(e.target.value); });
-  const busy = async (btn, fn) => { btn.disabled = true; const t = btn.textContent; btn.classList.add("loading"); try { await fn(); } catch (e) { alert(e.message); } finally { btn.disabled = false; btn.classList.remove("loading"); btn.textContent = t; } };
   $("#btnPropose").addEventListener("click", (e) => busy(e.target, async () => { const d = await api("/api/decide", { method: "POST", body: JSON.stringify({ budget: +$("#budgetSel").value }) }); await loadDecisions(d.id); }));
   $("#btnEvalMissing").addEventListener("click", (e) => busy(e.target, async () => { await api(`/api/evaluate_candidates/${S.decision.id}`, { method: "POST" }); document.querySelector('[data-tab="jobs"]').click(); }));
   $("#btnTrain").addEventListener("click", (e) => busy(e.target, async () => { await api("/api/train", { method: "POST", body: JSON.stringify({ decision_id: S.decision.id, seed: +$("#seedIn").value }) }); document.querySelector('[data-tab="jobs"]').click(); }));

@@ -4,4 +4,5 @@ logs
 **/__pycache__
 .pytest_cache
 artifacts/agent_sessions
+artifacts/judge_sessions
 artifacts/jobs/.*.lock

@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-# Hosted, read-only EmbodiWeave studio: pinned FalkorDB plus the FastAPI studio in one container.
+# Hosted evidence studio and bounded remote agent: pinned FalkorDB plus FastAPI in one container.
 # Training and evaluation need torch and the worker; run those locally with scripts/start.sh.
 FROM falkordb/falkordb@sha256:107455e862a824e45e8e9f5a7fbfdf5e00a08b14e13eae2577c72fd9e3f59ba6
 RUN apt-get update && apt-get install -y --no-install-recommends python3 python3-venv \

@@ -2,7 +2,7 @@
 
 **GraphHacks 2026, Track 1: Agents That Act on Connected Data.** FalkorDB is the primary database.
 
-**Live demo:** [embodiweave.onrender.com](https://embodiweave.onrender.com) (free tier, the first load can take up to a minute) · **License:** MIT · **Demo video:** [60 second walkthrough](https://embodiweave.onrender.com/media/embodiweave-demo.mp4) · [Judge guide](https://embodiweave.onrender.com/guide.html)
+**Live demo:** [embodiweave.onrender.com](https://embodiweave.onrender.com) (free tier, the first load can take up to a minute) · **[Try the live agent](https://embodiweave.onrender.com/live.html)** · **License:** MIT · **Demo video:** [60 second walkthrough](https://embodiweave.onrender.com/media/embodiweave-demo.mp4) · [Judge guide](https://embodiweave.onrender.com/guide.html)
 
 EmbodiWeave turns robot failures into evidence-backed training decisions. A simulated mobile robot
 fails a new mission (static obstacles plus a crossing pedestrian). An agent queries a FalkorDB graph of
@@ -16,14 +16,15 @@ Everything is a software simulation. No physical robot is involved.
 ## Start here: a judge’s walkthrough
 
 1. [Watch the recorded paired replay](https://embodiweave.onrender.com): seed 1300032, deployed collision at step 51, new checkpoint goal at step 112. A good episode is not a passed gate.
-2. [Run live Cypher](https://embodiweave.onrender.com/#live): query the same conditional transfer evidence the agent used. Query text, parameters, rows and graph revision are visible.
+2. **[Ask the live agent](https://embodiweave.onrender.com/live.html)**: choose a sample brief or write a question. A real model selects tools against live FalkorDB, proposes a fresh adaptation plan and previews the exact-artifact gate. Each call exposes its arguments, Cypher, evidence and latency. You can also [run Cypher directly](https://embodiweave.onrender.com/#live).
 3. [Inspect selection and the gate](https://embodiweave.onrender.com/#decide): scratch wins the recorded ranking; target collisions remain 13%, over the 10% limit. Three of four suites fail. Promotion is rejected.
 4. [Open the studio](https://embodiweave.onrender.com/studio.html): browse the real Sonnet MCP trace, replay different episodes, inspect evidence, and try an isolated What-if.
 5. [Watch the demo film](https://embodiweave.onrender.com/guide.html#film), then reproduce locally below.
 
-**Evidence boundaries:** Live means a current query to running FalkorDB. Recorded means stored PPO,
-simulator or LLM execution evidence. What-if means a labelled sandbox copy. Training, scenario evaluation
-and new agent launches require the full local stack; they are disabled on the free public demo.
+**Evidence boundaries:** Live means a current query or fresh LLM investigation against running FalkorDB.
+The public agent computes a plan and gate preview; it does not train or deploy. Recorded means stored PPO,
+simulator or original Sonnet execution evidence. What-if means a labelled sandbox copy. New PPO training,
+scenario evaluation and the full training agent require the local stack.
 The demo film is an edited browser walkthrough, with captions and a choreographed pointer. Its replay
 frames and interface states were captured from the running app. It does not show a new training run.
 
@@ -188,13 +189,41 @@ Live LLM runs (15 Oct, traces in `artifacts/records/agent_trace/`):
   A second Groq attempt (`agent_traces/agent-20261015055357-535ef1.jsonl`, 80-turn budget) was cut off by
   Groq rate limits after its first evaluation and wrote no agent_trace record.
 
-## Ask the agent locally
+## Try the public live agent
+
+Open [live.html](https://embodiweave.onrender.com/live.html), choose an example or write a question, consent
+to sending the question and public evidence to the displayed provider, and run. No judge API key or account
+is needed. The server owns the key; it is never returned in config, tool results or receipts.
+
+This is a fresh function-calling loop (`ew/judge_agent.py`), separate from the original Sonnet MCP training
+run. The model selects `inspect_mission`, `query_evidence`, `propose_adaptation` and `check_checkpoint`.
+Reads execute named `GRAPH.RO_QUERY` templates. The same frozen selection rule computes the adaptation
+plan; the same trusted gate validates complete canonical evaluations of the exact artifact. Planning and
+gate checks are previews with no graph or deployment writes. No arbitrary Cypher, paths, shell, network
+tools, training, evaluation jobs or final-test outcomes are available to this public loop.
+
+The receipt shows the actual model(s) returned by the provider, selected tools, arguments, returned rows or
+record IDs, exact Cypher, revision, latency, token usage and final report. A model failure, turn limit,
+database outage or service restart is explicit; recorded output is never substituted for a live answer.
+Model prose is interpretation: inspect the tool results to verify it.
+
+**Free hosting limits:** one active investigation, at most 6 model turns, 10 tool calls, 1,200 output tokens
+per turn and two minutes per session; 20 shared starts per UTC day, 4 per browser per hour. Failed attempts
+count. Browser cookies isolate receipts; another visitor cannot list or fetch your session. Reloading
+resumes your current receipt. Sessions and allowances are ephemeral on free Render and reset on restart;
+they are not a durable billing cap. OpenRouter is fixed to `nvidia/nemotron-3.5-lightning:free`, routed only
+to NVIDIA with no paid or provider fallback. Your OpenRouter privacy settings must permit NVIDIA. A Groq
+key can instead use `llama-3.3-70b-versatile`. Provider free quotas can be lower than the app allowance.
+The server needs `EW_PUBLIC_AGENT=1` and `OPENROUTER_API_KEY` (or `GROQ_API_KEY`) in Render Environment.
+Run one uvicorn process. No new hosted dependencies or torch are required.
+
+## Ask the full training agent locally
 
 Set one provider key in your shell and `EW_ALLOW_LLM=1` **before starting the API**, then open Studio → Agent.
 Keys remain on the server. The consent checkbox authorizes provider API usage and one bounded training
 investigation. The launcher allows at most 12 model turns and one new training job per session, requires a live local worker and deduplicates
 concurrent starts. Inspect the session state and final trace in Agent; cancel training in Jobs. Without
-explicit opt-in or a provider key, launch is disabled. The public Render demo always disables launch.
+explicit opt-in or a provider key, launch is disabled. The public Render demo uses the bounded investigation above.
 Existing real LLM traces remain browsable without a key. Provider API usage may incur charges.
 
 ## Studio
@@ -222,7 +251,7 @@ Requirements: Linux or macOS with Docker, Python 3.13. No GPU needed (4 CPU core
 ```bash
 python3.13 -m venv .venv && .venv/bin/pip install -r requirements.lock
 bash scripts/start.sh                   # FalkorDB (pinned digest), worker, studio on 127.0.0.1:8000
-.venv/bin/python -m pytest -q           # 63 tests, needs FalkorDB on localhost:6379
+.venv/bin/python -m pytest -q           # needs FalkorDB on localhost:6379
 ```
 
 The launcher uses a dedicated `embodiweave-db` container bound to loopback, waits for database readiness,
@@ -291,7 +320,7 @@ Per-gate commands and outputs: [`evidence/GATES.md`](evidence/GATES.md). Readine
 - All code, training runs and results were produced after kickoff, on 15 October 2026 (git history).
 - AI tool disclosure: Claude Code (Anthropic) produced the initial code, experiments and documentation.
   OpenAI Codex assisted the independent PRD audit, queue and validation fixes, reproducible exports, local
-  agent launcher, tests, judge guide and landing updates, browser QA and edited demo film. Both were
+  agent launcher, public live agent, tests, judge guide and landing updates, browser QA and edited demo film. Both were
   directed by the project owner. Runtime provider/model identity is recorded separately in each agent trace.
 
 ## Acknowledgements
@@ -307,10 +336,12 @@ templates the recorded agent run used (`failure_inspection`, `relevant_trials`, 
 `GET /api/live/overview` (node and edge counts), `GET /api/live/query/{failure|transfer|scratch|decision|gate}` and
 `GET /api/live/featured` (the recorded decision ranking and gate checks). All go through `GRAPH.RO_QUERY`.
 
-`Dockerfile` builds a read-only studio: the pinned FalkorDB image plus the FastAPI studio, without torch or the
-worker (about 80 MB of memory). On boot it rebuilds the graph from the committed records, so the hosted graph
+`Dockerfile` builds the hosted studio: the pinned FalkorDB image plus the FastAPI studio, without torch or the
+worker. The bounded live agent uses remote inference. On boot it rebuilds the graph from the committed records, so the hosted graph
 matches this repository. Browsing, decisions and what-ifs work there; training, evaluation, promotion and export
-return 403 and run on the full local setup (`scripts/start.sh`). The landing page is `web/index.html`, the judge guide is `web/guide.html`, and the
+return 403 and run on the full local setup (`scripts/start.sh`). The public agent's config/start/status endpoints
+are `/api/judge/config`, `/api/judge/start` and `/api/judge/sessions/{id}`. The landing page is `web/index.html`,
+the live agent is `web/live.html`, the judge guide is `web/guide.html`, and the
 studio is `web/studio.html`. Dynamic measurements come from records or live queries; the guide identifies
 the specific recorded run it describes. `design/design.md` is the committed shared visual guide.
 

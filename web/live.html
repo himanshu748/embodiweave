@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live agent · EmbodiWeave</title><meta name="description" content="Ask a real model to investigate live FalkorDB evidence, choose an adaptation plan and preview the exact-artifact validation gate.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="landing.css?v=live1"><link rel="stylesheet" href="live.css?v=live1"><script src="live.js?v=live1" defer></script></head>
+<body><a class="skip" href="#investigate">Skip to investigation</a>
+<header class="nav"><a class="brand" href="./">EmbodiWeave</a><nav aria-label="Main"><a href="guide.html">Judge guide</a><a href="./#live">Graph console</a><a href="studio.html">Studio</a><a href="https://github.com/himanshu748/embodiweave">Source</a></nav></header>
+<main>
+<section class="live-intro"><p class="eyebrow">Live investigation / GraphHacks 2026 / Track 1</p><h1>Give the agent<br><span class="hl">a question to prove.</span></h1><p class="lede">A real model chooses tools, queries the running FalkorDB graph and follows the evidence. Watch each call, then inspect the exact Cypher and records behind its answer.</p><div class="live" role="status" id="availability">Connecting to the free Render service…</div></section>
+<section class="investigation" id="investigate" aria-label="Live agent investigation">
+<div class="question-sheet">
+  <p class="eyebrow">Your brief</p><h2>What should it investigate?</h2>
+  <div class="prompt-list" aria-label="Example questions">
+    <button type="button" class="prompt" data-question="Investigate the deployed robot's failure. Use live evidence to propose the next adaptation at a 150000-step budget, then check whether the recorded new checkpoint can be promoted.">Investigate the failure and next step <span aria-hidden="true">↗</span></button>
+    <button type="button" class="prompt" data-question="Why does the graph recommend training from scratch instead of reusing a compatible parent at a 150000-step budget? Cite the applicable trials and rule estimates.">Why start from scratch? <span aria-hidden="true">↗</span></button>
+    <button type="button" class="prompt" data-question="Check scratch~a7ee2c-s7 against the exact-artifact promotion gate. Why is the recorded result rejected even though target success improved? Cite the validation evidence.">Explain the rejected checkpoint <span aria-hidden="true">↗</span></button>
+  </div>
+  <form id="investigationForm">
+    <label for="question">Your question</label>
+    <textarea id="question" rows="5" minlength="8" maxlength="800" required>Investigate the deployed robot's failure. Use live evidence to propose the next adaptation at a 150000-step budget, then check whether the recorded new checkpoint can be promoted.</textarea>
+    <p class="fine">Keep private information out. Your question and public graph evidence are sent to <span id="providerName">the configured model provider</span>. The server keeps the API key private.</p>
+    <label class="live-consent"><input id="consent" type="checkbox"> <span>I agree to send this question and public graph evidence to the model provider.</span></label>
+    <button class="btn" id="start" disabled>Run live investigation <span aria-hidden="true">→</span></button>
+    <button class="btn ghost" type="button" id="retryConnection" hidden>Reconnect</button>
+    <p id="startError" class="error" role="alert"></p>
+  </form>
+  <div class="run-boundaries"><b>What runs here</b><p>A fresh model investigation, a graph-driven adaptation plan and an exact-artifact gate preview. No new PPO training or deployment changes.</p><p id="limits">Up to 6 model turns, 10 tool calls and 2 minutes. One investigation runs at a time.</p><p><a href="./#agent">Recorded Sonnet training run</a> · <a href="guide.html#reproduce">Run full training locally</a></p></div>
+</div>
+<div class="evidence-sheet" aria-labelledby="evidenceTitle">
+  <div class="sheet-head"><div><p class="eyebrow">Execution receipt</p><h2 id="evidenceTitle">Follow the tools.</h2></div><span class="tag" id="runState">Ready when you are</span></div>
+  <p id="runStatus" role="status">Choose a question and consent to start. No model call has been made.</p>
+  <p class="fine mono" id="runMeta"></p>
+  <ol id="toolTrace" class="tool-trace" aria-label="Completed live tool calls"></ol>
+  <div class="trace-empty" id="traceEmpty"><span class="mono">Question → model → tool → FalkorDB → evidence</span><p>The model chooses the calls. The frozen rule ranks the start options. The trusted gate checks the measurements.</p><a href="./#live">Prefer a direct query? Open the live graph console →</a></div>
+  <section class="agent-answer" id="answerPanel" hidden><h3>Agent report</h3><p class="fine">Model interpretation of the tool results. Verify claims against the evidence above.</p><div id="answer"></div></section>
+  <p><button class="btn ghost small" id="resume" type="button" hidden>Resume session status</button><a id="downloadReceipt" class="btn ghost small" hidden download="embodiweave-live-investigation.json">Download this receipt</a></p>
+</div>
+</section>
+<section class="live-footnote"><span class="tag rec">Recorded simulator evidence</span><p>The graph contains real, previously measured simulator runs. Asking a fresh agent does not create new episode measurements. Free hosting can sleep, and free models have shared quotas. A provider or database failure is shown explicitly.</p></section>
+</main><footer><span>EmbodiWeave · MIT · software simulation</span><a href="guide.html">Judge guide, video and reproduction →</a></footer></body></html>

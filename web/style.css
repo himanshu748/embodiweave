@@ -143,6 +143,7 @@ button[disabled][title] { cursor: help; }
 .stage3d canvas { display: block; width: 100%; height: 100%; }
 
 .agent-launch { padding:20px; border:1px solid var(--line); border-radius:10px; margin-bottom:20px; }
+.agent-launch a.btn { display:inline-flex; align-items:center; min-height:44px; padding:10px 16px; border:1px solid var(--line); border-radius:8px; text-decoration:none; }
 .consent { display:flex; align-items:flex-start; gap:10px; margin:16px 0; font-size:14px; }
 .consent input { width:20px; height:20px; flex:none; }
 
