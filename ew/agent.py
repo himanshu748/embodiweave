@@ -120,15 +120,66 @@ async def run_llm(session_id: str) -> dict:
                                     "content": json.dumps(out, default=str)[:20000],
                                     "is_error": isinstance(out, dict) and "error" in out})
                 messages.append({"role": "user", "content": results})
-    return {"model": MODEL, "transcript": transcript, "usage": usage, "final_text": final_text}
+    return {"provider": "anthropic", "model": MODEL, "transcript": transcript, "usage": usage, "final_text": final_text}
+
+
+GROQ_MODEL = os.environ.get("EW_GROQ_MODEL", "openai/gpt-oss-120b")
+
+
+async def run_groq(session_id: str) -> dict:
+    """Same MCP tools and loop, with Groq's OpenAI-style chat completions as the runtime LLM."""
+    from groq import Groq
+    client = Groq()  # reads GROQ_API_KEY
+    available = {m.id for m in client.models.list().data}
+    if GROQ_MODEL not in available:
+        raise SystemExit(f"Groq model {GROQ_MODEL} not offered; set EW_GROQ_MODEL to one of {sorted(available)}")
+    transcript, usage = [], []
+    async with stdio_client(_server(session_id, "llm-agent")) as (r, w):
+        async with ClientSession(r, w) as s:
+            await s.initialize()
+            listed = await s.list_tools()
+            tools = [{"type": "function", "function": {"name": t.name, "description": t.description or "",
+                                                       "parameters": t.input_schema}} for t in listed.tools]
+            messages = [{"role": "system", "content": SYSTEM},
+                        {"role": "user", "content": "Investigate the failing deployed policy and run the failure-to-fix loop."}]
+            final_text = ""
+            for turn in range(MAX_TURNS):
+                resp = client.chat.completions.create(model=GROQ_MODEL, messages=messages, tools=tools,
+                                                      tool_choice="auto", max_completion_tokens=8000)
+                ch = resp.choices[0]
+                usage.append({"turn": turn, "model": resp.model, "input": resp.usage.prompt_tokens,
+                              "output": resp.usage.completion_tokens, "stop": ch.finish_reason})
+                msg = ch.message
+                calls = msg.tool_calls or []
+                messages.append({"role": "assistant", "content": msg.content or "",
+                                 **({"tool_calls": [{"id": c.id, "type": "function",
+                                                     "function": {"name": c.function.name, "arguments": c.function.arguments}}
+                                                    for c in calls]} if calls else {})})
+                if msg.content:
+                    transcript.append({"turn": turn, "assistant_text": msg.content})
+                if not calls:
+                    final_text = msg.content or ""
+                    break
+                for c in calls:
+                    try:
+                        args = json.loads(c.function.arguments or "{}")
+                        out = _result(await s.call_tool(c.function.name, args))
+                    except json.JSONDecodeError as e:
+                        args, out = c.function.arguments, {"error": f"INVALID_JSON: {e}"}
+                    transcript.append({"turn": turn, "tool": c.function.name, "args": args, "result": out})
+                    messages.append({"role": "tool", "tool_call_id": c.id, "content": json.dumps(out, default=str)[:20000]})
+    return {"provider": "groq", "model": GROQ_MODEL, "transcript": transcript, "usage": usage, "final_text": final_text}
 
 
 def main():
     mode = sys.argv[1] if len(sys.argv) > 1 else "deterministic"
     sid = records.new_id("agent")
     t0 = time.time()
-    out = asyncio.run(run_llm(sid) if mode == "llm" else run_deterministic(sid))
-    rec = records.write("agent_trace", {"id": sid, "mode": "llm-agent" if mode == "llm" else "deterministic",
+    if mode == "llm":  # pick the provider whose key is configured; Groq first, it is the project's chosen provider
+        mode = "llm-groq" if os.environ.get("GROQ_API_KEY") else "llm-anthropic"
+    runner = {"llm-groq": run_groq, "llm-anthropic": run_llm, "deterministic": run_deterministic}[mode]
+    out = asyncio.run(runner(sid))
+    rec = records.write("agent_trace", {"id": sid, "mode": "llm-agent" if mode.startswith("llm") else "deterministic",
                                         "wall_s": round(time.time() - t0, 1), **out})
     print(json.dumps({"agent_trace_id": rec["id"], "mode": rec["mode"], "wall_s": rec["wall_s"]}))
 
