@@ -8,11 +8,13 @@ import json
 import time
 from pathlib import Path
 
-from . import artifacts, records, rl
+from . import _LazyModule, artifacts, records
 from .contract import CONTRACT_V1, PolicyContract, get_contract
 from .criteria import THRESHOLDS, meets
 from .graph import db, ingest
 from .scenarios import FAMILIES, PROTECTED_ROLES, SPENT_FINAL_TESTS, SUITES, Family
+
+rl = _LazyModule("ew.rl")  # torch loads only when training or evaluating
 
 REPLAYS = artifacts.ROOT / "replays"
 

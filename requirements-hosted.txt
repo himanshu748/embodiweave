@@ -1,0 +1,9 @@
+# Read-only hosted studio (Dockerfile). Pinned to the same versions as requirements.lock; no torch.
+FalkorDB==1.8.0
+fastapi==0.143.1
+numpy==2.5.4
+pydantic==2.14.1
+python-multipart==0.0.32
+redis==8.1.0
+starlette==1.8.0
+uvicorn==0.54.0

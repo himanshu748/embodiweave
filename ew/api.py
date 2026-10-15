@@ -16,15 +16,32 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from . import agent_tools as T
-from . import artifacts, jobs, records, rl, service, whatif
+from . import _LazyModule, artifacts, jobs, records, service, whatif
 from .contract import CONTRACT_V1
 from .graph import db
 from .graph import queries as Q
 from .scenarios import FAMILIES, PROTECTED_ROLES, SUITES, with_controls
 
+rl = _LazyModule("ew.rl")
+
 app = FastAPI(title="EmbodiWeave Studio")
 WEB = Path(__file__).resolve().parent.parent / "web"
 STATIC_MODE = os.environ.get("EW_STATIC", "0") == "1"
+
+
+# Hosted demo (EW_STATIC=1): no worker, no torch. Reads, decisions and sandboxed what-ifs work; anything that
+# trains, evaluates, promotes or exports is refused with a pointer to the local setup.
+READONLY_ALLOWED_POSTS = {"/api/decide", "/api/whatif"}
+
+
+@app.middleware("http")
+async def hosted_readonly(request, call_next):
+    if STATIC_MODE and request.method == "POST" and request.url.path not in READONLY_ALLOWED_POSTS:
+        return JSONResponse(status_code=403, content={
+            "error": "hosted_demo_readonly",
+            "detail": "The hosted studio is read-only: training, evaluation and promotion run on the local setup "
+                      "(scripts/start.sh). Every recorded run is still browsable here."})
+    return await call_next(request)
 
 
 @app.exception_handler(db.GraphUnavailable)
@@ -45,7 +62,8 @@ def status():
     up = db.ping()
     return {"graph": {"up": up, "revision": db.revision() if up else None, "name": db.GRAPH},
             "worker": _worker_alive(), "deployed_policy": T.DEPLOYED_POLICY,
-            "contract": CONTRACT_V1.contract_id, "world": "simulated", "server_time": time.time()}
+            "contract": CONTRACT_V1.contract_id, "world": "simulated", "server_time": time.time(),
+            "hosted_readonly": STATIC_MODE}
 
 
 @app.get("/api/catalog")

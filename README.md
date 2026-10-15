@@ -2,6 +2,8 @@
 
 **GraphHacks 2026, Track 1: Agents That Act on Connected Data.** FalkorDB is the primary database.
 
+**Live demo:** _Render URL goes here_ · **License:** MIT · **Demo video:** _link goes here_
+
 EmbodiWeave turns robot failures into evidence-backed training decisions. A simulated mobile robot
 fails a new mission (static obstacles plus a crossing pedestrian). An agent queries a FalkorDB graph of
 checkpoints, contracts, evaluations, failures and past adaptation trials, decides where to start
@@ -206,3 +208,19 @@ Per-gate commands and outputs: [`evidence/GATES.md`](evidence/GATES.md). Readine
 
 FalkorDB, Stable-Baselines3, Gymnasium, PyTorch, FastAPI, the Model Context Protocol Python SDK and the
 Anthropic Python SDK. License: not yet chosen by the owner.
+
+## Hosted demo
+
+`Dockerfile` builds a read-only studio: the pinned FalkorDB image plus the FastAPI studio, without torch or the
+worker (about 80 MB of memory). On boot it rebuilds the graph from the committed records, so the hosted graph
+matches this repository. Browsing, decisions and what-ifs work there; training, evaluation, promotion and export
+return 403 and run on the full local setup (`scripts/start.sh`). The landing page is `web/index.html` and the
+studio is `web/studio.html`; both read every number from the API.
+
+```
+docker build -t embodiweave . && docker run -p 8000:8000 embodiweave
+```
+
+## License
+
+MIT, see [LICENSE](LICENSE).

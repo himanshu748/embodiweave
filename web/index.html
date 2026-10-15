@@ -3,165 +3,116 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EmbodiWeave Studio</title>
-<link rel="stylesheet" href="style.css">
+<title>EmbodiWeave</title>
+<meta name="description" content="A FalkorDB graph decides how to fix a failing robot policy: where to start training, whether to train at all, and whether the result may ship.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Ctext y=%2714%27 font-size=%2714%27%3E%E2%97%88%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="landing.css">
 </head>
 <body>
-<header class="topbar">
-  <div class="brand">
-    <span class="logo" aria-hidden="true">◈</span>
-    <div>
-      <h1>EmbodiWeave</h1>
-      <p class="tag">Turn robot failures into evidence-backed training decisions</p>
-    </div>
-  </div>
-  <div class="badges" role="status" aria-live="polite">
-    <span class="badge sim" title="Everything here is a software simulation, not a physical robot">Simulated world</span>
-    <span id="modeBadge" class="badge mode recorded" title="Origin of what is on screen">Recorded</span>
-    <span id="graphBadge" class="badge">Graph …</span>
-    <span id="workerBadge" class="badge">Worker …</span>
-  </div>
+<header class="nav">
+  <a class="brand" href="./"><span class="logo" aria-hidden="true">◈</span> EmbodiWeave</a>
+  <nav>
+    <a href="#loop">How it works</a>
+    <a href="#results">Results</a>
+    <a href="#agent">Live agent</a>
+    <a href="#graph">Graph model</a>
+    <a class="gh" href="https://github.com/himanshu748/embodiweave">GitHub</a>
+    <a class="cta small" href="studio.html">Open the studio</a>
+  </nav>
 </header>
-<div id="banner" class="banner hidden" role="alert"></div>
 
-<main class="layout">
-  <section class="col-left" aria-label="Arena">
-    <div class="panel">
-      <div class="panel-head">
-        <h2>Arena replay</h2>
-        <span class="hint">Positions come from recorded simulator states of the selected evaluations</span>
-      </div>
-      <div class="arenas">
-        <figure class="arena">
-          <figcaption>
-            <span class="side">Before</span>
-            <select id="evalA" aria-label="Before evaluation"></select>
-          </figcaption>
-          <canvas id="canA" width="460" height="460" aria-label="Before arena"></canvas>
-          <div class="meta" id="metaA"></div>
-        </figure>
-        <figure class="arena">
-          <figcaption>
-            <span class="side">After</span>
-            <select id="evalB" aria-label="After evaluation"></select>
-          </figcaption>
-          <canvas id="canB" width="460" height="460" aria-label="After arena"></canvas>
-          <div class="meta" id="metaB"></div>
-        </figure>
-      </div>
-      <div id="matchNote" class="note"></div>
-      <div class="transport" role="group" aria-label="Playback controls">
-        <button id="prevEp" title="Previous episode ( [ )" aria-label="Previous episode">⏮</button>
-        <button id="play" title="Play / pause (Space)" aria-label="Play">▶</button>
-        <button id="nextEp" title="Next episode ( ] )" aria-label="Next episode">⏭</button>
-        <input id="scrub" type="range" min="0" max="250" value="0" aria-label="Scrub time step">
-        <span id="tLabel" class="mono">t=0</span>
-        <label class="inline">Speed
-          <select id="speed" aria-label="Playback speed"><option>0.5</option><option selected>1</option><option>2</option><option>4</option></select>
-        </label>
-        <label class="inline">Episode
-          <select id="episode" aria-label="Episode (paired by seed)"></select>
-        </label>
-      </div>
-      <div class="legend">
-        <span><i class="dot robot"></i>robot</span><span><i class="dot mover"></i>moving obstacle</span>
-        <span><i class="dot static"></i>static obstacle</span><span><i class="dot goal"></i>goal</span>
-        <span class="ok">✓ success</span><span class="bad">✕ collision</span><span class="warn">◷ timeout</span>
-      </div>
-    </div>
+<main>
+<section class="hero">
+  <p class="eyebrow">GraphHacks 2026 · Track 1: Agents That Act on Connected Data · built on FalkorDB</p>
+  <h1>Your robot failed.<br><span class="grad">The graph decides the fix.</span></h1>
+  <p class="lede">EmbodiWeave turns a failing robot policy into an evidence-backed training decision. An agent queries a
+    FalkorDB graph of checkpoints, contracts, evaluations, failures and past adaptation trials, picks where to start
+    training (or decides to start from scratch), runs real PPO, measures the result and asks a promotion gate whether it may ship.
+    Every outcome is written back, so the next decision changes when the evidence does.</p>
+  <div class="ctas">
+    <a class="cta" href="studio.html">Open the live studio →</a>
+    <a class="cta ghost" href="https://github.com/himanshu748/embodiweave">Read the code</a>
+  </div>
+  <div class="live" id="live" aria-live="polite">
+    <span class="dot" id="liveDot"></span><span id="liveText">Connecting to FalkorDB…</span>
+  </div>
+  <p class="sim">Everything runs in a software simulation of a two-wheeled robot. No physical robot is involved.</p>
+</section>
 
-    <div class="panel">
-      <div class="panel-head"><h2>Scenario controls</h2><span class="hint">Runs a real evaluation of a saved checkpoint on the configuration you set</span></div>
-      <form id="scenarioForm" class="grid-form">
-        <label>Checkpoint <select id="scPolicy"></select></label>
-        <label>Base family <select id="scFamily"><option>static_crossing</option><option>crossing</option><option>static</option><option>open</option></select></label>
-        <label>Static obstacles <input id="scStatic" type="number" min="0" max="4" value="2"></label>
-        <label>Mover speed (m/s) <input id="scSpeed" type="range" min="0.2" max="1.5" step="0.1" value="0.8"><output id="scSpeedOut">0.8</output></label>
-        <label>Mover radius (m) <input id="scRadius" type="range" min="0.2" max="0.8" step="0.05" value="0.5"><output id="scRadiusOut">0.5</output></label>
-        <label>Episodes <input id="scEps" type="number" min="1" max="8" value="4"></label>
-        <label>Load into <select id="scSide"><option value="B">After</option><option value="A">Before</option></select></label>
-        <button type="submit" id="scRun" class="primary">Run live evaluation</button>
-      </form>
-      <div id="scResult" class="note"></div>
-    </div>
-  </section>
+<section id="loop" class="band">
+  <h2>The failure-to-fix loop</h2>
+  <p class="sub">Six bounded steps. The LLM chooses which tool to call; trusted code enforces contracts, budgets and the gate.</p>
+  <ol class="loop">
+    <li><b>Observe</b><span>Measured failures of the deployed policy, with authored hypotheses labelled as hypotheses.</span></li>
+    <li><b>Query</b><span>Read-only Cypher templates over lineage, semantic contracts and matched validation.</span></li>
+    <li><b>Decide</b><span>A frozen rule ranks parents and scratch by conditioned transfer history, then records the decision.</span></li>
+    <li><b>Train</b><span>One bounded PPO run from the selected start. No retries to chase a better number.</span></li>
+    <li><b>Measure</b><span>Evaluate on retained-behaviour suites tied to the exact artifact hash.</span></li>
+    <li><b>Gate</b><span>Promotion passes only if every suite clears its threshold. Results flow back into the graph.</span></li>
+  </ol>
+</section>
 
-  <section class="col-right" aria-label="Decision and evidence">
-    <nav class="tabs" role="tablist">
-      <button role="tab" data-tab="decision" aria-selected="true">Decision</button>
-      <button role="tab" data-tab="evidence">Evidence</button>
-      <button role="tab" data-tab="graph">Graph</button>
-      <button role="tab" data-tab="jobs">Jobs</button>
-      <button role="tab" data-tab="agent">Agent</button>
-      <button role="tab" data-tab="results">Results</button>
-    </nav>
+<section id="results" class="band">
+  <h2>What the graph got right, and wrong</h2>
+  <p class="sub">Final-test success on previously unused test suites, three seeds per arm. Each rule change was committed before its experiment.</p>
+  <div class="tablewrap"><table id="resultsTable" aria-label="Experiment results">
+    <thead><tr><th>Experiment</th><th>Rule</th><th>Graph picked</th><th>Graph arm</th><th>Latest checkpoint</th><th>Best-validation checkpoint</th></tr></thead>
+    <tbody><tr><td colspan="6" class="muted">Loading recorded results…</td></tr></tbody>
+  </table></div>
+  <p class="note">exp-1 is a negative result: the first rule could only choose among parents, and warm starts from this library plateau.
+    The graph's own transfer history showed it, so training from scratch became a graph option. Small samples: treat these as preliminary.</p>
+</section>
 
-    <div class="tabpanel" id="tab-decision" role="tabpanel">
-      <div class="row">
-        <label class="inline grow">Decision <select id="decisionSel"></select></label>
-        <span id="decisionMode" class="badge small"></span>
-      </div>
-      <div id="decisionHead" class="decision-head"></div>
-      <h3>Candidates <span class="hint">all eligible checkpoints, ranked by rule</span></h3>
-      <table class="tbl" id="rankTbl" aria-label="Ranked candidates"></table>
-      <h3>Rejected</h3>
-      <ul id="rejected" class="rejected"></ul>
-      <div class="actions">
-        <label class="inline">Budget <select id="budgetSel"><option>150000</option><option>60000</option></select></label>
-        <button id="btnPropose">Propose with rule</button>
-        <button id="btnEvalMissing">Evaluate missing</button>
-        <label class="inline">Seed <input id="seedIn" type="number" value="11" min="0" max="99999" style="width:6em"></label>
-        <button id="btnTrain" class="primary">Launch training</button>
-      </div>
-      <details class="whatif">
-        <summary>What-if (isolated graph copy)</summary>
-        <p class="hint">Interventions go into a GRAPH.COPY of production. Results are hypothetical and cannot launch training.</p>
-        <div class="row">
-          <label class="inline">Hypothetical trial from <select id="wiParent"></select></label>
-          <label class="inline">outcome <select id="wiReached"><option value="1">reached threshold</option><option value="0">not reached</option></select></label>
-          <label class="inline">× <input id="wiCount" type="number" min="1" max="3" value="2" style="width:3.5em"></label>
-        </div>
-        <div class="row">
-          <label class="inline">Pretend built under mirrored contract <select id="wiContract"><option value="">(none)</option></select></label>
-          <button id="btnWhatIf">Run What-if</button>
-        </div>
-        <div id="wiResult"></div>
-      </details>
-    </div>
+<section id="agent" class="band">
+  <h2>A real LLM ran the loop</h2>
+  <p class="sub" id="agentSub">Loading the latest recorded agent trace…</p>
+  <div class="steps" id="agentSteps"></div>
+  <div class="verdict" id="agentVerdict"></div>
+</section>
 
-    <div class="tabpanel hidden" id="tab-evidence" role="tabpanel">
-      <p class="hint">Every read template the decision ran, with parameters, returned record ids and the exact Cypher (GRAPH.RO_QUERY).</p>
-      <div id="queries"></div>
-    </div>
+<section id="graph" class="band two">
+  <div>
+    <h2>Graph model</h2>
+    <p class="sub">Authored world facts plus measured evidence appended from immutable records.</p>
+<pre class="code">(:Run)-[:PRODUCED]->(:Policy)-[:USES_CONTRACT]->(:Contract)-[:FOR_ROBOT]->(:Robot)
+(:Policy)-[:DERIVED_FROM]->(:Policy)
+(:Evaluation)-[:ASSESSED]->(:Policy)
+(:Evaluation)-[:ON_SUITE]->(:Suite)-[:EVALUATES]->(:Competency)
+(:Failure)-[:OBSERVED_IN]->(:Evaluation)
+(:Hypothesis {measured:false})-[:ABOUT]->(:Failure)
+(:Trial)-[:FROM_PARENT]->(:Policy) | -[:FROM_ORIGIN]->(:Origin)
+(:Trial)-[:TARGETS]->(:Family), -[:UNDER_CONTRACT]->(:Contract)
+(:Mission)-[:REQUIRES]->(:Competency)-[:REQUIRES]->(:Competency)</pre>
+  </div>
+  <div>
+    <h2>One of the decision queries</h2>
+    <p class="sub">Which past trials from each candidate parent apply to this exact target, recipe, budget and contract.</p>
+<pre class="code">UNWIND $ids AS pid
+MATCH (p:Policy {id:pid})
+OPTIONAL MATCH (t:Trial)-[:FROM_PARENT]->(p)
+WHERE t.threshold_id = $threshold AND t.recipe = $recipe
+  AND t.budget = $budget
+  AND (t)-[:TARGETS]->(:Family {id:$family})
+  AND (t)-[:UNDER_CONTRACT]->(:Contract {id:$contract})
+OPTIONAL MATCH (t)-[:PRODUCED]->(child:Policy)
+RETURN pid AS policy_id, t.id AS trial_id,
+       t.threshold_reached AS reached,
+       t.steps_to_threshold AS steps_to_threshold,
+       child.id AS child_id</pre>
+  </div>
+</section>
 
-    <div class="tabpanel hidden" id="tab-graph" role="tabpanel">
-      <p class="hint">Live FalkorDB neighbourhood of the selected decision. Click a node to inspect its record.</p>
-      <div id="graphWrap"><svg id="graphSvg" role="img" aria-label="Decision evidence graph"></svg></div>
-      <details><summary>Cypher used for this view</summary><pre id="graphCypher" class="code"></pre></details>
-    </div>
-
-    <div class="tabpanel hidden" id="tab-jobs" role="tabpanel">
-      <p class="hint">State is read from the single worker's job files. Progress is real environment steps.</p>
-      <div id="jobs"></div>
-    </div>
-
-    <div class="tabpanel hidden" id="tab-agent" role="tabpanel">
-      <div class="row"><label class="inline grow">Session <select id="traceSel"></select></label><span id="traceMode" class="badge small"></span></div>
-      <ol id="trace" class="trace"></ol>
-    </div>
-
-    <div class="tabpanel hidden" id="tab-results" role="tabpanel">
-      <div id="results"></div>
-    </div>
-  </section>
+<section class="band why">
+  <div><h3>Graph-driven, not graph-decorated</h3><p>Remove the transfer history and the decision changes. The no-history arm exists to show it.</p></div>
+  <div><h3>Honest by construction</h3><p>Final-test suites are invisible to the agent, spent suites are refused in code and every number links to a record.</p></div>
+  <div><h3>Safe what-ifs</h3><p>Hypothetical evidence runs on a GRAPH.COPY sandbox and can never trigger a job.</p></div>
+</section>
 </main>
 
-<aside id="inspector" class="inspector hidden" aria-label="Record inspector">
-  <div class="panel-head"><h2 id="inspTitle">Record</h2><button id="inspClose" aria-label="Close inspector">✕</button></div>
-  <div id="inspKind"></div>
-  <pre id="inspBody" class="code"></pre>
-</aside>
-<script src="app.js"></script>
+<footer>
+  <span>EmbodiWeave · MIT licensed · FalkorDB is the primary database</span>
+  <span>Built during GraphHacks 2026 with an AI coding assistant (disclosed in the README)</span>
+</footer>
+<script src="landing.js"></script>
 </body>
 </html>

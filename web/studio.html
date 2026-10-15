@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EmbodiWeave Studio</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Ctext y=%2714%27 font-size=%2714%27%3E%E2%97%88%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <a href="./" class="logo" aria-label="EmbodiWeave home" style="text-decoration:none">◈</a>
+    <div>
+      <h1>EmbodiWeave</h1>
+      <p class="tag">Turn robot failures into evidence-backed training decisions</p>
+    </div>
+  </div>
+  <div class="badges" role="status" aria-live="polite">
+    <span class="badge sim" title="Everything here is a software simulation, not a physical robot">Simulated world</span>
+    <span id="modeBadge" class="badge mode recorded" title="Origin of what is on screen">Recorded</span>
+    <span id="graphBadge" class="badge">Graph …</span>
+    <span id="workerBadge" class="badge">Worker …</span>
+  </div>
+</header>
+<div id="banner" class="banner hidden" role="alert"></div>
+
+<main class="layout">
+  <section class="col-left" aria-label="Arena">
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Arena replay</h2>
+        <span class="hint">Positions come from recorded simulator states of the selected evaluations</span>
+      </div>
+      <div class="arenas">
+        <figure class="arena">
+          <figcaption>
+            <span class="side">Before</span>
+            <select id="evalA" aria-label="Before evaluation"></select>
+          </figcaption>
+          <canvas id="canA" width="460" height="460" aria-label="Before arena"></canvas>
+          <div class="meta" id="metaA"></div>
+        </figure>
+        <figure class="arena">
+          <figcaption>
+            <span class="side">After</span>
+            <select id="evalB" aria-label="After evaluation"></select>
+          </figcaption>
+          <canvas id="canB" width="460" height="460" aria-label="After arena"></canvas>
+          <div class="meta" id="metaB"></div>
+        </figure>
+      </div>
+      <div id="matchNote" class="note"></div>
+      <div class="transport" role="group" aria-label="Playback controls">
+        <button id="prevEp" title="Previous episode ( [ )" aria-label="Previous episode">⏮</button>
+        <button id="play" title="Play / pause (Space)" aria-label="Play">▶</button>
+        <button id="nextEp" title="Next episode ( ] )" aria-label="Next episode">⏭</button>
+        <input id="scrub" type="range" min="0" max="250" value="0" aria-label="Scrub time step">
+        <span id="tLabel" class="mono">t=0</span>
+        <label class="inline">Speed
+          <select id="speed" aria-label="Playback speed"><option>0.5</option><option selected>1</option><option>2</option><option>4</option></select>
+        </label>
+        <label class="inline">Episode
+          <select id="episode" aria-label="Episode (paired by seed)"></select>
+        </label>
+      </div>
+      <div class="legend">
+        <span><i class="dot robot"></i>robot</span><span><i class="dot mover"></i>moving obstacle</span>
+        <span><i class="dot static"></i>static obstacle</span><span><i class="dot goal"></i>goal</span>
+        <span class="ok">✓ success</span><span class="bad">✕ collision</span><span class="warn">◷ timeout</span>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2>Scenario controls</h2><span class="hint">Runs a real evaluation of a saved checkpoint on the configuration you set</span></div>
+      <form id="scenarioForm" class="grid-form">
+        <label>Checkpoint <select id="scPolicy"></select></label>
+        <label>Base family <select id="scFamily"><option>static_crossing</option><option>crossing</option><option>static</option><option>open</option></select></label>
+        <label>Static obstacles <input id="scStatic" type="number" min="0" max="4" value="2"></label>
+        <label>Mover speed (m/s) <input id="scSpeed" type="range" min="0.2" max="1.5" step="0.1" value="0.8"><output id="scSpeedOut">0.8</output></label>
+        <label>Mover radius (m) <input id="scRadius" type="range" min="0.2" max="0.8" step="0.05" value="0.5"><output id="scRadiusOut">0.5</output></label>
+        <label>Episodes <input id="scEps" type="number" min="1" max="8" value="4"></label>
+        <label>Load into <select id="scSide"><option value="B">After</option><option value="A">Before</option></select></label>
+        <button type="submit" id="scRun" class="primary">Run live evaluation</button>
+      </form>
+      <div id="scResult" class="note"></div>
+    </div>
+  </section>
+
+  <section class="col-right" aria-label="Decision and evidence">
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-tab="decision" aria-selected="true">Decision</button>
+      <button role="tab" data-tab="evidence">Evidence</button>
+      <button role="tab" data-tab="graph">Graph</button>
+      <button role="tab" data-tab="jobs">Jobs</button>
+      <button role="tab" data-tab="agent">Agent</button>
+      <button role="tab" data-tab="results">Results</button>
+    </nav>
+
+    <div class="tabpanel" id="tab-decision" role="tabpanel">
+      <div class="row">
+        <label class="inline grow">Decision <select id="decisionSel"></select></label>
+        <span id="decisionMode" class="badge small"></span>
+      </div>
+      <div id="decisionHead" class="decision-head"></div>
+      <h3>Candidates <span class="hint">all eligible checkpoints, ranked by rule</span></h3>
+      <table class="tbl" id="rankTbl" aria-label="Ranked candidates"></table>
+      <h3>Rejected</h3>
+      <ul id="rejected" class="rejected"></ul>
+      <div class="actions">
+        <label class="inline">Budget <select id="budgetSel"><option>150000</option><option>60000</option></select></label>
+        <button id="btnPropose">Propose with rule</button>
+        <button id="btnEvalMissing">Evaluate missing</button>
+        <label class="inline">Seed <input id="seedIn" type="number" value="11" min="0" max="99999" style="width:6em"></label>
+        <button id="btnTrain" class="primary">Launch training</button>
+      </div>
+      <details class="whatif">
+        <summary>What-if (isolated graph copy)</summary>
+        <p class="hint">Interventions go into a GRAPH.COPY of production. Results are hypothetical and cannot launch training.</p>
+        <div class="row">
+          <label class="inline">Hypothetical trial from <select id="wiParent"></select></label>
+          <label class="inline">outcome <select id="wiReached"><option value="1">reached threshold</option><option value="0">not reached</option></select></label>
+          <label class="inline">× <input id="wiCount" type="number" min="1" max="3" value="2" style="width:3.5em"></label>
+        </div>
+        <div class="row">
+          <label class="inline">Pretend built under mirrored contract <select id="wiContract"><option value="">(none)</option></select></label>
+          <button id="btnWhatIf">Run What-if</button>
+        </div>
+        <div id="wiResult"></div>
+      </details>
+    </div>
+
+    <div class="tabpanel hidden" id="tab-evidence" role="tabpanel">
+      <p class="hint">Every read template the decision ran, with parameters, returned record ids and the exact Cypher (GRAPH.RO_QUERY).</p>
+      <div id="queries"></div>
+    </div>
+
+    <div class="tabpanel hidden" id="tab-graph" role="tabpanel">
+      <p class="hint">Live FalkorDB neighbourhood of the selected decision. Click a node to inspect its record.</p>
+      <div id="graphWrap"><svg id="graphSvg" role="img" aria-label="Decision evidence graph"></svg></div>
+      <details><summary>Cypher used for this view</summary><pre id="graphCypher" class="code"></pre></details>
+    </div>
+
+    <div class="tabpanel hidden" id="tab-jobs" role="tabpanel">
+      <p class="hint">State is read from the single worker's job files. Progress is real environment steps.</p>
+      <div id="jobs"></div>
+    </div>
+
+    <div class="tabpanel hidden" id="tab-agent" role="tabpanel">
+      <div class="row"><label class="inline grow">Session <select id="traceSel"></select></label><span id="traceMode" class="badge small"></span></div>
+      <ol id="trace" class="trace"></ol>
+    </div>
+
+    <div class="tabpanel hidden" id="tab-results" role="tabpanel">
+      <div id="results"></div>
+    </div>
+  </section>
+</main>
+
+<aside id="inspector" class="inspector hidden" aria-label="Record inspector">
+  <div class="panel-head"><h2 id="inspTitle">Record</h2><button id="inspClose" aria-label="Close inspector">✕</button></div>
+  <div id="inspKind"></div>
+  <pre id="inspBody" class="code"></pre>
+</aside>
+<script src="app.js"></script>
+</body>
+</html>
