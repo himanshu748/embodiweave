@@ -200,7 +200,7 @@ async function loadReplay(side, evalId) {
 function tick() {
   if (S.playing) {
     S.t += S.speed;
-    if (S.t >= maxT()) { S.t = maxT(); S.playing = false; $("#play").textContent = "▶"; }
+    if (S.t >= maxT()) { S.t = maxT(); S.playing = false; $("#play").textContent = "▶"; $("#play").setAttribute("aria-label", "Play"); }
     S.t = Math.floor(S.t); renderArena();
   }
   setTimeout(tick, 60);
@@ -261,8 +261,18 @@ function renderDecision() {
       t.child_policy_id ? [" · child ", el("span", { class: "chip", onclick: () => inspect(t.child_policy_id) }, t.child_policy_id)] : ""));
   }
   const tbl = $("#rankTbl"); tbl.innerHTML = "";
-  tbl.append(el("tr", {}, ...["#", "Checkpoint", "Transfer estimate", "Matched validation", "Applicable trials", "Lineage"].map((h) => el("th", {}, h))));
+  const search = d.rule_version === "search-v1";
+  tbl.append(el("tr", {}, ...(search ? ["#", "Checkpoint", "Suites passed", "Worst deficit", "Validation evidence", "Selection key"] :
+    ["#", "Checkpoint", "Transfer estimate", "Matched validation", "Applicable trials", "Lineage"]).map((h) => el("th", {}, h))));
   for (const c of d.ranking || []) {
+    if (search) {
+      tbl.append(el("tr", {class:c.policy_id === d.selected ? "sel" : ""}, el("td", {}, c.rank),
+        el("td", {}, el("span", {class:"chip", onclick:()=>inspect(c.policy_id)}, c.policy_id)),
+        el("td", {}, `${c.passed}/4`), el("td", {}, pct(c.sort_key[1])),
+        el("td", {}, ...Object.values(c.validation).map(v=>el("span", {class:"chip", onclick:()=>inspect(v.evaluation_id)}, v.suite_id))),
+        el("td", {class:"hint"}, JSON.stringify(c.sort_key.slice(0,4)))));
+      continue;
+    }
     const v = c.validation;
     tbl.append(el("tr", { class: c.policy_id === d.selected ? "sel" : "" },
       el("td", {}, c.option_rank ?? c.rank),
@@ -296,7 +306,7 @@ function renderDecision() {
   if (outside.length) rej.append(el("li", {}, el("details", {}, el("summary", { class: "hint" }, `${outside.length} checkpoints outside the requested library catalog (trial children)`),
     ...outside.map((r) => el("div", {}, el("span", { class: "chip", onclick: () => inspect(r.policy_id) }, r.policy_id), " ", el("span", { class: "hint" }, r.reasons[0]))))));
   if (!d.rejected.length) rej.append(el("li", { class: "hint" }, "none"));
-  $("#btnTrain").disabled = S.readonly || S.graphDown || d.mode === "what-if" || !["train_from_parent", "train_from_scratch"].includes(d.action);
+  $("#btnTrain").disabled = S.readonly || S.graphDown || search || d.mode === "what-if" || !["train_from_parent", "train_from_scratch"].includes(d.action);
   $("#btnEvalMissing").disabled = S.readonly || S.graphDown || d.action !== "evaluate_candidates";
 }
 function renderQueries() {

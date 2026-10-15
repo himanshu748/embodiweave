@@ -143,7 +143,7 @@ def subgraph(did: str):
     """Nodes and edges around a decision, read live from FalkorDB (graph name from the decision)."""
     d = records.read("decision", did)
     g = d.get("graph") or db.GRAPH
-    if g != db.GRAPH:
+    if d.get("mode") == "what-if" and g != db.GRAPH:
         raise HTTPException(410, "What-if graph copies are dropped after use; showing the recorded decision only")
     cy = """
 MATCH (d:Decision {id:$d})-[r]->(x)
@@ -153,7 +153,7 @@ OPTIONAL MATCH (t:Trial)-[:FROM_PARENT|FROM_ORIGIN]->(x)
 OPTIONAL MATCH (x)-[:USES_CONTRACT]->(c:Contract)
 RETURN type(r) AS rel, labels(x)[0] AS xl, x.id AS xid, par.id AS parent, e.id AS eval, e.success_rate AS sr,
        t.id AS trial, t.threshold_reached AS reached, t.budget AS tb, c.id AS contract"""
-    _, rows, ms = db.ro(cy.strip(), {"d": did, "suite": d["suite_id"]})
+    _, rows, ms = db.ro(cy.strip(), {"d": did, "suite": d.get("suite_id", "val-target-v1")})
     hide = {r["policy_id"] for r in d["rejected"] if all(x.startswith("outside requested catalog") for x in r["reasons"])}
     nodes, edges = {did: {"id": did, "label": "Decision"}}, set()
 
