@@ -4,13 +4,16 @@ on:
   pull_request:
 permissions:
   contents: read
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   validation:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.13'
           cache: pip
@@ -23,7 +26,7 @@ jobs:
         run: |
           docker run -d --name ew-ci -p 127.0.0.1:6379:6379 falkordb/falkordb@sha256:107455e862a824e45e8e9f5a7fbfdf5e00a08b14e13eae2577c72fd9e3f59ba6
           for i in $(seq 1 30); do
-            if docker exec ew-ci redis-cli ping | rg PONG; then exit 0; fi
+            if [ "$(docker exec ew-ci redis-cli ping)" = PONG ]; then exit 0; fi
             sleep 1
           done
           exit 1

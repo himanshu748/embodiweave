@@ -6,7 +6,7 @@ services:
     environment:
       EW_ARTIFACTS: /data
       EW_STATIC: "1"
-      EW_PUBLIC_TRAINING: "1"
+      EW_PERSISTENT_ARTIFACTS: "1"
     volumes:
       - evidence:/data
     mem_limit: 1536m
