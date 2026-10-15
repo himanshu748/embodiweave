@@ -20,7 +20,7 @@ async function connect() {
       : config.enabled ? `FalkorDB live · revision ${graph.graph.revision} · ${config.provider} agent ready` : config.reason;
     $("#providerName").textContent = config.provider || "the configured provider";
     $("#consent").disabled = !config.enabled;
-    $("#limits").textContent = `Up to ${config.max_turns} model turns, ${config.max_tools} tool calls and 2 minutes. One investigation at a time; ${config.daily_runs} shared starts per UTC day, ${config.visitor_hourly} per browser per hour. Allowances reset if the free service restarts.`;
+    $("#limits").textContent = `Up to ${config.max_turns} model turns, ${config.max_tools} tool calls and 2 minutes. One investigation at a time; ${config.daily_runs} shared starts per UTC day, ${config.visitor_hourly} per browser per hour. ${config.ephemeral ? "Allowances reset if the free service restarts." : "Completed receipts and allowances persist on this server."}`;
     ready();
   } catch (_) {
     $("#availability").textContent = "Could not connect. Reconnect in a moment.";
@@ -130,7 +130,8 @@ $("#investigationForm").addEventListener("submit", async (e) => {
     poll(s.id, ++pollVersion);
   } catch (e) { $("#startError").textContent = e.name === "AbortError" ? "The connection timed out. Reconnect and try again." : e.message; active = false; ready(); }
 });
-(async () => { await connect(); const id = sessionStorage.getItem("ew_judge_session"); if (id) { currentId = id; await poll(id, ++pollVersion); } })();
+const connectionReady = connect();
+(async () => { await connectionReady; const id = sessionStorage.getItem("ew_judge_session"); if (id) { currentId = id; await poll(id, ++pollVersion); } })();
 
 let ppoConfig = null, ppoActive = false, ppoId = null, ppoVersion = 0;
 function ppoReady() { $("#ppoStart").disabled = ppoActive || !ppoConfig?.enabled || !$("#ppoConsent").checked; }
@@ -172,7 +173,7 @@ $("#ppoCancel").addEventListener("click", async () => {
   catch(e) { $("#ppoError").textContent = e.message; }
 });
 (async () => {
-  try { ppoConfig = await request("/api/public-training/config"); $("#ppoState").textContent = ppoConfig.enabled ? "CPU ready" : "Unavailable";
+  try { await connectionReady; ppoConfig = await request("/api/public-training/config"); $("#ppoState").textContent = ppoConfig.enabled ? "CPU ready" : "Unavailable";
     $("#ppoLimits").textContent = ppoConfig.enabled ? `One trial at a time · ${ppoConfig.daily_runs} shared starts per UTC day · ${ppoConfig.visitor_hourly} per browser/hour · eight-minute limit. No model key needed for this button. Download your evidence after completion.` : ppoConfig.reason;
     ppoReady(); const id = sessionStorage.getItem("ew_ppo_session"); if (id) followTraining(id);
   } catch(e) { $("#ppoStatus").textContent = "CPU service unavailable. Reconnect or reload to try again."; }

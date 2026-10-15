@@ -218,8 +218,9 @@ per turn and two minutes per session; 20 shared starts per UTC day, 4 per browse
 count. Browser cookies isolate receipts; another visitor cannot list or fetch your session. Reloading
 resumes your current receipt. AWS mounts receipts and records on a persistent Docker volume. Running sessions become interrupted on API restart;
 completed receipts and quotas survive. On an optional free Render deployment, its ephemeral filesystem can reset these allowances.
-These application quotas are not a cloud billing cap. OpenRouter is fixed to `nvidia/nemotron-3-ultra-550b-a55b:free`, routed only
-to NVIDIA with no paid or provider fallback. Your OpenRouter privacy settings must permit NVIDIA. A Groq
+These application quotas are not a cloud billing cap. OpenRouter uses `nvidia/nemotron-3-ultra-550b-a55b:free`, with `nvidia/nemotron-3-super-120b-a12b:free`
+as an explicit fallback on overload/unavailability. Both route only to NVIDIA, with no paid model or other-provider fallback.
+The receipt records the actual returned model, and both can be unavailable under shared free capacity. Your OpenRouter privacy settings must permit NVIDIA. A Groq
 key can instead use `llama-3.3-70b-versatile`. Provider free quotas can be lower than the app allowance.
 The server needs `EW_PUBLIC_AGENT=1` and `OPENROUTER_API_KEY` (or `GROQ_API_KEY`) in the private server environment.
 Run one uvicorn process. The CPU-only PyTorch stack runs in a separate short-lived worker, without provider or AWS credentials.

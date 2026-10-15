@@ -160,3 +160,22 @@ def test_gate_comparison_uses_matched_measurements_without_inventing_a_baseline(
     else:
         assert "collision_delta" not in comparison
     assert result["deployment_changed"] is False
+
+
+def test_overload_fallback_uses_only_free_nvidia_models(public_agent, monkeypatch):
+    sent = []
+    class Response:
+        def __enter__(self): return self
+        def __exit__(self, *a): pass
+        def read(self, limit):
+            if len(sent) == 1:
+                return json.dumps({"error": {"code": 503, "message": "overloaded"}}).encode()
+            return json.dumps({"model": J.FREE_NVIDIA_MODELS[1], "choices": [{"message": {"content": "Ready"}}]}).encode()
+    def call(req, **kw):
+        sent.append(json.loads(req.data))
+        return Response()
+    monkeypatch.setattr(J.urllib.request, "urlopen", call)
+    result = J._completion([{}, {}], J.configuration(), 60)
+    assert result["model"] == J.FREE_NVIDIA_MODELS[1]
+    assert [r["model"] for r in sent] == list(J.FREE_NVIDIA_MODELS)
+    assert all(r["model"].endswith(":free") and r["provider"] == {"only": ["nvidia"], "allow_fallbacks": False} for r in sent)

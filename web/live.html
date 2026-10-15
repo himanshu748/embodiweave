@@ -3,7 +3,7 @@
 <title>Live agent · EmbodiWeave</title><meta name="description" content="Ask a real model to investigate live FalkorDB evidence, choose an adaptation plan and preview the exact-artifact validation gate.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
-<link rel="stylesheet" href="landing.css?v=live1"><link rel="stylesheet" href="live.css?v=ppo1"><script src="live.js?v=ppo1" defer></script></head>
+<link rel="stylesheet" href="landing.css?v=live1"><link rel="stylesheet" href="live.css?v=ppo1"><script src="live.js?v=ppo2" defer></script></head>
 <body><a class="skip" href="#investigate">Skip to investigation</a>
 <header class="nav"><a class="brand" href="./">EmbodiWeave</a><nav aria-label="Main"><a href="guide.html">Judge guide</a><a href="./#live">Graph console</a><a href="studio.html">Studio</a><a href="https://github.com/himanshu748/embodiweave">Source</a></nav></header>
 <main>
@@ -24,6 +24,7 @@
   <p class="eyebrow">Your brief</p><h2>What should it investigate?</h2>
   <div class="prompt-list" aria-label="Example questions">
     <button type="button" class="prompt" data-question="Investigate the deployed robot's failure. Use live evidence to propose the next adaptation at a 150000-step budget, then check whether the recorded new checkpoint can be promoted.">Investigate the failure and next step <span aria-hidden="true">↗</span></button>
+    <button type="button" class="prompt" data-question="Inspect the mission, then call run_ppo_flow to launch one real 4096-step PPO trial, 180 validation episodes, the gate and checkpoint export. Report its pending session ID and direct me to the PPO panel for measured completion.">Run the complete training flow <span aria-hidden="true">↗</span></button>
     <button type="button" class="prompt" data-question="Why does the graph recommend training from scratch instead of reusing a compatible parent at a 150000-step budget? Cite the applicable trials and rule estimates.">Why start from scratch? <span aria-hidden="true">↗</span></button>
     <button type="button" class="prompt" data-question="Check scratch~a7ee2c-s7 against the exact-artifact promotion gate. Why is the recorded result rejected even though target success improved? Cite the validation evidence.">Explain the rejected checkpoint <span aria-hidden="true">↗</span></button>
   </div>
@@ -49,5 +50,5 @@
   <p><button class="btn ghost small" id="resume" type="button" hidden>Resume session status</button><a id="downloadReceipt" class="btn ghost small" hidden download="embodiweave-live-investigation.json">Download this receipt</a></p>
 </div>
 </section>
-<section class="live-footnote"><span class="tag rec">Recorded simulator evidence</span><p>The graph contains real, previously measured simulator runs. Asking a fresh agent does not create new episode measurements. Free model inference has shared quotas. Download new checkpoint evidence to keep a copy. A provider or database failure is shown explicitly.</p></section>
+<section class="live-footnote"><span class="tag rec">Recorded simulator evidence</span><p>The graph contains real, previously measured simulator runs. An investigation reads existing evidence; the separately consented PPO flow creates new measurements. Free model inference has shared quotas. Download new checkpoint evidence to keep a copy. A provider or database failure is shown explicitly.</p></section>
 </main><footer><span>EmbodiWeave · MIT · software simulation</span><a href="guide.html">Judge guide, video and reproduction →</a></footer></body></html>

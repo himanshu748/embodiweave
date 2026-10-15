@@ -22,4 +22,4 @@ docker run -d --name ew-api --restart unless-stopped --network embodiweave-net \
 docker run -d --name ew-proxy --restart unless-stopped --network embodiweave-net \
   --log-opt max-size=10m --log-opt max-file=3 -p 80:80 -p 443:443 \
   -e EW_PUBLIC_HOST="$EW_PUBLIC_HOST" -v "$PWD/deploy/Caddyfile:/etc/caddy/Caddyfile:ro" \
-  -v embodiweave-caddy-data:/data -v embodiweave-caddy-config:/config caddy:2
+  -v embodiweave-caddy-data:/data -v embodiweave-caddy-config:/config caddy:2@sha256:685ae3d7c34d9b5f8caeddc5d14051db7bbd88ff1f5a2fa0c16bd8ca328fb7af

@@ -26,6 +26,7 @@ MAX_TURNS, MAX_TOOLS, MAX_SECONDS = 6, 10, 120
 DAILY_RUNS, VISITOR_HOURLY = 20, 4
 COOKIE = "ew_judge_visitor"
 _threads: dict[str, threading.Thread] = {}
+FREE_NVIDIA_MODELS = ("nvidia/nemotron-3-ultra-550b-a55b:free", "nvidia/nemotron-3-super-120b-a12b:free")
 FEATURED_CHILD = "scratch~a7ee2c-s7"
 SYSTEM = """You are EmbodiWeave's public robotics evidence agent. Investigate the user's question by choosing tools.
 Use live FalkorDB evidence before answering. Tools execute named GRAPH.RO_QUERY templates; you cannot issue Cypher.
@@ -86,6 +87,8 @@ def configuration():
     enabled = os.environ.get("EW_PUBLIC_AGENT") == "1" and provider is not None
     return {"enabled": enabled, "provider": provider,
             "model": "nvidia/nemotron-3-ultra-550b-a55b:free" if provider == "OpenRouter" else "llama-3.3-70b-versatile",
+            "fallback_models": list(FREE_NVIDIA_MODELS[1:]) if provider == "OpenRouter" else [],
+            "ephemeral": os.environ.get("EW_PERSISTENT_ARTIFACTS") != "1",
             "max_turns": MAX_TURNS, "max_tools": MAX_TOOLS, "max_seconds": MAX_SECONDS,
             "daily_runs": DAILY_RUNS, "visitor_hourly": VISITOR_HOURLY,
             "reason": None if enabled else "The live model is not configured. Try the live graph console or recorded agent evidence."}
@@ -128,7 +131,7 @@ def _redact(value):
 def _read(path):
     s = json.loads(path.read_text())
     if s["state"] == "running" and s["id"] not in _threads:
-        s.update(state="interrupted", detail="The free service restarted. Start a new investigation; recorded evidence is still available.")
+        s.update(state="interrupted", detail="The API restarted. Start a new investigation; recorded evidence is still available.")
         _save(path, s)
     return s
 
@@ -260,36 +263,53 @@ def _model_result(result):
 
 
 def _completion(messages, config, remaining):
-    if config["provider"] == "OpenRouter":
+    openrouter = config["provider"] == "OpenRouter"
+    if openrouter:
         url, key = "https://openrouter.ai/api/v1/chat/completions", os.environ["OPENROUTER_API_KEY"]
+        models = FREE_NVIDIA_MODELS
     else:
         url, key = "https://api.groq.com/openai/v1/chat/completions", os.environ["GROQ_API_KEY"]
-    body = {"model": config["model"], "messages": messages, "tools": config.get("tools", TOOLS),
-            "tool_choice": "required" if len(messages) == 2 else "auto", "max_tokens": 1200,
-            "temperature": 0.2}
-    if config["provider"] == "OpenRouter":
-        body["provider"] = {"only": ["nvidia"], "allow_fallbacks": False}
-        body["reasoning"] = {"enabled": False, "exclude": True}
-    req = urllib.request.Request(url, data=json.dumps(body).encode(), headers={
-        "Authorization": "Bearer " + key, "Content-Type": "application/json",
-        "HTTP-Referer": os.environ.get("EW_PUBLIC_URL", "https://embodiweave.onrender.com"), "X-Title": "EmbodiWeave judge investigation"})
-    try:
-        with urllib.request.urlopen(req, timeout=max(1, min(45, remaining))) as response:
-            raw = response.read(512_001)
-        if len(raw) > 512_000:
-            raise ProviderFailure("The model returned too much data. Try a shorter investigation.")
-        data = json.loads(raw)
-        if "error" in data:
-            raise ProviderFailure("The model provider could not complete the request. Try again later or inspect the recorded trace.")
-        return data
-    except urllib.error.HTTPError as exc:
-        if exc.code == 429:
-            raise ProviderFailure("The free model provider is rate limited. Please try later; live graph queries still work.") from None
-        if exc.code == 404:
-            raise ProviderFailure("No permitted free model endpoint is available. The project owner may need to check provider settings. Live graph queries still work.") from None
-        raise ProviderFailure(f"The model provider returned HTTP {exc.code}. Please try later; recorded evidence remains available.") from None
-    except (urllib.error.URLError, TimeoutError, json.JSONDecodeError):
-        raise ProviderFailure("The model provider did not respond in time. Try again or inspect the recorded trace.") from None
+        models = ("llama-3.3-70b-versatile",)
+    deadline = time.time() + remaining
+    for model in models:
+        body = {"model": model, "messages": messages, "tools": config.get("tools", TOOLS),
+                "tool_choice": "required" if len(messages) == 2 else "auto", "max_tokens": 1200,
+                "temperature": 0.2}
+        if openrouter:
+            body["provider"] = {"only": ["nvidia"], "allow_fallbacks": False}
+            body["reasoning"] = {"enabled": False, "exclude": True}
+        req = urllib.request.Request(url, data=json.dumps(body).encode(), headers={
+            "Authorization": "Bearer " + key, "Content-Type": "application/json",
+            "HTTP-Referer": os.environ.get("EW_PUBLIC_URL", "https://embodiweave.onrender.com"),
+            "X-Title": "EmbodiWeave judge investigation"})
+        remaining = deadline - time.time()
+        if remaining <= 0:
+            raise ProviderFailure("The model time limit was reached. The fixed PPO workflow is still available.")
+        try:
+            with urllib.request.urlopen(req, timeout=max(1, min(45, remaining))) as response:
+                raw = response.read(512_001)
+            if len(raw) > 512_000:
+                raise ProviderFailure("The model returned too much data. Try a shorter investigation.")
+            data = json.loads(raw)
+            if "error" in data:
+                code = data["error"].get("code") if isinstance(data["error"], dict) else None
+                if openrouter and code in (404, 502, 503, 504):
+                    continue  # Only the explicit free NVIDIA allowlist; never another provider or paid model.
+                if code == 429:
+                    raise ProviderFailure("The free model provider is rate limited. The fixed PPO workflow still works.")
+                raise ProviderFailure("The model provider could not complete the request. The fixed PPO workflow is still available.")
+            return data
+        except urllib.error.HTTPError as exc:
+            if exc.code == 429:
+                raise ProviderFailure("The free model provider is rate limited. Please try later; live graph queries still work.") from None
+            if openrouter and exc.code in (404, 502, 503, 504):
+                continue
+            raise ProviderFailure(f"The model provider returned HTTP {exc.code}. Please try later; recorded evidence remains available.") from None
+        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError):
+            if openrouter:
+                continue
+            raise ProviderFailure("The model provider did not respond in time. Try again or inspect the recorded trace.") from None
+    raise ProviderFailure("The permitted free NVIDIA models are temporarily unavailable or overloaded. Try the fixed PPO flow above; it needs no model request.")
 
 
 def _run(s):

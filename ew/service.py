@@ -249,6 +249,7 @@ def export_bundle(policy_id: str) -> dict:
             z.write(lock, "requirements.lock")
         z.writestr("REPRODUCE.md", (
             f"# Reproduce {policy_id}\n\nartifact_hash (sha256 over model.zip + vecnormalize.pkl digests): {m['artifact_hash']}\n\n"
+            "On Linux, after creating `.venv` and before installing `requirements.lock`, install the CPU wheel: `.venv/bin/pip install torch==2.14.1+cpu --index-url https://download.pytorch.org/whl/cpu`.\n\n"
             "```\npython3.13 -m venv .venv\n.venv/bin/pip install -r requirements.lock\n"
             "PYTHONPATH=source .venv/bin/python -m ew.cli evaluate --policy-dir policy --suite val-target-v1\n```\n"
             f"Training: recipe {m['recipe']} seed {m['seed']} steps {m['consumed_steps']} on family {m['family']} "
