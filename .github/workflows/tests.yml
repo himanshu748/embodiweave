@@ -1,0 +1,43 @@
+name: Tests
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements.lock
+      - name: Install pinned CPU stack
+        run: |
+          python -m pip install torch==2.14.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r requirements.lock
+      - name: Start pinned FalkorDB
+        run: |
+          docker run -d --name ew-ci -p 127.0.0.1:6379:6379 falkordb/falkordb@sha256:107455e862a824e45e8e9f5a7fbfdf5e00a08b14e13eae2577c72fd9e3f59ba6
+          for i in $(seq 1 30); do
+            if docker exec ew-ci redis-cli ping | rg PONG; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Test real validation and graph boundaries
+        run: python -m pytest -q
+      - name: Fresh compose launch
+        run: |
+          docker compose up --build --wait --wait-timeout 180
+          python -c "import json,urllib.request; s=json.load(urllib.request.urlopen('http://127.0.0.1:8000/api/status')); assert s['graph']['up']"
+      - name: Logs on failure
+        if: failure()
+        run: docker compose logs --tail=100
+      - name: Stop owned containers
+        if: always()
+        run: |
+          docker compose down
+          docker rm -f ew-ci

@@ -1,0 +1,21 @@
+services:
+  embodiweave:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      EW_ARTIFACTS: /data
+      EW_STATIC: "1"
+      EW_PUBLIC_TRAINING: "1"
+    volumes:
+      - evidence:/data
+    mem_limit: 1536m
+    cpus: 1.8
+    healthcheck:
+      test: ["CMD", "/app/.venv/bin/python", "-c", "import json,urllib.request; assert json.load(urllib.request.urlopen('http://127.0.0.1:8000/api/status'))['graph']['up']"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+volumes:
+  evidence:
