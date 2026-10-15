@@ -219,7 +219,7 @@ function setView(v, d) {
       view3d.setStep(+$("#step").textContent || 0);
     } catch { v = "top"; document.querySelector('.viewtabs [data-view="3d"]').disabled = true; }
   }
-  $("#stage3d").hidden = v !== "3d"; $("#arenas2d").hidden = v === "3d";
+  $("#stage3d").hidden = $("#who3d").hidden = v !== "3d"; $("#arenas2d").hidden = v === "3d";
   document.querySelectorAll(".viewtabs button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.view === v)));
   if (v === "3d") view3d?.resize();
 }
