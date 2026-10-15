@@ -35,6 +35,28 @@ function summarize(call) {
   const qs = r.queries || [];
   return qs.map((q) => `${q.template}: ${q.row_count} rows · rev ${q.graph_revision} · ${q.ms} ms`).join(" / ");
 }
+function gateValues(result) {
+  const region = document.createElement("div"), table = document.createElement("table"), caption = document.createElement("caption");
+  region.className = "gate-values"; region.tabIndex = 0; region.setAttribute("role", "region"); region.setAttribute("aria-label", "Measured promotion gate results");
+  caption.textContent = `Trusted ${result.rule} gate · artifact ${result.artifact_hash.slice(0, 12)}`; table.append(caption);
+  const head = document.createElement("tr");
+  for (const label of ["Validation suite", "Success / min", "Collision / max", "Gate"]) { const th = document.createElement("th"); th.textContent = label; th.scope = "col"; head.append(th); }
+  table.append(head);
+  const percent = (x) => (100 * x).toFixed(1) + "%";
+  for (const check of result.checks) {
+    const row = document.createElement("tr");
+    for (const text of [check.suite_id, `${percent(check.success_rate)} / ${percent(check.min_success)}`, `${percent(check.collision_rate)} / ${percent(check.max_collision)}`, check.pass ? "Pass" : "Fail"]) { const td = document.createElement("td"); td.textContent = text; row.append(td); }
+    table.append(row);
+  }
+  region.append(table);
+  const comparison = result.comparison_to_deployed;
+  if (comparison?.available) {
+    const p = document.createElement("p"); p.className = "tool-result";
+    p.textContent = `Measured target comparison with P-static-b: success ${percent(comparison.baseline.success_rate)} → ${percent(comparison.candidate.success_rate)}; collision ${percent(comparison.baseline.collision_rate)} → ${percent(comparison.candidate.collision_rate)}. Gate requirements remain unchanged.`;
+    region.append(p);
+  }
+  return region;
+}
 function paint(s) {
   currentId = s.id;
   $("#runState").textContent = s.state;
@@ -51,7 +73,9 @@ function paint(s) {
     const details = document.createElement("details"), label = document.createElement("summary"), pre = document.createElement("pre");
     label.textContent = "Inspect arguments, Cypher and evidence";
     pre.textContent = JSON.stringify({ arguments: c.args, result: c.result }, null, 2);
-    details.append(label, pre); li.append(title, timing, summary, details); list.append(li);
+    details.append(label, pre); li.append(title, timing, summary);
+    if (c.result.preview) li.append(gateValues(c.result));
+    li.append(details); list.append(li);
   }
   $("#answerPanel").hidden = !s.answer;
   renderAnswer(s.answer || "");

@@ -206,12 +206,15 @@ The receipt shows the actual model(s) returned by the provider, selected tools, 
 record IDs, exact Cypher, revision, latency, token usage and final report. A model failure, turn limit,
 database outage or service restart is explicit; recorded output is never substituted for a live answer.
 Model prose is interpretation: inspect the tool results to verify it.
+Gate calls also read complete matched target evaluations for the candidate and deployed policy, compute
+rate differences, and render the measured gate table directly. A checkpoint can have fewer collisions
+than deployment while still failing the gate's absolute ceiling; missing baseline evidence stays unknown.
 
 **Free hosting limits:** one active investigation, at most 6 model turns, 10 tool calls, 1,200 output tokens
 per turn and two minutes per session; 20 shared starts per UTC day, 4 per browser per hour. Failed attempts
 count. Browser cookies isolate receipts; another visitor cannot list or fetch your session. Reloading
 resumes your current receipt. Sessions and allowances are ephemeral on free Render and reset on restart;
-they are not a durable billing cap. OpenRouter is fixed to `nvidia/nemotron-3.5-lightning:free`, routed only
+they are not a durable billing cap. OpenRouter is fixed to `nvidia/nemotron-3-ultra-550b-a55b:free`, routed only
 to NVIDIA with no paid or provider fallback. Your OpenRouter privacy settings must permit NVIDIA. A Groq
 key can instead use `llama-3.3-70b-versatile`. Provider free quotas can be lower than the app allowance.
 The server needs `EW_PUBLIC_AGENT=1` and `OPENROUTER_API_KEY` (or `GROQ_API_KEY`) in Render Environment.

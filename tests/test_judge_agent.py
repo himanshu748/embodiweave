@@ -25,7 +25,7 @@ def public_agent(tmp_path, monkeypatch):
 def test_session_consent_isolation_and_no_secret_exposure(public_agent):
     c, other = TestClient(api.app), TestClient(api.app)
     cfg = c.get("/api/judge/config")
-    assert cfg.json()["enabled"] is True and cfg.json()["model"] == "nvidia/nemotron-3.5-lightning:free"
+    assert cfg.json()["enabled"] is True and cfg.json()["model"] == "nvidia/nemotron-3-ultra-550b-a55b:free"
     assert "HttpOnly" in cfg.headers["set-cookie"] and "SameSite=strict" in cfg.headers["set-cookie"]
     assert c.post("/api/judge/start", json={"question": "Investigate failure", "consent": False}).status_code == 403
     r = c.post("/api/judge/start", json={"question": "Investigate failure", "consent": True})
@@ -131,7 +131,7 @@ def test_provider_request_is_free_only_and_http_errors_are_sanitized(public_agen
     with pytest.raises(J.ProviderFailure, match="rate limited") as exc:
         J._completion([{}, {}], J.configuration(), 60)
     assert "test-provider-secret" not in str(exc.value)
-    assert sent[0]["model"] == "nvidia/nemotron-3.5-lightning:free" and sent[0]["max_tokens"] == 1200
+    assert sent[0]["model"] == "nvidia/nemotron-3-ultra-550b-a55b:free" and sent[0]["max_tokens"] == 1200
     assert sent[0]["provider"] == {"only": ["nvidia"], "allow_fallbacks": False}
 
 
@@ -142,3 +142,21 @@ def test_public_opt_in_and_question_bounds(public_agent, monkeypatch):
     monkeypatch.setenv("EW_PUBLIC_AGENT", "0")
     with pytest.raises(PermissionError):
         J.start("Investigate the failure", True, owner)
+
+
+@pytest.mark.parametrize("missing", [False, True])
+def test_gate_comparison_uses_matched_measurements_without_inventing_a_baseline(public_agent, monkeypatch, missing):
+    monkeypatch.setattr(J.Q, "run", lambda *a: SimpleNamespace(dicts=lambda: [{"id": "child"}, {"id": "P-static-b"}]))
+    monkeypatch.setattr(J.service, "promotion_preview", lambda p: {"verdict": "rejected", "policy_id": p})
+    rows = [{"policy_id": "child", "evaluation_id": "child-eval", "success_rate": 0.8667, "collision_rate": 0.1333}]
+    if not missing:
+        rows.append({"policy_id": "P-static-b", "evaluation_id": "baseline-eval", "success_rate": 0.3667, "collision_rate": 0.4833})
+    monkeypatch.setattr(J, "_query", lambda name, params: {"template": name, "params": params, "rows": rows})
+    result = J.execute("check_checkpoint", {"policy_id": "child"})
+    comparison = result["comparison_to_deployed"]
+    assert comparison["available"] is not missing
+    if not missing:
+        assert comparison["success_delta"] == 0.5 and comparison["collision_delta"] == -0.35
+    else:
+        assert "collision_delta" not in comparison
+    assert result["deployment_changed"] is False
