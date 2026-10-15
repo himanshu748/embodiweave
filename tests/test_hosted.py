@@ -19,6 +19,9 @@ def test_hosted_mode_refuses_training_but_serves_live_reads(monkeypatch):
     # this artifacts directory holds no featured agent run: say so instead of inventing rows
     assert c.get("/api/live/query/transfer").status_code == 404
     assert c.get("/api/live/featured").status_code == 404
+    lineage = c.get("/api/search/lineage").json()
+    assert lineage["via"] == "GRAPH.RO_QUERY" and lineage["rows"] == []
+    assert lineage["params"] == {"rule": "search-v1"}
     monkeypatch.setattr(api, "STATIC_MODE", False)
     assert c.post("/api/train", json={}).status_code != 403
     db.delete_graph("ew_test")

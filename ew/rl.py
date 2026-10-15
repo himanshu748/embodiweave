@@ -109,6 +109,7 @@ def train(policy_id: str, *, family: Family | str, budget_steps: int, seed: int,
     and the validation schedule results (if a validation suite was given).
     """
     fam = FAMILIES[family] if isinstance(family, str) else family
+    training_source = source_snapshot()
     rc = RECIPES[recipe]
     reservation = reserved_steps(budget_steps, recipe)
     if parent_id:
@@ -165,7 +166,7 @@ def train(policy_id: str, *, family: Family | str, budget_steps: int, seed: int,
         "parent_id": parent_id, "run_id": run_id, "contract_id": contract.contract_id,
         "robot": contract.robot.name, "family": fam.name, "family_id": fam.fid(), "recipe": recipe,
         "recipe_params": rc, "seed": seed, "budget_steps": budget_steps, "consumed_steps": consumed,
-        "reserved_steps": reservation, "source": source_snapshot(),
+        "reserved_steps": reservation, "source": training_source,
         "status": "cancelled" if cb.cancelled else "completed", "wall_s": round(wall, 2),
         "weight_delta_l2": float(torch.norm(w1 - w0)), "runtime": runtime_versions(),
         "created_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),

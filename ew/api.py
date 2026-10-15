@@ -566,6 +566,12 @@ def live_overview():
             "ms": round(ms1 + ms2, 2), "via": "GRAPH.RO_QUERY", "at": time.time()}
 
 
+@app.get("/api/search/lineage")
+def search_lineage():
+    r = Q.run("search_lineage", {"rule": "search-v1"})
+    return {**r.to_log(), "via": "GRAPH.RO_QUERY", "at": time.time()}
+
+
 @app.get("/api/live/query/{name}")
 def live_query(name: str):
     presets = _live_presets()

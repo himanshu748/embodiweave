@@ -219,12 +219,14 @@ def export_bundle(policy_id: str) -> dict:
     artifacts.verify_policy(policy_id, m["artifact_hash"])
     out_dir = artifacts.ROOT / "exports"
     out_dir.mkdir(parents=True, exist_ok=True)
-    path = out_dir / f"{policy_id}-{m['artifact_hash'][:12]}-repro-v2.zip"
+    path = out_dir / f"{policy_id}-{m['artifact_hash'][:12]}-repro-v3.zip"
     root = Path(__file__).resolve().parent.parent
     rel = {"runs": [r for r in records.all_of("run") if r.get("child_policy_id") == policy_id],
            "evaluations": [e for e in records.all_of("evaluation") if e["policy_id"] == policy_id],
            "trials": [t for t in records.all_of("trial") if policy_id in (t.get("child_policy_id"), t.get("parent_id"))],
            "promotions": [p for p in records.all_of("promotion") if p["policy_id"] == policy_id]}
+    decision_ids = {r.get("decision_id") for kind in ("runs", "trials") for r in rel[kind]}
+    rel["decisions"] = [d for d in records.all_of("decision") if d["id"] in decision_ids]
     lineage, cur = [], m
     while cur:
         lineage.append({"policy_id": cur["policy_id"], "artifact_hash": cur["artifact_hash"], "family": cur["family"],
@@ -240,8 +242,24 @@ def export_bundle(policy_id: str) -> dict:
         z.writestr("contract.json", json.dumps(contract, indent=1, default=list))
         z.writestr("records.json", json.dumps(rel, indent=1, default=str))
         z.writestr("lineage.json", json.dumps(lineage, indent=1))
+        for replay in sorted(REPLAYS.glob("*.json")):
+            if replay.stem in {e["id"] for e in rel["evaluations"]}:
+                z.write(replay, f"replays/{replay.name}")
+        confirmation = artifacts.ROOT / "final-confirmation-started.json"
+        if confirmation.exists() and json.loads(confirmation.read_text()).get("policy_id") == policy_id:
+            z.write(confirmation, "final-confirmation-protocol.json")
         z.writestr("source.json", json.dumps({"export_source": source, "training_source": m.get("source"),
                         "historical_note": "Training source was not captured for historical artifacts" if not m.get("source") else None}, indent=2))
+        archive = artifacts.ROOT / "source_archives" / f"{(m.get('source') or {}).get('source_hash', '')}.zip"
+        if archive.exists():
+            with zipfile.ZipFile(archive) as training:
+                expected = m["source"]["files"]
+                if set(training.namelist()) != set(expected):
+                    raise ValueError("training source archive file set mismatch")
+                for name, digest in expected.items():
+                    if hashlib.sha256(training.read(name)).hexdigest() != digest:
+                        raise ValueError("training source archive checksum mismatch")
+            z.write(archive, "training-source.zip")
         for file in sorted((root / "ew").rglob("*.py")):
             z.write(file, "source/" + str(file.relative_to(root)))
         lock = root / "requirements.lock"

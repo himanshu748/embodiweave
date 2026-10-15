@@ -52,3 +52,17 @@ def test_search_fails_closed_when_graph_is_down(monkeypatch):
     monkeypatch.setattr(search.Q, "run", unavailable)
     with pytest.raises(db.GraphUnavailable):
         search.plan()
+
+
+def test_promotion_implementation_thresholds_and_suites_are_unchanged():
+    import ast
+    import hashlib
+    import json
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[1]
+    proof = json.loads((root / "evidence/search-v1/gate-unchanged.json").read_text())["exact_source_matches"]
+    text = (root / "ew/service.py").read_text()
+    functions = {n.name: ast.get_source_segment(text, n) for n in ast.parse(text).body if isinstance(n, ast.FunctionDef)}
+    for name, digest in proof.items():
+        content = (root / name).read_bytes() if name.endswith(".py") else functions[name].encode()
+        assert hashlib.sha256(content).hexdigest() == digest

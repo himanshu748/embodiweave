@@ -12,6 +12,18 @@ from dataclasses import asdict, dataclass, field
 from . import db
 
 TEMPLATES = {
+    "search_lineage": """
+MATCH (d:Decision {rule_version:$rule})-[:SELECTED]->(parent:Policy)
+MATCH (d)-[:LAUNCHED]->(r:Run)-[:PRODUCED]->(child:Policy)
+MATCH (t:Trial)-[:VIA_RUN]->(r)
+MATCH (gate:Promotion)-[:FOR]->(child)
+MATCH (d)-[:BASED_ON]->(e:Evaluation)-[:ON_SUITE]->(s:Suite)
+WHERE s.role = 'validation' AND (e)-[:ASSESSED]->(parent) AND e.artifact_hash = parent.artifact_hash
+RETURN d.id AS decision, parent.id AS origin, t.intervention AS intervention,
+       s.id AS evidence_suite, e.success_rate AS origin_success, e.collision_rate AS origin_collisions,
+       child.id AS candidate, gate.verdict AS verdict, d.explanation AS rationale
+ORDER BY decision, evidence_suite LIMIT 100""",
+
     "search_validation": """
 MATCH (p:Policy)-[:USES_CONTRACT]->(:Contract {id:$contract})
 MATCH (e:Evaluation)-[:ASSESSED]->(p)
