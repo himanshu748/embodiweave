@@ -12,11 +12,12 @@ An agent uses connected robot failures and checkpoint history in FalkorDB to cho
 
 | Measured candidate | Target success / collision | Open | Static | Crossing | Fixed promo-1 gate |
 |---|---|---|---|---|---|
+| **Collision limit (maximum)** | **≤10%** | **≤5%** | **≤10%** | **≤15%** | All four required |
 | Original scratch checkpoint | 86.67% / 13.33% | 72.5% / 0% | 95% / 2.5% | 72.5% / 17.5% | Rejected, 1/4 |
 | Longer training | 91.67% / 8.33% | 82.5% / 0% | 92.5% / 5% | 85% / 10% | Rejected, 3/4 |
 | Rehearsal across training families | 95% / 5% | 100% / 0% | 97.5% / 2.5% | 85% / 15% | Passed, 4/4 |
 
-Each row uses the same complete validation suites: target 60 episodes, open 40, static 40, crossing 40, **180 total per candidate**. Every cell is success / collision. Each new attempt requested 300,000 additional steps and consumed 301,056 after rollout rounding, with seed 7 fixed before training. The passing lineage consumed 753,664 steps including its root.
+Each candidate uses the same complete validation suites: target 60 episodes, open 40, static 40, crossing 40, **180 total per candidate**. Candidate cells show success / collision; the limits row shows each suite's maximum collision rate from the fixed [promo-1 criteria](ew/criteria.py). Each new attempt requested 300,000 additional steps and consumed 301,056 after rollout rounding, with seed 7 fixed before training. The passing lineage consumed 753,664 steps including its root.
 
 **Held-out target confirmation: 86 goals, 13 collisions, 1 timeout in 100 episodes.** The target permits at most 10% collisions. Held-out retained tasks were not evaluated. Passing validation is not a claim of general safety; production remains `P-static-b`.
 
