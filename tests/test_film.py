@@ -1,0 +1,41 @@
+import io
+import struct
+import wave
+from pathlib import Path
+import json
+
+import numpy as np
+import pytest
+
+from scripts.film.voice import pcm_wav, tokens
+
+
+def test_streamed_wav_header_is_finalized_without_changing_pcm():
+    pcm = np.arange(2400, dtype=np.int16).tobytes()
+    buffer = io.BytesIO()
+    with wave.open(buffer, "wb") as wav:
+        wav.setnchannels(1); wav.setsampwidth(2); wav.setframerate(48000); wav.writeframes(pcm)
+    streamed = bytearray(buffer.getvalue())
+    streamed[4:8] = struct.pack("<I", 0xffffffff)
+    streamed[40:44] = struct.pack("<I", 0xffffffff)
+    with wave.open(io.BytesIO(pcm_wav(bytes(streamed)))) as wav:
+        assert wav.getnframes() == 2400
+        assert wav.readframes(2400) == pcm
+
+
+def test_transcript_comparison_keeps_claim_numbers():
+    assert tokens("Falkor-D-B, thirteen collisions in forty episodes.") == tokens("FalkorDB: 13 collisions in 40 episodes.")
+    assert tokens("13 collisions") != tokens("3 collisions")
+
+
+def test_recorded_transfer_motion_reproduces_from_actions():
+    pytest.importorskip("mujoco")
+    from sim.mujoco.environment import MuJoCoNavEnv
+    root = Path(__file__).resolve().parents[1] / "evidence/mujoco-v1"
+    episode = json.loads((root/"deployed-open.json").read_text())["episodes"][0]
+    with np.load(root/episode["trajectory"], allow_pickle=False) as trace:
+        env=MuJoCoNavEnv("open",layout=episode["layout"],record=True)
+        env.reset()
+        for action in trace["actions"][:5]:env.step(action)
+        actual=np.array([f["qpos"] for f in env.physics_trace])
+        np.testing.assert_allclose(actual,trace["qpos"][:len(actual)],atol=1e-6,rtol=1e-6)

@@ -1,0 +1,56 @@
+[
+  {
+    "attempt": "longer",
+    "meaning": "Recent training success over at most 200 episodes, not validation performance",
+    "samples": [
+      {
+        "episodes": 666,
+        "steps": 75000,
+        "train_success_recent": 0.805
+      },
+      {
+        "episodes": 1336,
+        "steps": 150000,
+        "train_success_recent": 0.895
+      },
+      {
+        "episodes": 2072,
+        "steps": 225000,
+        "train_success_recent": 0.905
+      },
+      {
+        "episodes": 2803,
+        "steps": 300000,
+        "train_success_recent": 0.935
+      }
+    ],
+    "source_log_sha256": "f9a6b73ef39596874982c97b2bc10851bd3ed7bb5697d17bad5d825af9515e17"
+  },
+  {
+    "attempt": "rehearsal",
+    "meaning": "Recent training success over at most 200 episodes, not validation performance",
+    "samples": [
+      {
+        "episodes": 774,
+        "steps": 75000,
+        "train_success_recent": 0.935
+      },
+      {
+        "episodes": 1574,
+        "steps": 150000,
+        "train_success_recent": 0.955
+      },
+      {
+        "episodes": 2381,
+        "steps": 225000,
+        "train_success_recent": 0.925
+      },
+      {
+        "episodes": 3197,
+        "steps": 300000,
+        "train_success_recent": 0.965
+      }
+    ],
+    "source_log_sha256": "12a098e64f3a62eaff6c315f7c986519e1b9e3504708c3132e20f048eba5f9f6"
+  }
+]

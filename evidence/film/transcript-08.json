@@ -1,0 +1,411 @@
+{
+  "metadata": {
+    "transaction_key": "deprecated",
+    "request_id": "01a14069-b5cd-7fa0-a408-cc37577c42ff",
+    "sha256": "095d31ba6912b5ac7b0c5bf517788edd4925f630b7d65d985c3d46285822dc6a",
+    "created": "2026-10-15T16:33:53.636Z",
+    "duration": 10.32,
+    "channels": 1,
+    "models": [
+      "2187e11a-3532-4498-b076-81fa530bdd49"
+    ],
+    "model_info": {
+      "2187e11a-3532-4498-b076-81fa530bdd49": {
+        "name": "general-nova-3",
+        "version": "2025-07-31.0",
+        "arch": "nova-3"
+      }
+    }
+  },
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "Longer training came first. A retained task failure then led to rehearsal across training families. Each attempt added about 300,000 PPO steps.",
+            "confidence": 1.0,
+            "words": [
+              {
+                "word": "longer",
+                "start": 0.0,
+                "end": 0.48,
+                "confidence": 0.9980469,
+                "punctuated_word": "Longer"
+              },
+              {
+                "word": "training",
+                "start": 0.48,
+                "end": 0.96,
+                "confidence": 1.0,
+                "punctuated_word": "training"
+              },
+              {
+                "word": "came",
+                "start": 0.96,
+                "end": 1.28,
+                "confidence": 1.0,
+                "punctuated_word": "came"
+              },
+              {
+                "word": "first",
+                "start": 1.28,
+                "end": 2.0,
+                "confidence": 0.9848633,
+                "punctuated_word": "first."
+              },
+              {
+                "word": "a",
+                "start": 2.1599998,
+                "end": 2.48,
+                "confidence": 1.0,
+                "punctuated_word": "A"
+              },
+              {
+                "word": "retained",
+                "start": 2.48,
+                "end": 2.8,
+                "confidence": 0.9980469,
+                "punctuated_word": "retained"
+              },
+              {
+                "word": "task",
+                "start": 2.8,
+                "end": 3.28,
+                "confidence": 0.99902344,
+                "punctuated_word": "task"
+              },
+              {
+                "word": "failure",
+                "start": 3.28,
+                "end": 3.6799998,
+                "confidence": 1.0,
+                "punctuated_word": "failure"
+              },
+              {
+                "word": "then",
+                "start": 3.6799998,
+                "end": 4.0,
+                "confidence": 0.9951172,
+                "punctuated_word": "then"
+              },
+              {
+                "word": "led",
+                "start": 4.0,
+                "end": 4.24,
+                "confidence": 0.99121094,
+                "punctuated_word": "led"
+              },
+              {
+                "word": "to",
+                "start": 4.24,
+                "end": 4.3199997,
+                "confidence": 1.0,
+                "punctuated_word": "to"
+              },
+              {
+                "word": "rehearsal",
+                "start": 4.3199997,
+                "end": 4.88,
+                "confidence": 0.99902344,
+                "punctuated_word": "rehearsal"
+              },
+              {
+                "word": "across",
+                "start": 4.88,
+                "end": 5.2799997,
+                "confidence": 1.0,
+                "punctuated_word": "across"
+              },
+              {
+                "word": "training",
+                "start": 5.2799997,
+                "end": 5.68,
+                "confidence": 1.0,
+                "punctuated_word": "training"
+              },
+              {
+                "word": "families",
+                "start": 5.68,
+                "end": 6.48,
+                "confidence": 0.9975586,
+                "punctuated_word": "families."
+              },
+              {
+                "word": "each",
+                "start": 6.72,
+                "end": 7.04,
+                "confidence": 1.0,
+                "punctuated_word": "Each"
+              },
+              {
+                "word": "attempt",
+                "start": 7.04,
+                "end": 7.44,
+                "confidence": 1.0,
+                "punctuated_word": "attempt"
+              },
+              {
+                "word": "added",
+                "start": 7.44,
+                "end": 7.8399997,
+                "confidence": 0.99902344,
+                "punctuated_word": "added"
+              },
+              {
+                "word": "about",
+                "start": 7.8399997,
+                "end": 8.16,
+                "confidence": 1.0,
+                "punctuated_word": "about"
+              },
+              {
+                "word": "300,000",
+                "start": 8.16,
+                "end": 9.12,
+                "confidence": 1.0,
+                "punctuated_word": "300,000"
+              },
+              {
+                "word": "ppo",
+                "start": 9.12,
+                "end": 9.679999,
+                "confidence": 0.9951172,
+                "punctuated_word": "PPO"
+              },
+              {
+                "word": "steps",
+                "start": 9.679999,
+                "end": 10.16,
+                "confidence": 0.9975586,
+                "punctuated_word": "steps."
+              }
+            ],
+            "paragraphs": {
+              "transcript": "\nLonger training came first. A retained task failure then led to rehearsal across training families. Each attempt added about 300,000 PPO steps.",
+              "paragraphs": [
+                {
+                  "sentences": [
+                    {
+                      "text": "Longer training came first.",
+                      "start": 0.0,
+                      "end": 2.0
+                    },
+                    {
+                      "text": "A retained task failure then led to rehearsal across training families.",
+                      "start": 2.1599998,
+                      "end": 6.48
+                    },
+                    {
+                      "text": "Each attempt added about 300,000 PPO steps.",
+                      "start": 6.72,
+                      "end": 10.16
+                    }
+                  ],
+                  "num_words": 22,
+                  "start": 0.0,
+                  "end": 10.16
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "utterances": [
+      {
+        "start": 0.0,
+        "end": 2.0,
+        "confidence": 0.99572754,
+        "channel": 0,
+        "transcript": "Longer training came first.",
+        "words": [
+          {
+            "word": "longer",
+            "start": 0.0,
+            "end": 0.48,
+            "confidence": 0.9980469,
+            "punctuated_word": "Longer"
+          },
+          {
+            "word": "training",
+            "start": 0.48,
+            "end": 0.96,
+            "confidence": 1.0,
+            "punctuated_word": "training"
+          },
+          {
+            "word": "came",
+            "start": 0.96,
+            "end": 1.28,
+            "confidence": 1.0,
+            "punctuated_word": "came"
+          },
+          {
+            "word": "first",
+            "start": 1.28,
+            "end": 2.0,
+            "confidence": 0.9848633,
+            "punctuated_word": "first."
+          }
+        ],
+        "id": "2b46c7f7-78e1-4a12-9177-7ffdfa8c13a8"
+      },
+      {
+        "start": 2.1599998,
+        "end": 6.48,
+        "confidence": 0.99818003,
+        "channel": 0,
+        "transcript": "A retained task failure then led to rehearsal across training families.",
+        "words": [
+          {
+            "word": "a",
+            "start": 2.1599998,
+            "end": 2.48,
+            "confidence": 1.0,
+            "punctuated_word": "A"
+          },
+          {
+            "word": "retained",
+            "start": 2.48,
+            "end": 2.8,
+            "confidence": 0.9980469,
+            "punctuated_word": "retained"
+          },
+          {
+            "word": "task",
+            "start": 2.8,
+            "end": 3.28,
+            "confidence": 0.99902344,
+            "punctuated_word": "task"
+          },
+          {
+            "word": "failure",
+            "start": 3.28,
+            "end": 3.6799998,
+            "confidence": 1.0,
+            "punctuated_word": "failure"
+          },
+          {
+            "word": "then",
+            "start": 3.6799998,
+            "end": 4.0,
+            "confidence": 0.9951172,
+            "punctuated_word": "then"
+          },
+          {
+            "word": "led",
+            "start": 4.0,
+            "end": 4.24,
+            "confidence": 0.99121094,
+            "punctuated_word": "led"
+          },
+          {
+            "word": "to",
+            "start": 4.24,
+            "end": 4.3199997,
+            "confidence": 1.0,
+            "punctuated_word": "to"
+          },
+          {
+            "word": "rehearsal",
+            "start": 4.3199997,
+            "end": 4.88,
+            "confidence": 0.99902344,
+            "punctuated_word": "rehearsal"
+          },
+          {
+            "word": "across",
+            "start": 4.88,
+            "end": 5.2799997,
+            "confidence": 1.0,
+            "punctuated_word": "across"
+          },
+          {
+            "word": "training",
+            "start": 5.2799997,
+            "end": 5.68,
+            "confidence": 1.0,
+            "punctuated_word": "training"
+          },
+          {
+            "word": "families",
+            "start": 5.68,
+            "end": 6.48,
+            "confidence": 0.9975586,
+            "punctuated_word": "families."
+          }
+        ],
+        "id": "2a897af6-2c87-4e04-8878-6547cd31a82d"
+      },
+      {
+        "start": 6.72,
+        "end": 9.12,
+        "confidence": 0.9998047,
+        "channel": 0,
+        "transcript": "Each attempt added about 300,000",
+        "words": [
+          {
+            "word": "each",
+            "start": 6.72,
+            "end": 7.04,
+            "confidence": 1.0,
+            "punctuated_word": "Each"
+          },
+          {
+            "word": "attempt",
+            "start": 7.04,
+            "end": 7.44,
+            "confidence": 1.0,
+            "punctuated_word": "attempt"
+          },
+          {
+            "word": "added",
+            "start": 7.44,
+            "end": 7.8399997,
+            "confidence": 0.99902344,
+            "punctuated_word": "added"
+          },
+          {
+            "word": "about",
+            "start": 7.8399997,
+            "end": 8.16,
+            "confidence": 1.0,
+            "punctuated_word": "about"
+          },
+          {
+            "word": "300,000",
+            "start": 8.16,
+            "end": 9.12,
+            "confidence": 1.0,
+            "punctuated_word": "300,000"
+          }
+        ],
+        "id": "f09e4693-bd56-4c57-9f7f-87d1897e8bb2"
+      },
+      {
+        "start": 9.12,
+        "end": 10.16,
+        "confidence": 0.9963379,
+        "channel": 0,
+        "transcript": "PPO steps.",
+        "words": [
+          {
+            "word": "ppo",
+            "start": 9.12,
+            "end": 9.679999,
+            "confidence": 0.9951172,
+            "punctuated_word": "PPO"
+          },
+          {
+            "word": "steps",
+            "start": 9.679999,
+            "end": 10.16,
+            "confidence": 0.9975586,
+            "punctuated_word": "steps."
+          }
+        ],
+        "id": "8afff5ba-bdf2-4d28-8b73-fe296b955186"
+      }
+    ]
+  }
+}

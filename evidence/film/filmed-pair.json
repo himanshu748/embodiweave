@@ -1,0 +1,91 @@
+{
+  "deployed": {
+    "goal_distance": 6.013886497367262,
+    "hit": "mover",
+    "layout": {
+      "goal": [
+        8.872204988547407,
+        1.6026134592174248
+      ],
+      "movers": [
+        [
+          2.2317196543964224,
+          1.994879479691944,
+          0.45444786557180566,
+          0.6368342380811115,
+          0.5
+        ]
+      ],
+      "start": [
+        1.6107987638894294,
+        6.7843866154297645,
+        -1.4265401665609532
+      ],
+      "statics": [
+        [
+          3.9552220709370682,
+          6.003731966256221,
+          0.4784597750196269
+        ],
+        [
+          6.355215584647076,
+          2.8021560862410513,
+          0.4448584084913044
+        ]
+      ]
+    },
+    "model_xml_sha256": "9dd840cb321ef55130101f697e151dfb24c4c78f4eba0de7d95439c9e39c3835",
+    "outcome": "collision",
+    "seconds": 3.5449999999999466,
+    "seed": 5103011,
+    "steps": 36,
+    "trajectory": "trajectories/deployed-static_crossing-5103011.npz",
+    "trajectory_sha256": "b952c1ba35bba1c0c05d0e30e27beb35febe93bdc77aac96398bd74fb2533d9c"
+  },
+  "rehearsal": {
+    "goal_distance": 0.2953709103966557,
+    "hit": null,
+    "layout": {
+      "goal": [
+        8.872204988547407,
+        1.6026134592174248
+      ],
+      "movers": [
+        [
+          2.2317196543964224,
+          1.994879479691944,
+          0.45444786557180566,
+          0.6368342380811115,
+          0.5
+        ]
+      ],
+      "start": [
+        1.6107987638894294,
+        6.7843866154297645,
+        -1.4265401665609532
+      ],
+      "statics": [
+        [
+          3.9552220709370682,
+          6.003731966256221,
+          0.4784597750196269
+        ],
+        [
+          6.355215584647076,
+          2.8021560862410513,
+          0.4448584084913044
+        ]
+      ]
+    },
+    "model_xml_sha256": "9dd840cb321ef55130101f697e151dfb24c4c78f4eba0de7d95439c9e39c3835",
+    "outcome": "success",
+    "seconds": 11.600000000000414,
+    "seed": 5103011,
+    "steps": 116,
+    "trajectory": "trajectories/rehearsal-static_crossing-5103011.npz",
+    "trajectory_sha256": "c722f69736fa42b8ab9bae3fb6b560f0f5c7d984253992e89b0ad54ed449292a"
+  },
+  "seed": 5103011,
+  "selection": "Earliest deployed pedestrian collision among paired rehearsal successes, for a readable short replay. Selected illustrative episode; full aggregates are reported.",
+  "suite": "sim2sim-mujoco-v1-static_crossing"
+}

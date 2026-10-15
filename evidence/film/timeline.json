@@ -1,0 +1,126 @@
+{
+  "model": "aura-2-thalia-en",
+  "seconds": 119.23333333333335,
+  "scenes": [
+    {
+      "id": 1,
+      "narration": "This robot passed its open-arena test. Watch what happens when a pedestrian crosses.",
+      "title": "A test is not a guarantee",
+      "visual": "physics-hook",
+      "start": 0.0,
+      "voice_seconds": 5.399979166666666,
+      "duration": 6.9,
+      "audio": "docs/demo/voice/01.wav"
+    },
+    {
+      "id": 2,
+      "narration": "I built EmbodiWeave to answer two questions: which robot checkpoint should I retrain, and is the result safe to ship?",
+      "title": "Which checkpoint? Safe to ship?",
+      "visual": "problem",
+      "start": 6.9,
+      "voice_seconds": 7.199979166666667,
+      "duration": 7.7,
+      "audio": "docs/demo/voice/02.wav"
+    },
+    {
+      "id": 3,
+      "narration": "Falkor-D-B connects policies, training runs, trials, evaluations, failures and decisions. The links preserve what produced what.",
+      "title": "The history is a graph",
+      "visual": "graph",
+      "start": 14.600000000000001,
+      "voice_seconds": 9.519979166666667,
+      "duration": 10.033333333333333,
+      "audio": "docs/demo/voice/03.wav"
+    },
+    {
+      "id": 4,
+      "narration": "First, the agent queries failed validation suites, matching the exact artifact hash. A look-alike checkpoint cannot substitute for measured evidence.",
+      "title": "Diagnose the exact artifact",
+      "visual": "diagnose",
+      "start": 24.633333333333333,
+      "voice_seconds": 9.079979166666666,
+      "duration": 9.6,
+      "audio": "docs/demo/voice/04.wav"
+    },
+    {
+      "id": 5,
+      "narration": "Matching tensor shapes are not enough. Falkor-D-B links sensor and action contracts, so incompatible starting points are excluded.",
+      "title": "Same shape. Different meaning.",
+      "visual": "contracts",
+      "start": 34.233333333333334,
+      "voice_seconds": 8.599979166666667,
+      "duration": 9.1,
+      "audio": "docs/demo/voice/05.wav"
+    },
+    {
+      "id": 6,
+      "narration": "The planner ranks eligible origins by failed suites and deficits. Before training, its decision records the Cypher, parameters and returned evidence in Falkor-D-B.",
+      "title": "The decision is evidence too",
+      "visual": "decision",
+      "start": 43.333333333333336,
+      "voice_seconds": 10.119979166666667,
+      "duration": 10.633333333333333,
+      "audio": "docs/demo/voice/06.wav"
+    },
+    {
+      "id": 7,
+      "narration": "If Falkor-D-B is unavailable, planning stops. There is no silent fallback.",
+      "title": "No graph. No plan.",
+      "visual": "closed",
+      "start": 53.96666666666667,
+      "voice_seconds": 5.439979166666666,
+      "duration": 5.966666666666667,
+      "audio": "docs/demo/voice/07.wav"
+    },
+    {
+      "id": 8,
+      "narration": "Longer training came first. A retained-task failure then led to rehearsal across training families. Each attempt added about three hundred thousand P-P-O steps.",
+      "title": "Two measured training attempts",
+      "visual": "learning",
+      "start": 59.93333333333334,
+      "voice_seconds": 10.319979166666666,
+      "duration": 10.833333333333334,
+      "audio": "docs/demo/voice/08.wav"
+    },
+    {
+      "id": 9,
+      "narration": "The original passed one of four suites. Longer training passed three. Rehearsal passed all four. The collision limits stayed at ten, five, ten and fifteen percent.",
+      "title": "Same gate. Every candidate.",
+      "visual": "gate",
+      "start": 70.76666666666667,
+      "voice_seconds": 11.399979166666666,
+      "duration": 11.9,
+      "audio": "docs/demo/voice/09.wav"
+    },
+    {
+      "id": 10,
+      "narration": "One held-out target test recorded thirteen collisions across one hundred episodes. The limit was ten percent. I report it anyway. Production stays unchanged.",
+      "title": "I report it anyway.",
+      "visual": "heldout",
+      "start": 82.66666666666667,
+      "voice_seconds": 11.159979166666666,
+      "duration": 11.666666666666666,
+      "audio": "docs/demo/voice/10.wav"
+    },
+    {
+      "id": 11,
+      "narration": "Finally, I transferred the same two-dimensional-trained checkpoints into MuJoCo physics. On forty fresh target episodes, the deployed policy collided 24 times. The rehearsal checkpoint collided 3 times. Crossing still had eight collisions. No retraining.",
+      "title": "New physics. Unchanged checkpoints.",
+      "visual": "transfer",
+      "start": 94.33333333333334,
+      "voice_seconds": 16.71997916666667,
+      "duration": 17.233333333333334,
+      "audio": "docs/demo/voice/11.wav"
+    },
+    {
+      "id": 12,
+      "narration": "The graph and checksummed evidence make these results inspectable. EmbodiWeave. Built on Falkor-D-B.",
+      "title": "Robot training decisions you can audit.",
+      "visual": "close",
+      "start": 111.56666666666668,
+      "voice_seconds": 6.159979166666667,
+      "duration": 7.666666666666667,
+      "audio": "docs/demo/voice/12.wav"
+    }
+  ]
+}

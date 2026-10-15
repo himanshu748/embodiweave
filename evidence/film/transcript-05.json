@@ -1,0 +1,350 @@
+{
+  "metadata": {
+    "transaction_key": "deprecated",
+    "request_id": "01a14069-357c-7bc1-9c6f-4da46acfcfae",
+    "sha256": "8e9f5d290032d45f81ba8bcbcaf91e2935b6332a1fd33f58a5cca963ae8107fb",
+    "created": "2026-10-15T16:33:20.189Z",
+    "duration": 8.6,
+    "channels": 1,
+    "models": [
+      "2187e11a-3532-4498-b076-81fa530bdd49"
+    ],
+    "model_info": {
+      "2187e11a-3532-4498-b076-81fa530bdd49": {
+        "name": "general-nova-3",
+        "version": "2025-07-31.0",
+        "arch": "nova-3"
+      }
+    }
+  },
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "Matching tensor shapes are not enough. FalkorDB links sensor and action contracts, so incompatible starting points are excluded.",
+            "confidence": 0.9970703,
+            "words": [
+              {
+                "word": "matching",
+                "start": 0.0,
+                "end": 0.56,
+                "confidence": 0.9926758,
+                "punctuated_word": "Matching"
+              },
+              {
+                "word": "tensor",
+                "start": 0.56,
+                "end": 0.96,
+                "confidence": 0.98999023,
+                "punctuated_word": "tensor"
+              },
+              {
+                "word": "shapes",
+                "start": 0.96,
+                "end": 1.28,
+                "confidence": 1.0,
+                "punctuated_word": "shapes"
+              },
+              {
+                "word": "are",
+                "start": 1.28,
+                "end": 1.52,
+                "confidence": 0.9921875,
+                "punctuated_word": "are"
+              },
+              {
+                "word": "not",
+                "start": 1.52,
+                "end": 1.76,
+                "confidence": 0.99902344,
+                "punctuated_word": "not"
+              },
+              {
+                "word": "enough",
+                "start": 1.76,
+                "end": 2.3999999,
+                "confidence": 0.666626,
+                "punctuated_word": "enough."
+              },
+              {
+                "word": "falkordb",
+                "start": 2.56,
+                "end": 3.4399998,
+                "confidence": 0.993042,
+                "punctuated_word": "FalkorDB"
+              },
+              {
+                "word": "links",
+                "start": 3.4399998,
+                "end": 3.84,
+                "confidence": 0.9248047,
+                "punctuated_word": "links"
+              },
+              {
+                "word": "sensor",
+                "start": 3.84,
+                "end": 4.24,
+                "confidence": 0.9526367,
+                "punctuated_word": "sensor"
+              },
+              {
+                "word": "and",
+                "start": 4.24,
+                "end": 4.48,
+                "confidence": 0.9980469,
+                "punctuated_word": "and"
+              },
+              {
+                "word": "action",
+                "start": 4.48,
+                "end": 4.88,
+                "confidence": 0.9970703,
+                "punctuated_word": "action"
+              },
+              {
+                "word": "contracts",
+                "start": 4.88,
+                "end": 5.84,
+                "confidence": 0.8557129,
+                "punctuated_word": "contracts,"
+              },
+              {
+                "word": "so",
+                "start": 5.92,
+                "end": 6.24,
+                "confidence": 0.99902344,
+                "punctuated_word": "so"
+              },
+              {
+                "word": "incompatible",
+                "start": 6.24,
+                "end": 7.04,
+                "confidence": 1.0,
+                "punctuated_word": "incompatible"
+              },
+              {
+                "word": "starting",
+                "start": 7.04,
+                "end": 7.3599997,
+                "confidence": 1.0,
+                "punctuated_word": "starting"
+              },
+              {
+                "word": "points",
+                "start": 7.3599997,
+                "end": 7.7599998,
+                "confidence": 0.99902344,
+                "punctuated_word": "points"
+              },
+              {
+                "word": "are",
+                "start": 7.7599998,
+                "end": 8.0,
+                "confidence": 1.0,
+                "punctuated_word": "are"
+              },
+              {
+                "word": "excluded",
+                "start": 8.0,
+                "end": 8.48,
+                "confidence": 0.99658203,
+                "punctuated_word": "excluded."
+              }
+            ],
+            "paragraphs": {
+              "transcript": "\nMatching tensor shapes are not enough. FalkorDB links sensor and action contracts, so incompatible starting points are excluded.",
+              "paragraphs": [
+                {
+                  "sentences": [
+                    {
+                      "text": "Matching tensor shapes are not enough.",
+                      "start": 0.0,
+                      "end": 2.3999999
+                    },
+                    {
+                      "text": "FalkorDB links sensor and action contracts, so incompatible starting points are excluded.",
+                      "start": 2.56,
+                      "end": 8.48
+                    }
+                  ],
+                  "num_words": 18,
+                  "start": 0.0,
+                  "end": 8.48
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "utterances": [
+      {
+        "start": 0.0,
+        "end": 3.4399998,
+        "confidence": 0.9476493,
+        "channel": 0,
+        "transcript": "Matching tensor shapes are not enough. FalkorDB",
+        "words": [
+          {
+            "word": "matching",
+            "start": 0.0,
+            "end": 0.56,
+            "confidence": 0.9926758,
+            "punctuated_word": "Matching"
+          },
+          {
+            "word": "tensor",
+            "start": 0.56,
+            "end": 0.96,
+            "confidence": 0.98999023,
+            "punctuated_word": "tensor"
+          },
+          {
+            "word": "shapes",
+            "start": 0.96,
+            "end": 1.28,
+            "confidence": 1.0,
+            "punctuated_word": "shapes"
+          },
+          {
+            "word": "are",
+            "start": 1.28,
+            "end": 1.52,
+            "confidence": 0.9921875,
+            "punctuated_word": "are"
+          },
+          {
+            "word": "not",
+            "start": 1.52,
+            "end": 1.76,
+            "confidence": 0.99902344,
+            "punctuated_word": "not"
+          },
+          {
+            "word": "enough",
+            "start": 1.76,
+            "end": 2.3999999,
+            "confidence": 0.666626,
+            "punctuated_word": "enough."
+          },
+          {
+            "word": "falkordb",
+            "start": 2.56,
+            "end": 3.4399998,
+            "confidence": 0.993042,
+            "punctuated_word": "FalkorDB"
+          }
+        ],
+        "id": "580d2559-efec-45b2-903d-f99178a13045"
+      },
+      {
+        "start": 3.4399998,
+        "end": 5.84,
+        "confidence": 0.9456543,
+        "channel": 0,
+        "transcript": "links sensor and action contracts,",
+        "words": [
+          {
+            "word": "links",
+            "start": 3.4399998,
+            "end": 3.84,
+            "confidence": 0.9248047,
+            "punctuated_word": "links"
+          },
+          {
+            "word": "sensor",
+            "start": 3.84,
+            "end": 4.24,
+            "confidence": 0.9526367,
+            "punctuated_word": "sensor"
+          },
+          {
+            "word": "and",
+            "start": 4.24,
+            "end": 4.48,
+            "confidence": 0.9980469,
+            "punctuated_word": "and"
+          },
+          {
+            "word": "action",
+            "start": 4.48,
+            "end": 4.88,
+            "confidence": 0.9970703,
+            "punctuated_word": "action"
+          },
+          {
+            "word": "contracts",
+            "start": 4.88,
+            "end": 5.84,
+            "confidence": 0.8557129,
+            "punctuated_word": "contracts,"
+          }
+        ],
+        "id": "51dad21b-3138-4039-8d5f-4ba414ed6454"
+      },
+      {
+        "start": 5.92,
+        "end": 7.04,
+        "confidence": 0.9995117,
+        "channel": 0,
+        "transcript": "so incompatible",
+        "words": [
+          {
+            "word": "so",
+            "start": 5.92,
+            "end": 6.24,
+            "confidence": 0.99902344,
+            "punctuated_word": "so"
+          },
+          {
+            "word": "incompatible",
+            "start": 6.24,
+            "end": 7.04,
+            "confidence": 1.0,
+            "punctuated_word": "incompatible"
+          }
+        ],
+        "id": "64d3a2b7-16b7-4b80-845c-a3bd861bbd50"
+      },
+      {
+        "start": 7.04,
+        "end": 8.48,
+        "confidence": 0.99890137,
+        "channel": 0,
+        "transcript": "starting points are excluded.",
+        "words": [
+          {
+            "word": "starting",
+            "start": 7.04,
+            "end": 7.3599997,
+            "confidence": 1.0,
+            "punctuated_word": "starting"
+          },
+          {
+            "word": "points",
+            "start": 7.3599997,
+            "end": 7.7599998,
+            "confidence": 0.99902344,
+            "punctuated_word": "points"
+          },
+          {
+            "word": "are",
+            "start": 7.7599998,
+            "end": 8.0,
+            "confidence": 1.0,
+            "punctuated_word": "are"
+          },
+          {
+            "word": "excluded",
+            "start": 8.0,
+            "end": 8.48,
+            "confidence": 0.99658203,
+            "punctuated_word": "excluded."
+          }
+        ],
+        "id": "2772221f-db11-4889-aa50-9f379e67b587"
+      }
+    ]
+  }
+}

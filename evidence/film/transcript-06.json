@@ -1,0 +1,400 @@
+{
+  "metadata": {
+    "transaction_key": "deprecated",
+    "request_id": "01a14069-61d3-7c41-9b56-3a102db3e56e",
+    "sha256": "67c49926b87f27570a2162759c6ba1d7af90a622132a18d6773633858ecbce8a",
+    "created": "2026-10-15T16:33:31.616Z",
+    "duration": 10.12,
+    "channels": 1,
+    "models": [
+      "2187e11a-3532-4498-b076-81fa530bdd49"
+    ],
+    "model_info": {
+      "2187e11a-3532-4498-b076-81fa530bdd49": {
+        "name": "general-nova-3",
+        "version": "2025-07-31.0",
+        "arch": "nova-3"
+      }
+    }
+  },
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "The planner ranks eligible origins by failed suites and deficits. Before training, its decision records the cipher, parameters, and returned evidence in FalkorDB.",
+            "confidence": 0.9975586,
+            "words": [
+              {
+                "word": "the",
+                "start": 0.08,
+                "end": 0.39999998,
+                "confidence": 0.9941406,
+                "punctuated_word": "The"
+              },
+              {
+                "word": "planner",
+                "start": 0.39999998,
+                "end": 0.71999997,
+                "confidence": 0.84472656,
+                "punctuated_word": "planner"
+              },
+              {
+                "word": "ranks",
+                "start": 0.71999997,
+                "end": 1.12,
+                "confidence": 0.99902344,
+                "punctuated_word": "ranks"
+              },
+              {
+                "word": "eligible",
+                "start": 1.12,
+                "end": 1.5999999,
+                "confidence": 0.99902344,
+                "punctuated_word": "eligible"
+              },
+              {
+                "word": "origins",
+                "start": 1.5999999,
+                "end": 2.1599998,
+                "confidence": 0.9975586,
+                "punctuated_word": "origins"
+              },
+              {
+                "word": "by",
+                "start": 2.1599998,
+                "end": 2.3999999,
+                "confidence": 0.99902344,
+                "punctuated_word": "by"
+              },
+              {
+                "word": "failed",
+                "start": 2.3999999,
+                "end": 2.72,
+                "confidence": 0.9951172,
+                "punctuated_word": "failed"
+              },
+              {
+                "word": "suites",
+                "start": 2.72,
+                "end": 3.12,
+                "confidence": 0.90234375,
+                "punctuated_word": "suites"
+              },
+              {
+                "word": "and",
+                "start": 3.12,
+                "end": 3.36,
+                "confidence": 0.9980469,
+                "punctuated_word": "and"
+              },
+              {
+                "word": "deficits",
+                "start": 3.36,
+                "end": 4.16,
+                "confidence": 0.9926758,
+                "punctuated_word": "deficits."
+              },
+              {
+                "word": "before",
+                "start": 4.4,
+                "end": 4.7999997,
+                "confidence": 0.99902344,
+                "punctuated_word": "Before"
+              },
+              {
+                "word": "training",
+                "start": 4.7999997,
+                "end": 5.3599997,
+                "confidence": 0.98291016,
+                "punctuated_word": "training,"
+              },
+              {
+                "word": "its",
+                "start": 5.3599997,
+                "end": 5.6,
+                "confidence": 0.9921875,
+                "punctuated_word": "its"
+              },
+              {
+                "word": "decision",
+                "start": 5.6,
+                "end": 5.92,
+                "confidence": 0.99902344,
+                "punctuated_word": "decision"
+              },
+              {
+                "word": "records",
+                "start": 5.92,
+                "end": 6.3999996,
+                "confidence": 1.0,
+                "punctuated_word": "records"
+              },
+              {
+                "word": "the",
+                "start": 6.3999996,
+                "end": 6.64,
+                "confidence": 0.99902344,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "cipher",
+                "start": 6.64,
+                "end": 7.3599997,
+                "confidence": 0.9099121,
+                "punctuated_word": "cipher,"
+              },
+              {
+                "word": "parameters",
+                "start": 7.3599997,
+                "end": 8.08,
+                "confidence": 0.8327637,
+                "punctuated_word": "parameters,"
+              },
+              {
+                "word": "and",
+                "start": 8.08,
+                "end": 8.16,
+                "confidence": 1.0,
+                "punctuated_word": "and"
+              },
+              {
+                "word": "returned",
+                "start": 8.16,
+                "end": 8.559999,
+                "confidence": 0.99609375,
+                "punctuated_word": "returned"
+              },
+              {
+                "word": "evidence",
+                "start": 8.559999,
+                "end": 8.96,
+                "confidence": 1.0,
+                "punctuated_word": "evidence"
+              },
+              {
+                "word": "in",
+                "start": 8.96,
+                "end": 9.12,
+                "confidence": 1.0,
+                "punctuated_word": "in"
+              },
+              {
+                "word": "falkordb",
+                "start": 9.12,
+                "end": 9.84,
+                "confidence": 0.9953125,
+                "punctuated_word": "FalkorDB."
+              }
+            ],
+            "paragraphs": {
+              "transcript": "\nThe planner ranks eligible origins by failed suites and deficits. Before training, its decision records the cipher, parameters, and returned evidence in FalkorDB.",
+              "paragraphs": [
+                {
+                  "sentences": [
+                    {
+                      "text": "The planner ranks eligible origins by failed suites and deficits.",
+                      "start": 0.08,
+                      "end": 4.16
+                    },
+                    {
+                      "text": "Before training, its decision records the cipher, parameters, and returned evidence in FalkorDB.",
+                      "start": 4.4,
+                      "end": 9.84
+                    }
+                  ],
+                  "num_words": 23,
+                  "start": 0.08,
+                  "end": 9.84
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "utterances": [
+      {
+        "start": 0.08,
+        "end": 4.16,
+        "confidence": 0.97216797,
+        "channel": 0,
+        "transcript": "The planner ranks eligible origins by failed suites and deficits.",
+        "words": [
+          {
+            "word": "the",
+            "start": 0.08,
+            "end": 0.39999998,
+            "confidence": 0.9941406,
+            "punctuated_word": "The"
+          },
+          {
+            "word": "planner",
+            "start": 0.39999998,
+            "end": 0.71999997,
+            "confidence": 0.84472656,
+            "punctuated_word": "planner"
+          },
+          {
+            "word": "ranks",
+            "start": 0.71999997,
+            "end": 1.12,
+            "confidence": 0.99902344,
+            "punctuated_word": "ranks"
+          },
+          {
+            "word": "eligible",
+            "start": 1.12,
+            "end": 1.5999999,
+            "confidence": 0.99902344,
+            "punctuated_word": "eligible"
+          },
+          {
+            "word": "origins",
+            "start": 1.5999999,
+            "end": 2.1599998,
+            "confidence": 0.9975586,
+            "punctuated_word": "origins"
+          },
+          {
+            "word": "by",
+            "start": 2.1599998,
+            "end": 2.3999999,
+            "confidence": 0.99902344,
+            "punctuated_word": "by"
+          },
+          {
+            "word": "failed",
+            "start": 2.3999999,
+            "end": 2.72,
+            "confidence": 0.9951172,
+            "punctuated_word": "failed"
+          },
+          {
+            "word": "suites",
+            "start": 2.72,
+            "end": 3.12,
+            "confidence": 0.90234375,
+            "punctuated_word": "suites"
+          },
+          {
+            "word": "and",
+            "start": 3.12,
+            "end": 3.36,
+            "confidence": 0.9980469,
+            "punctuated_word": "and"
+          },
+          {
+            "word": "deficits",
+            "start": 3.36,
+            "end": 4.16,
+            "confidence": 0.9926758,
+            "punctuated_word": "deficits."
+          }
+        ],
+        "id": "a08797d4-b956-49c7-b5fd-3afe69360bdd"
+      },
+      {
+        "start": 4.4,
+        "end": 9.84,
+        "confidence": 0.9774039,
+        "channel": 0,
+        "transcript": "Before training, its decision records the cipher, parameters, and returned evidence in FalkorDB.",
+        "words": [
+          {
+            "word": "before",
+            "start": 4.4,
+            "end": 4.7999997,
+            "confidence": 0.99902344,
+            "punctuated_word": "Before"
+          },
+          {
+            "word": "training",
+            "start": 4.7999997,
+            "end": 5.3599997,
+            "confidence": 0.98291016,
+            "punctuated_word": "training,"
+          },
+          {
+            "word": "its",
+            "start": 5.3599997,
+            "end": 5.6,
+            "confidence": 0.9921875,
+            "punctuated_word": "its"
+          },
+          {
+            "word": "decision",
+            "start": 5.6,
+            "end": 5.92,
+            "confidence": 0.99902344,
+            "punctuated_word": "decision"
+          },
+          {
+            "word": "records",
+            "start": 5.92,
+            "end": 6.3999996,
+            "confidence": 1.0,
+            "punctuated_word": "records"
+          },
+          {
+            "word": "the",
+            "start": 6.3999996,
+            "end": 6.64,
+            "confidence": 0.99902344,
+            "punctuated_word": "the"
+          },
+          {
+            "word": "cipher",
+            "start": 6.64,
+            "end": 7.3599997,
+            "confidence": 0.9099121,
+            "punctuated_word": "cipher,"
+          },
+          {
+            "word": "parameters",
+            "start": 7.3599997,
+            "end": 8.08,
+            "confidence": 0.8327637,
+            "punctuated_word": "parameters,"
+          },
+          {
+            "word": "and",
+            "start": 8.08,
+            "end": 8.16,
+            "confidence": 1.0,
+            "punctuated_word": "and"
+          },
+          {
+            "word": "returned",
+            "start": 8.16,
+            "end": 8.559999,
+            "confidence": 0.99609375,
+            "punctuated_word": "returned"
+          },
+          {
+            "word": "evidence",
+            "start": 8.559999,
+            "end": 8.96,
+            "confidence": 1.0,
+            "punctuated_word": "evidence"
+          },
+          {
+            "word": "in",
+            "start": 8.96,
+            "end": 9.12,
+            "confidence": 1.0,
+            "punctuated_word": "in"
+          },
+          {
+            "word": "falkordb",
+            "start": 9.12,
+            "end": 9.84,
+            "confidence": 0.9953125,
+            "punctuated_word": "FalkorDB."
+          }
+        ],
+        "id": "4842aa02-0c70-4b1d-afc8-1aff78b3a0ae"
+      }
+    ]
+  }
+}

@@ -1,0 +1,352 @@
+{
+  "metadata": {
+    "transaction_key": "deprecated",
+    "request_id": "01a14068-923e-7cd1-ba08-029b07602169",
+    "sha256": "2e6d5a9a6dc29bcf1fd4885c69c4fb8c448d75efd41b5bc029df4e4fa00dd288",
+    "created": "2026-10-15T16:32:42.076Z",
+    "duration": 9.52,
+    "channels": 1,
+    "models": [
+      "2187e11a-3532-4498-b076-81fa530bdd49"
+    ],
+    "model_info": {
+      "2187e11a-3532-4498-b076-81fa530bdd49": {
+        "name": "general-nova-3",
+        "version": "2025-07-31.0",
+        "arch": "nova-3"
+      }
+    }
+  },
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "FalkorDB connects policies, training runs, trials, evaluations, failures, and decisions. The links preserve what produced what.",
+            "confidence": 0.99731445,
+            "words": [
+              {
+                "word": "falkordb",
+                "start": 0.0,
+                "end": 1.04,
+                "confidence": 0.99731445,
+                "punctuated_word": "FalkorDB"
+              },
+              {
+                "word": "connects",
+                "start": 1.04,
+                "end": 1.4399999,
+                "confidence": 0.9951172,
+                "punctuated_word": "connects"
+              },
+              {
+                "word": "policies",
+                "start": 1.4399999,
+                "end": 2.32,
+                "confidence": 0.99121094,
+                "punctuated_word": "policies,"
+              },
+              {
+                "word": "training",
+                "start": 2.3999999,
+                "end": 2.72,
+                "confidence": 0.99902344,
+                "punctuated_word": "training"
+              },
+              {
+                "word": "runs",
+                "start": 2.72,
+                "end": 3.4399998,
+                "confidence": 0.9975586,
+                "punctuated_word": "runs,"
+              },
+              {
+                "word": "trials",
+                "start": 3.52,
+                "end": 4.32,
+                "confidence": 0.9980469,
+                "punctuated_word": "trials,"
+              },
+              {
+                "word": "evaluations",
+                "start": 4.4,
+                "end": 5.44,
+                "confidence": 0.9975586,
+                "punctuated_word": "evaluations,"
+              },
+              {
+                "word": "failures",
+                "start": 5.68,
+                "end": 6.48,
+                "confidence": 0.88720703,
+                "punctuated_word": "failures,"
+              },
+              {
+                "word": "and",
+                "start": 6.48,
+                "end": 6.64,
+                "confidence": 0.99902344,
+                "punctuated_word": "and"
+              },
+              {
+                "word": "decisions",
+                "start": 6.64,
+                "end": 7.44,
+                "confidence": 0.9914551,
+                "punctuated_word": "decisions."
+              },
+              {
+                "word": "the",
+                "start": 7.68,
+                "end": 7.8399997,
+                "confidence": 0.99902344,
+                "punctuated_word": "The"
+              },
+              {
+                "word": "links",
+                "start": 7.8399997,
+                "end": 8.16,
+                "confidence": 0.9921875,
+                "punctuated_word": "links"
+              },
+              {
+                "word": "preserve",
+                "start": 8.16,
+                "end": 8.559999,
+                "confidence": 0.9873047,
+                "punctuated_word": "preserve"
+              },
+              {
+                "word": "what",
+                "start": 8.559999,
+                "end": 8.8,
+                "confidence": 1.0,
+                "punctuated_word": "what"
+              },
+              {
+                "word": "produced",
+                "start": 8.8,
+                "end": 9.2,
+                "confidence": 0.9951172,
+                "punctuated_word": "produced"
+              },
+              {
+                "word": "what",
+                "start": 9.2,
+                "end": 9.5199995,
+                "confidence": 0.9770508,
+                "punctuated_word": "what."
+              }
+            ],
+            "paragraphs": {
+              "transcript": "\nFalkorDB connects policies, training runs, trials, evaluations, failures, and decisions. The links preserve what produced what.",
+              "paragraphs": [
+                {
+                  "sentences": [
+                    {
+                      "text": "FalkorDB connects policies, training runs, trials, evaluations, failures, and decisions.",
+                      "start": 0.0,
+                      "end": 7.44
+                    },
+                    {
+                      "text": "The links preserve what produced what.",
+                      "start": 7.68,
+                      "end": 9.5199995
+                    }
+                  ],
+                  "num_words": 16,
+                  "start": 0.0,
+                  "end": 9.5199995
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "utterances": [
+      {
+        "start": 0.0,
+        "end": 1.04,
+        "confidence": 0.99731445,
+        "channel": 0,
+        "transcript": "FalkorDB",
+        "words": [
+          {
+            "word": "falkordb",
+            "start": 0.0,
+            "end": 1.04,
+            "confidence": 0.99731445,
+            "punctuated_word": "FalkorDB"
+          }
+        ],
+        "id": "643b3124-6def-4b00-9359-bed50bb19798"
+      },
+      {
+        "start": 1.04,
+        "end": 2.32,
+        "confidence": 0.99316406,
+        "channel": 0,
+        "transcript": "connects policies,",
+        "words": [
+          {
+            "word": "connects",
+            "start": 1.04,
+            "end": 1.4399999,
+            "confidence": 0.9951172,
+            "punctuated_word": "connects"
+          },
+          {
+            "word": "policies",
+            "start": 1.4399999,
+            "end": 2.32,
+            "confidence": 0.99121094,
+            "punctuated_word": "policies,"
+          }
+        ],
+        "id": "1ee9bb37-90db-4fee-a439-df9ddba8301e"
+      },
+      {
+        "start": 2.3999999,
+        "end": 4.32,
+        "confidence": 0.99820966,
+        "channel": 0,
+        "transcript": "training runs, trials,",
+        "words": [
+          {
+            "word": "training",
+            "start": 2.3999999,
+            "end": 2.72,
+            "confidence": 0.99902344,
+            "punctuated_word": "training"
+          },
+          {
+            "word": "runs",
+            "start": 2.72,
+            "end": 3.4399998,
+            "confidence": 0.9975586,
+            "punctuated_word": "runs,"
+          },
+          {
+            "word": "trials",
+            "start": 3.52,
+            "end": 4.32,
+            "confidence": 0.9980469,
+            "punctuated_word": "trials,"
+          }
+        ],
+        "id": "7e242116-732b-4602-bc5b-45d7c309046f"
+      },
+      {
+        "start": 4.4,
+        "end": 5.44,
+        "confidence": 0.9975586,
+        "channel": 0,
+        "transcript": "evaluations,",
+        "words": [
+          {
+            "word": "evaluations",
+            "start": 4.4,
+            "end": 5.44,
+            "confidence": 0.9975586,
+            "punctuated_word": "evaluations,"
+          }
+        ],
+        "id": "be264ec4-e010-4d5b-a8e4-1e6eabb609c7"
+      },
+      {
+        "start": 5.68,
+        "end": 6.48,
+        "confidence": 0.88720703,
+        "channel": 0,
+        "transcript": "failures,",
+        "words": [
+          {
+            "word": "failures",
+            "start": 5.68,
+            "end": 6.48,
+            "confidence": 0.88720703,
+            "punctuated_word": "failures,"
+          }
+        ],
+        "id": "914573e3-8887-4a76-bda4-5ea78f4a9a3f"
+      },
+      {
+        "start": 6.48,
+        "end": 7.44,
+        "confidence": 0.99523926,
+        "channel": 0,
+        "transcript": "and decisions.",
+        "words": [
+          {
+            "word": "and",
+            "start": 6.48,
+            "end": 6.64,
+            "confidence": 0.99902344,
+            "punctuated_word": "and"
+          },
+          {
+            "word": "decisions",
+            "start": 6.64,
+            "end": 7.44,
+            "confidence": 0.9914551,
+            "punctuated_word": "decisions."
+          }
+        ],
+        "id": "19da579d-0f3c-4cf5-90b2-435431938280"
+      },
+      {
+        "start": 7.68,
+        "end": 9.5199995,
+        "confidence": 0.9917806,
+        "channel": 0,
+        "transcript": "The links preserve what produced what.",
+        "words": [
+          {
+            "word": "the",
+            "start": 7.68,
+            "end": 7.8399997,
+            "confidence": 0.99902344,
+            "punctuated_word": "The"
+          },
+          {
+            "word": "links",
+            "start": 7.8399997,
+            "end": 8.16,
+            "confidence": 0.9921875,
+            "punctuated_word": "links"
+          },
+          {
+            "word": "preserve",
+            "start": 8.16,
+            "end": 8.559999,
+            "confidence": 0.9873047,
+            "punctuated_word": "preserve"
+          },
+          {
+            "word": "what",
+            "start": 8.559999,
+            "end": 8.8,
+            "confidence": 1.0,
+            "punctuated_word": "what"
+          },
+          {
+            "word": "produced",
+            "start": 8.8,
+            "end": 9.2,
+            "confidence": 0.9951172,
+            "punctuated_word": "produced"
+          },
+          {
+            "word": "what",
+            "start": 9.2,
+            "end": 9.5199995,
+            "confidence": 0.9770508,
+            "punctuated_word": "what."
+          }
+        ],
+        "id": "ae58b2fe-27cd-43d6-b5dc-2f36d8d5fef2"
+      }
+    ]
+  }
+}

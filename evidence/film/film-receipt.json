@@ -1,0 +1,137 @@
+{
+  "seconds": 119.23333333333335,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "narration_model": "aura-2-thalia-en",
+  "narration_seconds": 111.11975,
+  "music": {
+    "title": "Cipher",
+    "artist": "Kevin MacLeod",
+    "licence": "CC BY 3.0",
+    "source": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Cipher2.mp3",
+    "source_sha256": "d3d0614535a61d748e2fd8d5117fc4d781022a7624794802a2462d8af3fdd522",
+    "edits": "Excerpt, fades, loudness normalization, music 18 dB below normalized narration"
+  },
+  "assets": {
+    "embodiweave-demo-v2.mp4": {
+      "bytes": 8729883,
+      "sha256": "12a3d226746677ea6e791d8ab11511a4c6f8a436d73a3c7e36df5e19f4421c74"
+    },
+    "embodiweave-demo-v2-narration-free.mp4": {
+      "bytes": 8598383,
+      "sha256": "33fc56910b32a90318aceff33176f1caaa4e379e7c49693649bb6b8e5f5dd7b7"
+    },
+    "embodiweave-demo-v2-720p.mp4": {
+      "bytes": 4403512,
+      "sha256": "8bcdc363c3881eab7dc200d55a3e5c7ef3bd5a9f494739b52e8227d8c42bd46c"
+    },
+    "embodiweave-demo-v2.gif": {
+      "bytes": 2712946,
+      "sha256": "bc429d079cdc83ce4127044d440c9520e6ae868208cbb89dd5a2072f8cc74d65"
+    },
+    "embodiweave-demo-v2.srt": {
+      "bytes": 2979,
+      "sha256": "5172d86f1e4aca15e72e44cd0aba54fd824843c7f61ef261bff241c32757e311"
+    }
+  },
+  "robot_motion": "Recorded MuJoCo joint positions from real frozen PPO checkpoints. No pose interpolation, keyframing or generated robot footage.",
+  "graphics": "Editorial titles, graph layout/highlights from real database records, measured learning curves, camera moves, sensor rays and path trails.",
+  "heldout": "Previously recorded result; not rerun and not ingested into planning graph.",
+  "thumbnail": {
+    "path": "docs/demo/thumbnail.png",
+    "sha256": "b05c5e6d3a72a0cc73d396f52a9373d34f4282c43e7fbacef30847cc5c361f4c"
+  },
+  "voice_selection": "Thalia selected using the higher Nova-3 audition transcription confidence; no human listening comparison claimed.",
+  "filmed_pair": {
+    "deployed": {
+      "goal_distance": 6.013886497367262,
+      "hit": "mover",
+      "layout": {
+        "goal": [
+          8.872204988547407,
+          1.6026134592174248
+        ],
+        "movers": [
+          [
+            2.2317196543964224,
+            1.994879479691944,
+            0.45444786557180566,
+            0.6368342380811115,
+            0.5
+          ]
+        ],
+        "start": [
+          1.6107987638894294,
+          6.7843866154297645,
+          -1.4265401665609532
+        ],
+        "statics": [
+          [
+            3.9552220709370682,
+            6.003731966256221,
+            0.4784597750196269
+          ],
+          [
+            6.355215584647076,
+            2.8021560862410513,
+            0.4448584084913044
+          ]
+        ]
+      },
+      "model_xml_sha256": "9dd840cb321ef55130101f697e151dfb24c4c78f4eba0de7d95439c9e39c3835",
+      "outcome": "collision",
+      "seconds": 3.5449999999999466,
+      "seed": 5103011,
+      "steps": 36,
+      "trajectory": "trajectories/deployed-static_crossing-5103011.npz",
+      "trajectory_sha256": "b952c1ba35bba1c0c05d0e30e27beb35febe93bdc77aac96398bd74fb2533d9c"
+    },
+    "rehearsal": {
+      "goal_distance": 0.2953709103966557,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.872204988547407,
+          1.6026134592174248
+        ],
+        "movers": [
+          [
+            2.2317196543964224,
+            1.994879479691944,
+            0.45444786557180566,
+            0.6368342380811115,
+            0.5
+          ]
+        ],
+        "start": [
+          1.6107987638894294,
+          6.7843866154297645,
+          -1.4265401665609532
+        ],
+        "statics": [
+          [
+            3.9552220709370682,
+            6.003731966256221,
+            0.4784597750196269
+          ],
+          [
+            6.355215584647076,
+            2.8021560862410513,
+            0.4448584084913044
+          ]
+        ]
+      },
+      "model_xml_sha256": "9dd840cb321ef55130101f697e151dfb24c4c78f4eba0de7d95439c9e39c3835",
+      "outcome": "success",
+      "seconds": 11.600000000000414,
+      "seed": 5103011,
+      "steps": 116,
+      "trajectory": "trajectories/rehearsal-static_crossing-5103011.npz",
+      "trajectory_sha256": "c722f69736fa42b8ab9bae3fb6b560f0f5c7d984253992e89b0ad54ed449292a"
+    },
+    "seed": 5103011,
+    "selection": "Earliest deployed pedestrian collision among paired rehearsal successes, for a readable short replay. Selected illustrative episode; full aggregates are reported.",
+    "suite": "sim2sim-mujoco-v1-static_crossing"
+  }
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "dg_request_id": "01a1405d-3c31-7441-a9ea-a409b070cbb8",
+    "model": "aura-2-thalia-en",
+    "characters": 60,
+    "sha256": "ce422e0a2a478e19a4b23a7d4e80f595aa71a9f8bd7f4027b243c3f648a99c6d",
+    "stt_request_id": "01a14063-a293-7961-bfcd-bce34ffd2317",
+    "stt_model": "nova-3",
+    "transcript": "I built EmbodiWeave. Robot training decisions you can audit.",
+    "confidence": 0.9946289
+  },
+  {
+    "dg_request_id": "01a1405d-4c95-7920-804c-197db9bc3450",
+    "model": "aura-2-apollo-en",
+    "characters": 60,
+    "sha256": "fa3a1cdc3b6fdf75a1fc619790a521ec34a5d6219c10a7c93e7a377ef37dd150",
+    "stt_request_id": "01a14063-b3bd-7763-a8fd-f326d5bf4bb5",
+    "stt_model": "nova-3",
+    "transcript": "I built EmbodiWeave robot training decisions you can audit.",
+    "confidence": 0.9892578
+  }
+]

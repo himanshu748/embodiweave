@@ -1,0 +1,448 @@
+{
+  "metadata": {
+    "transaction_key": "deprecated",
+    "request_id": "01a14069-dcc7-7c22-8520-88277e6ecb97",
+    "sha256": "7510e5c06a7abaa9509e402d4c0cdee2daec830b47484cc60e5306dc845fba9c",
+    "created": "2026-10-15T16:34:07.217Z",
+    "duration": 11.4,
+    "channels": 1,
+    "models": [
+      "2187e11a-3532-4498-b076-81fa530bdd49"
+    ],
+    "model_info": {
+      "2187e11a-3532-4498-b076-81fa530bdd49": {
+        "name": "general-nova-3",
+        "version": "2025-07-31.0",
+        "arch": "nova-3"
+      }
+    }
+  },
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "The original passed one of four suites. Longer training passed three. Rehearsal passed all four. The collision limits stayed at 10, five, 10, and 15%.",
+            "confidence": 0.99609375,
+            "words": [
+              {
+                "word": "the",
+                "start": 0.16,
+                "end": 0.39999998,
+                "confidence": 0.98828125,
+                "punctuated_word": "The"
+              },
+              {
+                "word": "original",
+                "start": 0.39999998,
+                "end": 0.79999995,
+                "confidence": 0.94628906,
+                "punctuated_word": "original"
+              },
+              {
+                "word": "passed",
+                "start": 0.79999995,
+                "end": 1.1999999,
+                "confidence": 0.96875,
+                "punctuated_word": "passed"
+              },
+              {
+                "word": "one",
+                "start": 1.1999999,
+                "end": 1.4399999,
+                "confidence": 0.99902344,
+                "punctuated_word": "one"
+              },
+              {
+                "word": "of",
+                "start": 1.4399999,
+                "end": 1.5999999,
+                "confidence": 1.0,
+                "punctuated_word": "of"
+              },
+              {
+                "word": "four",
+                "start": 1.5999999,
+                "end": 1.8399999,
+                "confidence": 0.99902344,
+                "punctuated_word": "four"
+              },
+              {
+                "word": "suites",
+                "start": 1.8399999,
+                "end": 2.56,
+                "confidence": 0.8930664,
+                "punctuated_word": "suites."
+              },
+              {
+                "word": "longer",
+                "start": 2.8,
+                "end": 3.12,
+                "confidence": 0.8232422,
+                "punctuated_word": "Longer"
+              },
+              {
+                "word": "training",
+                "start": 3.12,
+                "end": 3.52,
+                "confidence": 0.99902344,
+                "punctuated_word": "training"
+              },
+              {
+                "word": "passed",
+                "start": 3.52,
+                "end": 3.9199998,
+                "confidence": 0.98828125,
+                "punctuated_word": "passed"
+              },
+              {
+                "word": "three",
+                "start": 3.9199998,
+                "end": 4.56,
+                "confidence": 0.9946289,
+                "punctuated_word": "three."
+              },
+              {
+                "word": "rehearsal",
+                "start": 4.72,
+                "end": 5.2799997,
+                "confidence": 0.9947917,
+                "punctuated_word": "Rehearsal"
+              },
+              {
+                "word": "passed",
+                "start": 5.2799997,
+                "end": 5.6,
+                "confidence": 0.9970703,
+                "punctuated_word": "passed"
+              },
+              {
+                "word": "all",
+                "start": 5.6,
+                "end": 5.8399997,
+                "confidence": 1.0,
+                "punctuated_word": "all"
+              },
+              {
+                "word": "four",
+                "start": 5.8399997,
+                "end": 6.4,
+                "confidence": 0.99902344,
+                "punctuated_word": "four."
+              },
+              {
+                "word": "the",
+                "start": 6.64,
+                "end": 6.7999997,
+                "confidence": 1.0,
+                "punctuated_word": "The"
+              },
+              {
+                "word": "collision",
+                "start": 6.7999997,
+                "end": 7.2,
+                "confidence": 0.9921875,
+                "punctuated_word": "collision"
+              },
+              {
+                "word": "limits",
+                "start": 7.2,
+                "end": 7.6,
+                "confidence": 0.9838867,
+                "punctuated_word": "limits"
+              },
+              {
+                "word": "stayed",
+                "start": 7.6,
+                "end": 7.9199996,
+                "confidence": 1.0,
+                "punctuated_word": "stayed"
+              },
+              {
+                "word": "at",
+                "start": 7.9199996,
+                "end": 8.16,
+                "confidence": 1.0,
+                "punctuated_word": "at"
+              },
+              {
+                "word": "10",
+                "start": 8.16,
+                "end": 8.799999,
+                "confidence": 0.984375,
+                "punctuated_word": "10,"
+              },
+              {
+                "word": "five",
+                "start": 8.8,
+                "end": 9.5199995,
+                "confidence": 0.99609375,
+                "punctuated_word": "five,"
+              },
+              {
+                "word": "10",
+                "start": 9.5199995,
+                "end": 10.08,
+                "confidence": 0.96972656,
+                "punctuated_word": "10,"
+              },
+              {
+                "word": "and",
+                "start": 10.08,
+                "end": 10.32,
+                "confidence": 0.99902344,
+                "punctuated_word": "and"
+              },
+              {
+                "word": "15%",
+                "start": 10.32,
+                "end": 11.2,
+                "confidence": 0.99780273,
+                "punctuated_word": "15%."
+              }
+            ],
+            "paragraphs": {
+              "transcript": "\nThe original passed one of four suites. Longer training passed three. Rehearsal passed all four. The collision limits stayed at 10, five, 10, and 15%.",
+              "paragraphs": [
+                {
+                  "sentences": [
+                    {
+                      "text": "The original passed one of four suites.",
+                      "start": 0.16,
+                      "end": 2.56
+                    },
+                    {
+                      "text": "Longer training passed three.",
+                      "start": 2.8,
+                      "end": 4.56
+                    },
+                    {
+                      "text": "Rehearsal passed all four.",
+                      "start": 4.72,
+                      "end": 6.4
+                    },
+                    {
+                      "text": "The collision limits stayed at 10, five, 10, and 15%.",
+                      "start": 6.64,
+                      "end": 11.2
+                    }
+                  ],
+                  "num_words": 25,
+                  "start": 0.16,
+                  "end": 11.2
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "utterances": [
+      {
+        "start": 0.16,
+        "end": 2.56,
+        "confidence": 0.9706334,
+        "channel": 0,
+        "transcript": "The original passed one of four suites.",
+        "words": [
+          {
+            "word": "the",
+            "start": 0.16,
+            "end": 0.39999998,
+            "confidence": 0.98828125,
+            "punctuated_word": "The"
+          },
+          {
+            "word": "original",
+            "start": 0.39999998,
+            "end": 0.79999995,
+            "confidence": 0.94628906,
+            "punctuated_word": "original"
+          },
+          {
+            "word": "passed",
+            "start": 0.79999995,
+            "end": 1.1999999,
+            "confidence": 0.96875,
+            "punctuated_word": "passed"
+          },
+          {
+            "word": "one",
+            "start": 1.1999999,
+            "end": 1.4399999,
+            "confidence": 0.99902344,
+            "punctuated_word": "one"
+          },
+          {
+            "word": "of",
+            "start": 1.4399999,
+            "end": 1.5999999,
+            "confidence": 1.0,
+            "punctuated_word": "of"
+          },
+          {
+            "word": "four",
+            "start": 1.5999999,
+            "end": 1.8399999,
+            "confidence": 0.99902344,
+            "punctuated_word": "four"
+          },
+          {
+            "word": "suites",
+            "start": 1.8399999,
+            "end": 2.56,
+            "confidence": 0.8930664,
+            "punctuated_word": "suites."
+          }
+        ],
+        "id": "a7531b80-842a-43e4-a72e-4e97852c8760"
+      },
+      {
+        "start": 2.8,
+        "end": 6.4,
+        "confidence": 0.97450763,
+        "channel": 0,
+        "transcript": "Longer training passed three. Rehearsal passed all four.",
+        "words": [
+          {
+            "word": "longer",
+            "start": 2.8,
+            "end": 3.12,
+            "confidence": 0.8232422,
+            "punctuated_word": "Longer"
+          },
+          {
+            "word": "training",
+            "start": 3.12,
+            "end": 3.52,
+            "confidence": 0.99902344,
+            "punctuated_word": "training"
+          },
+          {
+            "word": "passed",
+            "start": 3.52,
+            "end": 3.9199998,
+            "confidence": 0.98828125,
+            "punctuated_word": "passed"
+          },
+          {
+            "word": "three",
+            "start": 3.9199998,
+            "end": 4.56,
+            "confidence": 0.9946289,
+            "punctuated_word": "three."
+          },
+          {
+            "word": "rehearsal",
+            "start": 4.72,
+            "end": 5.2799997,
+            "confidence": 0.9947917,
+            "punctuated_word": "Rehearsal"
+          },
+          {
+            "word": "passed",
+            "start": 5.2799997,
+            "end": 5.6,
+            "confidence": 0.9970703,
+            "punctuated_word": "passed"
+          },
+          {
+            "word": "all",
+            "start": 5.6,
+            "end": 5.8399997,
+            "confidence": 1.0,
+            "punctuated_word": "all"
+          },
+          {
+            "word": "four",
+            "start": 5.8399997,
+            "end": 6.4,
+            "confidence": 0.99902344,
+            "punctuated_word": "four."
+          }
+        ],
+        "id": "793ed98c-0e6f-441c-b7ac-dd5b2245bc45"
+      },
+      {
+        "start": 6.64,
+        "end": 11.2,
+        "confidence": 0.9923096,
+        "channel": 0,
+        "transcript": "The collision limits stayed at 10, five, 10, and 15%.",
+        "words": [
+          {
+            "word": "the",
+            "start": 6.64,
+            "end": 6.7999997,
+            "confidence": 1.0,
+            "punctuated_word": "The"
+          },
+          {
+            "word": "collision",
+            "start": 6.7999997,
+            "end": 7.2,
+            "confidence": 0.9921875,
+            "punctuated_word": "collision"
+          },
+          {
+            "word": "limits",
+            "start": 7.2,
+            "end": 7.6,
+            "confidence": 0.9838867,
+            "punctuated_word": "limits"
+          },
+          {
+            "word": "stayed",
+            "start": 7.6,
+            "end": 7.9199996,
+            "confidence": 1.0,
+            "punctuated_word": "stayed"
+          },
+          {
+            "word": "at",
+            "start": 7.9199996,
+            "end": 8.16,
+            "confidence": 1.0,
+            "punctuated_word": "at"
+          },
+          {
+            "word": "10",
+            "start": 8.16,
+            "end": 8.799999,
+            "confidence": 0.984375,
+            "punctuated_word": "10,"
+          },
+          {
+            "word": "five",
+            "start": 8.8,
+            "end": 9.5199995,
+            "confidence": 0.99609375,
+            "punctuated_word": "five,"
+          },
+          {
+            "word": "10",
+            "start": 9.5199995,
+            "end": 10.08,
+            "confidence": 0.96972656,
+            "punctuated_word": "10,"
+          },
+          {
+            "word": "and",
+            "start": 10.08,
+            "end": 10.32,
+            "confidence": 0.99902344,
+            "punctuated_word": "and"
+          },
+          {
+            "word": "15%",
+            "start": 10.32,
+            "end": 11.2,
+            "confidence": 0.99780273,
+            "punctuated_word": "15%."
+          }
+        ],
+        "id": "f945a128-a8e1-4c34-b736-6fc589a8c224"
+      }
+    ]
+  }
+}
