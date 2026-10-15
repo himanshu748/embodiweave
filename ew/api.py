@@ -367,5 +367,62 @@ def results():
     return {"experiments": out} if out else {"status": "not_run"}
 
 
+
+# Live graph console for the landing page. Each question re-runs, right now, a read-only template the recorded agent
+# run used, with the parameters stored in that run's decision and promotion records. Nothing here can write.
+FEATURED_DECISION = os.environ.get("EW_FEATURED_DECISION", "deci-20261015060348-a7ee2c")
+FEATURED_PROMOTION = os.environ.get("EW_FEATURED_PROMOTION", "prom-20261015060506-9a3c7a")
+FEATURED_FAILURE_EVAL = os.environ.get("EW_FEATURED_FAILURE_EVAL", "eval-20261015040917-9c0df8")
+
+
+def _live_presets() -> dict:
+    d = records.read("decision", FEATURED_DECISION)
+    used = {q["template"]: q["params"] for q in d.get("queries", [])}
+    pr = records.read("promotion", FEATURED_PROMOTION)
+    return {
+        "failure": ("failure_inspection", {"evaluation": FEATURED_FAILURE_EVAL}),
+        "transfer": ("relevant_trials", used["relevant_trials"]),
+        "scratch": ("scratch_trials", used["scratch_trials"]),
+        "decision": ("decision_provenance", {"decision": FEATURED_DECISION}),
+        "gate": ("promotion_evidence", pr["query"]["params"]),
+    }
+
+
+@app.get("/api/live/overview")
+def live_overview():
+    nh, nodes, ms1 = db.ro("MATCH (n) RETURN labels(n)[0] AS label, count(n) AS n ORDER BY n DESC")
+    eh, edges, ms2 = db.ro("MATCH ()-[r]->() RETURN type(r) AS type, count(r) AS n ORDER BY n DESC")
+    return {"graph": db.GRAPH, "revision": db.revision(),
+            "nodes": [{"label": a, "n": b} for a, b in nodes], "edges": [{"type": a, "n": b} for a, b in edges],
+            "node_total": sum(b for _, b in nodes), "edge_total": sum(b for _, b in edges),
+            "ms": round(ms1 + ms2, 2), "via": "GRAPH.RO_QUERY", "at": time.time()}
+
+
+@app.get("/api/live/query/{name}")
+def live_query(name: str):
+    presets = _live_presets()
+    if name not in presets:
+        raise HTTPException(404, f"unknown question; use one of {sorted(presets)}")
+    template, params = presets[name]
+    r = Q.run(template, params)
+    return {"question": name, "template": template, "cypher": r.cypher, "params": params, "header": r.header,
+            "rows": r.rows[:40], "row_count": len(r.rows), "ms": r.ms, "graph": r.graph,
+            "graph_revision": r.graph_revision, "via": "GRAPH.RO_QUERY", "at": time.time()}
+
+
+@app.get("/api/live/featured")
+def live_featured():
+    """The recorded decision and gate verdict the live console's questions come from."""
+    d = records.read("decision", FEATURED_DECISION)
+    pr = records.read("promotion", FEATURED_PROMOTION)
+    opts = [{"option": "scratch", **{k: d["scratch_option"].get(k) for k in ("p_reach", "p_basis", "trial_child_score", "n_completed", "n_reached")}}]
+    opts += [{"option": r["policy_id"], **{k: r.get(k) for k in ("p_reach", "p_basis", "trial_child_score", "n_completed", "n_reached")}}
+             for r in d["ranking"]]
+    return {"decision_id": d["id"], "action": d["action"], "selected": d["selected"], "rule": d["rule_version"],
+            "graph_revision": d["graph_revision"], "mode": d["mode"], "explanation": d["explanation"],
+            "agent_trace_id": d.get("agent_trace_id"), "options": opts, "option_order": d["option_order"],
+            "rejected": d["rejected"], "query_count": len(d.get("queries", [])),
+            "promotion": {"id": pr["id"], "policy_id": pr["policy_id"], "verdict": pr["verdict"], "checks": pr["checks"]}}
+
 if WEB.exists():
     app.mount("/", StaticFiles(directory=str(WEB), html=True), name="web")

@@ -9,14 +9,130 @@ const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 // ---------- live status ----------
 async function live() {
   try {
-    const s = await get("api/status");
+    const [s, o] = await Promise.all([get("api/status"), get("api/live/overview").catch(() => null)]);
     $("#liveDot").className = "dot " + (s.graph.up ? "up" : "down");
-    $("#liveText").innerHTML = s.graph.up
-      ? `FalkorDB live, graph revision <b class="mono">${s.graph.revision}</b>, deployed <b class="mono">${esc(s.deployed_policy)}</b>`
-      : "FalkorDB is down. Recorded evidence is still browsable in the studio.";
+    if (!s.graph.up) { $("#liveText").textContent = "FalkorDB is down. Recorded evidence is still browsable in the studio."; return; }
+    const n = (x) => Number(x).toLocaleString("en-US");
+    $("#liveText").innerHTML = o
+      ? `Live from FalkorDB: <b class="mono">${n(o.node_total)}</b> nodes, <b class="mono">${n(o.edge_total)}</b> edges, read in <b class="mono">${o.ms} ms</b>`
+      : `FalkorDB live, graph revision <b class="mono">${s.graph.revision}</b>`;
+    if (o) {
+      const top = o.nodes.slice(0, 5).map((x) => `${esc(x.label)} <b class="mono">${n(x.n)}</b>`).join(" · ");
+      $("#gcText").innerHTML = `graph <b class="mono">${esc(o.graph)}</b> holds ${top}`;
+    }
   } catch {
     $("#liveDot").className = "dot down";
     $("#liveText").textContent = "Studio API not reachable. Refresh to retry.";
+  }
+}
+
+// ---------- live graph console ----------
+const KW = /(\$\w+)|\b(OPTIONAL MATCH|MATCH|WHERE|RETURN|UNWIND|ORDER BY|AND|AS|LIMIT|DISTINCT|NOT|IN|WITH)\b|(:[A-Z][A-Za-z_]+)/g;
+const cypher = (c) => esc(c).replace(KW, (m, p, k, l) => p ? `<span class="pr">${m}</span>` : k ? `<span class="kw">${m}</span>` : `<span class="lb">${m}</span>`);
+function cell(v, h) {
+  if (v === null || v === undefined) return `<td class="nul">null</td>`;
+  if (v === true || v === false) return `<td class="${v ? "yes" : "no"}">${v}</td>`;
+  if (Array.isArray(v)) {
+    const t = JSON.stringify(v);
+    return `<td class="mono" title="${esc(t)}">${esc(t.length > 42 ? t.slice(0, 40) + "…]" : t)}</td>`;
+  }
+  if (typeof v === "number") return `<td class="mono num">${Number.isInteger(v) ? v : v.toFixed(4)}</td>`;
+  if (/hash/.test(h) && String(v).length > 16) return `<td class="mono" title="${esc(v)}">${esc(String(v).slice(0, 12))}…</td>`;
+  return `<td class="${String(v).length > 60 ? "wrap" : "mono"}">${esc(v)}</td>`;
+}
+const READ = {
+  failure(r) {
+    const f = r.rows.map((x) => Object.fromEntries(r.header.map((h, i) => [h, x[i]])));
+    if (!f.length) return "No evaluation found.";
+    const parts = f.filter((x) => x.outcome).map((x) => `${x.outcome}${x.hit ? ` with ${x.hit}` : ""} ×${x.count}`);
+    return `<b>${esc(f[0].policy_id)}</b> reached the goal in ${pct(f[0].success_rate)} of target episodes. Failures recorded in the graph: ${esc(parts.join(", "))}. Linked hypotheses are authored, not measured, and say so.`;
+  },
+  transfer(r) {
+    const t = r.rows.filter((x) => x[1]); const ok = t.filter((x) => x[3] === true).length;
+    const parents = new Set(r.rows.map((x) => x[0])).size;
+    return `<b>${ok} of ${t.length}</b> matching fine-tuning trials from ${parents} parent checkpoints reached the threshold. Only trials with the same target family, recipe, budget, threshold and contract count.`;
+  },
+  scratch(r) {
+    const t = r.rows.filter((x) => x[0]); const ok = t.filter((x) => x[2] === true).length;
+    return `<b>${ok} of ${t.length}</b> matching from-scratch trials reached the threshold. The live count includes the trial this decision launched, because outcomes are written back to the graph.`;
+  },
+  decision(r) {
+    const d = Object.fromEntries(r.header.map((h, i) => [h, r.rows[0]?.[i]]));
+    return `Rule <b>${esc(d.rule)}</b> at graph revision ${esc(d.revision)} chose <b>${esc(d.action)}</b>, launched <span class="mono">${esc(d.run_id)}</span> and produced checkpoint <span class="mono">${esc(d.child_id)}</span>. Reached the threshold: ${esc(d.reached)}.`;
+  },
+  gate(r) {
+    return `<b>${r.rows.filter((x) => x[2]).length} validation suites</b> have evidence measured on the exact artifact hash of the new checkpoint. The gate compares each to its threshold below.`;
+  },
+};
+let currentQ = "failure";
+async function ask(q) {
+  currentQ = q;
+  document.querySelectorAll(".q").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.q === q)));
+  const panel = $("#qPanel"); panel.classList.add("busy");
+  $("#qMeta").textContent = "Querying FalkorDB";
+  try {
+    const r = await get(`api/live/query/${q}`);
+    if (currentQ !== q) return;
+    $("#qCypher").innerHTML = cypher(r.cypher);
+    $("#qParams").innerHTML = Object.entries(r.params).map(([k, v]) =>
+      `<span class="param"><span class="pr">$${esc(k)}</span> ${esc(Array.isArray(v) ? JSON.stringify(v) : (String(v).length > 20 && k === "hash" ? String(v).slice(0, 12) + "…" : v))}</span>`).join("");
+    $("#qRows").innerHTML = `<thead><tr>${r.header.map((h) => `<th scope="col">${esc(h)}</th>`).join("")}</tr></thead>
+      <tbody>${r.rows.map((x) => `<tr>${x.map((v, i) => cell(v, r.header[i])).join("")}</tr>`).join("") || `<tr><td class="state" colspan="${r.header.length}">No rows</td></tr>`}</tbody>`;
+    $("#qRead").innerHTML = READ[q](r);
+    const at = new Date(r.at * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+    $("#qMeta").textContent = `${r.row_count} rows · ${r.ms} ms · ${r.via} · rev ${r.graph_revision} · ${at}`;
+  } catch {
+    $("#qMeta").textContent = "FalkorDB did not answer. Try again.";
+    $("#qRows").innerHTML = `<tbody><tr><td class="state err">The live query failed. Use Run again to retry.</td></tr></tbody>`;
+  } finally { panel.classList.remove("busy"); }
+}
+function consoleInit() {
+  document.querySelectorAll(".q").forEach((b) => b.addEventListener("click", () => ask(b.dataset.q)));
+  $(".qlist").addEventListener("keydown", (e) => {
+    if (!["ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft"].includes(e.key)) return;
+    const qs = [...document.querySelectorAll(".q")]; const i = qs.findIndex((b) => b.dataset.q === currentQ);
+    const n = qs[(i + (e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : qs.length - 1)) % qs.length];
+    n.focus(); ask(n.dataset.q); e.preventDefault();
+  });
+  $("#qRun").addEventListener("click", () => ask(currentQ));
+  ask("failure");
+}
+
+async function heroQuery() {
+  try {
+    const [t, sc] = await Promise.all([get("api/live/query/transfer"), get("api/live/query/scratch")]);
+    const pt = t.rows.filter((x) => x[1]), ps = sc.rows.filter((x) => x[0]);
+    const okT = pt.filter((x) => x[3] === true).length, okS = ps.filter((x) => x[2] === true).length;
+    $("#hqMs").textContent = `${(t.ms + sc.ms).toFixed(1)} ms`;
+    $("#hqOut").innerHTML = `Fine-tuning a parent: <b>${okT} of ${pt.length}</b> matching trials reached the threshold. From scratch: <b>${okS} of ${ps.length}</b>. The recorded agent read this pattern and trained from scratch. <span class="go">See the queries ↓</span>`;
+  } catch { $("#hqOut").textContent = "FalkorDB did not answer just now. The console below retries."; }
+}
+
+// ---------- recorded decision chain ----------
+async function decisionChain() {
+  try {
+    const f = await get("api/live/featured");
+    $("#decideSub").innerHTML = `The LLM agent called the frozen rule <b class="mono">${esc(f.rule)}</b> at graph revision ${esc(f.graph_revision)}. It read ${f.query_count} graph queries, ranked every start option by its chance of reaching the target threshold and recorded <span class="mono">${esc(f.decision_id)}</span>.`;
+    const chosen = f.action === "train_from_scratch" ? "scratch" : f.selected;
+    const max = Math.max(...f.options.map((o) => o.p_reach || 0)) || 1;
+    $("#bars").innerHTML = f.options.map((o) => `<li class="${o.option === chosen ? "win" : ""}">
+      <div class="bl"><b class="mono">${esc(o.option === "scratch" ? "Train from scratch" : o.option)}</b>${o.option === chosen ? '<span class="chosen">Chosen</span>' : ""}<span class="pv mono">${pct(o.p_reach)}</span></div>
+      <div class="track"><span style="--w:${((o.p_reach || 0) / max) * 100}%"></span></div>
+      <small>${esc(o.p_basis)}</small></li>`).join("");
+    const rj = f.rejected.find((r) => /contract/.test(r.reasons.join(" ")));
+    $("#rejNote").innerHTML = `${f.rejected.length} more checkpoints were excluded before ranking.${rj ? ` For example <span class="mono">${esc(rj.policy_id)}</span>: ${esc(rj.reasons[0])}.` : ""}`;
+    const p = f.promotion;
+    $("#checks").innerHTML = p.checks.map((c) => `<li class="${c.pass ? "pass" : "fail"}">
+      <span class="ck" aria-hidden="true">${c.pass ? "✓" : "✕"}</span>
+      <span><b class="mono">${esc(c.suite_id)}</b><small>${esc(c.role)}</small></span>
+      <span class="mono">${pct(c.success_rate)} ok <small>need ≥ ${pct(c.min_success)}</small></span>
+      <span class="mono">${pct(c.collision_rate)} hit <small>limit ${pct(c.max_collision)}</small></span></li>`).join("");
+    const passed = p.checks.filter((c) => c.pass).length;
+    $("#gateBox").className = "gatebox " + (p.verdict === "promoted" ? "ok" : "bad");
+    $("#gateBox").innerHTML = `<b>${p.verdict === "promoted" ? "Promoted" : "Rejected"}</b> ${passed} of ${p.checks.length} suites passed, so <span class="mono">${esc(p.policy_id)}</span> does not ship and the deployed policy stays. The verdict is written back to the graph as a Promotion node.`;
+  } catch {
+    $("#bars").innerHTML = `<li class="state err">The recorded decision could not be loaded. Refresh to retry.</li>`;
+    $("#checks").innerHTML = "";
   }
 }
 
@@ -252,5 +368,5 @@ function reveals() {
   });
 }
 
-reveals(); schema(); live(); hero(); results(); agent();
+reveals(); schema(); live(); hero(); heroQuery(); consoleInit(); decisionChain(); results(); agent();
 setInterval(live, 15000);

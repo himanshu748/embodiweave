@@ -2,7 +2,7 @@
 
 **GraphHacks 2026, Track 1: Agents That Act on Connected Data.** FalkorDB is the primary database.
 
-**Live demo:** [embodiweave.onrender.com](https://embodiweave.onrender.com) · **License:** MIT · **Demo video:** _link goes here_
+**Live demo:** [embodiweave.onrender.com](https://embodiweave.onrender.com) (free tier, the first load can take up to a minute) · **License:** MIT · **Demo video:** _link goes here_
 
 EmbodiWeave turns robot failures into evidence-backed training decisions. A simulated mobile robot
 fails a new mission (static obstacles plus a crossing pedestrian). An agent queries a FalkorDB graph of
@@ -210,6 +210,12 @@ FalkorDB, Stable-Baselines3, Gymnasium, PyTorch, FastAPI, the Model Context Prot
 Anthropic Python SDK. License: not yet chosen by the owner.
 
 ## Hosted demo
+
+The landing page has a **Live from FalkorDB** console: five buttons re-run, against the live graph, the read-only
+templates the recorded agent run used (`failure_inspection`, `relevant_trials`, `scratch_trials`, `decision_provenance`,
+`promotion_evidence`) with the parameters stored in its decision and promotion records. Endpoints:
+`GET /api/live/overview` (node and edge counts), `GET /api/live/query/{failure|transfer|scratch|decision|gate}` and
+`GET /api/live/featured` (the recorded decision ranking and gate checks). All go through `GRAPH.RO_QUERY`.
 
 `Dockerfile` builds a read-only studio: the pinned FalkorDB image plus the FastAPI studio, without torch or the
 worker (about 80 MB of memory). On boot it rebuilds the graph from the committed records, so the hosted graph
