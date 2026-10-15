@@ -1,0 +1,714 @@
+{
+ "calls": [
+  {
+   "args": {},
+   "result": {
+    "deployed_policy": "P-static-b",
+    "deployed_target_evaluation": {
+     "evaluation_id": "eval-20261015040917-9c0df8",
+     "summary": {
+      "collision_rate": 0.4833,
+      "collisions_by_object": {
+       "mover": 21,
+       "static": 8,
+       "wall": 0
+      },
+      "episodes": 60,
+      "mean_success_steps": 94.2,
+      "success_rate": 0.3667,
+      "timeout_rate": 0.15
+     }
+    },
+    "failure_evidence": [
+     {
+      "collision_rate": 0.4833,
+      "count": 21,
+      "episodes": [
+       1,
+       2,
+       6,
+       8,
+       9,
+       14,
+       16,
+       17,
+       23,
+       25,
+       26,
+       27,
+       32,
+       33,
+       34,
+       36,
+       39,
+       43,
+       52,
+       56,
+       58
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:collision:mover",
+      "hit": "mover",
+      "hypothesis": "Collisions with the moving obstacle MAY indicate weak yielding to dynamic obstacles. Authored hypothesis, not a measured cause.",
+      "hypothesis_id": "hyp-mover-yield",
+      "outcome": "collision",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": "yield_dynamic",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "collision_rate": 0.4833,
+      "count": 8,
+      "episodes": [
+       5,
+       10,
+       12,
+       13,
+       28,
+       31,
+       42,
+       49
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:collision:static",
+      "hit": "static",
+      "hypothesis": "Collisions with static obstacles MAY indicate weak static avoidance. Authored hypothesis.",
+      "hypothesis_id": "hyp-static-avoid",
+      "outcome": "collision",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": "avoid_static",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "collision_rate": 0.4833,
+      "count": 9,
+      "episodes": [
+       0,
+       3,
+       11,
+       20,
+       37,
+       41,
+       44,
+       48,
+       55
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:timeout",
+      "hit": null,
+      "hypothesis": null,
+      "hypothesis_id": null,
+      "outcome": "timeout",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": null,
+      "suite_id": "val-target-v1"
+     }
+    ],
+    "graph_revision": 13,
+    "mission": "static_crossing",
+    "note": "Failure rows are measured; hypothesis rows are authored and unverified.",
+    "requirements": [
+     {
+      "competency": "avoid_static",
+      "suite_id": "val-static-v1"
+     },
+     {
+      "competency": "reach_goal",
+      "suite_id": "val-open-v1"
+     },
+     {
+      "competency": "static_crossing_mission",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "competency": "yield_dynamic",
+      "suite_id": "val-crossing-v1"
+     }
+    ],
+    "robot": "ew-unicycle-r20"
+   },
+   "tool": "inspect_mission"
+  },
+  {
+   "args": {
+    "budget": 150000
+   },
+   "result": {
+    "action": "train_from_parent",
+    "decision_id": "deci-20261015041640-6fcae1",
+    "explanation": "Selected P-static-b: p_reach 0.5 (prior Beta(1,1) (no applicable trials)), matched val-target-v1 success 0.37 / collision 0.48. Same transfer estimate as P-static-a; wins on matched validation (-0.1166 vs -0.4167).",
+    "graph_revision": 13,
+    "needs_evaluation": null,
+    "queries": [
+     {
+      "params": {
+       "mission": "static_crossing"
+      },
+      "returned_ids": [
+       "avoid_static",
+       "reach_goal",
+       "static_crossing_mission",
+       "val-crossing-v1",
+       "val-open-v1",
+       "val-static-v1",
+       "val-target-v1",
+       "yield_dynamic"
+      ],
+      "template": "mission_requirements"
+     },
+     {
+      "params": {
+       "contract": "ew-contract-1:2f013b6f4849",
+       "robot": "ew-unicycle-r20"
+      },
+      "returned_ids": [
+       "P-cross-a",
+       "P-mirror",
+       "P-open-a",
+       "P-static-a",
+       "P-static-a~cross-t1",
+       "P-static-b",
+       "P-static-b~tgt-s301"
+      ],
+      "template": "candidate_eligibility"
+     },
+     {
+      "params": {
+       "ids": [
+        "P-open-a",
+        "P-static-a",
+        "P-cross-a",
+        "P-static-b"
+       ]
+      },
+      "returned_ids": [
+       "P-cross-a",
+       "P-open-a",
+       "P-static-a",
+       "P-static-b",
+       "run-20261015040303-5486a3",
+       "run-20261015040331-2ce08c",
+       "run-20261015040413-21549a",
+       "run-20261015040548-a267ec"
+      ],
+      "template": "candidate_ancestry"
+     },
+     {
+      "params": {
+       "ids": [
+        "P-open-a",
+        "P-static-a",
+        "P-cross-a",
+        "P-static-b"
+       ],
+       "suite": "val-target-v1"
+      },
+      "returned_ids": [
+       "P-cross-a",
+       "P-open-a",
+       "P-static-a",
+       "P-static-b",
+       "eval-20261015040906-81b5d2",
+       "eval-20261015040909-861253",
+       "eval-20261015040914-b5aef7",
+       "eval-20261015040917-9c0df8"
+      ],
+      "template": "matched_validation"
+     },
+     {
+      "params": {
+       "budget": 150000,
+       "contract": "ew-contract-1:2f013b6f4849",
+       "family": "static_crossing@43ce902c",
+       "ids": [
+        "P-open-a",
+        "P-static-a",
+        "P-cross-a",
+        "P-static-b"
+       ],
+       "recipe": "ppo-r1",
+       "threshold": "thr-target-1"
+      },
+      "returned_ids": [
+       "P-cross-a",
+       "P-open-a",
+       "P-static-a",
+       "P-static-b"
+      ],
+      "template": "relevant_trials"
+     },
+     {
+      "params": {
+       "budget": 150000,
+       "family": "static_crossing@43ce902c",
+       "ids": [
+        "P-open-a",
+        "P-static-a",
+        "P-cross-a",
+        "P-static-b"
+       ],
+       "recipe": "ppo-r1",
+       "threshold": "thr-target-1"
+      },
+      "returned_ids": [
+       "P-static-a",
+       "P-static-b",
+       "trial-20261015040704-e327c6",
+       "trial-20261015040948-bb36e2"
+      ],
+      "template": "non_applicable_trials"
+     }
+    ],
+    "ranking": [
+     {
+      "median_steps_to_threshold": null,
+      "n_completed": 0,
+      "n_not_reached_within_budget": 0,
+      "n_reached": 0,
+      "p_basis": "prior Beta(1,1) (no applicable trials)",
+      "p_reach": 0.5,
+      "policy_id": "P-static-b",
+      "rank": 1,
+      "validation": {
+       "collision_rate": 0.4833,
+       "episodes": 60,
+       "evaluation_id": "eval-20261015040917-9c0df8",
+       "score": -0.1166,
+       "success_rate": 0.3667
+      }
+     },
+     {
+      "median_steps_to_threshold": null,
+      "n_completed": 0,
+      "n_not_reached_within_budget": 0,
+      "n_reached": 0,
+      "p_basis": "prior Beta(1,1) (no applicable trials)",
+      "p_reach": 0.5,
+      "policy_id": "P-static-a",
+      "rank": 2,
+      "validation": {
+       "collision_rate": 0.65,
+       "episodes": 60,
+       "evaluation_id": "eval-20261015040909-861253",
+       "score": -0.4167,
+       "success_rate": 0.2333
+      }
+     },
+     {
+      "median_steps_to_threshold": null,
+      "n_completed": 0,
+      "n_not_reached_within_budget": 0,
+      "n_reached": 0,
+      "p_basis": "prior Beta(1,1) (no applicable trials)",
+      "p_reach": 0.5,
+      "policy_id": "P-cross-a",
+      "rank": 3,
+      "validation": {
+       "collision_rate": 0.55,
+       "episodes": 60,
+       "evaluation_id": "eval-20261015040914-b5aef7",
+       "score": -0.5333,
+       "success_rate": 0.0167
+      }
+     },
+     {
+      "median_steps_to_threshold": null,
+      "n_completed": 0,
+      "n_not_reached_within_budget": 0,
+      "n_reached": 0,
+      "p_basis": "prior Beta(1,1) (no applicable trials)",
+      "p_reach": 0.5,
+      "policy_id": "P-open-a",
+      "rank": 4,
+      "validation": {
+       "collision_rate": 0.9833,
+       "episodes": 60,
+       "evaluation_id": "eval-20261015040906-81b5d2",
+       "score": -0.9666,
+       "success_rate": 0.0167
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "policy_id": "P-mirror",
+      "reasons": [
+       "semantic contract mismatch (ew-contract-1m:6fad9cbfe838 vs ew-contract-1:2f013b6f4849; differs in ray_order)"
+      ]
+     },
+     {
+      "policy_id": "P-static-a~cross-t1",
+      "reasons": [
+       "outside requested catalog (run kind transfer_measurement)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~tgt-s301",
+      "reasons": [
+       "outside requested catalog (run kind transfer_trial)"
+      ]
+     }
+    ],
+    "rule": "ew-select-1",
+    "selected": "P-static-b"
+   },
+   "tool": "propose_adaptation"
+  },
+  {
+   "args": {
+    "decision_id": "deci-20261015041640-6fcae1",
+    "seed": 7
+   },
+   "result": {
+    "budget": 150000,
+    "child_policy_id": "P-static-b~6fcae1-s7",
+    "created": true,
+    "job_id": "job-20261015041640-b2c532",
+    "parent": "P-static-b",
+    "quota_steps": 3000000,
+    "quota_used_steps": 150000,
+    "state": "queued"
+   },
+   "tool": "start_training"
+  },
+  {
+   "args": {
+    "job_id": "job-20261015041640-b2c532",
+    "timeout_s": 240
+   },
+   "result": {
+    "consumed_steps": 151552,
+    "error": null,
+    "id": "job-20261015041640-b2c532",
+    "kind": "transfer_trial",
+    "progress": {
+     "at": 1792037859.1514654,
+     "episodes": 1582,
+     "steps": 150000,
+     "train_success_recent": 0.4
+    },
+    "result": {
+     "child_artifact_hash": "0e696bcdbed5769e0494e30682f17e194f86263406c0085c1f4a7a54959b568a",
+     "child_policy_id": "P-static-b~6fcae1-s7",
+     "final_evaluation_id": "eval-20261015041745-ed2eb3",
+     "run_id": "run-20261015041642-462430",
+     "schedule": [
+      {
+       "collision_rate": 0.5833,
+       "collisions_by_object": {
+        "mover": 23,
+        "static": 12,
+        "wall": 0
+       },
+       "episodes": 60,
+       "mean_success_steps": 97.1,
+       "steps": 37504,
+       "success_rate": 0.3667,
+       "suite_id": "val-target-v1",
+       "timeout_rate": 0.05
+      },
+      {
+       "collision_rate": 0.5,
+       "collisions_by_object": {
+        "mover": 19,
+        "static": 11,
+        "wall": 0
+       },
+       "episodes": 60,
+       "mean_success_steps": 96.3,
+       "steps": 75000,
+       "success_rate": 0.4167,
+       "suite_id": "val-target-v1",
+       "timeout_rate": 0.0833
+      },
+      {
+       "collision_rate": 0.4167,
+       "collisions_by_object": {
+        "mover": 20,
+        "static": 5,
+        "wall": 0
+       },
+       "episodes": 60,
+       "mean_success_steps": 103.8,
+       "steps": 112504,
+       "success_rate": 0.45,
+       "suite_id": "val-target-v1",
+       "timeout_rate": 0.1333
+      },
+      {
+       "collision_rate": 0.4333,
+       "collisions_by_object": {
+        "mover": 21,
+        "static": 5,
+        "wall": 0
+       },
+       "episodes": 60,
+       "mean_success_steps": 100.4,
+       "steps": 150000,
+       "success_rate": 0.4333,
+       "suite_id": "val-target-v1",
+       "timeout_rate": 0.1333
+      },
+      {
+       "collision_rate": 0.4167,
+       "collisions_by_object": {
+        "mover": 21,
+        "static": 4,
+        "wall": 0
+       },
+       "episodes": 60,
+       "mean_success_steps": 99.4,
+       "steps": 151552,
+       "success_rate": 0.4167,
+       "suite_id": "val-target-v1",
+       "timeout_rate": 0.1667
+      }
+     ],
+     "steps_to_threshold": null,
+     "threshold_reached": false,
+     "trial_id": "trial-6fcae1-s7",
+     "trial_status": "completed"
+    },
+    "state": "completed"
+   },
+   "tool": "wait_for_job"
+  },
+  {
+   "args": {
+    "policy_id": "P-static-b~6fcae1-s7",
+    "suite_id": "val-open-v1"
+   },
+   "result": {
+    "created": true,
+    "job_id": "job-20261015041746-4bf1d6",
+    "state": "queued"
+   },
+   "tool": "evaluate_checkpoint"
+  },
+  {
+   "args": {
+    "job_id": "job-20261015041746-4bf1d6",
+    "timeout_s": 240
+   },
+   "result": {
+    "consumed_steps": null,
+    "error": null,
+    "id": "job-20261015041746-4bf1d6",
+    "kind": "evaluate",
+    "progress": null,
+    "result": {
+     "artifact_hash": "0e696bcdbed5769e0494e30682f17e194f86263406c0085c1f4a7a54959b568a",
+     "evaluation_id": "eval-20261015041748-615dc9",
+     "summary": {
+      "collision_rate": 0.0,
+      "collisions_by_object": {
+       "mover": 0,
+       "static": 0,
+       "wall": 0
+      },
+      "episodes": 40,
+      "mean_success_steps": 79.4,
+      "success_rate": 1.0,
+      "timeout_rate": 0.0
+     }
+    },
+    "state": "completed"
+   },
+   "tool": "wait_for_job"
+  },
+  {
+   "args": {
+    "policy_id": "P-static-b~6fcae1-s7",
+    "suite_id": "val-static-v1"
+   },
+   "result": {
+    "created": true,
+    "job_id": "job-20261015041748-7d1ae1",
+    "state": "queued"
+   },
+   "tool": "evaluate_checkpoint"
+  },
+  {
+   "args": {
+    "job_id": "job-20261015041748-7d1ae1",
+    "timeout_s": 240
+   },
+   "result": {
+    "consumed_steps": null,
+    "error": null,
+    "id": "job-20261015041748-7d1ae1",
+    "kind": "evaluate",
+    "progress": null,
+    "result": {
+     "artifact_hash": "0e696bcdbed5769e0494e30682f17e194f86263406c0085c1f4a7a54959b568a",
+     "evaluation_id": "eval-20261015041752-ef4495",
+     "summary": {
+      "collision_rate": 0.025,
+      "collisions_by_object": {
+       "mover": 0,
+       "static": 1,
+       "wall": 0
+      },
+      "episodes": 40,
+      "mean_success_steps": 97.8,
+      "success_rate": 0.4,
+      "timeout_rate": 0.575
+     }
+    },
+    "state": "completed"
+   },
+   "tool": "wait_for_job"
+  },
+  {
+   "args": {
+    "policy_id": "P-static-b~6fcae1-s7",
+    "suite_id": "val-crossing-v1"
+   },
+   "result": {
+    "created": true,
+    "job_id": "job-20261015041754-fb1aa8",
+    "state": "queued"
+   },
+   "tool": "evaluate_checkpoint"
+  },
+  {
+   "args": {
+    "job_id": "job-20261015041754-fb1aa8",
+    "timeout_s": 240
+   },
+   "result": {
+    "consumed_steps": null,
+    "error": null,
+    "id": "job-20261015041754-fb1aa8",
+    "kind": "evaluate",
+    "progress": null,
+    "result": {
+     "artifact_hash": "0e696bcdbed5769e0494e30682f17e194f86263406c0085c1f4a7a54959b568a",
+     "evaluation_id": "eval-20261015041756-93a703",
+     "summary": {
+      "collision_rate": 0.45,
+      "collisions_by_object": {
+       "mover": 18,
+       "static": 0,
+       "wall": 0
+      },
+      "episodes": 40,
+      "mean_success_steps": 87.3,
+      "success_rate": 0.55,
+      "timeout_rate": 0.0
+     }
+    },
+    "state": "completed"
+   },
+   "tool": "wait_for_job"
+  },
+  {
+   "args": {
+    "policy_id": "P-static-b~6fcae1-s7"
+   },
+   "result": {
+    "artifact_hash": "0e696bcdbed5769e0494e30682f17e194f86263406c0085c1f4a7a54959b568a",
+    "checks": [
+     {
+      "collision_rate": 0.4167,
+      "evaluation_id": "eval-20261015041745-ed2eb3",
+      "max_collision": 0.1,
+      "min_success": 0.8,
+      "pass": false,
+      "role": "target",
+      "success_rate": 0.4167,
+      "suite_id": "val-target-v1"
+     },
+     {
+      "collision_rate": 0.0,
+      "evaluation_id": "eval-20261015041748-615dc9",
+      "max_collision": 0.05,
+      "min_success": 0.9,
+      "pass": true,
+      "role": "retained",
+      "success_rate": 1.0,
+      "suite_id": "val-open-v1"
+     },
+     {
+      "collision_rate": 0.025,
+      "evaluation_id": "eval-20261015041752-ef4495",
+      "max_collision": 0.1,
+      "min_success": 0.75,
+      "pass": false,
+      "role": "retained",
+      "success_rate": 0.4,
+      "suite_id": "val-static-v1"
+     },
+     {
+      "collision_rate": 0.45,
+      "evaluation_id": "eval-20261015041756-93a703",
+      "max_collision": 0.15,
+      "min_success": 0.75,
+      "pass": false,
+      "role": "retained",
+      "success_rate": 0.55,
+      "suite_id": "val-crossing-v1"
+     }
+    ],
+    "id": "prom-20261015041756-78a86b",
+    "missing": [],
+    "policy_id": "P-static-b~6fcae1-s7",
+    "reasons": [
+     "val-target-v1: success 0.42 (min 0.8), collision 0.42 (max 0.1)",
+     "val-static-v1: success 0.40 (min 0.75), collision 0.03 (max 0.1)",
+     "val-crossing-v1: success 0.55 (min 0.75), collision 0.45 (max 0.15)"
+    ],
+    "verdict": "rejected"
+   },
+   "tool": "request_promotion"
+  },
+  {
+   "args": {
+    "policy_id": "P-static-b~6fcae1-s7"
+   },
+   "result": {
+    "artifact_hash": "0e696bcdbed5769e0494e30682f17e194f86263406c0085c1f4a7a54959b568a",
+    "bundle": "P-static-b~6fcae1-s7-0e696bcdbed5.zip",
+    "bytes": 196577,
+    "lineage": [
+     {
+      "artifact_hash": "0e696bcdbed5769e0494e30682f17e194f86263406c0085c1f4a7a54959b568a",
+      "family": "static_crossing",
+      "policy_id": "P-static-b~6fcae1-s7",
+      "seed": 7,
+      "steps": 151552
+     },
+     {
+      "artifact_hash": "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+      "family": "static+custom",
+      "policy_id": "P-static-b",
+      "seed": 104,
+      "steps": 100352
+     },
+     {
+      "artifact_hash": "390485ae8caaba1babb63257a97f8d18fe86d19c1af3266135f36bf2f760cf64",
+      "family": "static",
+      "policy_id": "P-static-a",
+      "seed": 102,
+      "steps": 151552
+     },
+     {
+      "artifact_hash": "b004eccbb87e06576657e2c2816e422b07e838b43b0d736b6a86482282a5787a",
+      "family": "open",
+      "policy_id": "P-open-a",
+      "seed": 101,
+      "steps": 120832
+     }
+    ],
+    "policy_id": "P-static-b~6fcae1-s7",
+    "sha256": "c1556996b0db5937f992d8897ee1b22793ba848041c6026ff19d391082628a83"
+   },
+   "tool": "export_evidence"
+  }
+ ],
+ "id": "agent-20261015041638-be5f25",
+ "kind": "agent_trace",
+ "mode": "deterministic",
+ "recorded_at": "2026-10-15T04:17:57+0000",
+ "wall_s": 79.1
+}

@@ -145,3 +145,93 @@ def record_decision(request: dict, *, mode: str = "deterministic", graph: str | 
     ingest.decision(rec, graph)
     db.bump_revision(f"decision {rec['id']}", graph)
     return rec
+
+
+def promote(policy_id: str, rule: str = "promo-1", graph: str | None = None) -> dict:
+    """Trusted promotion gate. Binds to the exact artifact hash; evidence must be on that hash."""
+    from .criteria import PROMOTION
+    from .graph import queries as Q
+    pr = PROMOTION[rule]
+    reasons, verdict = [], "promoted"
+    h = artifacts.verify_policy(policy_id)  # files exist and match their manifest
+    m = artifacts.load_manifest(policy_id)
+    if m["contract_id"] != CONTRACT_V1.contract_id:
+        reasons.append(f"contract {m['contract_id']} is not the mission contract")
+    if m["status"] != "completed":
+        reasons.append(f"checkpoint status {m['status']}")
+    reqs = [pr["target"]] + pr["retained"]
+    q = Q.run("promotion_evidence", {"policy": policy_id, "suites": [r["suite_id"] for r in reqs], "hash": h}, graph)
+    rows = {}
+    for r in q.dicts():
+        if r["evaluation_id"]:
+            rows[r["suite_id"]] = r  # newest wins (ordered by time)
+        if r["policy_hash"] != h:
+            reasons.append("graph artifact hash differs from files on disk")
+    used, missing, checks = [], [], []
+    for crit in reqs:
+        r = rows.get(crit["suite_id"])
+        if r is None:
+            missing.append(crit["suite_id"])
+            continue
+        ok = r["success_rate"] >= crit["min_success"] and r["collision_rate"] <= crit["max_collision"]
+        checks.append({"suite_id": crit["suite_id"], "evaluation_id": r["evaluation_id"], "success_rate": r["success_rate"],
+                       "collision_rate": r["collision_rate"], "min_success": crit["min_success"],
+                       "max_collision": crit["max_collision"], "pass": ok,
+                       "role": "target" if crit is pr["target"] else "retained"})
+        used.append(r["evaluation_id"])
+        if not ok:
+            reasons.append(f"{crit['suite_id']}: success {r['success_rate']:.2f} (min {crit['min_success']}), "
+                           f"collision {r['collision_rate']:.2f} (max {crit['max_collision']})")
+    if missing:
+        verdict = "insufficient_evidence"
+        reasons.append("no evaluation of this exact artifact on: " + ", ".join(missing))
+    elif reasons:
+        verdict = "rejected"
+    rec = records.write("promotion", {"policy_id": policy_id, "artifact_hash": h, "rule": rule, "verdict": verdict,
+                                      "reasons": reasons, "checks": checks, "missing": missing,
+                                      "evaluation_ids": used, "query": q.to_log()})
+    ingest.promotion(rec, graph)
+    db.bump_revision(f"promotion {rec['id']}", graph)
+    return rec
+
+
+def export_bundle(policy_id: str) -> dict:
+    """Zip the checkpoint with contract, records, lock file and checksums."""
+    import hashlib
+    import zipfile
+    m = artifacts.load_manifest(policy_id)
+    artifacts.verify_policy(policy_id, m["artifact_hash"])
+    out_dir = artifacts.ROOT / "exports"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    path = out_dir / f"{policy_id}-{m['artifact_hash'][:12]}.zip"
+    root = Path(__file__).resolve().parent.parent
+    rel = {"runs": [r for r in records.all_of("run") if r.get("child_policy_id") == policy_id],
+           "evaluations": [e for e in records.all_of("evaluation") if e["policy_id"] == policy_id],
+           "trials": [t for t in records.all_of("trial") if policy_id in (t.get("child_policy_id"), t.get("parent_id"))],
+           "promotions": [p for p in records.all_of("promotion") if p["policy_id"] == policy_id]}
+    lineage, cur = [], m
+    while cur:
+        lineage.append({"policy_id": cur["policy_id"], "artifact_hash": cur["artifact_hash"], "family": cur["family"],
+                        "steps": cur["consumed_steps"], "seed": cur["seed"]})
+        cur = artifacts.load_manifest(cur["parent_id"]) if cur.get("parent_id") else None
+    contract = get_contract(m["contract_id"]).describe()
+    with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as z:
+        d = artifacts.policy_dir(policy_id)
+        for n in ("model.zip", "vecnormalize.pkl", "manifest.json"):
+            z.write(d / n, f"policy/{n}")
+        z.writestr("contract.json", json.dumps(contract, indent=1, default=list))
+        z.writestr("records.json", json.dumps(rel, indent=1, default=str))
+        z.writestr("lineage.json", json.dumps(lineage, indent=1))
+        lock = root / "requirements.lock"
+        if lock.exists():
+            z.write(lock, "requirements.lock")
+        z.writestr("REPRODUCE.md", (
+            f"# Reproduce {policy_id}\n\nartifact_hash (sha256 over model.zip + vecnormalize.pkl digests): {m['artifact_hash']}\n\n"
+            "```\npip install -r requirements.lock\npython -m ew.cli evaluate --policy-dir policy --suite val-target-v1\n```\n"
+            f"Training: recipe {m['recipe']} seed {m['seed']} steps {m['consumed_steps']} on family {m['family']} "
+            f"from parent {m.get('parent_id') or 'scratch'}. Runtime: {json.dumps(m['runtime'])}.\n"
+            "Bitwise identical retraining is not promised across hardware or package versions; evaluation of the\n"
+            "saved artifact on the same suite seeds is deterministic on the same package set.\n"))
+    sha = hashlib.sha256(path.read_bytes()).hexdigest()
+    return {"path": str(path), "sha256": sha, "policy_id": policy_id, "artifact_hash": m["artifact_hash"],
+            "lineage": lineage, "bytes": path.stat().st_size}

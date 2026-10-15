@@ -1,0 +1,35 @@
+{
+ "id": "job-20261015041754-fb1aa8",
+ "kind": "evaluate",
+ "params": {
+  "policy_id": "P-static-b~6fcae1-s7",
+  "suite_id": "val-crossing-v1",
+  "purpose": "agent evaluation"
+ },
+ "idem_key": "70b9d46fb9bc04a1",
+ "state": "completed",
+ "submitted_at": 1792037874.5055585,
+ "requested_by": "agent-20261015041638-be5f25",
+ "progress": null,
+ "result": {
+  "evaluation_id": "eval-20261015041756-93a703",
+  "summary": {
+   "episodes": 40,
+   "success_rate": 0.55,
+   "collision_rate": 0.45,
+   "timeout_rate": 0.0,
+   "mean_success_steps": 87.3,
+   "collisions_by_object": {
+    "wall": 0,
+    "static": 0,
+    "mover": 18
+   }
+  },
+  "artifact_hash": "0e696bcdbed5769e0494e30682f17e194f86263406c0085c1f4a7a54959b568a"
+ },
+ "error": null,
+ "consumed_steps": null,
+ "worker_pid": 2113,
+ "started_at": 1792037874.7944098,
+ "finished_at": 1792037876.1861982
+}
