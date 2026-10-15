@@ -162,6 +162,9 @@ def trial(t: dict, g: str | None = None) -> None:
               {"id": t["id"], "cp": t["child_policy_id"]}, g)
     if t.get("run_id"):
         db.rw("MATCH (t:Trial {id:$id}), (r:Run {id:$r}) MERGE (t)-[:VIA_RUN]->(r)", {"id": t["id"], "r": t["run_id"]}, g)
+    if t.get("search_rule"):
+        db.rw("MATCH (t:Trial {id:$id}) SET t.search_rule=$rule, t.intervention=$intervention",
+              {"id": t["id"], "rule": t["search_rule"], "intervention": t["intervention"]}, g)
 
 
 def decision(d: dict, g: str | None = None) -> None:

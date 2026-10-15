@@ -25,6 +25,31 @@ from .provenance import source_snapshot
 torch.set_num_threads(1)
 
 
+class TrainingEnv(EmbodiNavEnv):
+    """Training-only interventions; never used by the evaluation path.
+
+    Rehearsal cycles authored families at episode boundaries. It never uses a
+    validation layout or seed. Reward shaping adds a terminal collision penalty.
+    """
+    def __init__(self, family, contract, recipe_params, **kwargs):
+        super().__init__(family, contract, **kwargs)
+        self.training_families = recipe_params.get("training_families", [])
+        self.family_index = 0
+        self.collision_penalty = recipe_params.get("collision_penalty", -10.0)
+
+    def reset(self, **kwargs):
+        if self.training_families:
+            self.family = FAMILIES[self.training_families[self.family_index % len(self.training_families)]]
+            self.family_index += 1
+        return super().reset(**kwargs)
+
+    def step(self, action):
+        obs, reward, term, trunc, info = super().step(action)
+        if info.get("outcome") == "collision":
+            reward += self.collision_penalty + 10.0
+        return obs, reward, term, trunc, info
+
+
 
 def runtime_versions() -> dict:
     import gymnasium, stable_baselines3
@@ -33,10 +58,11 @@ def runtime_versions() -> dict:
             "dynamics": DYNAMICS_VERSION, "reward": REWARD_VERSION, "machine": platform.machine()}
 
 
-def make_vec(family: Family, contract: PolicyContract, n_envs: int, seed: int, on_frame=None) -> DummyVecEnv:
+def make_vec(family: Family, contract: PolicyContract, n_envs: int, seed: int, on_frame=None,
+             recipe_params=None) -> DummyVecEnv:
     def mk(i):
         def _f():
-            e = Monitor(EmbodiNavEnv(family, contract, on_frame=on_frame if i == 0 else None))
+            e = Monitor(TrainingEnv(family, contract, recipe_params or {}, on_frame=on_frame if i == 0 else None))
             e.reset(seed=seed * 1000 + i)
             return e
         return _f
@@ -93,12 +119,16 @@ def train(policy_id: str, *, family: Family | str, budget_steps: int, seed: int,
             raise ValueError("contract mismatch between requested contract and parent")
         contract = pc
     contract = contract or CONTRACT_V1
-    venv = make_vec(fam, contract, rc["n_envs"], seed, on_frame=on_frame)
+    venv = make_vec(fam, contract, rc["n_envs"], seed, on_frame=on_frame, recipe_params=rc)
     pdir = artifacts.policy_dir(parent_id) if parent_id else None
     if parent_id:
         venv = VecNormalize.load(str(pdir / "vecnormalize.pkl"), venv)
         venv.training, venv.norm_reward = True, True
-        model = PPO.load(str(pdir / "model.zip"), env=venv, device="cpu", seed=seed)
+        # PPO.load otherwise silently keeps the parent's optimizer hyperparameters.
+        # Pass the recorded recipe explicitly, preserving parent weights and stats.
+        model = PPO.load(str(pdir / "model.zip"), env=venv, device="cpu", seed=seed,
+                         **{k: rc[k] for k in ("n_steps", "batch_size", "n_epochs", "learning_rate",
+                                               "gamma", "gae_lambda", "clip_range", "ent_coef")})
     else:
         venv = VecNormalize(venv, norm_obs=True, norm_reward=True, clip_obs=10.0, gamma=rc["gamma"])
         model = PPO("MlpPolicy", venv, device="cpu", seed=seed, verbose=0,
