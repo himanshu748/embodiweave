@@ -1,0 +1,48 @@
+{
+ "budget_steps": 300000,
+ "child_artifact_hash": "b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565",
+ "child_policy_id": "search-20261015185749-4a6581",
+ "consumed_steps": 301056,
+ "contract_id": "ew-contract-1:2f013b6f4849",
+ "decision_id": "deci-20261015185749-420707",
+ "final_evaluation_id": "eval-20261015185833-82fb12",
+ "id": "tria-20261015185835-ce926e",
+ "intervention": "rehearsal",
+ "kind": "trial",
+ "parent_artifact_hash": "a08219d163fdb404bf481f544ceb158c63e33e49baf75685e5e7aae07b87941b",
+ "parent_id": "search-20261015185536-6720c9",
+ "recipe": "ppo-rehearsal-v1",
+ "recorded_at": "2026-10-15T18:58:35+0530",
+ "run_id": "run-20261015185749-177cb3",
+ "schedule": [
+  {
+   "collision_rate": 0.05,
+   "collisions_by_object": {
+    "mover": 2,
+    "static": 1,
+    "wall": 0
+   },
+   "episodes": 60,
+   "mean_success_steps": 98.3,
+   "steps": 301056,
+   "success_rate": 0.95,
+   "suite_id": "val-target-v1",
+   "timeout_rate": 0.0
+  }
+ ],
+ "search_rule": "search-v1",
+ "seed": 7,
+ "status": "completed",
+ "steps_to_threshold": 301056,
+ "suite_id": "val-target-v1",
+ "target_family": "static_crossing",
+ "target_family_id": "static_crossing@43ce902c",
+ "threshold": {
+  "max_collision": 0.1,
+  "min_success": 0.8,
+  "suite_id": "val-target-v1"
+ },
+ "threshold_id": "thr-target-1",
+ "threshold_reached": true,
+ "validation_every": null
+}

@@ -1,0 +1,352 @@
+{
+ "artifact_hash": "b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565",
+ "contract_id": "ew-contract-1:2f013b6f4849",
+ "custom_family": false,
+ "episodes": [
+  {
+   "final_goal_dist": 0.248,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.923,
+   "steps": 83
+  },
+  {
+   "final_goal_dist": 5.142,
+   "hit": "wall",
+   "outcome": "collision",
+   "return": -8.872,
+   "steps": 29
+  },
+  {
+   "final_goal_dist": 0.246,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.182,
+   "steps": 106
+  },
+  {
+   "final_goal_dist": 0.272,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.859,
+   "steps": 91
+  },
+  {
+   "final_goal_dist": 0.236,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.251,
+   "steps": 92
+  },
+  {
+   "final_goal_dist": 0.229,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.972,
+   "steps": 99
+  },
+  {
+   "final_goal_dist": 0.265,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.468,
+   "steps": 85
+  },
+  {
+   "final_goal_dist": 0.293,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.201,
+   "steps": 98
+  },
+  {
+   "final_goal_dist": 0.23,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.372,
+   "steps": 103
+  },
+  {
+   "final_goal_dist": 0.294,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.217,
+   "steps": 100
+  },
+  {
+   "final_goal_dist": 0.271,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.483,
+   "steps": 102
+  },
+  {
+   "final_goal_dist": 0.266,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.879,
+   "steps": 162
+  },
+  {
+   "final_goal_dist": 0.248,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.222,
+   "steps": 112
+  },
+  {
+   "final_goal_dist": 0.274,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.43,
+   "steps": 85
+  },
+  {
+   "final_goal_dist": 0.279,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.098,
+   "steps": 86
+  },
+  {
+   "final_goal_dist": 0.295,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.518,
+   "steps": 94
+  },
+  {
+   "final_goal_dist": 0.258,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.072,
+   "steps": 100
+  },
+  {
+   "final_goal_dist": 0.298,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.272,
+   "steps": 95
+  },
+  {
+   "final_goal_dist": 0.245,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.913,
+   "steps": 110
+  },
+  {
+   "final_goal_dist": 0.218,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.443,
+   "steps": 102
+  },
+  {
+   "final_goal_dist": 0.246,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.231,
+   "steps": 90
+  },
+  {
+   "final_goal_dist": 0.29,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.003,
+   "steps": 94
+  },
+  {
+   "final_goal_dist": 0.203,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.731,
+   "steps": 87
+  },
+  {
+   "final_goal_dist": 0.256,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.248,
+   "steps": 93
+  },
+  {
+   "final_goal_dist": 0.3,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.161,
+   "steps": 87
+  },
+  {
+   "final_goal_dist": 0.292,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.32,
+   "steps": 83
+  },
+  {
+   "final_goal_dist": 0.26,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.973,
+   "steps": 99
+  },
+  {
+   "final_goal_dist": 0.235,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.183,
+   "steps": 100
+  },
+  {
+   "final_goal_dist": 0.239,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.35,
+   "steps": 80
+  },
+  {
+   "final_goal_dist": 0.244,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.068,
+   "steps": 95
+  },
+  {
+   "final_goal_dist": 0.258,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.139,
+   "steps": 114
+  },
+  {
+   "final_goal_dist": 0.207,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.468,
+   "steps": 110
+  },
+  {
+   "final_goal_dist": 0.264,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.595,
+   "steps": 88
+  },
+  {
+   "final_goal_dist": 0.224,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.389,
+   "steps": 85
+  },
+  {
+   "final_goal_dist": 0.243,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.874,
+   "steps": 119
+  },
+  {
+   "final_goal_dist": 0.264,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.873,
+   "steps": 86
+  },
+  {
+   "final_goal_dist": 0.24,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.541,
+   "steps": 87
+  },
+  {
+   "final_goal_dist": 0.215,
+   "hit": null,
+   "outcome": "success",
+   "return": 15.63,
+   "steps": 100
+  },
+  {
+   "final_goal_dist": 0.265,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.312,
+   "steps": 93
+  },
+  {
+   "final_goal_dist": 0.297,
+   "hit": null,
+   "outcome": "success",
+   "return": 20.026,
+   "steps": 128
+  }
+ ],
+ "experiment_id": null,
+ "family_id": "static@7069d847",
+ "id": "eval-20261015185835-bb0cc0",
+ "kind": "evaluation",
+ "policy_id": "search-20261015185749-4a6581",
+ "purpose": "search-v1:deci-20261015185749-420707",
+ "recorded_at": "2026-10-15T18:58:35+0530",
+ "seeds": [
+  1100000,
+  1100001,
+  1100002,
+  1100003,
+  1100004,
+  1100005,
+  1100006,
+  1100007,
+  1100008,
+  1100009,
+  1100010,
+  1100011,
+  1100012,
+  1100013,
+  1100014,
+  1100015,
+  1100016,
+  1100017,
+  1100018,
+  1100019,
+  1100020,
+  1100021,
+  1100022,
+  1100023,
+  1100024,
+  1100025,
+  1100026,
+  1100027,
+  1100028,
+  1100029,
+  1100030,
+  1100031,
+  1100032,
+  1100033,
+  1100034,
+  1100035,
+  1100036,
+  1100037,
+  1100038,
+  1100039
+ ],
+ "suite_id": "val-static-v1",
+ "suite_role": "validation",
+ "suite_version": "1",
+ "summary": {
+  "collision_rate": 0.025,
+  "collisions_by_object": {
+   "mover": 0,
+   "static": 0,
+   "wall": 1
+  },
+  "episodes": 40,
+  "mean_success_steps": 98.0,
+  "success_rate": 0.975,
+  "timeout_rate": 0.0
+ },
+ "wall_s": 0.76
+}

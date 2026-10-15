@@ -73,3 +73,38 @@ PYTHONPATH=. python -m scripts.search_validation
 Use an isolated artifact directory and graph for development. Import the measured records
 and artifacts into the hosted demo only after hash verification. Do not use this trusted
 operator command as an unrestricted public endpoint.
+
+## Measured outcome; selection stopped
+
+| Attempt | Additional actual steps | Target success / collision | Open | Static | Crossing | promo-1 |
+|---|---:|---|---|---|---|---|
+| Longer ppo-r1 | 301,056 | 55/60 / 5/60 | 33/40 / 0/40 | 37/40 / 2/40 | 34/40 / 4/40 | Rejected, 3/4 |
+| Rehearsal | 301,056 | 57/60 / 3/60 | 40/40 / 0/40 | 39/40 / 1/40 | 34/40 / 6/40 | Promoted, 4/4 |
+
+Cells show successes / collisions, with each fraction using that suite's episode count.
+The graph chose `scratch~10715f-s7` for the first attempt. It had the same validation
+metrics as `scratch~a7ee2c-s7`; the frozen ranking broke that tie by policy ID.
+After the first attempt improved to three passing suites, the graph selected that
+child as the next origin. Its open-arena failures triggered rehearsal. That is a
+validation-driven, authored heuristic. It does not prove the intervention caused
+the improvement, and it does not demonstrate that a graph beats a relational store.
+
+The rehearsal checkpoint passed all four unchanged validation checks. Crossing
+collisions were exactly 6/40, at the 15% limit, so that pass had no collision margin.
+The complete lineage consumed 753,664 training steps including its 151,552-step root.
+
+One fresh held-out target confirmation then measured **86/100 successes, 13/100
+collisions, 1/100 timeout**. Collisions included 1 wall, 6 static and 6 movers.
+It failed the 10% target collision limit. No further model selection or tuning
+was performed. Held-out retained-task evaluation remains untested. The baseline
+and first rejection remain visible; the deployed policy remains unchanged.
+
+The validation pass is real and the held-out failure is real. With adaptive selection
+on these validation suites, the gap is consistent with limited generalization;
+these data do not establish its cause. A next study needs independently preregistered
+training seeds and a fresh, sealed test protocol, rather than repeated use of this test.
+
+See [`evidence/search-v1/summary.json`](../evidence/search-v1/summary.json) for exact
+decision, trial, evaluation, promotion and bundle IDs; `checksums.json` binds the
+new evidence records and unchanged suite/threshold source. Each bundle includes
+the exact captured training source, all validation episodes and its decision queries.
