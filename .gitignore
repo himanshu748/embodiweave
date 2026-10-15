@@ -6,3 +6,4 @@ logs/*.log
 logs/*.pid
 logs/*.err
 artifacts/jobs/worker.heartbeat
+logs/*.out

@@ -186,6 +186,11 @@ function modeBadge(m) {
   const label = m === "what-if" ? "What-if (hypothetical)" : m === "llm-agent" ? "LLM agent" : "Deterministic rule run";
   return el("span", { class: "badge small " + cls }, label);
 }
+function childScore(c) {
+  if (c.trial_child_score === undefined) return "";
+  return el("div", { class: "hint", title: "mean (success - collision) on the validation suite of checkpoints these trials produced" },
+    c.trial_child_score === null ? "no measured trial child" : `children score ${c.trial_child_score.toFixed(2)} (n=${c.n_trial_child_scores})`);
+}
 function renderDecision() {
   const d = S.decision; if (!d) return;
   $("#decisionMode").replaceWith(Object.assign(modeBadge(d.mode), { id: "decisionMode" }));
@@ -205,26 +210,28 @@ function renderDecision() {
   for (const c of d.ranking || []) {
     const v = c.validation;
     tbl.append(el("tr", { class: c.policy_id === d.selected ? "sel" : "" },
-      el("td", {}, c.rank),
+      el("td", {}, c.option_rank ?? c.rank),
       el("td", {}, el("span", { class: "chip", onclick: () => inspect(c.policy_id) }, c.policy_id)),
       el("td", {}, el("b", {}, c.p_reach.toFixed(2)), el("div", { class: c.p_basis.includes("WHAT-IF") ? "hint what" : "hint" }, c.p_basis)),
       el("td", {}, `${pct(v.success_rate)} ok · ${pct(v.collision_rate)} coll`, el("div", {}, el("span", { class: "chip", onclick: () => inspect(v.evaluation_id) }, v.evaluation_id.slice(-6)), ` n=${v.episodes}`)),
       el("td", {}, (c.trials || []).length ? (c.trials || []).map((t) => el("span", { class: "chip " + (t.hypothetical ? "hyp" : t.reached ? "pass" : "fail"),
           title: t.hypothetical ? "hypothetical (What-if)" : t.reached ? `reached at ≤${t.steps_to_threshold}` : "not reached within budget",
-          onclick: () => t.hypothetical ? null : inspect(t.trial_id) }, (t.hypothetical ? "hyp " : "") + (t.reached ? "✓" : "✕") + " s" + (t.seed ?? "?"))) : el("span", { class: "hint" }, "none")),
+          onclick: () => t.hypothetical ? null : inspect(t.trial_id) }, (t.hypothetical ? "hyp " : "") + (t.reached ? "✓" : "✕") + " s" + (t.seed ?? "?"))) : el("span", { class: "hint" }, "none"),
+          childScore(c)),
       el("td", { class: "hint" }, (c.lineage || []).filter((l) => l.depth > 0).map((l) => l.policy).join(" ← ") || "scratch")));
   }
   if (d.scratch_option) {
     const so = d.scratch_option;
-    tbl.append(el("tr", { class: d.action === "train_from_scratch" ? "sel" : "" },
-      el("td", {}, d.action === "train_from_scratch" ? "1" : "–"),
+    const srow = (el("tr", { class: d.action === "train_from_scratch" ? "sel" : "" },
+      el("td", {}, so.option_rank ?? (d.action === "train_from_scratch" ? "1" : "–")),
       el("td", {}, el("span", { class: "chip" }, "Origin: scratch"), el("div", { class: "hint" }, "no parent weights")),
       el("td", {}, el("b", {}, so.p_reach.toFixed(2)), el("div", { class: "hint" }, so.p_basis)),
       el("td", { class: "hint" }, "n/a (no checkpoint yet)"),
       el("td", {}, (so.trials || []).length ? so.trials.map((t) => el("span", { class: "chip " + (t.hypothetical ? "hyp" : t.reached ? "pass" : "fail"),
           title: t.reached ? `reached at ≤${t.steps_to_threshold}` : "not reached within budget", onclick: () => inspect(t.trial_id) },
-          (t.reached ? "✓" : "✕") + " s" + (t.seed ?? "?"))) : el("span", { class: "hint" }, "none")),
-      el("td", { class: "hint" }, "ew-select-2 option")));
+          (t.reached ? "✓" : "✕") + " s" + (t.seed ?? "?"))) : el("span", { class: "hint" }, "none"), childScore(so)),
+      el("td", { class: "hint" }, "no parent")));
+    if (so.option_rank && tbl.children[so.option_rank]) tbl.insertBefore(srow, tbl.children[so.option_rank]); else tbl.append(srow);
   }
   if (!(d.ranking || []).length) tbl.append(el("tr", {}, el("td", { colspan: 6, class: "empty" }, d.action === "evaluate_candidates" ? "Ranking withheld until every eligible candidate has matched validation." : "No eligible candidates.")));
   const rej = $("#rejected"); rej.innerHTML = "";
@@ -340,20 +347,25 @@ async function renderTrace(id) {
 // ---------------- results ----------------
 async function renderResults() {
   const r = await api("/api/results"); const box = $("#results"); box.innerHTML = "";
-  if (r.status === "not_run") { box.append(el("div", { class: "empty" }, "The comparison experiment has not finished yet.")); return; }
-  box.append(el("p", {}, `Protocol ${r.protocol.id}, frozen ${r.protocol.frozen_at}. Budget ${r.protocol.budget.toLocaleString()} PPO steps per arm and seed; seeds ${r.protocol.comparison_seeds.join(", ")} (preliminary: 3 training seeds).`));
-  const tbl = el("table", { class: "tbl restbl" });
-  tbl.append(el("tr", {}, ...["Arm", "Parent", "Seed", "Threshold", "Val success / coll", "Frozen test success / coll", "Wall s"].map((h) => el("th", {}, h))));
-  for (const [arm, parent] of Object.entries(r.arms)) {
-    for (const x of r.phase_b[String(parent)] || r.phase_b[parent === null ? "null" : parent] || []) {
-      tbl.append(el("tr", {}, el("td", {}, arm), el("td", {}, parent || "scratch"), el("td", {}, x.seed),
-        el("td", {}, x.reached ? `≤${x.steps_to_threshold.toLocaleString()}` : "not reached"),
-        el("td", { class: "num" }, `${pct(x.final_val.success_rate)} / ${pct(x.final_val.collision_rate)}`),
-        el("td", { class: "num" }, `${pct(x.final_test.success_rate)} / ${pct(x.final_test.collision_rate)}`),
-        el("td", { class: "num" }, x.wall_s)));
-    }
+  if (r.status === "not_run") { box.append(el("div", { class: "empty" }, "No comparison experiment has been reported yet.")); return; }
+  box.append(el("p", { class: "hint" }, "Each experiment froze its protocol before running and used its own final-test suite once. " +
+    "Arms that chose the same parent share the same runs. 3 training seeds per arm: treat differences as preliminary."));
+  for (const x of r.experiments.slice().reverse()) {
+    const p = x.protocol;
+    box.append(el("h3", {}, `${p.id} · rule ${p.selection_rule} · final test ${p.final_test_suite}`),
+      el("div", { class: "hint" }, `Frozen ${p.frozen_at}. ${p.budget.toLocaleString()} PPO steps per arm and seed; seeds ${p.comparison_seeds.join(", ")}.`));
+    if (x.graph_explanation) box.append(el("div", { class: "note" }, "Graph decision: ", x.graph_decision ? el("span", { class: "chip", onclick: () => inspect(x.graph_decision) }, x.graph_decision.slice(-6)) : "", " ", x.graph_explanation));
+    const tbl = el("table", { class: "tbl restbl" });
+    tbl.append(el("tr", {}, ...["Arm", "Start", "Reached thr.", "Mean test success", "Mean test coll.", "Per seed test success"].map((h) => el("th", {}, h))));
+    const best = Math.max(...x.arms.map((a) => a.test_success));
+    for (const a of x.arms)
+      tbl.append(el("tr", { class: a.arm === "graph" ? "sel" : "" }, el("td", {}, a.arm), el("td", {}, a.parent || "scratch"),
+        el("td", { class: "num" }, `${a.reached}/${a.n}`),
+        el("td", { class: "num" }, el(a.test_success === best ? "b" : "span", {}, pct(a.test_success))),
+        el("td", { class: "num" }, pct(a.test_collision)),
+        el("td", { class: "num hint" }, a.rows.map((row) => `s${row.seed} ${pct(row.final_test.success_rate)}`).join(" · "))));
+    box.append(tbl);
   }
-  box.append(tbl, el("p", { class: "hint" }, `Separate costs: library ${r.costs.library_steps.toLocaleString()} steps; transfer measurement ${r.costs.transfer_measurement_steps.toLocaleString()} steps. Arms that chose the same parent share the same runs.`));
 }
 
 // ---------------- inspector ----------------
@@ -431,9 +443,15 @@ async function init() {
     }
   } catch (e) { /* graph down: catalog comes from the graph */ }
   await loadEvals();
-  // default matched pair: deployed policy vs newest child evaluation on the target validation suite
+  // default matched pair: deployed policy vs the newest child that follows the latest production decision
+  // (a scratch child if the graph recommends scratch, else a child of the selected parent)
+  let last = null;
+  try { const ds = (await api("/api/decisions")).filter((d) => d.mode !== "what-if"); last = ds[ds.length - 1]; } catch (_) {}
+  const prefix = last ? (last.action === "train_from_scratch" ? "scratch~" : last.selected ? last.selected + "~" : null) : null;
   const dep = S.status?.deployed_policy, tgt = S.evals.filter((e) => e.suite_id === "val-target-v1");
-  const before = tgt.filter((e) => e.policy_id === dep).pop(), after = tgt.filter((e) => e.policy_id.includes("~")).pop();
+  const children = tgt.filter((e) => e.policy_id.includes("~"));
+  const before = tgt.filter((e) => e.policy_id === dep).pop();
+  const after = (prefix && children.filter((e) => e.policy_id.startsWith(prefix)).pop()) || children.pop();
   if (before) { $("#evalA").value = before.id; await loadReplay("A", before.id); }
   if (after) { $("#evalB").value = after.id; await loadReplay("B", after.id); }
   try { await loadDecisions(); } catch (_) {}

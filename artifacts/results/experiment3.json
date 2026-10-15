@@ -1,0 +1,1229 @@
+{
+ "protocol": {
+  "id": "exp-3",
+  "frozen_at": "2026-10-15T04:48:33+0000",
+  "target_family": "static_crossing",
+  "recipe": "ppo-r1",
+  "budget": 150000,
+  "threshold_id": "thr-target-1",
+  "validation_suite": "val-target-v1",
+  "validation_points": 4,
+  "final_test_suite": "test-target-v3",
+  "selection_rule": "ew-select-3",
+  "catalog": "library run kind only",
+  "comparison_seeds": [
+   801,
+   802,
+   803
+  ],
+  "arms": {
+   "graph": "ew-select-3 on graph evidence at freeze time (parent or scratch)",
+   "graph_v2": "ew-select-2 on the same graph, for contrast",
+   "latest": "latest created_at among eligible library checkpoints",
+   "best_val": "max (success_rate - collision_rate) on val-target-v1, ties by policy id",
+   "scratch": "no parent weights, fresh VecNormalize"
+  },
+  "notes": "Identical (parent, seed) pairs are computed once and shared between arms that agree. Every run is recorded as a Trial and ingested, so the graph keeps learning after selection."
+ },
+ "decision_graph": "deci-20261015044833-2ba630",
+ "decision_graph_v2": "deci-20261015044833-2faa5f",
+ "graph_action": "train_from_scratch",
+ "graph_explanation": "Selected scratch: p_reach 0.25 (1/6 applicable scratch trials reached threshold), trial children score 0.5695 (n=6). Beats P-open-a: p_reach 0.25 (0/2 applicable trials reached threshold), trial children score -0.7417 (n=2) on trial-child validation.",
+ "graph_revision_at_selection": 107,
+ "arms": {
+  "graph": null,
+  "graph_v2": "P-open-a",
+  "latest": "P-static-b",
+  "best_val": "P-static-b",
+  "scratch": null
+ },
+ "eligible": [
+  "P-cross-a",
+  "P-open-a",
+  "P-static-a",
+  "P-static-b"
+ ],
+ "ranking_graph": [
+  {
+   "rank": 1,
+   "policy_id": "P-open-a",
+   "p_reach": 0.25,
+   "p_basis": "0/2 applicable trials reached threshold",
+   "validation": {
+    "evaluation_id": "eval-20261015040906-81b5d2",
+    "success_rate": 0.0167,
+    "collision_rate": 0.9833,
+    "episodes": 60,
+    "score": -0.9666
+   },
+   "n_completed": 2,
+   "n_reached": 0
+  },
+  {
+   "rank": 2,
+   "policy_id": "P-static-a",
+   "p_reach": 0.1429,
+   "p_basis": "0/5 applicable trials reached threshold",
+   "validation": {
+    "evaluation_id": "eval-20261015040909-861253",
+    "success_rate": 0.2333,
+    "collision_rate": 0.65,
+    "episodes": 60,
+    "score": -0.4167
+   },
+   "n_completed": 5,
+   "n_reached": 0
+  },
+  {
+   "rank": 3,
+   "policy_id": "P-cross-a",
+   "p_reach": 0.1429,
+   "p_basis": "0/5 applicable trials reached threshold",
+   "validation": {
+    "evaluation_id": "eval-20261015040914-b5aef7",
+    "success_rate": 0.0167,
+    "collision_rate": 0.55,
+    "episodes": 60,
+    "score": -0.5333
+   },
+   "n_completed": 5,
+   "n_reached": 0
+  },
+  {
+   "rank": 4,
+   "policy_id": "P-static-b",
+   "p_reach": 0.0909,
+   "p_basis": "0/9 applicable trials reached threshold",
+   "validation": {
+    "evaluation_id": "eval-20261015040917-9c0df8",
+    "success_rate": 0.3667,
+    "collision_rate": 0.4833,
+    "episodes": 60,
+    "score": -0.1166
+   },
+   "n_completed": 9,
+   "n_reached": 0
+  }
+ ],
+ "scratch_option": {
+  "p_reach": 0.25,
+  "trials": [
+   {
+    "trial_id": "trial-exp1-scratch-s601",
+    "status": "completed",
+    "reached": false,
+    "steps_to_threshold": null,
+    "consumed": 151552,
+    "seed": 601,
+    "hypothetical": false
+   },
+   {
+    "trial_id": "trial-exp1-scratch-s602",
+    "status": "completed",
+    "reached": false,
+    "steps_to_threshold": null,
+    "consumed": 151552,
+    "seed": 602,
+    "hypothetical": false
+   },
+   {
+    "trial_id": "trial-exp1-scratch-s603",
+    "status": "completed",
+    "reached": true,
+    "steps_to_threshold": 75000,
+    "consumed": 151552,
+    "seed": 603,
+    "hypothetical": false
+   },
+   {
+    "trial_id": "trial-exp2-scratch-s701",
+    "status": "completed",
+    "reached": false,
+    "steps_to_threshold": null,
+    "consumed": 151552,
+    "seed": 701,
+    "hypothetical": false
+   },
+   {
+    "trial_id": "trial-exp2-scratch-s702",
+    "status": "completed",
+    "reached": false,
+    "steps_to_threshold": null,
+    "consumed": 151552,
+    "seed": 702,
+    "hypothetical": false
+   },
+   {
+    "trial_id": "trial-exp2-scratch-s703",
+    "status": "completed",
+    "reached": false,
+    "steps_to_threshold": null,
+    "consumed": 151552,
+    "seed": 703,
+    "hypothetical": false
+   }
+  ],
+  "n_completed": 6,
+  "n_reached": 1,
+  "p_basis": "1/6 applicable scratch trials reached threshold",
+  "trial_child_score": 0.5695,
+  "n_trial_child_scores": 6,
+  "option_rank": 1
+ },
+ "runs": {
+  "null": [
+   {
+    "parent": null,
+    "seed": 801,
+    "child": "scratch~x3-s801",
+    "schedule": [
+     {
+      "steps": 37504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.5667,
+      "collision_rate": 0.2333,
+      "timeout_rate": 0.2,
+      "mean_success_steps": 174.7,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 5,
+       "mover": 9
+      }
+     },
+     {
+      "steps": 75000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.7333,
+      "collision_rate": 0.1667,
+      "timeout_rate": 0.1,
+      "mean_success_steps": 150.4,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 5,
+       "mover": 5
+      }
+     },
+     {
+      "steps": 112504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.7,
+      "collision_rate": 0.3,
+      "timeout_rate": 0.0,
+      "mean_success_steps": 133.2,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 6,
+       "mover": 12
+      }
+     },
+     {
+      "steps": 150000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.65,
+      "collision_rate": 0.2333,
+      "timeout_rate": 0.1167,
+      "mean_success_steps": 138.7,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 4,
+       "mover": 10
+      }
+     },
+     {
+      "steps": 151552,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.65,
+      "collision_rate": 0.2667,
+      "timeout_rate": 0.0833,
+      "mean_success_steps": 134.1,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 3,
+       "mover": 13
+      }
+     }
+    ],
+    "steps_to_threshold": null,
+    "reached": false,
+    "consumed": 151552,
+    "wall_s": 67.9,
+    "final_val": {
+     "episodes": 60,
+     "success_rate": 0.65,
+     "collision_rate": 0.2667,
+     "timeout_rate": 0.0833,
+     "mean_success_steps": 134.1,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 3,
+      "mover": 13
+     }
+    },
+    "final_val_id": "eval-20261015044941-af7e46",
+    "trial_id": "trial-exp3-scratch-s801",
+    "run_id": "run-20261015044833-eec3d5",
+    "final_test": {
+     "evaluation_id": "eval-20261015045144-7bce4d",
+     "episodes": 100,
+     "success_rate": 0.65,
+     "collision_rate": 0.13,
+     "timeout_rate": 0.22,
+     "mean_success_steps": 133.1,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 3,
+      "mover": 10
+     }
+    }
+   },
+   {
+    "parent": null,
+    "seed": 802,
+    "child": "scratch~x3-s802",
+    "schedule": [
+     {
+      "steps": 37504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.6833,
+      "collision_rate": 0.3167,
+      "timeout_rate": 0.0,
+      "mean_success_steps": 153.0,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 4,
+       "mover": 15
+      }
+     },
+     {
+      "steps": 75000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.6,
+      "collision_rate": 0.3333,
+      "timeout_rate": 0.0667,
+      "mean_success_steps": 135.8,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 4,
+       "mover": 16
+      }
+     },
+     {
+      "steps": 112504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.45,
+      "collision_rate": 0.2667,
+      "timeout_rate": 0.2833,
+      "mean_success_steps": 129.9,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 5,
+       "mover": 11
+      }
+     },
+     {
+      "steps": 150000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.7167,
+      "collision_rate": 0.1833,
+      "timeout_rate": 0.1,
+      "mean_success_steps": 117.4,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 3,
+       "mover": 8
+      }
+     },
+     {
+      "steps": 151552,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.6833,
+      "collision_rate": 0.2,
+      "timeout_rate": 0.1167,
+      "mean_success_steps": 116.7,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 4,
+       "mover": 8
+      }
+     }
+    ],
+    "steps_to_threshold": null,
+    "reached": false,
+    "consumed": 151552,
+    "wall_s": 65.2,
+    "final_val": {
+     "episodes": 60,
+     "success_rate": 0.6833,
+     "collision_rate": 0.2,
+     "timeout_rate": 0.1167,
+     "mean_success_steps": 116.7,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 4,
+      "mover": 8
+     }
+    },
+    "final_val_id": "eval-20261015044939-6578c6",
+    "trial_id": "trial-exp3-scratch-s802",
+    "run_id": "run-20261015044833-781046",
+    "final_test": {
+     "evaluation_id": "eval-20261015045142-639b14",
+     "episodes": 100,
+     "success_rate": 0.68,
+     "collision_rate": 0.25,
+     "timeout_rate": 0.07,
+     "mean_success_steps": 114.5,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 3,
+      "mover": 22
+     }
+    }
+   },
+   {
+    "parent": null,
+    "seed": 803,
+    "child": "scratch~x3-s803",
+    "schedule": [
+     {
+      "steps": 37504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4833,
+      "collision_rate": 0.5167,
+      "timeout_rate": 0.0,
+      "mean_success_steps": 165.8,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 12,
+       "mover": 19
+      }
+     },
+     {
+      "steps": 75000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.8833,
+      "collision_rate": 0.1,
+      "timeout_rate": 0.0167,
+      "mean_success_steps": 130.8,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 2,
+       "mover": 4
+      }
+     },
+     {
+      "steps": 112504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.7833,
+      "collision_rate": 0.0667,
+      "timeout_rate": 0.15,
+      "mean_success_steps": 114.1,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 1,
+       "mover": 3
+      }
+     },
+     {
+      "steps": 150000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.7833,
+      "collision_rate": 0.1,
+      "timeout_rate": 0.1167,
+      "mean_success_steps": 104.3,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 1,
+       "mover": 5
+      }
+     },
+     {
+      "steps": 151552,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.8,
+      "collision_rate": 0.1,
+      "timeout_rate": 0.1,
+      "mean_success_steps": 105.1,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 0,
+       "mover": 6
+      }
+     }
+    ],
+    "steps_to_threshold": 75000,
+    "reached": true,
+    "consumed": 151552,
+    "wall_s": 63.0,
+    "final_val": {
+     "episodes": 60,
+     "success_rate": 0.8,
+     "collision_rate": 0.1,
+     "timeout_rate": 0.1,
+     "mean_success_steps": 105.1,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 0,
+      "mover": 6
+     }
+    },
+    "final_val_id": "eval-20261015044936-303170",
+    "trial_id": "trial-exp3-scratch-s803",
+    "run_id": "run-20261015044833-0615d8",
+    "final_test": {
+     "evaluation_id": "eval-20261015045142-71c656",
+     "episodes": 100,
+     "success_rate": 0.77,
+     "collision_rate": 0.15,
+     "timeout_rate": 0.08,
+     "mean_success_steps": 107.6,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 2,
+      "mover": 13
+     }
+    }
+   }
+  ],
+  "P-open-a": [
+   {
+    "parent": "P-open-a",
+    "seed": 801,
+    "child": "P-open-a~x3-s801",
+    "schedule": [
+     {
+      "steps": 37504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.0,
+      "collision_rate": 1.0,
+      "timeout_rate": 0.0,
+      "mean_success_steps": null,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 46,
+       "mover": 14
+      }
+     },
+     {
+      "steps": 75000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.0667,
+      "collision_rate": 0.9333,
+      "timeout_rate": 0.0,
+      "mean_success_steps": 83.8,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 41,
+       "mover": 15
+      }
+     },
+     {
+      "steps": 112504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.0833,
+      "collision_rate": 0.9167,
+      "timeout_rate": 0.0,
+      "mean_success_steps": 81.6,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 38,
+       "mover": 17
+      }
+     },
+     {
+      "steps": 150000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.1167,
+      "collision_rate": 0.8667,
+      "timeout_rate": 0.0167,
+      "mean_success_steps": 87.6,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 32,
+       "mover": 20
+      }
+     },
+     {
+      "steps": 151552,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.1167,
+      "collision_rate": 0.8667,
+      "timeout_rate": 0.0167,
+      "mean_success_steps": 82.7,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 33,
+       "mover": 19
+      }
+     }
+    ],
+    "steps_to_threshold": null,
+    "reached": false,
+    "consumed": 151552,
+    "wall_s": 50.8,
+    "final_val": {
+     "episodes": 60,
+     "success_rate": 0.1167,
+     "collision_rate": 0.8667,
+     "timeout_rate": 0.0167,
+     "mean_success_steps": 82.7,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 33,
+      "mover": 19
+     }
+    },
+    "final_val_id": "eval-20261015045027-107d36",
+    "trial_id": "trial-exp3-P-open-a-s801",
+    "run_id": "run-20261015044936-075ad1",
+    "final_test": {
+     "evaluation_id": "eval-20261015045144-2f43d0",
+     "episodes": 100,
+     "success_rate": 0.15,
+     "collision_rate": 0.85,
+     "timeout_rate": 0.0,
+     "mean_success_steps": 91.5,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 63,
+      "mover": 22
+     }
+    }
+   },
+   {
+    "parent": "P-open-a",
+    "seed": 802,
+    "child": "P-open-a~x3-s802",
+    "schedule": [
+     {
+      "steps": 37504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.0333,
+      "collision_rate": 0.9667,
+      "timeout_rate": 0.0,
+      "mean_success_steps": 84.0,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 42,
+       "mover": 16
+      }
+     },
+     {
+      "steps": 75000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.0667,
+      "collision_rate": 0.8833,
+      "timeout_rate": 0.05,
+      "mean_success_steps": 124.0,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 38,
+       "mover": 15
+      }
+     },
+     {
+      "steps": 112504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.0833,
+      "collision_rate": 0.85,
+      "timeout_rate": 0.0667,
+      "mean_success_steps": 115.8,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 37,
+       "mover": 14
+      }
+     },
+     {
+      "steps": 150000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.1167,
+      "collision_rate": 0.8,
+      "timeout_rate": 0.0833,
+      "mean_success_steps": 83.6,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 32,
+       "mover": 16
+      }
+     },
+     {
+      "steps": 151552,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.0833,
+      "collision_rate": 0.8167,
+      "timeout_rate": 0.1,
+      "mean_success_steps": 84.8,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 32,
+       "mover": 17
+      }
+     }
+    ],
+    "steps_to_threshold": null,
+    "reached": false,
+    "consumed": 151552,
+    "wall_s": 53.4,
+    "final_val": {
+     "episodes": 60,
+     "success_rate": 0.0833,
+     "collision_rate": 0.8167,
+     "timeout_rate": 0.1,
+     "mean_success_steps": 84.8,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 32,
+      "mover": 17
+     }
+    },
+    "final_val_id": "eval-20261015045032-114fe3",
+    "trial_id": "trial-exp3-P-open-a-s802",
+    "run_id": "run-20261015044939-c427e7",
+    "final_test": {
+     "evaluation_id": "eval-20261015045145-100175",
+     "episodes": 100,
+     "success_rate": 0.15,
+     "collision_rate": 0.81,
+     "timeout_rate": 0.04,
+     "mean_success_steps": 96.5,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 57,
+      "mover": 24
+     }
+    }
+   },
+   {
+    "parent": "P-open-a",
+    "seed": 803,
+    "child": "P-open-a~x3-s803",
+    "schedule": [
+     {
+      "steps": 37504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.0167,
+      "collision_rate": 0.9833,
+      "timeout_rate": 0.0,
+      "mean_success_steps": 77.0,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 45,
+       "mover": 14
+      }
+     },
+     {
+      "steps": 75000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.0667,
+      "collision_rate": 0.9333,
+      "timeout_rate": 0.0,
+      "mean_success_steps": 76.8,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 40,
+       "mover": 16
+      }
+     },
+     {
+      "steps": 112504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.0833,
+      "collision_rate": 0.9167,
+      "timeout_rate": 0.0,
+      "mean_success_steps": 82.6,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 36,
+       "mover": 19
+      }
+     },
+     {
+      "steps": 150000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.1333,
+      "collision_rate": 0.8667,
+      "timeout_rate": 0.0,
+      "mean_success_steps": 92.9,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 34,
+       "mover": 18
+      }
+     },
+     {
+      "steps": 151552,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.1167,
+      "collision_rate": 0.8833,
+      "timeout_rate": 0.0,
+      "mean_success_steps": 89.4,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 35,
+       "mover": 18
+      }
+     }
+    ],
+    "steps_to_threshold": null,
+    "reached": false,
+    "consumed": 151552,
+    "wall_s": 51.2,
+    "final_val": {
+     "episodes": 60,
+     "success_rate": 0.1167,
+     "collision_rate": 0.8833,
+     "timeout_rate": 0.0,
+     "mean_success_steps": 89.4,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 35,
+      "mover": 18
+     }
+    },
+    "final_val_id": "eval-20261015045033-f85066",
+    "trial_id": "trial-exp3-P-open-a-s803",
+    "run_id": "run-20261015044941-2ef9fd",
+    "final_test": {
+     "evaluation_id": "eval-20261015045145-0fd6f8",
+     "episodes": 100,
+     "success_rate": 0.1,
+     "collision_rate": 0.9,
+     "timeout_rate": 0.0,
+     "mean_success_steps": 97.5,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 65,
+      "mover": 25
+     }
+    }
+   }
+  ],
+  "P-static-b": [
+   {
+    "parent": "P-static-b",
+    "seed": 801,
+    "child": "P-static-b~x3-s801",
+    "schedule": [
+     {
+      "steps": 37504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.3833,
+      "collision_rate": 0.4833,
+      "timeout_rate": 0.1333,
+      "mean_success_steps": 94.5,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 6,
+       "mover": 23
+      }
+     },
+     {
+      "steps": 75000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.3667,
+      "collision_rate": 0.4667,
+      "timeout_rate": 0.1667,
+      "mean_success_steps": 94.0,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 6,
+       "mover": 22
+      }
+     },
+     {
+      "steps": 112504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.3667,
+      "collision_rate": 0.4833,
+      "timeout_rate": 0.15,
+      "mean_success_steps": 101.7,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 7,
+       "mover": 22
+      }
+     },
+     {
+      "steps": 150000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4,
+      "collision_rate": 0.45,
+      "timeout_rate": 0.15,
+      "mean_success_steps": 100.9,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 5,
+       "mover": 22
+      }
+     },
+     {
+      "steps": 151552,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4,
+      "collision_rate": 0.4,
+      "timeout_rate": 0.2,
+      "mean_success_steps": 101.6,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 4,
+       "mover": 20
+      }
+     }
+    ],
+    "steps_to_threshold": null,
+    "reached": false,
+    "consumed": 151552,
+    "wall_s": 62.3,
+    "final_val": {
+     "episodes": 60,
+     "success_rate": 0.4,
+     "collision_rate": 0.4,
+     "timeout_rate": 0.2,
+     "mean_success_steps": 101.6,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 4,
+      "mover": 20
+     }
+    },
+    "final_val_id": "eval-20261015045129-e4f694",
+    "trial_id": "trial-exp3-P-static-b-s801",
+    "run_id": "run-20261015045027-5a3595",
+    "final_test": {
+     "evaluation_id": "eval-20261015045149-a8ad4e",
+     "episodes": 100,
+     "success_rate": 0.39,
+     "collision_rate": 0.48,
+     "timeout_rate": 0.13,
+     "mean_success_steps": 102.4,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 13,
+      "mover": 35
+     }
+    }
+   },
+   {
+    "parent": "P-static-b",
+    "seed": 802,
+    "child": "P-static-b~x3-s802",
+    "schedule": [
+     {
+      "steps": 37504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4,
+      "collision_rate": 0.5167,
+      "timeout_rate": 0.0833,
+      "mean_success_steps": 95.6,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 9,
+       "mover": 22
+      }
+     },
+     {
+      "steps": 75000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4,
+      "collision_rate": 0.5,
+      "timeout_rate": 0.1,
+      "mean_success_steps": 91.5,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 7,
+       "mover": 23
+      }
+     },
+     {
+      "steps": 112504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.45,
+      "collision_rate": 0.4,
+      "timeout_rate": 0.15,
+      "mean_success_steps": 93.2,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 6,
+       "mover": 18
+      }
+     },
+     {
+      "steps": 150000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.45,
+      "collision_rate": 0.4,
+      "timeout_rate": 0.15,
+      "mean_success_steps": 94.5,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 8,
+       "mover": 16
+      }
+     },
+     {
+      "steps": 151552,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4667,
+      "collision_rate": 0.3833,
+      "timeout_rate": 0.15,
+      "mean_success_steps": 93.4,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 8,
+       "mover": 15
+      }
+     }
+    ],
+    "steps_to_threshold": null,
+    "reached": false,
+    "consumed": 151552,
+    "wall_s": 61.5,
+    "final_val": {
+     "episodes": 60,
+     "success_rate": 0.4667,
+     "collision_rate": 0.3833,
+     "timeout_rate": 0.15,
+     "mean_success_steps": 93.4,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 8,
+      "mover": 15
+     }
+    },
+    "final_val_id": "eval-20261015045133-d6d940",
+    "trial_id": "trial-exp3-P-static-b-s802",
+    "run_id": "run-20261015045032-013b37",
+    "final_test": {
+     "evaluation_id": "eval-20261015045150-ae4e43",
+     "episodes": 100,
+     "success_rate": 0.35,
+     "collision_rate": 0.48,
+     "timeout_rate": 0.17,
+     "mean_success_steps": 94.1,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 19,
+      "mover": 29
+     }
+    }
+   },
+   {
+    "parent": "P-static-b",
+    "seed": 803,
+    "child": "P-static-b~x3-s803",
+    "schedule": [
+     {
+      "steps": 37504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.3833,
+      "collision_rate": 0.4167,
+      "timeout_rate": 0.2,
+      "mean_success_steps": 97.7,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 5,
+       "mover": 20
+      }
+     },
+     {
+      "steps": 75000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4167,
+      "collision_rate": 0.3667,
+      "timeout_rate": 0.2167,
+      "mean_success_steps": 105.0,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 2,
+       "mover": 20
+      }
+     },
+     {
+      "steps": 112504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.3167,
+      "collision_rate": 0.4,
+      "timeout_rate": 0.2833,
+      "mean_success_steps": 98.8,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 2,
+       "mover": 22
+      }
+     },
+     {
+      "steps": 150000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.3,
+      "collision_rate": 0.4667,
+      "timeout_rate": 0.2333,
+      "mean_success_steps": 104.5,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 1,
+       "mover": 27
+      }
+     },
+     {
+      "steps": 151552,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.3,
+      "collision_rate": 0.45,
+      "timeout_rate": 0.25,
+      "mean_success_steps": 112.8,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 2,
+       "mover": 25
+      }
+     }
+    ],
+    "steps_to_threshold": null,
+    "reached": false,
+    "consumed": 151552,
+    "wall_s": 62.4,
+    "final_val": {
+     "episodes": 60,
+     "success_rate": 0.3,
+     "collision_rate": 0.45,
+     "timeout_rate": 0.25,
+     "mean_success_steps": 112.8,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 2,
+      "mover": 25
+     }
+    },
+    "final_val_id": "eval-20261015045135-95d9fb",
+    "trial_id": "trial-exp3-P-static-b-s803",
+    "run_id": "run-20261015045033-e1041b",
+    "final_test": {
+     "evaluation_id": "eval-20261015045151-37da35",
+     "episodes": 100,
+     "success_rate": 0.37,
+     "collision_rate": 0.38,
+     "timeout_rate": 0.25,
+     "mean_success_steps": 105.4,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 3,
+      "mover": 35
+     }
+    }
+   }
+  ]
+ },
+ "summary": {
+  "graph": {
+   "parent": null,
+   "n_seeds": 3,
+   "reached": 1,
+   "test_success_mean": 0.7,
+   "test_collision_mean": 0.1767,
+   "per_seed_test_success": {
+    "801": 0.65,
+    "802": 0.68,
+    "803": 0.77
+   }
+  },
+  "graph_v2": {
+   "parent": "P-open-a",
+   "n_seeds": 3,
+   "reached": 0,
+   "test_success_mean": 0.1333,
+   "test_collision_mean": 0.8533,
+   "per_seed_test_success": {
+    "801": 0.15,
+    "802": 0.15,
+    "803": 0.1
+   }
+  },
+  "latest": {
+   "parent": "P-static-b",
+   "n_seeds": 3,
+   "reached": 0,
+   "test_success_mean": 0.37,
+   "test_collision_mean": 0.4467,
+   "per_seed_test_success": {
+    "801": 0.39,
+    "802": 0.35,
+    "803": 0.37
+   }
+  },
+  "best_val": {
+   "parent": "P-static-b",
+   "n_seeds": 3,
+   "reached": 0,
+   "test_success_mean": 0.37,
+   "test_collision_mean": 0.4467,
+   "per_seed_test_success": {
+    "801": 0.39,
+    "802": 0.35,
+    "803": 0.37
+   }
+  },
+  "scratch": {
+   "parent": null,
+   "n_seeds": 3,
+   "reached": 1,
+   "test_success_mean": 0.7,
+   "test_collision_mean": 0.1767,
+   "per_seed_test_success": {
+    "801": 0.65,
+    "802": 0.68,
+    "803": 0.77
+   }
+  }
+ },
+ "costs": {
+  "steps": 1363968,
+  "train_wall_s": 181.6
+ },
+ "completed_at": "2026-10-15T04:51:51+0000"
+}

@@ -149,6 +149,6 @@ SUITES = {
 
 # A final-test suite is spent once an experiment has reported on it. Only that experiment may evaluate on it again
 # (to reproduce its own numbers); any changed method needs a fresh suite.
-SPENT_FINAL_TESTS = {"test-target-v1": "exp-1", "test-target-v2": "exp-2"}
+SPENT_FINAL_TESTS = {"test-target-v1": "exp-1", "test-target-v2": "exp-2", "test-target-v3": "exp-3"}
 
 PROTECTED_ROLES = {"final_test"}

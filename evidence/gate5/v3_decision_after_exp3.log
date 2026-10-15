@@ -1,0 +1,2 @@
+deci-20261015045216-413558 ew-select-3 train_from_scratch
+Selected scratch: p_reach 0.2727 (2/9 applicable scratch trials reached threshold), trial children score 0.5537 (n=9). Beats P-static-a: p_reach 0.1429 (0/5 applicable trials reached threshold), trial children score -0.03 (n=5) on transfer estimate.

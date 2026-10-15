@@ -65,3 +65,21 @@ Tests: `pytest tests` -> 26 passed (adds RO write rejection, reload/normalizatio
 immutability, prerequisite closure, same-shape compatibility rejection, missing-evidence handling,
 failed trial without invented steps plus decision provenance, final-test protection, What-if
 isolation, outage).
+
+## Gate 5 follow-up: rules ew-select-2 and ew-select-3, exp-2 and exp-3 (10:00 to 10:30 IST)
+
+Full write-up: `gate5/RESULTS.md`. Commands, in order:
+
+| Step | Command | Observed |
+|---|---|---|
+| Transfer diagnostics | `scripts/diag_transfer.py` x4 (seed 601, P-open-a) | val success at 150k: parent_norm 0.08, fresh_norm 0.08, reset_value 0.13, reset_std 0.33 (`gate5/diag-*.json`) |
+| ew-select-2 tests | `pytest tests/test_select_v2.py` | scratch trials link FROM_ORIGIN; v1 ignores scratch; What-if scratch flip cannot launch; scratch decision queues a parentless job |
+| Backfill | `scripts/backfill_scratch_trials.py` | 3 Trial records derived from exp-1 scratch runs (1 reached at 75k) |
+| v2 decision | see `gate5/v2_decision_after_backfill.log` | train_from_scratch, p 0.40 vs best parent 0.25 |
+| exp-2 | `scripts/experiment2.py` (frozen in commit 238ddb0) | graph=scratch 0.713 test success vs latest/best_val 0.393; v1 pick P-cross-a 0.093 |
+| v2 after exp-2 | `gate5/v2_decision_after_exp2.log` | tie at p 0.25, reuse kept (P-open-a): flaw |
+| ew-select-3 + test-target-v3 | commit 0622c9a, `pytest -q` | 37 passed |
+| exp-3 | `scripts/experiment3.py` | graph=scratch 0.700 vs latest/best_val 0.370; v2 pick P-open-a 0.133 |
+| v3 after exp-3 | `gate5/v3_decision_after_exp3.log` | train_from_scratch, p 0.27 (2/9) |
+
+Spent final-test suites are refused in code: v1 by exp-1, v2 by exp-2, v3 by exp-3.

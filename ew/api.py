@@ -327,8 +327,26 @@ def agent_trace(tid: str):
 
 @app.get("/api/results")
 def results():
-    p = artifacts.ROOT / "results" / "experiment.json"
-    return json.loads(p.read_text()) if p.exists() else {"status": "not_run"}
+    """Every reported experiment, normalized to arms -> per-seed rows. Final-test numbers appear only here."""
+    out = []
+    for name in ("experiment.json", "experiment2.json", "experiment3.json"):
+        p = artifacts.ROOT / "results" / name
+        if not p.exists():
+            continue
+        r = json.loads(p.read_text())
+        runs = r.get("runs") or r.get("phase_b") or {}
+        arms = []
+        for arm, parent in r["arms"].items():
+            rows = runs.get("null" if parent is None else parent, [])
+            n = len(rows) or 1
+            arms.append({"arm": arm, "parent": parent, "n": len(rows), "reached": sum(bool(x["reached"]) for x in rows),
+                         "test_success": round(sum(x["final_test"]["success_rate"] for x in rows) / n, 4),
+                         "test_collision": round(sum(x["final_test"]["collision_rate"] for x in rows) / n, 4),
+                         "rows": [{k: x[k] for k in ("seed", "reached", "steps_to_threshold", "final_val", "final_test", "wall_s")}
+                                  for x in rows]})
+        out.append({"protocol": r["protocol"], "arms": arms, "costs": r.get("costs", {}),
+                    "graph_decision": r.get("decision_graph"), "graph_explanation": r.get("graph_explanation")})
+    return {"experiments": out} if out else {"status": "not_run"}
 
 
 if WEB.exists():
