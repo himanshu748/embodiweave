@@ -1,0 +1,72 @@
+{
+ "policy": "L-cross",
+ "family": "crossing",
+ "steps": 301056,
+ "wall_s": 93.4,
+ "weight_delta_l2": 9.291033744812012,
+ "artifact_hash": "6eba010a49f43189fbb00cee2f6c553ec768f0eb96b566f431e53161a0fae0d3",
+ "schedule": [
+  {
+   "steps": 60000,
+   "suite_id": "val-crossing-v1",
+   "episodes": 40,
+   "success_rate": 0.825,
+   "collision_rate": 0.175,
+   "timeout_rate": 0.0,
+   "mean_success_steps": 115.5
+  },
+  {
+   "steps": 120000,
+   "suite_id": "val-crossing-v1",
+   "episodes": 40,
+   "success_rate": 0.875,
+   "collision_rate": 0.125,
+   "timeout_rate": 0.0,
+   "mean_success_steps": 99.3
+  },
+  {
+   "steps": 180000,
+   "suite_id": "val-crossing-v1",
+   "episodes": 40,
+   "success_rate": 0.95,
+   "collision_rate": 0.05,
+   "timeout_rate": 0.0,
+   "mean_success_steps": 104.3
+  },
+  {
+   "steps": 240000,
+   "suite_id": "val-crossing-v1",
+   "episodes": 40,
+   "success_rate": 0.9,
+   "collision_rate": 0.1,
+   "timeout_rate": 0.0,
+   "mean_success_steps": 100.3
+  },
+  {
+   "steps": 300000,
+   "suite_id": "val-crossing-v1",
+   "episodes": 40,
+   "success_rate": 0.95,
+   "collision_rate": 0.05,
+   "timeout_rate": 0.0,
+   "mean_success_steps": 98.3
+  },
+  {
+   "steps": 301056,
+   "suite_id": "val-crossing-v1",
+   "episodes": 40,
+   "success_rate": 0.95,
+   "collision_rate": 0.05,
+   "timeout_rate": 0.0,
+   "mean_success_steps": 98.6
+  }
+ ],
+ "reloaded_eval": {
+  "episodes": 40,
+  "success_rate": 0.95,
+  "collision_rate": 0.05,
+  "timeout_rate": 0.0,
+  "mean_success_steps": 98.6
+ },
+ "suite": "val-crossing-v1"
+}

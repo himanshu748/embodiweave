@@ -1,0 +1,31 @@
+
+### decision deci-20261015040905-4a7243 rev=2 action=evaluate_candidates selected=None
+    4 eligible candidate(s) lack a matched val-target-v1 evaluation of their exact artifact: P-open-a, P-static-a, P-cross-a, P-static-b. Evaluate before ranking.
+    rejected P-mirror ['semantic contract mismatch (ew-contract-1m:6fad9cbfe838 vs ew-contract-1:2f013b6f4849; differs in ray_order)']
+   eval P-open-a eval-20261015040906-81b5d2 {'episodes': 60, 'success_rate': 0.0167, 'collision_rate': 0.9833, 'timeout_rate': 0.0, 'mean_success_steps': 83.0, 'collisions_by_object': {'wall': 0, 'static': 51, 'mover': 8}}
+   eval P-static-a eval-20261015040909-861253 {'episodes': 60, 'success_rate': 0.2333, 'collision_rate': 0.65, 'timeout_rate': 0.1167, 'mean_success_steps': 92.0, 'collisions_by_object': {'wall': 0, 'static': 17, 'mover': 22}}
+   eval P-cross-a eval-20261015040914-b5aef7 {'episodes': 60, 'success_rate': 0.0167, 'collision_rate': 0.55, 'timeout_rate': 0.4333, 'mean_success_steps': 247.0, 'collisions_by_object': {'wall': 0, 'static': 26, 'mover': 7}}
+   eval P-static-b eval-20261015040917-9c0df8 {'episodes': 60, 'success_rate': 0.3667, 'collision_rate': 0.4833, 'timeout_rate': 0.15, 'mean_success_steps': 94.2, 'collisions_by_object': {'wall': 0, 'static': 8, 'mover': 21}}
+
+### decision deci-20261015040917-3f3c94 rev=7 action=train_from_parent selected=P-static-b
+    Selected P-static-b: p_reach 0.5 (prior Beta(1,1) (no applicable trials)), matched val-target-v1 success 0.37 / collision 0.48. Same transfer estimate as P-static-a~cross-t1; wins on matched validation (-0.1166 vs -0.1667).
+    rejected P-mirror ['semantic contract mismatch (ew-contract-1m:6fad9cbfe838 vs ew-contract-1:2f013b6f4849; differs in ray_order)']
+    #1 P-static-b             p=0.500 (prior Beta(1,1) (no applicable trials)) val=-0.117 succ=0.37 coll=0.48
+    #2 P-static-a~cross-t1    p=0.500 (prior Beta(1,1) (no applicable trials)) val=-0.167 succ=0.25 coll=0.42
+    #3 P-static-a             p=0.500 (prior Beta(1,1) (no applicable trials)) val=-0.417 succ=0.23 coll=0.65
+    #4 P-cross-a              p=0.500 (prior Beta(1,1) (no applicable trials)) val=-0.533 succ=0.02 coll=0.55
+    #5 P-open-a               p=0.500 (prior Beta(1,1) (no applicable trials)) val=-0.967 succ=0.02 coll=0.98
+
+   trial trial-20261015040948-bb36e2 reached=False steps_to_threshold=None consumed=61440 schedule=[(15000, 0.4333, 0.5167), (30000, 0.45, 0.45), (45000, 0.4833, 0.45), (60000, 0.4833, 0.4333), (61440, 0.5333, 0.4167)]
+
+### decision deci-20261015040948-f54a86 rev=11 action=train_from_parent selected=P-static-b~tgt-s301
+    Selected P-static-b~tgt-s301: p_reach 0.5 (prior Beta(1,1) (no applicable trials)), matched val-target-v1 success 0.53 / collision 0.42. Same transfer estimate as P-static-a~cross-t1; wins on matched validation (0.1166 vs -0.1667).
+    rejected P-mirror ['semantic contract mismatch (ew-contract-1m:6fad9cbfe838 vs ew-contract-1:2f013b6f4849; differs in ray_order)']
+    #1 P-static-b~tgt-s301    p=0.500 (prior Beta(1,1) (no applicable trials)) val=+0.117 succ=0.53 coll=0.42
+    #2 P-static-a~cross-t1    p=0.500 (prior Beta(1,1) (no applicable trials)) val=-0.167 succ=0.25 coll=0.42
+    #3 P-static-a             p=0.500 (prior Beta(1,1) (no applicable trials)) val=-0.417 succ=0.23 coll=0.65
+    #4 P-cross-a              p=0.500 (prior Beta(1,1) (no applicable trials)) val=-0.533 succ=0.02 coll=0.55
+    #5 P-open-a               p=0.500 (prior Beta(1,1) (no applicable trials)) val=-0.967 succ=0.02 coll=0.98
+    #6 P-static-b             p=0.333 (0/1 applicable trials reached threshold) val=-0.117 succ=0.37 coll=0.48
+
+graph revision 12

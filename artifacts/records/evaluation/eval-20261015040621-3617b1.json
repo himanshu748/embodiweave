@@ -1,0 +1,351 @@
+{
+ "artifact_hash": "390485ae8caaba1babb63257a97f8d18fe86d19c1af3266135f36bf2f760cf64",
+ "contract_id": "ew-contract-1:2f013b6f4849",
+ "custom_family": false,
+ "episodes": [
+  {
+   "final_goal_dist": 3.675,
+   "hit": null,
+   "outcome": "timeout",
+   "return": 1.785,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 0.274,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.207,
+   "steps": 78
+  },
+  {
+   "final_goal_dist": 0.292,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.117,
+   "steps": 95
+  },
+  {
+   "final_goal_dist": 6.766,
+   "hit": null,
+   "outcome": "timeout",
+   "return": -6.714,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 3.03,
+   "hit": null,
+   "outcome": "timeout",
+   "return": 2.562,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 8.069,
+   "hit": null,
+   "outcome": "timeout",
+   "return": -0.623,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 5.028,
+   "hit": null,
+   "outcome": "timeout",
+   "return": 0.88,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 5.351,
+   "hit": null,
+   "outcome": "timeout",
+   "return": -0.168,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 0.24,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.775,
+   "steps": 93
+  },
+  {
+   "final_goal_dist": 2.589,
+   "hit": "static",
+   "outcome": "collision",
+   "return": -5.865,
+   "steps": 82
+  },
+  {
+   "final_goal_dist": 0.28,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.866,
+   "steps": 94
+  },
+  {
+   "final_goal_dist": 0.29,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.827,
+   "steps": 103
+  },
+  {
+   "final_goal_dist": 7.59,
+   "hit": "static",
+   "outcome": "collision",
+   "return": -8.841,
+   "steps": 16
+  },
+  {
+   "final_goal_dist": 3.67,
+   "hit": null,
+   "outcome": "timeout",
+   "return": -3.95,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 0.235,
+   "hit": null,
+   "outcome": "success",
+   "return": 15.982,
+   "steps": 112
+  },
+  {
+   "final_goal_dist": 6.463,
+   "hit": "static",
+   "outcome": "collision",
+   "return": -9.362,
+   "steps": 11
+  },
+  {
+   "final_goal_dist": 6.44,
+   "hit": null,
+   "outcome": "timeout",
+   "return": -10.734,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 0.295,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.603,
+   "steps": 86
+  },
+  {
+   "final_goal_dist": 0.298,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.637,
+   "steps": 95
+  },
+  {
+   "final_goal_dist": 4.187,
+   "hit": "static",
+   "outcome": "collision",
+   "return": -6.93,
+   "steps": 115
+  },
+  {
+   "final_goal_dist": 6.531,
+   "hit": null,
+   "outcome": "timeout",
+   "return": -11.173,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 6.451,
+   "hit": null,
+   "outcome": "timeout",
+   "return": -10.79,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 0.231,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.69,
+   "steps": 85
+  },
+  {
+   "final_goal_dist": 7.519,
+   "hit": null,
+   "outcome": "timeout",
+   "return": -0.795,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 6.949,
+   "hit": null,
+   "outcome": "timeout",
+   "return": -9.526,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 6.125,
+   "hit": null,
+   "outcome": "timeout",
+   "return": -7.55,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 7.409,
+   "hit": null,
+   "outcome": "timeout",
+   "return": -6.729,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 0.232,
+   "hit": null,
+   "outcome": "success",
+   "return": 15.988,
+   "steps": 94
+  },
+  {
+   "final_goal_dist": 5.536,
+   "hit": null,
+   "outcome": "timeout",
+   "return": -3.783,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 0.229,
+   "hit": null,
+   "outcome": "success",
+   "return": 15.821,
+   "steps": 102
+  },
+  {
+   "final_goal_dist": 7.875,
+   "hit": null,
+   "outcome": "timeout",
+   "return": 0.071,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 4.304,
+   "hit": "static",
+   "outcome": "collision",
+   "return": -6.563,
+   "steps": 45
+  },
+  {
+   "final_goal_dist": 0.281,
+   "hit": null,
+   "outcome": "success",
+   "return": 15.11,
+   "steps": 109
+  },
+  {
+   "final_goal_dist": 5.581,
+   "hit": "static",
+   "outcome": "collision",
+   "return": -8.816,
+   "steps": 16
+  },
+  {
+   "final_goal_dist": 0.226,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.35,
+   "steps": 104
+  },
+  {
+   "final_goal_dist": 0.294,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.308,
+   "steps": 79
+  },
+  {
+   "final_goal_dist": 6.208,
+   "hit": "static",
+   "outcome": "collision",
+   "return": -9.378,
+   "steps": 17
+  },
+  {
+   "final_goal_dist": 5.338,
+   "hit": null,
+   "outcome": "timeout",
+   "return": -1.423,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 6.544,
+   "hit": null,
+   "outcome": "timeout",
+   "return": 0.247,
+   "steps": 250
+  },
+  {
+   "final_goal_dist": 0.21,
+   "hit": null,
+   "outcome": "success",
+   "return": 19.678,
+   "steps": 115
+  }
+ ],
+ "family_id": "static@7069d847",
+ "id": "eval-20261015040621-3617b1",
+ "kind": "evaluation",
+ "policy_id": "P-static-a",
+ "purpose": "library-history",
+ "recorded_at": "2026-10-15T04:06:21+0000",
+ "seeds": [
+  1100000,
+  1100001,
+  1100002,
+  1100003,
+  1100004,
+  1100005,
+  1100006,
+  1100007,
+  1100008,
+  1100009,
+  1100010,
+  1100011,
+  1100012,
+  1100013,
+  1100014,
+  1100015,
+  1100016,
+  1100017,
+  1100018,
+  1100019,
+  1100020,
+  1100021,
+  1100022,
+  1100023,
+  1100024,
+  1100025,
+  1100026,
+  1100027,
+  1100028,
+  1100029,
+  1100030,
+  1100031,
+  1100032,
+  1100033,
+  1100034,
+  1100035,
+  1100036,
+  1100037,
+  1100038,
+  1100039
+ ],
+ "suite_id": "val-static-v1",
+ "suite_role": "validation",
+ "suite_version": "1",
+ "summary": {
+  "collision_rate": 0.175,
+  "collisions_by_object": {
+   "mover": 0,
+   "static": 7,
+   "wall": 0
+  },
+  "episodes": 40,
+  "mean_success_steps": 96.3,
+  "success_rate": 0.375,
+  "timeout_rate": 0.45
+ },
+ "wall_s": 2.81
+}

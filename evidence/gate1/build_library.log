@@ -1,0 +1,99 @@
+graph revision after init: 1
+P-open-a 120832 28.13 b004eccbb87e
+P-static-a 151552 42.07 390485ae8caa
+P-cross-a 151552 40.97 e539fe5a99c0
+P-mirror 200704 53.89 8eeaf088795c
+P-static-b 100352 27.51 eef89a9a248e
+P-open-a val-open-v1 {'episodes': 40, 'success_rate': 1.0, 'collision_rate': 0.0, 'timeout_rate': 0.0, 'mean_success_steps': 78.7, 'collisions_by_object': {'wall': 0, 'static': 0, 'mover': 0}}
+P-static-a val-open-v1 {'episodes': 40, 'success_rate': 1.0, 'collision_rate': 0.0, 'timeout_rate': 0.0, 'mean_success_steps': 79.7, 'collisions_by_object': {'wall': 0, 'static': 0, 'mover': 0}}
+P-static-a val-static-v1 {'episodes': 40, 'success_rate': 0.375, 'collision_rate': 0.175, 'timeout_rate': 0.45, 'mean_success_steps': 96.3, 'collisions_by_object': {'wall': 0, 'static': 7, 'mover': 0}}
+P-cross-a val-open-v1 {'episodes': 40, 'success_rate': 1.0, 'collision_rate': 0.0, 'timeout_rate': 0.0, 'mean_success_steps': 79.6, 'collisions_by_object': {'wall': 0, 'static': 0, 'mover': 0}}
+P-cross-a val-crossing-v1 {'episodes': 40, 'success_rate': 0.775, 'collision_rate': 0.225, 'timeout_rate': 0.0, 'mean_success_steps': 91.1, 'collisions_by_object': {'wall': 0, 'static': 0, 'mover': 9}}
+P-mirror val-crossing-v1 {'episodes': 40, 'success_rate': 0.95, 'collision_rate': 0.05, 'timeout_rate': 0.0, 'mean_success_steps': 101.3, 'collisions_by_object': {'wall': 0, 'static': 0, 'mover': 2}}
+P-static-b val-open-v1 {'episodes': 40, 'success_rate': 1.0, 'collision_rate': 0.0, 'timeout_rate': 0.0, 'mean_success_steps': 79.0, 'collisions_by_object': {'wall': 0, 'static': 0, 'mover': 0}}
+P-static-b val-static-v1 {'episodes': 40, 'success_rate': 0.425, 'collision_rate': 0.175, 'timeout_rate': 0.4, 'mean_success_steps': 90.9, 'collisions_by_object': {'wall': 0, 'static': 7, 'mover': 0}}
+trial trial-20261015040704-e327c6 False None
+{
+ "library_cost": [
+  {
+   "policy": "P-open-a",
+   "steps": 120832,
+   "wall_s": 28.13
+  },
+  {
+   "policy": "P-static-a",
+   "steps": 151552,
+   "wall_s": 42.07
+  },
+  {
+   "policy": "P-cross-a",
+   "steps": 151552,
+   "wall_s": 40.97
+  },
+  {
+   "policy": "P-mirror",
+   "steps": 200704,
+   "wall_s": 53.89
+  },
+  {
+   "policy": "P-static-b",
+   "steps": 100352,
+   "wall_s": 27.51
+  },
+  {
+   "eval": "eval-20261015040617-a3bd26",
+   "policy": "P-open-a",
+   "suite": "val-open-v1",
+   "wall_s": 1.2
+  },
+  {
+   "eval": "eval-20261015040618-bc9c19",
+   "policy": "P-static-a",
+   "suite": "val-open-v1",
+   "wall_s": 1.11
+  },
+  {
+   "eval": "eval-20261015040621-3617b1",
+   "policy": "P-static-a",
+   "suite": "val-static-v1",
+   "wall_s": 2.81
+  },
+  {
+   "eval": "eval-20261015040622-1687d9",
+   "policy": "P-cross-a",
+   "suite": "val-open-v1",
+   "wall_s": 1.13
+  },
+  {
+   "eval": "eval-20261015040623-ad0bd3",
+   "policy": "P-cross-a",
+   "suite": "val-crossing-v1",
+   "wall_s": 1.41
+  },
+  {
+   "eval": "eval-20261015040625-1d9597",
+   "policy": "P-mirror",
+   "suite": "val-crossing-v1",
+   "wall_s": 1.83
+  },
+  {
+   "eval": "eval-20261015040626-4c64f8",
+   "policy": "P-static-b",
+   "suite": "val-open-v1",
+   "wall_s": 1.28
+  },
+  {
+   "eval": "eval-20261015040629-a5924e",
+   "policy": "P-static-b",
+   "suite": "val-static-v1",
+   "wall_s": 2.63
+  },
+  {
+   "trial": "trial-20261015040704-e327c6",
+   "steps": 61440,
+   "wall_s": 30.95
+  }
+ ],
+ "total_wall_s": 241.4,
+ "graph_revision": 1
+}

@@ -1,0 +1,72 @@
+{
+ "policy": "L-open",
+ "family": "open",
+ "steps": 200704,
+ "wall_s": 52.5,
+ "weight_delta_l2": 7.126671314239502,
+ "artifact_hash": "bbd41008da8db0edb795acb49d4d220509be52bebf0efa048886ccc08d090e07",
+ "schedule": [
+  {
+   "steps": 40000,
+   "suite_id": "val-open-v1",
+   "episodes": 40,
+   "success_rate": 1.0,
+   "collision_rate": 0.0,
+   "timeout_rate": 0.0,
+   "mean_success_steps": 95.3
+  },
+  {
+   "steps": 80000,
+   "suite_id": "val-open-v1",
+   "episodes": 40,
+   "success_rate": 1.0,
+   "collision_rate": 0.0,
+   "timeout_rate": 0.0,
+   "mean_success_steps": 80.0
+  },
+  {
+   "steps": 120000,
+   "suite_id": "val-open-v1",
+   "episodes": 40,
+   "success_rate": 1.0,
+   "collision_rate": 0.0,
+   "timeout_rate": 0.0,
+   "mean_success_steps": 79.3
+  },
+  {
+   "steps": 160000,
+   "suite_id": "val-open-v1",
+   "episodes": 40,
+   "success_rate": 1.0,
+   "collision_rate": 0.0,
+   "timeout_rate": 0.0,
+   "mean_success_steps": 79.1
+  },
+  {
+   "steps": 200000,
+   "suite_id": "val-open-v1",
+   "episodes": 40,
+   "success_rate": 1.0,
+   "collision_rate": 0.0,
+   "timeout_rate": 0.0,
+   "mean_success_steps": 79.1
+  },
+  {
+   "steps": 200704,
+   "suite_id": "val-open-v1",
+   "episodes": 40,
+   "success_rate": 1.0,
+   "collision_rate": 0.0,
+   "timeout_rate": 0.0,
+   "mean_success_steps": 79.0
+  }
+ ],
+ "reloaded_eval": {
+  "episodes": 40,
+  "success_rate": 1.0,
+  "collision_rate": 0.0,
+  "timeout_rate": 0.0,
+  "mean_success_steps": 79.0
+ },
+ "suite": "val-open-v1"
+}

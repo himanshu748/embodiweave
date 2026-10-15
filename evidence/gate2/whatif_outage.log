@@ -1,0 +1,18 @@
+PRODUCTION (library catalog) deci-20261015041048-933bc9 rev 12 -> P-static-a | Selected P-static-a: p_reach 0.5 (prior Beta(1,1) (no applicable trials)), matched val-target-v1 success 0.23 / collision 0.65. Same transfer estimate as P-cross-a; wins on matched validation (-0.4167 vs -0.5333).
+   #1 P-static-a   p=0.500 prior Beta(1,1) (no applicable trials) val=-0.417
+   #2 P-cross-a    p=0.500 prior Beta(1,1) (no applicable trials) val=-0.533
+   #3 P-open-a     p=0.500 prior Beta(1,1) (no applicable trials) val=-0.967
+   #4 P-static-b   p=0.333 0/1 applicable trials reached threshold val=-0.117
+WHAT-IF ew_whatif_3ec5f4f9 deci-20261015041048-320dd3 rev 15 -> P-cross-a | Selected P-cross-a: p_reach 0.75 (2/2 applicable trials reached threshold (WHAT-IF: 2 hypothetical, not measured)), matched val-target-v1 success 0.02 / collision 0.55. Beats P-static-a on transfer evidence (0.5 vs 0.75).
+   #1 P-cross-a    p=0.750 2/2 applicable trials reached threshold (WHAT-IF: 2 hypothetical, not measured) val=-0.533
+   #2 P-static-a   p=0.500 prior Beta(1,1) (no applicable trials) val=-0.417
+   #3 P-open-a     p=0.500 prior Beta(1,1) (no applicable trials) val=-0.967
+   #4 P-static-b   p=0.333 0/1 applicable trials reached threshold val=-0.117
+WHAT-IF compat ew_whatif_178f3c6e -> P-cross-a rejected: [('P-static-a', 'semantic contract mismatch (ew-contract-1m:6fad9cbfe838 vs e'), ('P-mirror', 'semantic contract mismatch (ew-contract-1m:6fad9cbfe838 vs e'), ('P-static-a~cross-t1', 'outside requested catalog (run kind transfer_measurement)'), ('P-static-b~tgt-s301', 'outside requested catalog (run kind transfer_trial)')]
+production fingerprint unchanged: True 13 13
+write to production refused: What-if interventions are only allowed on isolated ew_whatif_* copies
+
+OUTAGE TEST: stopping FalkorDB container
+decision stopped explicitly after 0.00s: FalkorDB unreachable at localhost:6379: ConnectionError
+recorded evidence still readable offline (Recorded mode): 6 decision records
+graph back, revision 13

@@ -1,0 +1,18 @@
+{
+  "env_steps_per_s_open": 13742,
+  "env_steps_per_s_static_crossing": 8414,
+  "ppo_steps": 20480,
+  "ppo_wall_s": 6.07,
+  "ppo_steps_per_s": 3372,
+  "weight_delta_l2": 2.6838948726654053,
+  "runtime": {
+    "python": "3.13.16",
+    "numpy": "2.5.4",
+    "torch": "2.14.1+cu130",
+    "gymnasium": "1.4.0",
+    "stable_baselines3": "2.9.0",
+    "dynamics": "ew-dyn-1",
+    "reward": "ew-reward-1",
+    "machine": "x86_64"
+  }
+}

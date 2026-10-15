@@ -1,0 +1,67 @@
+# Gate evidence log
+
+All commands ran in the Claude Code cloud container described in `gate0/readiness.md`
+(x86_64, 4 CPU, 15.7 GiB, no GPU). Nothing here ran on the user's Mac.
+
+## Gate 1: environment and reloadable PPO (2026-10-15, 09:25 to 09:37 IST)
+
+Frozen contract `ew-contract-1:2f013b6f4849` (full dump: `gate1/frozen_contract.json`):
+unicycle robot r=0.20 m, v in [0, 1.0] m/s, w in [-2, 2] rad/s, dt 0.1 s, no action repeat.
+Frame = [goal_dist/10, cos bearing, sin bearing, prev v/vmax, prev w/wmax, 12 free ranges/4 m
+(CCW from heading)] = 17 features; history 3 frames newest first = 51-dim observation; history
+reset fills all slots with the episode's first frame. Actions [a_v, a_w] clipped to [-1, 1],
+v = (a_v+1)/2*vmax, w = a_w*wmax. VecNormalize(obs+reward, clip 10) saved per checkpoint.
+Reward `ew-reward-1`: progress 1.0/m, time -0.005/step, proximity up to -0.05 inside 0.4 m,
+success +10 (goal < 0.3 m), collision -10; 250-step limit.
+
+| Check | Command | Observed |
+|---|---|---|
+| Env tests (checker x4 families, seeding, motion, collisions, timeout, bounce, ray semantics, history reset, replay) | `pytest tests/test_env.py` | 16 passed |
+| Throughput | `scripts/throughput.py` | env 13.7k steps/s (open), 8.4k (static_crossing); PPO 3,372 steps/s single process |
+| Learnability (scratch PPO, then reload from disk and evaluate) | `scripts/learnability.py` x4 in parallel | open 1.00 success @200k; static 0.875 @300k; crossing 0.95 @300k; static_crossing 0.93 @400k (60 val episodes) |
+| Reload consistency | final in-memory validation vs reloaded artifact | identical summaries (e.g. L-target 0.9333 / 0.05 both) |
+
+Learnability decision: all four families are learnable on this host. Static_crossing from scratch
+needs about 160k to 240k steps to pass 0.85 success, so a 60k adaptation budget is too small to be
+informative (no parent reached threshold at 60k). The Gate 5 adaptation budget is set to 150k.
+
+Checkpoint library (`scripts/build_library.py`, real PPO, library cost ~4.5 min wall):
+
+| Policy | Origin | Trained on | Steps | Contract |
+|---|---|---|---|---|
+| P-open-a | scratch | open | 120,832 | v1 |
+| P-static-a | P-open-a | static | 151,552 | v1 |
+| P-cross-a | P-open-a | crossing | 151,552 | v1 |
+| P-mirror | scratch | crossing | 200,704 | mirrored rays (same 51-dim shape) |
+| P-static-b | P-static-a | static, 4 obstacles | 100,352 | v1 (latest library checkpoint) |
+| P-static-a~cross-t1 | P-static-a | crossing (prior transfer measurement) | 61,440 | v1 |
+
+## Gate 2: FalkorDB-backed selection (09:37 to 09:41 IST)
+
+Pinned `falkordb/falkordb@sha256:107455e8...` (module 60002). Client falkordb 1.8.0.
+Selection rule `ew-select-1` frozen in `ew/select.py` docstring before any benchmark.
+
+Real decision sequence (`scripts/gate2_demo.py --trial 301`, log `gate2/decisions.log`):
+1. D1: `evaluate_candidates`. 4 eligible checkpoints lacked a matched val-target-v1 evaluation;
+   P-mirror rejected for a semantic contract mismatch (ray_order) despite identical shape.
+2. Matched evaluations (60 episodes each, exact hashes): P-static-b 0.37 success / 0.48 collision
+   (21 of 29 collisions with the mover), P-static-a 0.23/0.65, P-cross-a 0.02/0.55 (mostly timeouts
+   and static hits), P-open-a 0.02/0.98. The deployed policy fails the target mission.
+3. D2 selected P-static-b (all p_reach at the 0.5 prior, best matched validation).
+4. Decision-launched trial from P-static-b, 60k budget, seed 301: threshold NOT reached within
+   budget (schedule 0.43, 0.45, 0.48, 0.48, final 0.53 success). steps_to_threshold recorded as null.
+5. D3 (and the library-catalog decision in `gate2/whatif_outage.log`): P-static-b drops to p_reach
+   0.333 and last place; selection changes to P-static-a. This change came from measured evidence.
+
+What-if (`gate2/whatif_outage.log`): GRAPH.COPY to `ew_whatif_*`; two hypothetical successful trials
+for P-cross-a flip the choice to P-cross-a with the basis labelled "WHAT-IF: 2 hypothetical, not
+measured". A hypothetical contract change rejects P-static-a. Production fingerprint (revision,
+label counts, trials, contracts) identical before and after; writes to the production graph refused.
+
+Outage: `docker stop falkordb` -> the decision raises GraphUnavailable immediately, no fallback;
+records stay readable on disk; after restart the graph is back at the same revision.
+
+Tests: `pytest tests` -> 26 passed (adds RO write rejection, reload/normalization, parent
+immutability, prerequisite closure, same-shape compatibility rejection, missing-evidence handling,
+failed trial without invented steps plus decision provenance, final-test protection, What-if
+isolation, outage).

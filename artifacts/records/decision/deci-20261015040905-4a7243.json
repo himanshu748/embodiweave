@@ -1,0 +1,523 @@
+{
+ "action": "evaluate_candidates",
+ "agent_trace_id": null,
+ "explanation": "4 eligible candidate(s) lack a matched val-target-v1 evaluation of their exact artifact: P-open-a, P-static-a, P-cross-a, P-static-b. Evaluate before ranking.",
+ "graph": "ew",
+ "graph_revision": 2,
+ "id": "deci-20261015040905-4a7243",
+ "kind": "decision",
+ "lineage": {
+  "P-cross-a": [
+   {
+    "depth": 0,
+    "policy": "P-cross-a",
+    "steps": 151552,
+    "trained_on": "crossing"
+   },
+   {
+    "depth": 1,
+    "policy": "P-open-a",
+    "steps": 120832,
+    "trained_on": "open"
+   }
+  ],
+  "P-open-a": [
+   {
+    "depth": 0,
+    "policy": "P-open-a",
+    "steps": 120832,
+    "trained_on": "open"
+   }
+  ],
+  "P-static-a": [
+   {
+    "depth": 0,
+    "policy": "P-static-a",
+    "steps": 151552,
+    "trained_on": "static"
+   },
+   {
+    "depth": 1,
+    "policy": "P-open-a",
+    "steps": 120832,
+    "trained_on": "open"
+   }
+  ],
+  "P-static-a~cross-t1": [
+   {
+    "depth": 0,
+    "policy": "P-static-a~cross-t1",
+    "steps": 61440,
+    "trained_on": "crossing"
+   },
+   {
+    "depth": 1,
+    "policy": "P-static-a",
+    "steps": 151552,
+    "trained_on": "static"
+   },
+   {
+    "depth": 2,
+    "policy": "P-open-a",
+    "steps": 120832,
+    "trained_on": "open"
+   }
+  ],
+  "P-static-b": [
+   {
+    "depth": 0,
+    "policy": "P-static-b",
+    "steps": 100352,
+    "trained_on": "static+custom"
+   },
+   {
+    "depth": 1,
+    "policy": "P-static-a",
+    "steps": 151552,
+    "trained_on": "static"
+   },
+   {
+    "depth": 2,
+    "policy": "P-open-a",
+    "steps": 120832,
+    "trained_on": "open"
+   }
+  ]
+ },
+ "mode": "deterministic",
+ "needs_evaluation": [
+  "P-open-a",
+  "P-static-a",
+  "P-cross-a",
+  "P-static-b"
+ ],
+ "queries": [
+  {
+   "cypher": "MATCH (m:Mission {id:$mission})-[:REQUIRES*1..6]->(c:Competency)\nOPTIONAL MATCH (s:Suite)-[:EVALUATES]->(c) WHERE s.role = 'validation'\nRETURN DISTINCT c.id AS competency, s.id AS suite_id\nORDER BY competency",
+   "graph": "ew",
+   "graph_revision": 2,
+   "header": [
+    "competency",
+    "suite_id"
+   ],
+   "ms": 5.92,
+   "params": {
+    "mission": "static_crossing"
+   },
+   "record_ids": [
+    "avoid_static",
+    "reach_goal",
+    "static_crossing_mission",
+    "val-crossing-v1",
+    "val-open-v1",
+    "val-static-v1",
+    "val-target-v1",
+    "yield_dynamic"
+   ],
+   "rows": [
+    [
+     "avoid_static",
+     "val-static-v1"
+    ],
+    [
+     "reach_goal",
+     "val-open-v1"
+    ],
+    [
+     "static_crossing_mission",
+     "val-target-v1"
+    ],
+    [
+     "yield_dynamic",
+     "val-crossing-v1"
+    ]
+   ],
+   "template": "mission_requirements"
+  },
+  {
+   "cypher": "MATCH (tc:Contract {id:$contract})-[:FOR_ROBOT]->(tr:Robot {id:$robot})\nMATCH (p:Policy)-[:USES_CONTRACT]->(pc:Contract)-[:FOR_ROBOT]->(pr:Robot)\nOPTIONAL MATCH (run:Run)-[:PRODUCED]->(p)\nRETURN p.id AS policy_id, p.artifact_hash AS artifact_hash, p.status AS status, p.created_at AS created_at,\n       run.kind AS run_kind, pc.id AS contract_id, pr.id AS robot_id,\n       pc.id = tc.id AS contract_match, pr.id = tr.id AS robot_match,\n       [k IN ['ray_order','n_rays','history','history_reset','dt_s','action_map','normalization'] WHERE pc[k] <> tc[k]] AS differing_fields\nORDER BY created_at\nLIMIT 200",
+   "graph": "ew",
+   "graph_revision": 2,
+   "header": [
+    "policy_id",
+    "artifact_hash",
+    "status",
+    "created_at",
+    "run_kind",
+    "contract_id",
+    "robot_id",
+    "contract_match",
+    "robot_match",
+    "differing_fields"
+   ],
+   "ms": 0.96,
+   "params": {
+    "contract": "ew-contract-1:2f013b6f4849",
+    "robot": "ew-unicycle-r20"
+   },
+   "record_ids": [
+    "P-cross-a",
+    "P-mirror",
+    "P-open-a",
+    "P-static-a",
+    "P-static-a~cross-t1",
+    "P-static-b"
+   ],
+   "rows": [
+    [
+     "P-open-a",
+     "b004eccbb87e06576657e2c2816e422b07e838b43b0d736b6a86482282a5787a",
+     "completed",
+     "2026-10-15T04:03:31+0000",
+     "library",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-static-a",
+     "390485ae8caaba1babb63257a97f8d18fe86d19c1af3266135f36bf2f760cf64",
+     "completed",
+     "2026-10-15T04:04:13+0000",
+     "library",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-cross-a",
+     "e539fe5a99c0284b4d5e076743123dca96cb44340b3d613b2fd95bbd0ae7f1c1",
+     "completed",
+     "2026-10-15T04:04:54+0000",
+     "library",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-mirror",
+     "8eeaf088795c8917a9921b64079e5df7a01f50f2027d176736c3a0d80e1b78aa",
+     "completed",
+     "2026-10-15T04:05:48+0000",
+     "library",
+     "ew-contract-1m:6fad9cbfe838",
+     "ew-unicycle-r20",
+     false,
+     true,
+     [
+      "ray_order"
+     ]
+    ],
+    [
+     "P-static-b",
+     "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+     "completed",
+     "2026-10-15T04:06:15+0000",
+     "library",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-static-a~cross-t1",
+     "d6dfd7e267a0bbe9935eb57d02e9513086e673f9301818b8fd0e8f0c08262926",
+     "completed",
+     "2026-10-15T04:07:00+0000",
+     "transfer_measurement",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ]
+   ],
+   "template": "candidate_eligibility"
+  },
+  {
+   "cypher": "UNWIND $ids AS pid\nMATCH (p:Policy {id:pid})\nMATCH path = (p)-[:DERIVED_FROM*0..8]->(a:Policy)\nOPTIONAL MATCH (run:Run)-[:PRODUCED]->(a)\nOPTIONAL MATCH (run)-[:TRAINED_ON]->(f:Family)\nRETURN pid AS policy_id, length(path) AS depth, a.id AS ancestor_id, a.artifact_hash AS ancestor_hash,\n       run.id AS run_id, run.kind AS run_kind, f.name AS trained_on, run.consumed AS steps\nORDER BY policy_id, depth",
+   "graph": "ew",
+   "graph_revision": 2,
+   "header": [
+    "policy_id",
+    "depth",
+    "ancestor_id",
+    "ancestor_hash",
+    "run_id",
+    "run_kind",
+    "trained_on",
+    "steps"
+   ],
+   "ms": 1.37,
+   "params": {
+    "ids": [
+     "P-open-a",
+     "P-static-a",
+     "P-cross-a",
+     "P-static-b",
+     "P-static-a~cross-t1"
+    ]
+   },
+   "record_ids": [
+    "P-cross-a",
+    "P-open-a",
+    "P-static-a",
+    "P-static-a~cross-t1",
+    "P-static-b",
+    "run-20261015040303-5486a3",
+    "run-20261015040331-2ce08c",
+    "run-20261015040413-21549a",
+    "run-20261015040548-a267ec",
+    "run-20261015040629-05d604"
+   ],
+   "rows": [
+    [
+     "P-cross-a",
+     0,
+     "P-cross-a",
+     "e539fe5a99c0284b4d5e076743123dca96cb44340b3d613b2fd95bbd0ae7f1c1",
+     "run-20261015040413-21549a",
+     "library",
+     "crossing",
+     151552
+    ],
+    [
+     "P-cross-a",
+     1,
+     "P-open-a",
+     "b004eccbb87e06576657e2c2816e422b07e838b43b0d736b6a86482282a5787a",
+     "run-20261015040303-5486a3",
+     "library",
+     "open",
+     120832
+    ],
+    [
+     "P-open-a",
+     0,
+     "P-open-a",
+     "b004eccbb87e06576657e2c2816e422b07e838b43b0d736b6a86482282a5787a",
+     "run-20261015040303-5486a3",
+     "library",
+     "open",
+     120832
+    ],
+    [
+     "P-static-a",
+     0,
+     "P-static-a",
+     "390485ae8caaba1babb63257a97f8d18fe86d19c1af3266135f36bf2f760cf64",
+     "run-20261015040331-2ce08c",
+     "library",
+     "static",
+     151552
+    ],
+    [
+     "P-static-a",
+     1,
+     "P-open-a",
+     "b004eccbb87e06576657e2c2816e422b07e838b43b0d736b6a86482282a5787a",
+     "run-20261015040303-5486a3",
+     "library",
+     "open",
+     120832
+    ],
+    [
+     "P-static-a~cross-t1",
+     0,
+     "P-static-a~cross-t1",
+     "d6dfd7e267a0bbe9935eb57d02e9513086e673f9301818b8fd0e8f0c08262926",
+     "run-20261015040629-05d604",
+     "transfer_measurement",
+     "crossing",
+     61440
+    ],
+    [
+     "P-static-a~cross-t1",
+     1,
+     "P-static-a",
+     "390485ae8caaba1babb63257a97f8d18fe86d19c1af3266135f36bf2f760cf64",
+     "run-20261015040331-2ce08c",
+     "library",
+     "static",
+     151552
+    ],
+    [
+     "P-static-a~cross-t1",
+     2,
+     "P-open-a",
+     "b004eccbb87e06576657e2c2816e422b07e838b43b0d736b6a86482282a5787a",
+     "run-20261015040303-5486a3",
+     "library",
+     "open",
+     120832
+    ],
+    [
+     "P-static-b",
+     0,
+     "P-static-b",
+     "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+     "run-20261015040548-a267ec",
+     "library",
+     "static+custom",
+     100352
+    ],
+    [
+     "P-static-b",
+     1,
+     "P-static-a",
+     "390485ae8caaba1babb63257a97f8d18fe86d19c1af3266135f36bf2f760cf64",
+     "run-20261015040331-2ce08c",
+     "library",
+     "static",
+     151552
+    ],
+    [
+     "P-static-b",
+     2,
+     "P-open-a",
+     "b004eccbb87e06576657e2c2816e422b07e838b43b0d736b6a86482282a5787a",
+     "run-20261015040303-5486a3",
+     "library",
+     "open",
+     120832
+    ]
+   ],
+   "template": "candidate_ancestry"
+  },
+  {
+   "cypher": "MATCH (s:Suite {id:$suite}) WHERE s.role = 'validation'\nUNWIND $ids AS pid\nMATCH (p:Policy {id:pid})\nOPTIONAL MATCH (e:Evaluation)-[:ASSESSED]->(p)\nWHERE (e)-[:ON_SUITE]->(s) AND e.artifact_hash = p.artifact_hash\nRETURN pid AS policy_id, p.artifact_hash AS artifact_hash, e.id AS evaluation_id,\n       e.success_rate AS success_rate, e.collision_rate AS collision_rate, e.timeout_rate AS timeout_rate,\n       e.episodes AS episodes, e.at AS at\nORDER BY policy_id, at",
+   "graph": "ew",
+   "graph_revision": 2,
+   "header": [
+    "policy_id",
+    "artifact_hash",
+    "evaluation_id",
+    "success_rate",
+    "collision_rate",
+    "timeout_rate",
+    "episodes",
+    "at"
+   ],
+   "ms": 1.01,
+   "params": {
+    "ids": [
+     "P-open-a",
+     "P-static-a",
+     "P-cross-a",
+     "P-static-b",
+     "P-static-a~cross-t1"
+    ],
+    "suite": "val-target-v1"
+   },
+   "record_ids": [
+    "P-cross-a",
+    "P-open-a",
+    "P-static-a",
+    "P-static-a~cross-t1",
+    "P-static-b",
+    "eval-20261015040704-64468d"
+   ],
+   "rows": [
+    [
+     "P-cross-a",
+     "e539fe5a99c0284b4d5e076743123dca96cb44340b3d613b2fd95bbd0ae7f1c1",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "P-open-a",
+     "b004eccbb87e06576657e2c2816e422b07e838b43b0d736b6a86482282a5787a",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "P-static-a",
+     "390485ae8caaba1babb63257a97f8d18fe86d19c1af3266135f36bf2f760cf64",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "P-static-a~cross-t1",
+     "d6dfd7e267a0bbe9935eb57d02e9513086e673f9301818b8fd0e8f0c08262926",
+     "eval-20261015040704-64468d",
+     0.25,
+     0.4167,
+     0.3333,
+     60,
+     "2026-10-15T04:07:04+0000"
+    ],
+    [
+     "P-static-b",
+     "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "template": "matched_validation"
+  }
+ ],
+ "ranking": [],
+ "recorded_at": "2026-10-15T04:09:05+0000",
+ "rejected": [
+  {
+   "policy_id": "P-mirror",
+   "reasons": [
+    "semantic contract mismatch (ew-contract-1m:6fad9cbfe838 vs ew-contract-1:2f013b6f4849; differs in ray_order)"
+   ]
+  }
+ ],
+ "request": {
+  "budget": 60000,
+  "contract": "ew-contract-1:2f013b6f4849",
+  "mission": "static_crossing",
+  "recipe": "ppo-r1",
+  "robot": "ew-unicycle-r20",
+  "target_family": "static_crossing",
+  "target_family_id": "static_crossing@43ce902c",
+  "threshold_id": "thr-target-1"
+ },
+ "requirements": [
+  {
+   "competency": "avoid_static",
+   "suite_id": "val-static-v1"
+  },
+  {
+   "competency": "reach_goal",
+   "suite_id": "val-open-v1"
+  },
+  {
+   "competency": "static_crossing_mission",
+   "suite_id": "val-target-v1"
+  },
+  {
+   "competency": "yield_dynamic",
+   "suite_id": "val-crossing-v1"
+  }
+ ],
+ "rule_version": "ew-select-1",
+ "selected": null,
+ "suite_id": "val-target-v1"
+}

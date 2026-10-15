@@ -1,0 +1,72 @@
+{
+ "policy": "L-target",
+ "family": "static_crossing",
+ "steps": 401408,
+ "wall_s": 132.8,
+ "weight_delta_l2": 10.906067848205566,
+ "artifact_hash": "6a13fc038dc2e0bada70ab796ef670800d1de4c9cb40ed314c963a0505a87515",
+ "schedule": [
+  {
+   "steps": 80000,
+   "suite_id": "val-target-v1",
+   "episodes": 60,
+   "success_rate": 0.55,
+   "collision_rate": 0.2167,
+   "timeout_rate": 0.2333,
+   "mean_success_steps": 185.8
+  },
+  {
+   "steps": 160000,
+   "suite_id": "val-target-v1",
+   "episodes": 60,
+   "success_rate": 0.85,
+   "collision_rate": 0.1167,
+   "timeout_rate": 0.0333,
+   "mean_success_steps": 115.5
+  },
+  {
+   "steps": 240000,
+   "suite_id": "val-target-v1",
+   "episodes": 60,
+   "success_rate": 0.95,
+   "collision_rate": 0.0333,
+   "timeout_rate": 0.0167,
+   "mean_success_steps": 109.3
+  },
+  {
+   "steps": 320000,
+   "suite_id": "val-target-v1",
+   "episodes": 60,
+   "success_rate": 0.9667,
+   "collision_rate": 0.0167,
+   "timeout_rate": 0.0167,
+   "mean_success_steps": 105.4
+  },
+  {
+   "steps": 400000,
+   "suite_id": "val-target-v1",
+   "episodes": 60,
+   "success_rate": 0.9333,
+   "collision_rate": 0.05,
+   "timeout_rate": 0.0167,
+   "mean_success_steps": 101.4
+  },
+  {
+   "steps": 401408,
+   "suite_id": "val-target-v1",
+   "episodes": 60,
+   "success_rate": 0.9333,
+   "collision_rate": 0.05,
+   "timeout_rate": 0.0167,
+   "mean_success_steps": 101.7
+  }
+ ],
+ "reloaded_eval": {
+  "episodes": 60,
+  "success_rate": 0.9333,
+  "collision_rate": 0.05,
+  "timeout_rate": 0.0167,
+  "mean_success_steps": 101.7
+ },
+ "suite": "val-target-v1"
+}
