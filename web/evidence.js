@@ -29,7 +29,7 @@ async function recorded() {
       h.textContent=`${run.label} · ${run.verdict === "promoted" ? "Passed validation gate" : "Rejected"}`;
       p.textContent=run.display_explanation;
       region.className="gate-values";region.tabIndex=0;region.setAttribute("role","region");region.setAttribute("aria-label",`${run.label} validation results`);
-      region.append(table(["Suite","Success","Collisions","Gate"],run.checks.map(c=>[names[c.suite_id]||c.suite_id,pct(c.success_rate),pct(c.collision_rate),c.pass?"Pass":"Fail"])));
+      region.append(table(["Suite","Success","Collisions / limit","Gate"],run.checks.map(c=>[names[c.suite_id]||c.suite_id,pct(c.success_rate),`${pct(c.collision_rate)} / ${pct(c.max_collision)}`,c.pass?"Pass":"Fail"])));
       const links=document.createElement("p"), replay=document.createElement("a"), bundle=document.createElement("a");
       replay.href=`studio.html?policy=${encodeURIComponent(run.policy_id)}`;replay.textContent="Replay this checkpoint";
       bundle.href=run.bundle_url;bundle.textContent="Download checksummed evidence";
