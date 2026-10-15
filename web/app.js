@@ -10,8 +10,8 @@ const el = (tag, attrs = {}, ...kids) => {
   for (const k of kids.flat()) if (k !== null && k !== undefined) e.append(k.nodeType ? k : String(k));
   return e;
 };
-const short = (h, n = 10) => (h ? String(h).slice(0, n) : "–");
-const pct = (x) => (x === null || x === undefined ? "–" : (100 * x).toFixed(0) + "%");
+const short = (h, n = 10) => (h ? String(h).slice(0, n) : "n/a");
+const pct = (x) => (x === null || x === undefined ? "n/a" : (100 * x).toFixed(0) + "%");
 
 const S = { status: null, catalog: [], evals: [], decisions: [], decision: null, replays: { A: null, B: null },
             ep: 0, t: 0, playing: false, speed: 1, mode: "Recorded", whatif: null, graphDown: false };
@@ -116,7 +116,7 @@ function renderArena() {
     if (!r) { m.textContent = ""; continue; }
     const e = r.episodes[S.ep];
     m.innerHTML = "";
-    m.append(el("b", {}, r.policy_id), ` · hash ${short(r.artifact_hash)} · ${r.suite_id} · seed ${e ? e.seed : "–"} · `,
+    m.append(el("b", {}, r.policy_id), ` · hash ${short(r.artifact_hash)} · ${r.suite_id} · seed ${e ? e.seed : "n/a"} · `,
       el("span", { class: e && e.outcome === "success" ? "ok" : e && e.outcome === "collision" ? "bad" : "warn" },
         e ? `${e.outcome}${e.hit ? " (" + e.hit + ")" : ""} at t=${e.steps}` : ""),
       el("br"), "evaluation ", el("span", { class: "chip", onclick: () => inspect(r.evaluation_id) }, r.evaluation_id),
@@ -161,7 +161,7 @@ async function loadEvals() {
   S.evals = (await api("/api/evaluations")).filter((e) => e.has_replay);
   for (const side of ["A", "B"]) {
     const sel = $("#eval" + side), cur = sel.value; sel.innerHTML = "";
-    sel.append(el("option", { value: "" }, "— choose evaluation —"));
+    sel.append(el("option", { value: "" }, "Choose an evaluation"));
     for (const e of S.evals.slice().reverse()) sel.append(evalOption(e));
     if (cur) sel.value = cur;
   }
@@ -172,7 +172,7 @@ async function loadDecisions(selectId) {
   S.decisions = await api("/api/decisions");
   const sel = $("#decisionSel"); sel.innerHTML = "";
   for (const d of S.decisions.slice().reverse())
-    sel.append(el("option", { value: d.id }, `${d.recorded_at.slice(11, 19)} ${d.mode} · ${d.action} → ${d.selected || "–"} · rev ${d.graph_revision}`));
+    sel.append(el("option", { value: d.id }, `${d.recorded_at.slice(11, 19)} ${d.mode} · ${d.action} → ${d.selected || "n/a"} · rev ${d.graph_revision}`));
   if (selectId) sel.value = selectId;
   if (sel.value) await selectDecision(sel.value);
   else { $("#decisionHead").innerHTML = "<div class='empty'>No decisions yet. Propose one with the rule.</div>"; }
@@ -223,7 +223,7 @@ function renderDecision() {
   if (d.scratch_option) {
     const so = d.scratch_option;
     const srow = (el("tr", { class: d.action === "train_from_scratch" ? "sel" : "" },
-      el("td", {}, so.option_rank ?? (d.action === "train_from_scratch" ? "1" : "–")),
+      el("td", {}, so.option_rank ?? (d.action === "train_from_scratch" ? "1" : "n/a")),
       el("td", {}, el("span", { class: "chip" }, "Origin: scratch"), el("div", { class: "hint" }, "no parent weights")),
       el("td", {}, el("b", {}, so.p_reach.toFixed(2)), el("div", { class: "hint" }, so.p_basis)),
       el("td", { class: "hint" }, "n/a (no checkpoint yet)"),
@@ -336,7 +336,7 @@ async function renderTrace(id) {
   $("#traceMode").className = "badge small " + (t.mode === "llm-agent" ? "measured" : "authored");
   const ol = $("#trace"); ol.innerHTML = "";
   for (const c of t.server_log) {
-    ol.append(el("li", {}, el("b", {}, c.tool), " ", el("span", { class: "hint" }, `rev ${c.graph_revision ?? "–"} · ${new Date(c.t * 1000).toLocaleTimeString()}`),
+    ol.append(el("li", {}, el("b", {}, c.tool), " ", el("span", { class: "hint" }, `rev ${c.graph_revision ?? "n/a"} · ${new Date(c.t * 1000).toLocaleTimeString()}`),
       c.error ? el("div", { class: "bad" }, c.error) : "",
       el("details", {}, el("summary", {}, "arguments / result"), el("pre", { class: "code" }, JSON.stringify({ args: c.args, result: c.result }, null, 1)))));
   }

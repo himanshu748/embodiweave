@@ -1,19 +1,17 @@
 :root {
-  --bg: #0f1216; --panel: #161b22; --panel2: #1c232c; --line: #2a3340; --text: #e6edf3; --muted: #8b98a8;
-  --accent: #5cc8ff; --ok: #3fb950; --bad: #f85149; --warn: #d29922; --what: #c297ff; --live: #ff7b72;
-  --robot: #5cc8ff; --mover: #ff9f43; --static: #6e7b8b; --goal: #3fb950; --grid: #1f2731;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
-}
-@media (prefers-color-scheme: light) {
-  :root { --bg: #f6f8fa; --panel: #ffffff; --panel2: #f0f3f6; --line: #d0d7de; --text: #1f2328; --muted: #59636e;
-          --grid: #eaeef2; --static: #8c959f; }
+  /* Same lab palette as the landing page: engineering paper, graphite ink, one safety-orange accent. */
+  --bg: #f4f2ec; --panel: #fbfaf7; --panel2: #eceae2; --line: #d6d2c6; --text: #1b2026; --muted: #555b62;
+  --accent: #b93d0b; --ok: #2f6b2f; --bad: #b42318; --warn: #8a5a00; --what: #2b4c7e; --live: #b93d0b;
+  --robot: #ea580c; --mover: #2b4c7e; --static: #8b9097; --goal: #2f6b2f; --grid: #dfdbd0;
+  --ease: cubic-bezier(.2, 0, 0, 1);
+  font-family: "IBM Plex Sans", sans-serif;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.45; }
-h1 { font-size: 18px; margin: 0; letter-spacing: .2px; }
+h1 { font: 700 18px/1.2 "Space Grotesk", sans-serif; margin: 0; letter-spacing: -.01em; }
 h2 { font-size: 14px; margin: 0; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); }
 h3 { font-size: 13px; margin: 14px 0 6px; }
-.mono, code, pre, .code { font-family: "JetBrains Mono", ui-monospace, Menlo, monospace; font-size: 12px; }
+.mono, code, pre, .code { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; font-variant-numeric: tabular-nums; }
 .hidden { display: none !important; }
 .hint { color: var(--muted); font-size: 12px; font-weight: 400; text-transform: none; letter-spacing: 0; }
 button, select, input { font: inherit; color: var(--text); background: var(--panel2); border: 1px solid var(--line);
@@ -22,7 +20,7 @@ button { cursor: pointer; }
 button:hover:not(:disabled) { border-color: var(--accent); }
 button:focus-visible, select:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 button:disabled { opacity: .45; cursor: not-allowed; }
-button.primary { background: var(--accent); color: #04121c; border-color: var(--accent); font-weight: 600; }
+button.primary { background: var(--text); color: var(--bg); border-color: var(--text); font-weight: 600; }
 
 .topbar { display: flex; justify-content: space-between; align-items: center; padding: 10px 18px;
   border-bottom: 1px solid var(--line); background: var(--panel); position: sticky; top: 0; z-index: 5; gap: 12px; flex-wrap: wrap; }
@@ -32,7 +30,7 @@ button.primary { background: var(--accent); color: #04121c; border-color: var(--
 .badges { display: flex; gap: 6px; flex-wrap: wrap; }
 .badge { border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; font-size: 12px; background: var(--panel2); white-space: nowrap; }
 .badge.small { font-size: 11px; padding: 1px 8px; }
-.badge.sim { border-color: #3b6ea8; color: #8cc4ff; }
+.badge.sim { border-color: var(--what); color: var(--what); }
 .badge.mode.recorded { border-color: var(--muted); }
 .badge.mode.live { border-color: var(--live); color: var(--live); }
 .badge.mode.whatif { border-color: var(--what); color: var(--what); }
@@ -45,11 +43,11 @@ button.primary { background: var(--accent); color: #04121c; border-color: var(--
 .banner { background: #4a1d1d; color: #ffd7d5; padding: 8px 18px; border-bottom: 1px solid var(--bad); }
 
 .layout { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 14px; padding: 14px 18px; }
-@media (max-width: 1100px) { .layout { grid-template-columns: 1fr; } }
+@media (max-width: 1100px) { .layout { grid-template-columns: minmax(0, 1fr); padding: 12px 16px; } }
 .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; }
 .panel-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
 .arenas { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-@media (max-width: 700px) { .arenas { grid-template-columns: 1fr; } }
+@media (max-width: 700px) { .arenas { grid-template-columns: minmax(0, 1fr); } }
 .arena { margin: 0; min-width: 0; }
 .arena figcaption { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; }
 .arena figcaption select { flex: 1; min-width: 0; font-size: 12px; }
@@ -83,7 +81,7 @@ canvas { width: 100%; height: auto; aspect-ratio: 1; background: var(--panel2); 
 .tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
 .tbl th, .tbl td { text-align: left; padding: 6px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
 .tbl th { color: var(--muted); font-weight: 600; }
-.tbl tr.sel td { background: rgba(92, 200, 255, .09); }
+.tbl tr.sel td { background: rgba(234, 88, 12, .08); }
 .tbl tr.sel td:first-child { box-shadow: inset 3px 0 var(--accent); }
 .chip { display: inline-block; border: 1px solid var(--line); border-radius: 5px; padding: 0 5px; margin: 1px 2px 1px 0;
   font-family: ui-monospace, Menlo, monospace; font-size: 11px; cursor: pointer; white-space: nowrap; background: var(--panel2); color: var(--text); }
@@ -117,3 +115,14 @@ pre.code { white-space: pre-wrap; word-break: break-word; background: var(--bg);
 .loading::after { content: " …"; }
 .restbl td.num { font-variant-numeric: tabular-nums; }
 .restbl td:nth-child(2) { white-space: nowrap; }
+
+/* motion and touch: quick press feedback, reduced motion respected */
+button, select, input { min-height: 40px; transition: border-color 120ms var(--ease), transform 120ms var(--ease); }
+button:active:not(:disabled) { transform: scale(.98); }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: 0ms !important; animation: none !important; } }
+canvas { max-width: 100%; height: auto; }
+.panel, .arena, figure { min-width: 0; }
+.tablewrap, table { max-width: 100%; }
+.inline.grow { min-width: 0; max-width: 100%; }
+select { max-width: 100%; }
+@media (max-width: 700px) { .tbl { display: block; overflow-x: auto; } }
