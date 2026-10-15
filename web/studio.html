@@ -13,7 +13,7 @@
 <body>
 <header class="topbar">
   <div class="brand">
-    <a href="./" class="logo" aria-label="EmbodiWeave home" style="text-decoration:none">◈</a>
+    <a href="./" class="logo" aria-label="Back to the EmbodiWeave overview"><svg viewBox="0 0 20 20" width="26" height="26" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="var(--robot)"/><path d="M10 10 L16 7" stroke="var(--bg)" stroke-width="2.2" stroke-linecap="round"/></svg></a>
     <div>
       <h1>EmbodiWeave</h1>
       <p class="tag">Turn robot failures into evidence-backed training decisions</p>
@@ -27,6 +27,10 @@
   </div>
 </header>
 <div id="banner" class="banner hidden" role="alert"></div>
+<div id="hostedNote" class="hosted-note hidden" role="note">
+  <strong>Hosted demo.</strong> Browse every recorded run, replay episodes, propose decisions with the frozen rule and try what-ifs on an isolated graph copy.
+  Training and evaluation need the worker, so they run on the <a href="https://github.com/himanshu748/embodiweave#hosted-demo">local setup</a>.
+</div>
 
 <main class="layout">
   <section class="col-left" aria-label="Arena">

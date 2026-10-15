@@ -103,7 +103,8 @@ h3 { font: 600 18px/1.3 var(--display); margin: 0 0 6px; }
 .loop li > span:last-child { color: var(--muted); font-size: 15px; }
 
 .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
-table { border-collapse: collapse; width: 100%; min-width: 620px; }
+table { border-collapse: collapse; width: 100%; min-width: 760px; }
+td.mono, td .mono { white-space: nowrap; }
 th, td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--line); font-size: 15px; vertical-align: top; }
 th { font: 600 12px/1.3 var(--mono); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
 tr:last-child td { border-bottom: 0; }
@@ -139,6 +140,40 @@ td.state.err { color: var(--bad); }
 
 footer { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 28px clamp(16px, 4vw, 48px);
   border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; background: var(--paper); }
+
+/* graph schema */
+.schema-wrap { overflow-x: auto; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: clamp(8px, 2vw, 20px); margin-bottom: 32px; }
+#schema { width: 100%; min-width: 560px; height: auto; display: block; font-family: var(--mono); }
+#schema .edge path { stroke: var(--obs); stroke-width: 1.4; transition: stroke var(--t-std) var(--ease), opacity var(--t-std) var(--ease); }
+#schema .edge text { font-size: 10px; fill: var(--muted); paint-order: stroke; stroke: var(--paper); stroke-width: 4px; transition: opacity var(--t-std) var(--ease); }
+#schema .node rect { fill: var(--surface); stroke: var(--ink); stroke-width: 1.2; transition: fill var(--t-quick) var(--ease); }
+#schema .node text { font: 600 13px var(--text); fill: var(--ink); pointer-events: none; }
+#schema .node { cursor: default; outline: none; }
+#schema .node.hub rect { fill: var(--robot); stroke: var(--robot); }
+#schema .node.hub text { fill: #fff; }
+#schema .node:focus-visible rect, #schema .node.lit rect { stroke: var(--accent); stroke-width: 2; }
+#schema.focus .edge { opacity: .18; }
+#schema.focus .edge.lit { opacity: 1; }
+#schema .edge.lit path { stroke: var(--accent); stroke-width: 2; }
+#schema .edge.lit text { fill: var(--accent); }
+.facts { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.facts li { padding-left: 16px; border-left: 2px solid var(--line); color: var(--muted); font-size: 15px; }
+.facts b { color: var(--ink); font-weight: 600; }
+
+/* the loop reads as a sequence: a rail joins the steps on wide screens */
+.loop { position: relative; }
+.loop li { position: relative; }
+@media (min-width: 901px) {
+  .loop li:not(:nth-child(3n))::after { content: ""; position: absolute; right: -13px; top: 30px; width: 14px; height: 2px; background: var(--accent); }
+}
+tbody tr { transition: background var(--t-quick) var(--ease); }
+tbody tr:hover { background: var(--surface); }
+.step { transition: border-color var(--t-quick) var(--ease); }
+.step:hover { border-color: var(--obs); }
+
+/* hero replay progress */
+.progress { height: 3px; background: var(--alt); border-radius: 2px; overflow: hidden; margin-top: 12px; }
+.progress span { display: block; height: 100%; width: 0; background: var(--robot); }
 
 /* motion: precise personality, only when allowed */
 @keyframes rise { from { opacity: 0; transform: translateY(var(--rise, 16px)); } to { opacity: 1; transform: none; } }

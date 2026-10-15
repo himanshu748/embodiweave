@@ -35,6 +35,19 @@ function setGraphDown(detail) {
   ["#btnPropose", "#btnEvalMissing", "#btnTrain", "#btnWhatIf"].forEach((s) => ($(s).disabled = true));
 }
 
+// ---------------- hosted read-only demo ----------------
+// The hosted studio has no worker or torch. Controls that would train or evaluate are disabled with a reason,
+// so nothing on screen is a dead button.
+const WORKER_ONLY = ["#btnTrain", "#btnEvalMissing", "#scRun"];
+const READONLY_WHY = "Hosted demo: training and evaluation run on the local setup (scripts/start.sh)";
+function enterReadonly() {
+  S.readonly = true;
+  document.body.classList.add("readonly");
+  WORKER_ONLY.forEach((x) => { const b = $(x); if (b) { b.disabled = true; b.title = READONLY_WHY; } });
+  const n = $("#hostedNote");
+  if (n) n.classList.remove("hidden");
+}
+
 // ---------------- status polling ----------------
 async function pollStatus() {
   try {
@@ -44,10 +57,13 @@ async function pollStatus() {
     if (s.graph.up) {
       g.textContent = `FalkorDB up · rev ${s.graph.revision}`; g.className = "badge up";
       if (S.graphDown) { S.graphDown = false; $("#banner").classList.add("hidden");
-        ["#btnPropose", "#btnEvalMissing", "#btnTrain", "#btnWhatIf"].forEach((x) => ($(x).disabled = false)); renderDecision(); }
+        ["#btnPropose", "#btnWhatIf"].forEach((x) => ($(x).disabled = false));
+        if (!S.readonly) ["#btnEvalMissing", "#btnTrain"].forEach((x) => ($(x).disabled = false)); renderDecision(); }
     } else { g.textContent = "FalkorDB down"; g.className = "badge down"; setGraphDown("ping failed"); }
     const w = $("#workerBadge");
-    if (!s.worker.alive) { w.textContent = "Worker offline"; w.className = "badge down"; }
+    if (s.hosted_readonly && !S.readonly) enterReadonly();
+    if (s.hosted_readonly) { w.textContent = "Training runs locally"; w.className = "badge"; }
+    else if (!s.worker.alive) { w.textContent = "Worker offline"; w.className = "badge down"; }
     else if (s.worker.running.length) { w.textContent = "Worker running 1 job"; w.className = "badge busy"; }
     else { w.textContent = "Worker idle"; w.className = "badge up"; }
     if (S.mode !== "What-if") setMode(s.worker.running.length ? "Live" : (S.liveScenario ? "Live" : "Recorded"));
@@ -241,8 +257,8 @@ function renderDecision() {
   if (outside.length) rej.append(el("li", {}, el("details", {}, el("summary", { class: "hint" }, `${outside.length} checkpoints outside the requested library catalog (trial children)`),
     ...outside.map((r) => el("div", {}, el("span", { class: "chip", onclick: () => inspect(r.policy_id) }, r.policy_id), " ", el("span", { class: "hint" }, r.reasons[0]))))));
   if (!d.rejected.length) rej.append(el("li", { class: "hint" }, "none"));
-  $("#btnTrain").disabled = S.graphDown || d.mode === "what-if" || !["train_from_parent", "train_from_scratch"].includes(d.action);
-  $("#btnEvalMissing").disabled = S.graphDown || d.action !== "evaluate_candidates";
+  $("#btnTrain").disabled = S.readonly || S.graphDown || d.mode === "what-if" || !["train_from_parent", "train_from_scratch"].includes(d.action);
+  $("#btnEvalMissing").disabled = S.readonly || S.graphDown || d.action !== "evaluate_candidates";
 }
 function renderQueries() {
   const box = $("#queries"); box.innerHTML = "";
@@ -314,8 +330,8 @@ async function renderJobs() {
       if (r.child_policy_id) {
         card.append(el("div", { class: "row" },
           el("button", { onclick: async () => { for (const s of ["val-open-v1", "val-static-v1", "val-crossing-v1"]) await api("/api/evaluate", { method: "POST", body: JSON.stringify({ policy_id: r.child_policy_id, suite_id: s }) }); renderJobs(); } }, "Evaluate retained behaviours"),
-          el("button", { onclick: async (ev) => { const p = await api(`/api/promote/${r.child_policy_id}`, { method: "POST" }); ev.target.after(el("div", { class: p.verdict === "promoted" ? "ok" : "bad" }, `${p.verdict}: ${p.reasons.join("; ") || "all gates passed"}`)); } }, "Request promotion"),
-          el("button", { onclick: async (ev) => { const b = await api(`/api/export/${r.child_policy_id}`, { method: "POST" }); ev.target.after(el("a", { href: b.download }, ` download bundle (sha256 ${short(b.sha256, 12)})`)); } }, "Export"),
+          el("button", { class: "needs-worker", disabled: S.readonly || null, title: S.readonly ? READONLY_WHY : null, onclick: async (ev) => { const p = await api(`/api/promote/${r.child_policy_id}`, { method: "POST" }); ev.target.after(el("div", { class: p.verdict === "promoted" ? "ok" : "bad" }, `${p.verdict}: ${p.reasons.join("; ") || "all gates passed"}`)); } }, "Request promotion"),
+          el("button", { class: "needs-worker", disabled: S.readonly || null, title: S.readonly ? READONLY_WHY : null, onclick: async (ev) => { const b = await api(`/api/export/${r.child_policy_id}`, { method: "POST" }); ev.target.after(el("a", { href: b.download }, ` download bundle (sha256 ${short(b.sha256, 12)})`)); } }, "Export"),
           el("button", { onclick: () => { $("#evalB").value = r.final_evaluation_id; loadReplay("B", r.final_evaluation_id); } }, "Replay as After")));
       }
     }

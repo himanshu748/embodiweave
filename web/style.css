@@ -126,3 +126,9 @@ canvas { max-width: 100%; height: auto; }
 .inline.grow { min-width: 0; max-width: 100%; }
 select { max-width: 100%; }
 @media (max-width: 700px) { .tbl { display: block; overflow-x: auto; } }
+.logo { display: inline-flex; text-decoration: none; }
+.hosted-note { margin: 12px 18px 0; padding: 10px 14px; border: 1px solid var(--line); border-left: 3px solid var(--accent);
+  border-radius: 8px; background: var(--panel); font-size: 13px; color: var(--muted); }
+.hosted-note strong { color: var(--text); }
+button[disabled][title] { cursor: help; }
+.grid-form { align-items: start; }

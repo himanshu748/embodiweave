@@ -56,6 +56,7 @@
         <div class="arena-foot" id="outB">&nbsp;</div>
       </div>
     </div>
+    <div class="progress" aria-hidden="true"><span id="prog"></span></div>
     <figcaption id="replayCap">
       <span>Same layout, same seed <b id="seed" class="mono">1300032</b>. Recorded simulator states replayed, step <b id="step" class="mono">0</b>.</span>
       <button id="replayBtn" type="button" class="btn ghost small">Replay</button>
@@ -109,23 +110,14 @@
 <section id="graph" class="band alt reveal">
   <p class="eyebrow">Graph model</p>
   <h2>Evidence lives in FalkorDB, decisions read it</h2>
+  <p class="sub">Authored world facts plus measured evidence appended from immutable records. Hover or focus a node to trace its relationships.</p>
+  <div class="schema-wrap">
+    <svg id="schema" viewBox="0 0 680 470" role="img" aria-labelledby="schemaTitle schemaDesc">
+      <title id="schemaTitle">EmbodiWeave graph schema</title>
+      <desc id="schemaDesc">Policy is central. A Run produced it, it uses a Contract for a Robot and may derive from another Policy. Evaluations assess it on Suites, Failures are observed in Evaluations and Hypotheses are about Failures. Trials start from a Policy or the scratch Origin, target a Family and run under a Contract.</desc>
+    </svg>
+  </div>
   <div class="two">
-    <div>
-      <h3>Nodes and relationships</h3>
-      <p class="sub">Authored world facts plus measured evidence appended from immutable records.</p>
-<pre class="code" tabindex="0">(:Run)-[:PRODUCED]->(:Policy)
-(:Policy)-[:USES_CONTRACT]->(:Contract)-[:FOR_ROBOT]->(:Robot)
-(:Policy)-[:DERIVED_FROM]->(:Policy)
-(:Evaluation)-[:ASSESSED]->(:Policy)
-(:Evaluation)-[:ON_SUITE]->(:Suite)-[:EVALUATES]->(:Competency)
-(:Failure)-[:OBSERVED_IN]->(:Evaluation)
-(:Hypothesis {measured:false})-[:ABOUT]->(:Failure)
-(:Trial)-[:FROM_PARENT]->(:Policy)
-(:Trial)-[:FROM_ORIGIN]->(:Origin {id:'scratch'})
-(:Trial)-[:TARGETS]->(:Family)
-(:Trial)-[:UNDER_CONTRACT]->(:Contract)
-(:Mission)-[:REQUIRES]->(:Competency)</pre>
-    </div>
     <div>
       <h3>One of the decision queries</h3>
       <p class="sub">Which past trials from each candidate parent apply to this exact target, recipe, budget and contract.</p>
@@ -141,6 +133,15 @@ RETURN pid AS policy_id, t.id AS trial_id,
        t.threshold_reached AS reached,
        t.steps_to_threshold AS steps_to_threshold,
        child.id AS child_id</pre>
+    </div>
+    <div>
+      <h3>Why a graph</h3>
+      <ul class="facts">
+        <li><b>Transfer history is conditional.</b> A past trial only counts if its target family, recipe, budget, threshold and contract all match, which is a multi-hop pattern, not a row filter.</li>
+        <li><b>Contracts gate reuse.</b> A checkpoint with a different ray order is rejected before ranking, with the differing fields named.</li>
+        <li><b>Every decision is provenance.</b> The decision records the graph revision and the exact queries it read, so it can be replayed.</li>
+        <li><b>All 10 agent query templates are read-only</b> and run through GRAPH.RO_QUERY, so the agent cannot write the graph.</li>
+      </ul>
     </div>
   </div>
 </section>

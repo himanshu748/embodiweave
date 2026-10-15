@@ -75,7 +75,7 @@ function play(A, B) {
   cancelAnimationFrame(raf);
   const total = Math.max(A.ep.robot.length, B.ep.robot.length) - 1;
   $("#outA").innerHTML = "&nbsp;"; $("#outB").innerHTML = "&nbsp;";
-  const finish = () => { drawFrame(A, total); drawFrame(B, total); $("#step").textContent = total; outcomeText(A.ep, $("#outA")); outcomeText(B.ep, $("#outB")); };
+  const finish = () => { $("#prog").style.width = "100%"; drawFrame(A, total); drawFrame(B, total); $("#step").textContent = total; outcomeText(A.ep, $("#outA")); outcomeText(B.ep, $("#outB")); };
   if (reduced()) return finish();
   const STEPS_PER_S = 24, t0 = performance.now();
   let shownA = false;
@@ -84,6 +84,7 @@ function play(A, B) {
     if (drawFrame(A, k) && !shownA) { outcomeText(A.ep, $("#outA")); shownA = true; }
     drawFrame(B, k);
     $("#step").textContent = Math.min(k, total);
+    $("#prog").style.width = `${(Math.min(k, total) / total) * 100}%`;
     if (k < total) raf = requestAnimationFrame(tick); else finish();
   };
   raf = requestAnimationFrame(tick);
@@ -197,6 +198,51 @@ async function agent() {
   }
 }
 
+// ---------- graph schema (hand-built SVG of the real node labels and relationship types) ----------
+const NODES = {
+  Robot: [590, 40], Contract: [470, 120], Run: [120, 70], Policy: [300, 215], Family: [610, 215],
+  Trial: [470, 300], Origin: [620, 390], Evaluation: [120, 330], Suite: [120, 440], Failure: [300, 400], Hypothesis: [470, 440],
+};
+const EDGES = [
+  ["Run", "Policy", "PRODUCED"], ["Policy", "Contract", "USES_CONTRACT"], ["Contract", "Robot", "FOR_ROBOT"],
+  ["Evaluation", "Policy", "ASSESSED"], ["Evaluation", "Suite", "ON_SUITE"], ["Failure", "Evaluation", "OBSERVED_IN"],
+  ["Hypothesis", "Failure", "ABOUT"], ["Trial", "Policy", "FROM_PARENT"], ["Trial", "Origin", "FROM_ORIGIN"],
+  ["Trial", "Family", "TARGETS"], ["Trial", "Contract", "UNDER_CONTRACT"], ["Policy", "Policy", "DERIVED_FROM"],
+];
+function schema() {
+  const svg = $("#schema");
+  if (!svg) return;
+  const defs = el("defs", {}, svg);
+  const m = el("marker", { id: "arw", viewBox: "0 0 10 10", refX: 9, refY: 5, markerWidth: 7, markerHeight: 7, orient: "auto-start-reverse" }, defs);
+  el("path", { d: "M0,0 L10,5 L0,10 z", fill: "context-stroke" }, m);
+  const W = (name) => name.length * 8.6 + 28, H = 32;
+  const edgeEls = [];
+  for (const [a, b, rel] of EDGES) {
+    const g = el("g", { class: "edge", "data-a": a, "data-b": b }, svg);
+    const [x1, y1] = NODES[a], [x2, y2] = NODES[b];
+    let d, lx, ly;
+    if (a === b) { d = `M${x1 + 30},${y1 - 16} C${x1 + 70},${y1 - 80} ${x1 - 70},${y1 - 80} ${x1 - 30},${y1 - 16}`; lx = x1; ly = y1 - 66; }
+    else {
+      // shorten the line to stop at the target pill's edge
+      const dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L;
+      const pad = (n) => Math.min(Math.abs((W(n) / 2) / (ux || 1e-6)), Math.abs((H / 2) / (uy || 1e-6))) + 4;
+      const sx = x1 + ux * pad(a), sy = y1 + uy * pad(a), ex = x2 - ux * pad(b), ey = y2 - uy * pad(b);
+      d = `M${sx.toFixed(1)},${sy.toFixed(1)} L${ex.toFixed(1)},${ey.toFixed(1)}`; lx = (sx + ex) / 2; ly = (sy + ey) / 2 - 6;
+    }
+    el("path", { d, fill: "none", "marker-end": "url(#arw)" }, g);
+    const t = el("text", { x: lx, y: ly, "text-anchor": "middle" }, g); t.textContent = rel;
+    edgeEls.push(g);
+  }
+  for (const [name, [x, y]] of Object.entries(NODES)) {
+    const g = el("g", { class: "node" + (name === "Policy" ? " hub" : ""), tabindex: 0, "data-n": name, transform: `translate(${x} ${y})` }, svg);
+    el("rect", { x: -W(name) / 2, y: -H / 2, width: W(name), height: H, rx: 16 }, g);
+    const t = el("text", { "text-anchor": "middle", "dominant-baseline": "central" }, g); t.textContent = name;
+    const on = () => { svg.classList.add("focus"); edgeEls.forEach((e) => e.classList.toggle("lit", e.dataset.a === name || e.dataset.b === name)); g.classList.add("lit"); };
+    const off = () => { svg.classList.remove("focus"); edgeEls.forEach((e) => e.classList.remove("lit")); g.classList.remove("lit"); };
+    g.addEventListener("mouseenter", on); g.addEventListener("mouseleave", off); g.addEventListener("focus", on); g.addEventListener("blur", off);
+  }
+}
+
 // ---------- once-only section reveals (content stays visible if this never runs) ----------
 function reveals() {
   if (reduced() || !("IntersectionObserver" in window)) return;
@@ -206,5 +252,5 @@ function reveals() {
   });
 }
 
-reveals(); live(); hero(); results(); agent();
+reveals(); schema(); live(); hero(); results(); agent();
 setInterval(live, 15000);
