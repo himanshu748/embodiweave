@@ -74,6 +74,16 @@ RETURN t.id AS trial_id, t.status AS status, t.threshold_reached AS reached,
        coalesce(t.hypothetical, false) AS hypothetical
 ORDER BY trial_id""",
 
+    "trial_outcomes": """
+UNWIND $trial_ids AS tid
+MATCH (t:Trial {id:tid})-[:PRODUCED]->(c:Policy)
+MATCH (s:Suite {id:$suite}) WHERE s.role = 'validation'
+OPTIONAL MATCH (e:Evaluation)-[:ASSESSED]->(c)
+WHERE (e)-[:ON_SUITE]->(s) AND e.artifact_hash = c.artifact_hash
+RETURN tid AS trial_id, c.id AS child_id, e.id AS evaluation_id, e.success_rate AS success_rate,
+       e.collision_rate AS collision_rate, e.at AS at
+ORDER BY trial_id, at""",
+
     "non_applicable_trials": """
 UNWIND $ids AS pid
 MATCH (t:Trial)-[:FROM_PARENT]->(p:Policy {id:pid})

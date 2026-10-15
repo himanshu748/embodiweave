@@ -1,0 +1,105 @@
+{
+ "budget_steps": 150000,
+ "child_artifact_hash": "62e7f07a602870fc83420f0cf5c4d05055df25340e4e22c54706f7d68f701490",
+ "child_policy_id": "scratch~x2-s702",
+ "consumed_steps": 151552,
+ "contract_id": "ew-contract-1:2f013b6f4849",
+ "decision_id": null,
+ "family": "static_crossing",
+ "family_id": "static_crossing@43ce902c",
+ "id": "run-20261015044001-720e19",
+ "kind": "run",
+ "parent_id": null,
+ "purpose": "exp-2 comparison",
+ "recipe": "ppo-r1",
+ "recorded_at": "2026-10-15T04:41:02+0000",
+ "run_kind": "comparison",
+ "runtime": {
+  "dynamics": "ew-dyn-1",
+  "gymnasium": "1.4.0",
+  "machine": "x86_64",
+  "numpy": "2.5.4",
+  "python": "3.13.16",
+  "reward": "ew-reward-1",
+  "stable_baselines3": "2.9.0",
+  "torch": "2.14.1+cu130"
+ },
+ "seed": 702,
+ "status": "completed",
+ "train_episodes": 1090,
+ "train_wall_s": 56.49,
+ "validation_schedule": [
+  {
+   "collision_rate": 0.2167,
+   "collisions_by_object": {
+    "mover": 8,
+    "static": 5,
+    "wall": 0
+   },
+   "episodes": 60,
+   "mean_success_steps": 163.0,
+   "steps": 37504,
+   "success_rate": 0.6,
+   "suite_id": "val-target-v1",
+   "timeout_rate": 0.1833
+  },
+  {
+   "collision_rate": 0.15,
+   "collisions_by_object": {
+    "mover": 3,
+    "static": 6,
+    "wall": 0
+   },
+   "episodes": 60,
+   "mean_success_steps": 136.9,
+   "steps": 75000,
+   "success_rate": 0.8333,
+   "suite_id": "val-target-v1",
+   "timeout_rate": 0.0167
+  },
+  {
+   "collision_rate": 0.1167,
+   "collisions_by_object": {
+    "mover": 7,
+    "static": 0,
+    "wall": 0
+   },
+   "episodes": 60,
+   "mean_success_steps": 125.4,
+   "steps": 112504,
+   "success_rate": 0.8167,
+   "suite_id": "val-target-v1",
+   "timeout_rate": 0.0667
+  },
+  {
+   "collision_rate": 0.1167,
+   "collisions_by_object": {
+    "mover": 6,
+    "static": 1,
+    "wall": 0
+   },
+   "episodes": 60,
+   "mean_success_steps": 119.2,
+   "steps": 150000,
+   "success_rate": 0.7667,
+   "suite_id": "val-target-v1",
+   "timeout_rate": 0.1167
+  },
+  {
+   "collision_rate": 0.1667,
+   "collisions_by_object": {
+    "mover": 10,
+    "static": 0,
+    "wall": 0
+   },
+   "episodes": 60,
+   "mean_success_steps": 118.0,
+   "steps": 151552,
+   "success_rate": 0.7167,
+   "suite_id": "val-target-v1",
+   "timeout_rate": 0.1167
+  }
+ ],
+ "wall_s": 60.7,
+ "weight_delta_l2": 7.702603340148926
+}

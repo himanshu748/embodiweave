@@ -28,6 +28,15 @@ Rule ew-select-2 (frozen 2026-10-15 10:10 IST, after exp-1, before exp-2; exp-1 
   If p_scratch is strictly greater than the best parent's p_reach the action is train_from_scratch;
   on a tie, reuse is kept. Motivation: exp-1 measured that warm starts from this library did not
   reach the threshold (0/9) while scratch did in 1/3, and ew-select-1 had no way to act on that.
+
+Rule ew-select-3 (frozen 2026-10-15 10:25 IST, after exp-2, before exp-3)
+  Parents and scratch are ranked together as options. Each option's evidence is its conditioned trials.
+  Rank by: higher p_reach, then higher mean matched validation score (success - collision) of the
+  checkpoints those trials produced (measured on the target validation suite; options with no measured
+  trial child sort last on this key), then the parent's own matched validation score (scratch last),
+  then id. Motivation: after exp-2, ew-select-2 tied scratch (1/6 reached) with P-open-a (0/2 reached)
+  at p_reach 0.25 and kept reuse, although scratch children scored about 0.5 on validation and
+  P-open-a children about -0.8. The binary threshold estimate threw that measured evidence away.
 """
 from __future__ import annotations
 
@@ -37,8 +46,8 @@ from . import artifacts
 from .criteria import THRESHOLDS
 from .graph import queries as Q
 
-RULE_VERSION = "ew-select-2"
-RULES = ("ew-select-1", "ew-select-2")
+RULE_VERSION = "ew-select-3"
+RULES = ("ew-select-1", "ew-select-2", "ew-select-3")
 
 
 def decide(request: dict, graph_name: str | None = None, use_history: bool = True,
@@ -157,7 +166,7 @@ def decide(request: dict, graph_name: str | None = None, use_history: bool = Tru
         else:
             why += f" Tie with {second['policy_id']} broken by {'steps-to-threshold' if not tie else 'policy id'}."
     scratch = None
-    if rule == "ew-select-2" and use_history:
+    if rule in ("ew-select-2", "ew-select-3") and use_history:
         st = q("scratch_trials", {k: params[k] for k in ("threshold", "recipe", "budget", "family", "contract")})
         sts = [r for r in st.dicts() if r["trial_id"]]
         sdone = [t for t in sts if t["status"] == "completed"]
@@ -169,6 +178,8 @@ def decide(request: dict, graph_name: str | None = None, use_history: bool = Tru
         n_hyp = sum(1 for t in sdone if t.get("hypothetical"))
         if n_hyp:
             scratch["p_basis"] += f" (WHAT-IF: {n_hyp} hypothetical, not measured)"
+        if rule == "ew-select-3":
+            return _rank_options_v3(base, ranking, scratch, sts, na, suite, q)
         if round(ps, 4) > best["p_reach"]:
             return {**base, "action": "train_from_scratch", "selected": None, "ranking": ranking, "scratch_option": scratch,
                     "non_applicable_trials": na.dicts(), "tie_broken_by_id": False,
@@ -183,3 +194,51 @@ def decide(request: dict, graph_name: str | None = None, use_history: bool = Tru
             "evidence_trial_ids": [t["trial_id"] for c in ranking for t in c["trials"]] + [t["trial_id"] for t in (scratch or {}).get("trials", [])],
             "evidence_eval_ids": [c["validation"]["evaluation_id"] for c in ranking],
             "explanation": why}
+
+
+def _rank_options_v3(base, ranking, scratch, scratch_trials, na, suite, q) -> dict:
+    """ew-select-3: one ranking over parents and scratch, using trial-child validation as the second key."""
+    done_ids = [t["trial_id"] for c in ranking for t in c["trials"] if t["status"] == "completed" and not t.get("hypothetical")]
+    done_ids += [t["trial_id"] for t in scratch_trials if t["status"] == "completed" and not t.get("hypothetical")]
+    child_score = {}
+    if done_ids:
+        for row in q("trial_outcomes", {"trial_ids": done_ids, "suite": suite}).dicts():
+            if row["evaluation_id"]:
+                child_score[row["trial_id"]] = round(row["success_rate"] - row["collision_rate"], 4)  # newest wins
+
+    def child_mean(trials):
+        xs = [child_score[t["trial_id"]] for t in trials if t["trial_id"] in child_score]
+        return (round(statistics.mean(xs), 4), len(xs)) if xs else (None, 0)
+
+    options = []
+    for c in ranking:
+        m, n = child_mean(c["trials"])
+        c["trial_child_score"], c["n_trial_child_scores"] = m, n
+        options.append({"option": c["policy_id"], "p": c["p_reach"], "child": m, "own": c["validation"]["score"], "ref": c})
+    m, n = child_mean(scratch["trials"])
+    scratch["trial_child_score"], scratch["n_trial_child_scores"] = m, n
+    options.append({"option": "scratch", "p": scratch["p_reach"], "child": m, "own": None, "ref": scratch})
+    options.sort(key=lambda o: (-o["p"], -o["child"] if o["child"] is not None else 1e12,
+                                -o["own"] if o["own"] is not None else 1e12, o["option"]))
+    for i, o in enumerate(options):
+        o["ref"]["option_rank"] = i + 1
+    for i, c in enumerate(sorted(ranking, key=lambda c: c["option_rank"])):
+        c["rank"] = i + 1
+    ranking.sort(key=lambda c: c["rank"])
+    top, second = options[0], options[1] if len(options) > 1 else None
+
+    def desc(o):
+        cs = f"trial children score {o['child']} (n={o['ref']['n_trial_child_scores']})" if o["child"] is not None else "no measured trial child"
+        return f"{o['option']}: p_reach {o['p']} ({o['ref']['p_basis']}), {cs}"
+    why = "Selected " + desc(top) + "."
+    if second:
+        key = "transfer estimate" if second["p"] != top["p"] else "trial-child validation" if second["child"] != top["child"] else \
+              "own matched validation" if second["own"] != top["own"] else "id"
+        why += f" Beats {desc(second)} on {key}."
+    evidence = {"evidence_trial_ids": [t["trial_id"] for c in ranking for t in c["trials"]] + [t["trial_id"] for t in scratch_trials],
+                "evidence_eval_ids": [c["validation"]["evaluation_id"] for c in ranking],
+                "option_order": [o["option"] for o in options], "non_applicable_trials": na.dicts(),
+                "scratch_option": scratch, "ranking": ranking, "tie_broken_by_id": key == "id" if second else False}
+    if top["option"] == "scratch":
+        return {**base, **evidence, "action": "train_from_scratch", "selected": None, "explanation": why}
+    return {**base, **evidence, "action": "train_from_parent", "selected": top["option"], "explanation": why}

@@ -96,7 +96,7 @@ def test_final_test_protected(world):
         service.evaluate("T-a", "test-target-v2")
     with pytest.raises(PermissionError, match="spent"):
         service.evaluate("T-a", "test-target-v1", final_test_runner=True, n_episodes=2)
-    rec = service.evaluate("T-a", "test-target-v2", final_test_runner=True, n_episodes=2)
+    rec = service.evaluate("T-a", "test-target-v2", final_test_runner=True, n_episodes=2, experiment_id="exp-2")
     with pytest.raises(PermissionError):
         ingest.evaluation(rec)
     rows = db.ro("MATCH (e:Evaluation)-[:ON_SUITE]->(s:Suite {role:'final_test'}) RETURN count(e)")[1]

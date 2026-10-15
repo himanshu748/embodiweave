@@ -1,0 +1,2304 @@
+{
+ "action": "train_from_scratch",
+ "agent_trace_id": null,
+ "evidence_eval_ids": [
+  "eval-20261015040906-81b5d2",
+  "eval-20261015040909-861253",
+  "eval-20261015040914-b5aef7",
+  "eval-20261015040917-9c0df8"
+ ],
+ "evidence_trial_ids": [
+  "trial-20261015042250-29c66d",
+  "trial-20261015042347-eee6ff",
+  "trial-20261015042423-9f3a95",
+  "trial-20261015042423-dcf8b2",
+  "trial-20261015042742-e57d03",
+  "trial-20261015042743-37d3b9",
+  "trial-20261015042745-903207",
+  "trial-20261015042315-15342e",
+  "trial-20261015042318-3b21fc",
+  "trial-exp2-P-cross-a-s701",
+  "trial-exp2-P-cross-a-s702",
+  "trial-exp2-P-cross-a-s703",
+  "trial-20261015042453-26b36d",
+  "trial-20261015042530-8d9fe7",
+  "trial-20261015042851-bac11e",
+  "trial-20261015042853-110017",
+  "trial-20261015042854-0a5abe",
+  "trial-6fcae1-s7",
+  "trial-exp2-P-static-b-s701",
+  "trial-exp2-P-static-b-s702",
+  "trial-exp2-P-static-b-s703",
+  "trial-exp1-scratch-s601",
+  "trial-exp1-scratch-s602",
+  "trial-exp1-scratch-s603",
+  "trial-exp2-scratch-s701",
+  "trial-exp2-scratch-s702",
+  "trial-exp2-scratch-s703"
+ ],
+ "explanation": "Selected scratch: p_reach 0.25 (1/6 applicable scratch trials reached threshold), trial children score 0.5695 (n=6). Beats P-open-a: p_reach 0.25 (0/2 applicable trials reached threshold), trial children score -0.7417 (n=2) on trial-child validation.",
+ "graph": "ew",
+ "graph_revision": 106,
+ "id": "deci-20261015044507-1451ca",
+ "kind": "decision",
+ "mode": "deterministic",
+ "non_applicable_trials": [
+  {
+   "budget": 60000,
+   "policy_id": "P-static-a",
+   "reached": false,
+   "target": "crossing",
+   "trial_id": "trial-20261015040704-e327c6"
+  },
+  {
+   "budget": 60000,
+   "policy_id": "P-static-b",
+   "reached": false,
+   "target": "static_crossing",
+   "trial_id": "trial-20261015040948-bb36e2"
+  }
+ ],
+ "option_order": [
+  "scratch",
+  "P-open-a",
+  "P-static-a",
+  "P-cross-a",
+  "P-static-b"
+ ],
+ "queries": [
+  {
+   "cypher": "MATCH (m:Mission {id:$mission})-[:REQUIRES*1..6]->(c:Competency)\nOPTIONAL MATCH (s:Suite)-[:EVALUATES]->(c) WHERE s.role = 'validation'\nRETURN DISTINCT c.id AS competency, s.id AS suite_id\nORDER BY competency",
+   "graph": "ew",
+   "graph_revision": 106,
+   "header": [
+    "competency",
+    "suite_id"
+   ],
+   "ms": 6.0,
+   "params": {
+    "mission": "static_crossing"
+   },
+   "record_ids": [
+    "avoid_static",
+    "reach_goal",
+    "static_crossing_mission",
+    "val-crossing-v1",
+    "val-open-v1",
+    "val-static-v1",
+    "val-target-v1",
+    "yield_dynamic"
+   ],
+   "rows": [
+    [
+     "avoid_static",
+     "val-static-v1"
+    ],
+    [
+     "reach_goal",
+     "val-open-v1"
+    ],
+    [
+     "static_crossing_mission",
+     "val-target-v1"
+    ],
+    [
+     "yield_dynamic",
+     "val-crossing-v1"
+    ]
+   ],
+   "template": "mission_requirements"
+  },
+  {
+   "cypher": "MATCH (tc:Contract {id:$contract})-[:FOR_ROBOT]->(tr:Robot {id:$robot})\nMATCH (p:Policy)-[:USES_CONTRACT]->(pc:Contract)-[:FOR_ROBOT]->(pr:Robot)\nOPTIONAL MATCH (run:Run)-[:PRODUCED]->(p)\nRETURN p.id AS policy_id, p.artifact_hash AS artifact_hash, p.status AS status, p.created_at AS created_at,\n       run.kind AS run_kind, pc.id AS contract_id, pr.id AS robot_id,\n       pc.id = tc.id AS contract_match, pr.id = tr.id AS robot_match,\n       [k IN ['ray_order','n_rays','history','history_reset','dt_s','action_map','normalization'] WHERE pc[k] <> tc[k]] AS differing_fields\nORDER BY created_at\nLIMIT 200",
+   "graph": "ew",
+   "graph_revision": 106,
+   "header": [
+    "policy_id",
+    "artifact_hash",
+    "status",
+    "created_at",
+    "run_kind",
+    "contract_id",
+    "robot_id",
+    "contract_match",
+    "robot_match",
+    "differing_fields"
+   ],
+   "ms": 2.76,
+   "params": {
+    "contract": "ew-contract-1:2f013b6f4849",
+    "robot": "ew-unicycle-r20"
+   },
+   "record_ids": [
+    "P-cross-a",
+    "P-cross-a~hist-s501",
+    "P-cross-a~hist-s502",
+    "P-cross-a~x2-s701",
+    "P-cross-a~x2-s702",
+    "P-cross-a~x2-s703",
+    "P-mirror",
+    "P-open-a",
+    "P-open-a~hist-s501",
+    "P-open-a~hist-s502",
+    "P-static-a",
+    "P-static-a~cmp-s601",
+    "P-static-a~cmp-s602",
+    "P-static-a~cmp-s603",
+    "P-static-a~cross-t1",
+    "P-static-a~hist-s501",
+    "P-static-a~hist-s502",
+    "P-static-b",
+    "P-static-b~6fcae1-s7",
+    "P-static-b~cmp-s601",
+    "P-static-b~cmp-s602",
+    "P-static-b~cmp-s603",
+    "P-static-b~hist-s501",
+    "P-static-b~hist-s502",
+    "P-static-b~tgt-s301",
+    "P-static-b~x2-s701",
+    "P-static-b~x2-s702",
+    "P-static-b~x2-s703",
+    "scratch~cmp-s601",
+    "scratch~cmp-s602",
+    "scratch~cmp-s603",
+    "scratch~x2-s701",
+    "scratch~x2-s702",
+    "scratch~x2-s703"
+   ],
+   "rows": [
+    [
+     "P-open-a",
+     "b004eccbb87e06576657e2c2816e422b07e838b43b0d736b6a86482282a5787a",
+     "completed",
+     "2026-10-15T04:03:31+0000",
+     "library",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-static-a",
+     "390485ae8caaba1babb63257a97f8d18fe86d19c1af3266135f36bf2f760cf64",
+     "completed",
+     "2026-10-15T04:04:13+0000",
+     "library",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-cross-a",
+     "e539fe5a99c0284b4d5e076743123dca96cb44340b3d613b2fd95bbd0ae7f1c1",
+     "completed",
+     "2026-10-15T04:04:54+0000",
+     "library",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-mirror",
+     "8eeaf088795c8917a9921b64079e5df7a01f50f2027d176736c3a0d80e1b78aa",
+     "completed",
+     "2026-10-15T04:05:48+0000",
+     "library",
+     "ew-contract-1m:6fad9cbfe838",
+     "ew-unicycle-r20",
+     false,
+     true,
+     [
+      "ray_order"
+     ]
+    ],
+    [
+     "P-static-b",
+     "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+     "completed",
+     "2026-10-15T04:06:15+0000",
+     "library",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-static-a~cross-t1",
+     "d6dfd7e267a0bbe9935eb57d02e9513086e673f9301818b8fd0e8f0c08262926",
+     "completed",
+     "2026-10-15T04:07:00+0000",
+     "transfer_measurement",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-static-b~tgt-s301",
+     "a2b93683e2a8fd9e083109004ac1a5da75a901ab72ce0ccad544d8720f315a74",
+     "completed",
+     "2026-10-15T04:09:45+0000",
+     "transfer_trial",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-static-b~6fcae1-s7",
+     "0e696bcdbed5769e0494e30682f17e194f86263406c0085c1f4a7a54959b568a",
+     "completed",
+     "2026-10-15T04:17:42+0000",
+     "transfer_trial",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-open-a~hist-s501",
+     "659ab7c2a08a80377aab2dc1d9ab0b6a6e9a90fed36ef2da46b360a3f683c940",
+     "completed",
+     "2026-10-15T04:22:49+0000",
+     "transfer_measurement",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-cross-a~hist-s501",
+     "1dce850c9e20ad71a587b64015d6760367e3a5d4aadbf20833db8d41c332de1d",
+     "completed",
+     "2026-10-15T04:23:10+0000",
+     "transfer_measurement",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-cross-a~hist-s502",
+     "b4e83a73a19d3050a8779db9faa9048090d79ace1d8c20347063dc8ae1829e4e",
+     "completed",
+     "2026-10-15T04:23:12+0000",
+     "transfer_measurement",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-open-a~hist-s502",
+     "510f3808893d8a028302695431dc96410f31d496a86b835ef1a2eae5d70270af",
+     "completed",
+     "2026-10-15T04:23:46+0000",
+     "transfer_measurement",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-static-a~hist-s501",
+     "6e0c2541ce55349a2385ffcf9ecb4a6776ad210c00197c9e76b0071e9b810d8d",
+     "completed",
+     "2026-10-15T04:24:20+0000",
+     "transfer_measurement",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-static-a~hist-s502",
+     "af9b7f132a2fc4408f54625a474a49d4adc7c3d014572f9ac1f732b5d8e9ac32",
+     "completed",
+     "2026-10-15T04:24:20+0000",
+     "transfer_measurement",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-static-b~hist-s501",
+     "f87f43ab55ae1061a0341b537d4a78f6adc481b63c0d47838adb6ef8bdaa07c4",
+     "completed",
+     "2026-10-15T04:24:50+0000",
+     "transfer_measurement",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-static-b~hist-s502",
+     "603e93a01eaeabeb11cfcc8d9b28c4dfbdeb99645d0dfb4f0bc5fe58df87b1e4",
+     "completed",
+     "2026-10-15T04:25:26+0000",
+     "transfer_measurement",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "scratch~cmp-s602",
+     "be48dc972dcbe733160f211bb152e2754852ef3f763a82a45a889f64ee363ad5",
+     "completed",
+     "2026-10-15T04:26:33+0000",
+     "comparison",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "scratch~cmp-s601",
+     "6facc82b2fd436d0de848015de00208c82f856aaa4e8439c3d9aa3914312fabb",
+     "completed",
+     "2026-10-15T04:26:34+0000",
+     "comparison",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "scratch~cmp-s603",
+     "24669548ac3f4a849c1d3b1cc738266d1f7932ea8a63708667c3af0bf1672ff0",
+     "completed",
+     "2026-10-15T04:26:35+0000",
+     "comparison",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-static-a~cmp-s601",
+     "5dc6c67f648eed05727e3364260eb433f95c9bd11213001f025746f4c575e197",
+     "completed",
+     "2026-10-15T04:27:39+0000",
+     "comparison",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-static-a~cmp-s602",
+     "870477cb7240a33ed52da1b0d3678252f63676092884069116b1efd64a5065f1",
+     "completed",
+     "2026-10-15T04:27:39+0000",
+     "comparison",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-static-a~cmp-s603",
+     "67368b96a1b8c366cc55a688985d5b0e6080945f790768679ff7d15beaeb7751",
+     "completed",
+     "2026-10-15T04:27:42+0000",
+     "comparison",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-static-b~cmp-s602",
+     "50df960f2b1653fa46ac340ca9e982565097d5ffe988e5cfe301b20a8bfa82b0",
+     "completed",
+     "2026-10-15T04:28:48+0000",
+     "comparison",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-static-b~cmp-s601",
+     "1cad8e57ec368edf6c935a7224c85127cf54e715a69cf04492b9e68af6cec58c",
+     "completed",
+     "2026-10-15T04:28:49+0000",
+     "comparison",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-static-b~cmp-s603",
+     "c55cffab0c64ca23b6801cf9935f0518ecc12f78678b35d12aafc2fc9425d45d",
+     "completed",
+     "2026-10-15T04:28:50+0000",
+     "comparison",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "scratch~x2-s701",
+     "9bd01aec3ac3ad9ccf5b3ab195b7c86db59bd2208922952c4ea0e6eee613b2bc",
+     "completed",
+     "2026-10-15T04:41:02+0000",
+     "comparison",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "scratch~x2-s702",
+     "62e7f07a602870fc83420f0cf5c4d05055df25340e4e22c54706f7d68f701490",
+     "completed",
+     "2026-10-15T04:41:02+0000",
+     "comparison",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "scratch~x2-s703",
+     "c4fd53e1955d46ff27441ff62f07e3511c5467c39181ec3056830895dd9d23e3",
+     "completed",
+     "2026-10-15T04:41:02+0000",
+     "comparison",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-cross-a~x2-s701",
+     "5d03e96965d28c9f63e507e003caa3758fb830ddc4051571128a7349d2a2c257",
+     "completed",
+     "2026-10-15T04:42:11+0000",
+     "comparison",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-cross-a~x2-s702",
+     "683403d937d6893f9ca79015a43cc0080a0e2186d41dca690b20e45a30f19184",
+     "completed",
+     "2026-10-15T04:42:13+0000",
+     "comparison",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-cross-a~x2-s703",
+     "8977af57a574d8ca33908a7ebd6bba9092700d99375fff10c454ef4ae530a45a",
+     "completed",
+     "2026-10-15T04:42:14+0000",
+     "comparison",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-static-b~x2-s701",
+     "7fc6886c1b01c235b17ea99169bfa21e0eb0ce559243e873092b598c193c4718",
+     "completed",
+     "2026-10-15T04:43:13+0000",
+     "comparison",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-static-b~x2-s702",
+     "bdf4522548bebdc972b04bf55db5af215c8a0a29fd028b17c1dbaf665e5a320f",
+     "completed",
+     "2026-10-15T04:43:16+0000",
+     "comparison",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ],
+    [
+     "P-static-b~x2-s703",
+     "c2be869b235d5e7fe09104865d229def26341f2bef486d6e55d27cf8364c55af",
+     "completed",
+     "2026-10-15T04:43:16+0000",
+     "comparison",
+     "ew-contract-1:2f013b6f4849",
+     "ew-unicycle-r20",
+     true,
+     true,
+     []
+    ]
+   ],
+   "template": "candidate_eligibility"
+  },
+  {
+   "cypher": "UNWIND $ids AS pid\nMATCH (p:Policy {id:pid})\nMATCH path = (p)-[:DERIVED_FROM*0..8]->(a:Policy)\nOPTIONAL MATCH (run:Run)-[:PRODUCED]->(a)\nOPTIONAL MATCH (run)-[:TRAINED_ON]->(f:Family)\nRETURN pid AS policy_id, length(path) AS depth, a.id AS ancestor_id, a.artifact_hash AS ancestor_hash,\n       run.id AS run_id, run.kind AS run_kind, f.name AS trained_on, run.consumed AS steps\nORDER BY policy_id, depth",
+   "graph": "ew",
+   "graph_revision": 106,
+   "header": [
+    "policy_id",
+    "depth",
+    "ancestor_id",
+    "ancestor_hash",
+    "run_id",
+    "run_kind",
+    "trained_on",
+    "steps"
+   ],
+   "ms": 1.31,
+   "params": {
+    "ids": [
+     "P-open-a",
+     "P-static-a",
+     "P-cross-a",
+     "P-static-b"
+    ]
+   },
+   "record_ids": [
+    "P-cross-a",
+    "P-open-a",
+    "P-static-a",
+    "P-static-b",
+    "run-20261015040303-5486a3",
+    "run-20261015040331-2ce08c",
+    "run-20261015040413-21549a",
+    "run-20261015040548-a267ec"
+   ],
+   "rows": [
+    [
+     "P-cross-a",
+     0,
+     "P-cross-a",
+     "e539fe5a99c0284b4d5e076743123dca96cb44340b3d613b2fd95bbd0ae7f1c1",
+     "run-20261015040413-21549a",
+     "library",
+     "crossing",
+     151552
+    ],
+    [
+     "P-cross-a",
+     1,
+     "P-open-a",
+     "b004eccbb87e06576657e2c2816e422b07e838b43b0d736b6a86482282a5787a",
+     "run-20261015040303-5486a3",
+     "library",
+     "open",
+     120832
+    ],
+    [
+     "P-open-a",
+     0,
+     "P-open-a",
+     "b004eccbb87e06576657e2c2816e422b07e838b43b0d736b6a86482282a5787a",
+     "run-20261015040303-5486a3",
+     "library",
+     "open",
+     120832
+    ],
+    [
+     "P-static-a",
+     0,
+     "P-static-a",
+     "390485ae8caaba1babb63257a97f8d18fe86d19c1af3266135f36bf2f760cf64",
+     "run-20261015040331-2ce08c",
+     "library",
+     "static",
+     151552
+    ],
+    [
+     "P-static-a",
+     1,
+     "P-open-a",
+     "b004eccbb87e06576657e2c2816e422b07e838b43b0d736b6a86482282a5787a",
+     "run-20261015040303-5486a3",
+     "library",
+     "open",
+     120832
+    ],
+    [
+     "P-static-b",
+     0,
+     "P-static-b",
+     "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+     "run-20261015040548-a267ec",
+     "library",
+     "static+custom",
+     100352
+    ],
+    [
+     "P-static-b",
+     1,
+     "P-static-a",
+     "390485ae8caaba1babb63257a97f8d18fe86d19c1af3266135f36bf2f760cf64",
+     "run-20261015040331-2ce08c",
+     "library",
+     "static",
+     151552
+    ],
+    [
+     "P-static-b",
+     2,
+     "P-open-a",
+     "b004eccbb87e06576657e2c2816e422b07e838b43b0d736b6a86482282a5787a",
+     "run-20261015040303-5486a3",
+     "library",
+     "open",
+     120832
+    ]
+   ],
+   "template": "candidate_ancestry"
+  },
+  {
+   "cypher": "MATCH (s:Suite {id:$suite}) WHERE s.role = 'validation'\nUNWIND $ids AS pid\nMATCH (p:Policy {id:pid})\nOPTIONAL MATCH (e:Evaluation)-[:ASSESSED]->(p)\nWHERE (e)-[:ON_SUITE]->(s) AND e.artifact_hash = p.artifact_hash\nRETURN pid AS policy_id, p.artifact_hash AS artifact_hash, e.id AS evaluation_id,\n       e.success_rate AS success_rate, e.collision_rate AS collision_rate, e.timeout_rate AS timeout_rate,\n       e.episodes AS episodes, e.at AS at\nORDER BY policy_id, at",
+   "graph": "ew",
+   "graph_revision": 106,
+   "header": [
+    "policy_id",
+    "artifact_hash",
+    "evaluation_id",
+    "success_rate",
+    "collision_rate",
+    "timeout_rate",
+    "episodes",
+    "at"
+   ],
+   "ms": 0.83,
+   "params": {
+    "ids": [
+     "P-open-a",
+     "P-static-a",
+     "P-cross-a",
+     "P-static-b"
+    ],
+    "suite": "val-target-v1"
+   },
+   "record_ids": [
+    "P-cross-a",
+    "P-open-a",
+    "P-static-a",
+    "P-static-b",
+    "eval-20261015040906-81b5d2",
+    "eval-20261015040909-861253",
+    "eval-20261015040914-b5aef7",
+    "eval-20261015040917-9c0df8"
+   ],
+   "rows": [
+    [
+     "P-cross-a",
+     "e539fe5a99c0284b4d5e076743123dca96cb44340b3d613b2fd95bbd0ae7f1c1",
+     "eval-20261015040914-b5aef7",
+     0.0167,
+     0.55,
+     0.4333,
+     60,
+     "2026-10-15T04:09:14+0000"
+    ],
+    [
+     "P-open-a",
+     "b004eccbb87e06576657e2c2816e422b07e838b43b0d736b6a86482282a5787a",
+     "eval-20261015040906-81b5d2",
+     0.0167,
+     0.9833,
+     0.0,
+     60,
+     "2026-10-15T04:09:06+0000"
+    ],
+    [
+     "P-static-a",
+     "390485ae8caaba1babb63257a97f8d18fe86d19c1af3266135f36bf2f760cf64",
+     "eval-20261015040909-861253",
+     0.2333,
+     0.65,
+     0.1167,
+     60,
+     "2026-10-15T04:09:09+0000"
+    ],
+    [
+     "P-static-b",
+     "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+     "eval-20261015040917-9c0df8",
+     0.3667,
+     0.4833,
+     0.15,
+     60,
+     "2026-10-15T04:09:17+0000"
+    ]
+   ],
+   "template": "matched_validation"
+  },
+  {
+   "cypher": "UNWIND $ids AS pid\nMATCH (p:Policy {id:pid})\nOPTIONAL MATCH (t:Trial)-[:FROM_PARENT]->(p)\nWHERE t.threshold_id = $threshold AND t.recipe = $recipe AND t.budget = $budget\n  AND (t)-[:TARGETS]->(:Family {id:$family})\n  AND (t)-[:UNDER_CONTRACT]->(:Contract {id:$contract})\nOPTIONAL MATCH (t)-[:PRODUCED]->(child:Policy)\nRETURN pid AS policy_id, t.id AS trial_id, t.status AS status, t.threshold_reached AS reached,\n       t.steps_to_threshold AS steps_to_threshold, t.consumed AS consumed, t.budget AS budget,\n       t.seed AS seed, child.id AS child_id, coalesce(t.hypothetical, false) AS hypothetical\nORDER BY policy_id, trial_id",
+   "graph": "ew",
+   "graph_revision": 106,
+   "header": [
+    "policy_id",
+    "trial_id",
+    "status",
+    "reached",
+    "steps_to_threshold",
+    "consumed",
+    "budget",
+    "seed",
+    "child_id",
+    "hypothetical"
+   ],
+   "ms": 1.88,
+   "params": {
+    "budget": 150000,
+    "contract": "ew-contract-1:2f013b6f4849",
+    "family": "static_crossing@43ce902c",
+    "ids": [
+     "P-open-a",
+     "P-static-a",
+     "P-cross-a",
+     "P-static-b"
+    ],
+    "recipe": "ppo-r1",
+    "threshold": "thr-target-1"
+   },
+   "record_ids": [
+    "P-cross-a",
+    "P-cross-a~hist-s501",
+    "P-cross-a~hist-s502",
+    "P-cross-a~x2-s701",
+    "P-cross-a~x2-s702",
+    "P-cross-a~x2-s703",
+    "P-open-a",
+    "P-open-a~hist-s501",
+    "P-open-a~hist-s502",
+    "P-static-a",
+    "P-static-a~cmp-s601",
+    "P-static-a~cmp-s602",
+    "P-static-a~cmp-s603",
+    "P-static-a~hist-s501",
+    "P-static-a~hist-s502",
+    "P-static-b",
+    "P-static-b~6fcae1-s7",
+    "P-static-b~cmp-s601",
+    "P-static-b~cmp-s602",
+    "P-static-b~cmp-s603",
+    "P-static-b~hist-s501",
+    "P-static-b~hist-s502",
+    "P-static-b~x2-s701",
+    "P-static-b~x2-s702",
+    "P-static-b~x2-s703",
+    "trial-20261015042250-29c66d",
+    "trial-20261015042315-15342e",
+    "trial-20261015042318-3b21fc",
+    "trial-20261015042347-eee6ff",
+    "trial-20261015042423-9f3a95",
+    "trial-20261015042423-dcf8b2",
+    "trial-20261015042453-26b36d",
+    "trial-20261015042530-8d9fe7",
+    "trial-20261015042742-e57d03",
+    "trial-20261015042743-37d3b9",
+    "trial-20261015042745-903207",
+    "trial-20261015042851-bac11e",
+    "trial-20261015042853-110017",
+    "trial-20261015042854-0a5abe",
+    "trial-6fcae1-s7",
+    "trial-exp2-P-cross-a-s701",
+    "trial-exp2-P-cross-a-s702",
+    "trial-exp2-P-cross-a-s703",
+    "trial-exp2-P-static-b-s701",
+    "trial-exp2-P-static-b-s702",
+    "trial-exp2-P-static-b-s703"
+   ],
+   "rows": [
+    [
+     "P-cross-a",
+     "trial-20261015042315-15342e",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     501,
+     "P-cross-a~hist-s501",
+     false
+    ],
+    [
+     "P-cross-a",
+     "trial-20261015042318-3b21fc",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     502,
+     "P-cross-a~hist-s502",
+     false
+    ],
+    [
+     "P-cross-a",
+     "trial-exp2-P-cross-a-s701",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     701,
+     "P-cross-a~x2-s701",
+     false
+    ],
+    [
+     "P-cross-a",
+     "trial-exp2-P-cross-a-s702",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     702,
+     "P-cross-a~x2-s702",
+     false
+    ],
+    [
+     "P-cross-a",
+     "trial-exp2-P-cross-a-s703",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     703,
+     "P-cross-a~x2-s703",
+     false
+    ],
+    [
+     "P-open-a",
+     "trial-20261015042250-29c66d",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     501,
+     "P-open-a~hist-s501",
+     false
+    ],
+    [
+     "P-open-a",
+     "trial-20261015042347-eee6ff",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     502,
+     "P-open-a~hist-s502",
+     false
+    ],
+    [
+     "P-static-a",
+     "trial-20261015042423-9f3a95",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     502,
+     "P-static-a~hist-s502",
+     false
+    ],
+    [
+     "P-static-a",
+     "trial-20261015042423-dcf8b2",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     501,
+     "P-static-a~hist-s501",
+     false
+    ],
+    [
+     "P-static-a",
+     "trial-20261015042742-e57d03",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     601,
+     "P-static-a~cmp-s601",
+     false
+    ],
+    [
+     "P-static-a",
+     "trial-20261015042743-37d3b9",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     602,
+     "P-static-a~cmp-s602",
+     false
+    ],
+    [
+     "P-static-a",
+     "trial-20261015042745-903207",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     603,
+     "P-static-a~cmp-s603",
+     false
+    ],
+    [
+     "P-static-b",
+     "trial-20261015042453-26b36d",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     501,
+     "P-static-b~hist-s501",
+     false
+    ],
+    [
+     "P-static-b",
+     "trial-20261015042530-8d9fe7",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     502,
+     "P-static-b~hist-s502",
+     false
+    ],
+    [
+     "P-static-b",
+     "trial-20261015042851-bac11e",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     602,
+     "P-static-b~cmp-s602",
+     false
+    ],
+    [
+     "P-static-b",
+     "trial-20261015042853-110017",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     601,
+     "P-static-b~cmp-s601",
+     false
+    ],
+    [
+     "P-static-b",
+     "trial-20261015042854-0a5abe",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     603,
+     "P-static-b~cmp-s603",
+     false
+    ],
+    [
+     "P-static-b",
+     "trial-6fcae1-s7",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     7,
+     "P-static-b~6fcae1-s7",
+     false
+    ],
+    [
+     "P-static-b",
+     "trial-exp2-P-static-b-s701",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     701,
+     "P-static-b~x2-s701",
+     false
+    ],
+    [
+     "P-static-b",
+     "trial-exp2-P-static-b-s702",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     702,
+     "P-static-b~x2-s702",
+     false
+    ],
+    [
+     "P-static-b",
+     "trial-exp2-P-static-b-s703",
+     "completed",
+     false,
+     null,
+     151552,
+     150000,
+     703,
+     "P-static-b~x2-s703",
+     false
+    ]
+   ],
+   "template": "relevant_trials"
+  },
+  {
+   "cypher": "UNWIND $ids AS pid\nMATCH (t:Trial)-[:FROM_PARENT]->(p:Policy {id:pid})\nMATCH (t)-[:TARGETS]->(f:Family)\nWHERE NOT (f.id = $family AND t.threshold_id = $threshold AND t.recipe = $recipe AND t.budget = $budget)\nRETURN pid AS policy_id, t.id AS trial_id, f.name AS target, t.budget AS budget, t.threshold_reached AS reached",
+   "graph": "ew",
+   "graph_revision": 106,
+   "header": [
+    "policy_id",
+    "trial_id",
+    "target",
+    "budget",
+    "reached"
+   ],
+   "ms": 0.79,
+   "params": {
+    "budget": 150000,
+    "family": "static_crossing@43ce902c",
+    "ids": [
+     "P-open-a",
+     "P-static-a",
+     "P-cross-a",
+     "P-static-b"
+    ],
+    "recipe": "ppo-r1",
+    "threshold": "thr-target-1"
+   },
+   "record_ids": [
+    "P-static-a",
+    "P-static-b",
+    "trial-20261015040704-e327c6",
+    "trial-20261015040948-bb36e2"
+   ],
+   "rows": [
+    [
+     "P-static-a",
+     "trial-20261015040704-e327c6",
+     "crossing",
+     60000,
+     false
+    ],
+    [
+     "P-static-b",
+     "trial-20261015040948-bb36e2",
+     "static_crossing",
+     60000,
+     false
+    ]
+   ],
+   "template": "non_applicable_trials"
+  },
+  {
+   "cypher": "MATCH (o:Origin {id:'scratch'})\nOPTIONAL MATCH (t:Trial)-[:FROM_ORIGIN]->(o)\nWHERE t.threshold_id = $threshold AND t.recipe = $recipe AND t.budget = $budget\n  AND (t)-[:TARGETS]->(:Family {id:$family})\n  AND (t)-[:UNDER_CONTRACT]->(:Contract {id:$contract})\nRETURN t.id AS trial_id, t.status AS status, t.threshold_reached AS reached,\n       t.steps_to_threshold AS steps_to_threshold, t.consumed AS consumed, t.seed AS seed,\n       coalesce(t.hypothetical, false) AS hypothetical\nORDER BY trial_id",
+   "graph": "ew",
+   "graph_revision": 106,
+   "header": [
+    "trial_id",
+    "status",
+    "reached",
+    "steps_to_threshold",
+    "consumed",
+    "seed",
+    "hypothetical"
+   ],
+   "ms": 0.72,
+   "params": {
+    "budget": 150000,
+    "contract": "ew-contract-1:2f013b6f4849",
+    "family": "static_crossing@43ce902c",
+    "recipe": "ppo-r1",
+    "threshold": "thr-target-1"
+   },
+   "record_ids": [
+    "trial-exp1-scratch-s601",
+    "trial-exp1-scratch-s602",
+    "trial-exp1-scratch-s603",
+    "trial-exp2-scratch-s701",
+    "trial-exp2-scratch-s702",
+    "trial-exp2-scratch-s703"
+   ],
+   "rows": [
+    [
+     "trial-exp1-scratch-s601",
+     "completed",
+     false,
+     null,
+     151552,
+     601,
+     false
+    ],
+    [
+     "trial-exp1-scratch-s602",
+     "completed",
+     false,
+     null,
+     151552,
+     602,
+     false
+    ],
+    [
+     "trial-exp1-scratch-s603",
+     "completed",
+     true,
+     75000,
+     151552,
+     603,
+     false
+    ],
+    [
+     "trial-exp2-scratch-s701",
+     "completed",
+     false,
+     null,
+     151552,
+     701,
+     false
+    ],
+    [
+     "trial-exp2-scratch-s702",
+     "completed",
+     false,
+     null,
+     151552,
+     702,
+     false
+    ],
+    [
+     "trial-exp2-scratch-s703",
+     "completed",
+     false,
+     null,
+     151552,
+     703,
+     false
+    ]
+   ],
+   "template": "scratch_trials"
+  },
+  {
+   "cypher": "UNWIND $trial_ids AS tid\nMATCH (t:Trial {id:tid})-[:PRODUCED]->(c:Policy)\nMATCH (s:Suite {id:$suite}) WHERE s.role = 'validation'\nOPTIONAL MATCH (e:Evaluation)-[:ASSESSED]->(c)\nWHERE (e)-[:ON_SUITE]->(s) AND e.artifact_hash = c.artifact_hash\nRETURN tid AS trial_id, c.id AS child_id, e.id AS evaluation_id, e.success_rate AS success_rate,\n       e.collision_rate AS collision_rate, e.at AS at\nORDER BY trial_id, at",
+   "graph": "ew",
+   "graph_revision": 106,
+   "header": [
+    "trial_id",
+    "child_id",
+    "evaluation_id",
+    "success_rate",
+    "collision_rate",
+    "at"
+   ],
+   "ms": 2.15,
+   "params": {
+    "suite": "val-target-v1",
+    "trial_ids": [
+     "trial-20261015042250-29c66d",
+     "trial-20261015042347-eee6ff",
+     "trial-20261015042423-9f3a95",
+     "trial-20261015042423-dcf8b2",
+     "trial-20261015042742-e57d03",
+     "trial-20261015042743-37d3b9",
+     "trial-20261015042745-903207",
+     "trial-20261015042315-15342e",
+     "trial-20261015042318-3b21fc",
+     "trial-exp2-P-cross-a-s701",
+     "trial-exp2-P-cross-a-s702",
+     "trial-exp2-P-cross-a-s703",
+     "trial-20261015042453-26b36d",
+     "trial-20261015042530-8d9fe7",
+     "trial-20261015042851-bac11e",
+     "trial-20261015042853-110017",
+     "trial-20261015042854-0a5abe",
+     "trial-6fcae1-s7",
+     "trial-exp2-P-static-b-s701",
+     "trial-exp2-P-static-b-s702",
+     "trial-exp2-P-static-b-s703",
+     "trial-exp1-scratch-s601",
+     "trial-exp1-scratch-s602",
+     "trial-exp1-scratch-s603",
+     "trial-exp2-scratch-s701",
+     "trial-exp2-scratch-s702",
+     "trial-exp2-scratch-s703"
+    ]
+   },
+   "record_ids": [
+    "P-cross-a~hist-s501",
+    "P-cross-a~hist-s502",
+    "P-cross-a~x2-s701",
+    "P-cross-a~x2-s702",
+    "P-cross-a~x2-s703",
+    "P-open-a~hist-s501",
+    "P-open-a~hist-s502",
+    "P-static-a~cmp-s601",
+    "P-static-a~cmp-s602",
+    "P-static-a~cmp-s603",
+    "P-static-a~hist-s501",
+    "P-static-a~hist-s502",
+    "P-static-b~6fcae1-s7",
+    "P-static-b~cmp-s601",
+    "P-static-b~cmp-s602",
+    "P-static-b~cmp-s603",
+    "P-static-b~hist-s501",
+    "P-static-b~hist-s502",
+    "P-static-b~x2-s701",
+    "P-static-b~x2-s702",
+    "P-static-b~x2-s703",
+    "eval-20261015041745-ed2eb3",
+    "eval-20261015042250-025c19",
+    "eval-20261015042315-91b889",
+    "eval-20261015042318-2a593d",
+    "eval-20261015042347-4e9298",
+    "eval-20261015042423-d02841",
+    "eval-20261015042423-fefd98",
+    "eval-20261015042453-d69eaa",
+    "eval-20261015042530-4e0751",
+    "eval-20261015042637-6099d0",
+    "eval-20261015042638-a61529",
+    "eval-20261015042639-126f9f",
+    "eval-20261015042742-23a8d7",
+    "eval-20261015042743-b3ca92",
+    "eval-20261015042745-78f390",
+    "eval-20261015042851-d9d21c",
+    "eval-20261015042853-ec334e",
+    "eval-20261015042854-9d2b29",
+    "eval-20261015044105-433802",
+    "eval-20261015044105-c85c47",
+    "eval-20261015044106-eab718",
+    "eval-20261015044216-791fe9",
+    "eval-20261015044218-78aff5",
+    "eval-20261015044219-8d87f6",
+    "eval-20261015044316-456a97",
+    "eval-20261015044319-8b4639",
+    "eval-20261015044320-160f8f",
+    "scratch~cmp-s601",
+    "scratch~cmp-s602",
+    "scratch~cmp-s603",
+    "scratch~x2-s701",
+    "scratch~x2-s702",
+    "scratch~x2-s703",
+    "trial-20261015042250-29c66d",
+    "trial-20261015042315-15342e",
+    "trial-20261015042318-3b21fc",
+    "trial-20261015042347-eee6ff",
+    "trial-20261015042423-9f3a95",
+    "trial-20261015042423-dcf8b2",
+    "trial-20261015042453-26b36d",
+    "trial-20261015042530-8d9fe7",
+    "trial-20261015042742-e57d03",
+    "trial-20261015042743-37d3b9",
+    "trial-20261015042745-903207",
+    "trial-20261015042851-bac11e",
+    "trial-20261015042853-110017",
+    "trial-20261015042854-0a5abe",
+    "trial-6fcae1-s7",
+    "trial-exp1-scratch-s601",
+    "trial-exp1-scratch-s602",
+    "trial-exp1-scratch-s603",
+    "trial-exp2-P-cross-a-s701",
+    "trial-exp2-P-cross-a-s702",
+    "trial-exp2-P-cross-a-s703",
+    "trial-exp2-P-static-b-s701",
+    "trial-exp2-P-static-b-s702",
+    "trial-exp2-P-static-b-s703",
+    "trial-exp2-scratch-s701",
+    "trial-exp2-scratch-s702",
+    "trial-exp2-scratch-s703"
+   ],
+   "rows": [
+    [
+     "trial-20261015042250-29c66d",
+     "P-open-a~hist-s501",
+     "eval-20261015042250-025c19",
+     0.1,
+     0.9,
+     "2026-10-15T04:22:50+0000"
+    ],
+    [
+     "trial-20261015042315-15342e",
+     "P-cross-a~hist-s501",
+     "eval-20261015042315-91b889",
+     0.05,
+     0.4833,
+     "2026-10-15T04:23:15+0000"
+    ],
+    [
+     "trial-20261015042318-3b21fc",
+     "P-cross-a~hist-s502",
+     "eval-20261015042318-2a593d",
+     0.0333,
+     0.4667,
+     "2026-10-15T04:23:18+0000"
+    ],
+    [
+     "trial-20261015042347-eee6ff",
+     "P-open-a~hist-s502",
+     "eval-20261015042347-4e9298",
+     0.15,
+     0.8333,
+     "2026-10-15T04:23:47+0000"
+    ],
+    [
+     "trial-20261015042423-9f3a95",
+     "P-static-a~hist-s502",
+     "eval-20261015042423-fefd98",
+     0.4333,
+     0.4333,
+     "2026-10-15T04:24:23+0000"
+    ],
+    [
+     "trial-20261015042423-dcf8b2",
+     "P-static-a~hist-s501",
+     "eval-20261015042423-d02841",
+     0.4333,
+     0.45,
+     "2026-10-15T04:24:23+0000"
+    ],
+    [
+     "trial-20261015042453-26b36d",
+     "P-static-b~hist-s501",
+     "eval-20261015042453-d69eaa",
+     0.4333,
+     0.3833,
+     "2026-10-15T04:24:53+0000"
+    ],
+    [
+     "trial-20261015042530-8d9fe7",
+     "P-static-b~hist-s502",
+     "eval-20261015042530-4e0751",
+     0.45,
+     0.35,
+     "2026-10-15T04:25:30+0000"
+    ],
+    [
+     "trial-20261015042742-e57d03",
+     "P-static-a~cmp-s601",
+     "eval-20261015042742-23a8d7",
+     0.4,
+     0.4667,
+     "2026-10-15T04:27:42+0000"
+    ],
+    [
+     "trial-20261015042743-37d3b9",
+     "P-static-a~cmp-s602",
+     "eval-20261015042743-b3ca92",
+     0.35,
+     0.4667,
+     "2026-10-15T04:27:43+0000"
+    ],
+    [
+     "trial-20261015042745-903207",
+     "P-static-a~cmp-s603",
+     "eval-20261015042745-78f390",
+     0.4333,
+     0.3833,
+     "2026-10-15T04:27:45+0000"
+    ],
+    [
+     "trial-20261015042851-bac11e",
+     "P-static-b~cmp-s602",
+     "eval-20261015042851-d9d21c",
+     0.4833,
+     0.4,
+     "2026-10-15T04:28:51+0000"
+    ],
+    [
+     "trial-20261015042853-110017",
+     "P-static-b~cmp-s601",
+     "eval-20261015042853-ec334e",
+     0.4333,
+     0.35,
+     "2026-10-15T04:28:53+0000"
+    ],
+    [
+     "trial-20261015042854-0a5abe",
+     "P-static-b~cmp-s603",
+     "eval-20261015042854-9d2b29",
+     0.4333,
+     0.4167,
+     "2026-10-15T04:28:54+0000"
+    ],
+    [
+     "trial-6fcae1-s7",
+     "P-static-b~6fcae1-s7",
+     "eval-20261015041745-ed2eb3",
+     0.4167,
+     0.4167,
+     "2026-10-15T04:17:45+0000"
+    ],
+    [
+     "trial-exp1-scratch-s601",
+     "scratch~cmp-s601",
+     "eval-20261015042638-a61529",
+     0.7167,
+     0.2167,
+     "2026-10-15T04:26:38+0000"
+    ],
+    [
+     "trial-exp1-scratch-s602",
+     "scratch~cmp-s602",
+     "eval-20261015042637-6099d0",
+     0.8,
+     0.15,
+     "2026-10-15T04:26:37+0000"
+    ],
+    [
+     "trial-exp1-scratch-s603",
+     "scratch~cmp-s603",
+     "eval-20261015042639-126f9f",
+     0.75,
+     0.1333,
+     "2026-10-15T04:26:39+0000"
+    ],
+    [
+     "trial-exp2-P-cross-a-s701",
+     "P-cross-a~x2-s701",
+     "eval-20261015044216-791fe9",
+     0.0667,
+     0.5,
+     "2026-10-15T04:42:16+0000"
+    ],
+    [
+     "trial-exp2-P-cross-a-s702",
+     "P-cross-a~x2-s702",
+     "eval-20261015044218-78aff5",
+     0.0667,
+     0.45,
+     "2026-10-15T04:42:18+0000"
+    ],
+    [
+     "trial-exp2-P-cross-a-s703",
+     "P-cross-a~x2-s703",
+     "eval-20261015044219-8d87f6",
+     0.0167,
+     0.5,
+     "2026-10-15T04:42:19+0000"
+    ],
+    [
+     "trial-exp2-P-static-b-s701",
+     "P-static-b~x2-s701",
+     "eval-20261015044316-456a97",
+     0.4667,
+     0.3833,
+     "2026-10-15T04:43:16+0000"
+    ],
+    [
+     "trial-exp2-P-static-b-s702",
+     "P-static-b~x2-s702",
+     "eval-20261015044319-8b4639",
+     0.3333,
+     0.4167,
+     "2026-10-15T04:43:19+0000"
+    ],
+    [
+     "trial-exp2-P-static-b-s703",
+     "P-static-b~x2-s703",
+     "eval-20261015044320-160f8f",
+     0.4333,
+     0.3333,
+     "2026-10-15T04:43:20+0000"
+    ],
+    [
+     "trial-exp2-scratch-s701",
+     "scratch~x2-s701",
+     "eval-20261015044105-433802",
+     0.7667,
+     0.1333,
+     "2026-10-15T04:41:05+0000"
+    ],
+    [
+     "trial-exp2-scratch-s702",
+     "scratch~x2-s702",
+     "eval-20261015044105-c85c47",
+     0.7167,
+     0.1667,
+     "2026-10-15T04:41:05+0000"
+    ],
+    [
+     "trial-exp2-scratch-s703",
+     "scratch~x2-s703",
+     "eval-20261015044106-eab718",
+     0.6833,
+     0.2167,
+     "2026-10-15T04:41:06+0000"
+    ]
+   ],
+   "template": "trial_outcomes"
+  }
+ ],
+ "ranking": [
+  {
+   "lineage": [
+    {
+     "depth": 0,
+     "policy": "P-open-a",
+     "steps": 120832,
+     "trained_on": "open"
+    }
+   ],
+   "median_steps_to_threshold": null,
+   "n_completed": 2,
+   "n_not_reached_within_budget": 2,
+   "n_reached": 0,
+   "n_trial_child_scores": 2,
+   "n_unknown_outcome": 0,
+   "option_rank": 2,
+   "p_basis": "0/2 applicable trials reached threshold",
+   "p_reach": 0.25,
+   "policy_id": "P-open-a",
+   "rank": 1,
+   "sort_key": [
+    -0.25,
+    0.9666,
+    1000000000000.0,
+    "P-open-a"
+   ],
+   "trial_child_score": -0.7417,
+   "trials": [
+    {
+     "budget": 150000,
+     "child_id": "P-open-a~hist-s501",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-open-a",
+     "reached": false,
+     "seed": 501,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-20261015042250-29c66d"
+    },
+    {
+     "budget": 150000,
+     "child_id": "P-open-a~hist-s502",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-open-a",
+     "reached": false,
+     "seed": 502,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-20261015042347-eee6ff"
+    }
+   ],
+   "validation": {
+    "collision_rate": 0.9833,
+    "episodes": 60,
+    "evaluation_id": "eval-20261015040906-81b5d2",
+    "score": -0.9666,
+    "success_rate": 0.0167
+   }
+  },
+  {
+   "lineage": [
+    {
+     "depth": 0,
+     "policy": "P-static-a",
+     "steps": 151552,
+     "trained_on": "static"
+    },
+    {
+     "depth": 1,
+     "policy": "P-open-a",
+     "steps": 120832,
+     "trained_on": "open"
+    }
+   ],
+   "median_steps_to_threshold": null,
+   "n_completed": 5,
+   "n_not_reached_within_budget": 5,
+   "n_reached": 0,
+   "n_trial_child_scores": 5,
+   "n_unknown_outcome": 0,
+   "option_rank": 3,
+   "p_basis": "0/5 applicable trials reached threshold",
+   "p_reach": 0.1429,
+   "policy_id": "P-static-a",
+   "rank": 2,
+   "sort_key": [
+    -0.1429,
+    0.4167,
+    1000000000000.0,
+    "P-static-a"
+   ],
+   "trial_child_score": -0.03,
+   "trials": [
+    {
+     "budget": 150000,
+     "child_id": "P-static-a~hist-s502",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-static-a",
+     "reached": false,
+     "seed": 502,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-20261015042423-9f3a95"
+    },
+    {
+     "budget": 150000,
+     "child_id": "P-static-a~hist-s501",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-static-a",
+     "reached": false,
+     "seed": 501,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-20261015042423-dcf8b2"
+    },
+    {
+     "budget": 150000,
+     "child_id": "P-static-a~cmp-s601",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-static-a",
+     "reached": false,
+     "seed": 601,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-20261015042742-e57d03"
+    },
+    {
+     "budget": 150000,
+     "child_id": "P-static-a~cmp-s602",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-static-a",
+     "reached": false,
+     "seed": 602,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-20261015042743-37d3b9"
+    },
+    {
+     "budget": 150000,
+     "child_id": "P-static-a~cmp-s603",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-static-a",
+     "reached": false,
+     "seed": 603,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-20261015042745-903207"
+    }
+   ],
+   "validation": {
+    "collision_rate": 0.65,
+    "episodes": 60,
+    "evaluation_id": "eval-20261015040909-861253",
+    "score": -0.4167,
+    "success_rate": 0.2333
+   }
+  },
+  {
+   "lineage": [
+    {
+     "depth": 0,
+     "policy": "P-cross-a",
+     "steps": 151552,
+     "trained_on": "crossing"
+    },
+    {
+     "depth": 1,
+     "policy": "P-open-a",
+     "steps": 120832,
+     "trained_on": "open"
+    }
+   ],
+   "median_steps_to_threshold": null,
+   "n_completed": 5,
+   "n_not_reached_within_budget": 5,
+   "n_reached": 0,
+   "n_trial_child_scores": 5,
+   "n_unknown_outcome": 0,
+   "option_rank": 4,
+   "p_basis": "0/5 applicable trials reached threshold",
+   "p_reach": 0.1429,
+   "policy_id": "P-cross-a",
+   "rank": 3,
+   "sort_key": [
+    -0.1429,
+    0.5333,
+    1000000000000.0,
+    "P-cross-a"
+   ],
+   "trial_child_score": -0.4333,
+   "trials": [
+    {
+     "budget": 150000,
+     "child_id": "P-cross-a~hist-s501",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-cross-a",
+     "reached": false,
+     "seed": 501,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-20261015042315-15342e"
+    },
+    {
+     "budget": 150000,
+     "child_id": "P-cross-a~hist-s502",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-cross-a",
+     "reached": false,
+     "seed": 502,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-20261015042318-3b21fc"
+    },
+    {
+     "budget": 150000,
+     "child_id": "P-cross-a~x2-s701",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-cross-a",
+     "reached": false,
+     "seed": 701,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-exp2-P-cross-a-s701"
+    },
+    {
+     "budget": 150000,
+     "child_id": "P-cross-a~x2-s702",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-cross-a",
+     "reached": false,
+     "seed": 702,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-exp2-P-cross-a-s702"
+    },
+    {
+     "budget": 150000,
+     "child_id": "P-cross-a~x2-s703",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-cross-a",
+     "reached": false,
+     "seed": 703,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-exp2-P-cross-a-s703"
+    }
+   ],
+   "validation": {
+    "collision_rate": 0.55,
+    "episodes": 60,
+    "evaluation_id": "eval-20261015040914-b5aef7",
+    "score": -0.5333,
+    "success_rate": 0.0167
+   }
+  },
+  {
+   "lineage": [
+    {
+     "depth": 0,
+     "policy": "P-static-b",
+     "steps": 100352,
+     "trained_on": "static+custom"
+    },
+    {
+     "depth": 1,
+     "policy": "P-static-a",
+     "steps": 151552,
+     "trained_on": "static"
+    },
+    {
+     "depth": 2,
+     "policy": "P-open-a",
+     "steps": 120832,
+     "trained_on": "open"
+    }
+   ],
+   "median_steps_to_threshold": null,
+   "n_completed": 9,
+   "n_not_reached_within_budget": 9,
+   "n_reached": 0,
+   "n_trial_child_scores": 9,
+   "n_unknown_outcome": 0,
+   "option_rank": 5,
+   "p_basis": "0/9 applicable trials reached threshold",
+   "p_reach": 0.0909,
+   "policy_id": "P-static-b",
+   "rank": 4,
+   "sort_key": [
+    -0.0909,
+    0.1166,
+    1000000000000.0,
+    "P-static-b"
+   ],
+   "trial_child_score": 0.0481,
+   "trials": [
+    {
+     "budget": 150000,
+     "child_id": "P-static-b~hist-s501",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-static-b",
+     "reached": false,
+     "seed": 501,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-20261015042453-26b36d"
+    },
+    {
+     "budget": 150000,
+     "child_id": "P-static-b~hist-s502",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-static-b",
+     "reached": false,
+     "seed": 502,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-20261015042530-8d9fe7"
+    },
+    {
+     "budget": 150000,
+     "child_id": "P-static-b~cmp-s602",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-static-b",
+     "reached": false,
+     "seed": 602,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-20261015042851-bac11e"
+    },
+    {
+     "budget": 150000,
+     "child_id": "P-static-b~cmp-s601",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-static-b",
+     "reached": false,
+     "seed": 601,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-20261015042853-110017"
+    },
+    {
+     "budget": 150000,
+     "child_id": "P-static-b~cmp-s603",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-static-b",
+     "reached": false,
+     "seed": 603,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-20261015042854-0a5abe"
+    },
+    {
+     "budget": 150000,
+     "child_id": "P-static-b~6fcae1-s7",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-static-b",
+     "reached": false,
+     "seed": 7,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-6fcae1-s7"
+    },
+    {
+     "budget": 150000,
+     "child_id": "P-static-b~x2-s701",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-static-b",
+     "reached": false,
+     "seed": 701,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-exp2-P-static-b-s701"
+    },
+    {
+     "budget": 150000,
+     "child_id": "P-static-b~x2-s702",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-static-b",
+     "reached": false,
+     "seed": 702,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-exp2-P-static-b-s702"
+    },
+    {
+     "budget": 150000,
+     "child_id": "P-static-b~x2-s703",
+     "consumed": 151552,
+     "hypothetical": false,
+     "policy_id": "P-static-b",
+     "reached": false,
+     "seed": 703,
+     "status": "completed",
+     "steps_to_threshold": null,
+     "trial_id": "trial-exp2-P-static-b-s703"
+    }
+   ],
+   "validation": {
+    "collision_rate": 0.4833,
+    "episodes": 60,
+    "evaluation_id": "eval-20261015040917-9c0df8",
+    "score": -0.1166,
+    "success_rate": 0.3667
+   }
+  }
+ ],
+ "recorded_at": "2026-10-15T04:45:07+0000",
+ "rejected": [
+  {
+   "policy_id": "P-mirror",
+   "reasons": [
+    "semantic contract mismatch (ew-contract-1m:6fad9cbfe838 vs ew-contract-1:2f013b6f4849; differs in ray_order)"
+   ]
+  },
+  {
+   "policy_id": "P-static-a~cross-t1",
+   "reasons": [
+    "outside requested catalog (run kind transfer_measurement)"
+   ]
+  },
+  {
+   "policy_id": "P-static-b~tgt-s301",
+   "reasons": [
+    "outside requested catalog (run kind transfer_trial)"
+   ]
+  },
+  {
+   "policy_id": "P-static-b~6fcae1-s7",
+   "reasons": [
+    "outside requested catalog (run kind transfer_trial)"
+   ]
+  },
+  {
+   "policy_id": "P-open-a~hist-s501",
+   "reasons": [
+    "outside requested catalog (run kind transfer_measurement)"
+   ]
+  },
+  {
+   "policy_id": "P-cross-a~hist-s501",
+   "reasons": [
+    "outside requested catalog (run kind transfer_measurement)"
+   ]
+  },
+  {
+   "policy_id": "P-cross-a~hist-s502",
+   "reasons": [
+    "outside requested catalog (run kind transfer_measurement)"
+   ]
+  },
+  {
+   "policy_id": "P-open-a~hist-s502",
+   "reasons": [
+    "outside requested catalog (run kind transfer_measurement)"
+   ]
+  },
+  {
+   "policy_id": "P-static-a~hist-s501",
+   "reasons": [
+    "outside requested catalog (run kind transfer_measurement)"
+   ]
+  },
+  {
+   "policy_id": "P-static-a~hist-s502",
+   "reasons": [
+    "outside requested catalog (run kind transfer_measurement)"
+   ]
+  },
+  {
+   "policy_id": "P-static-b~hist-s501",
+   "reasons": [
+    "outside requested catalog (run kind transfer_measurement)"
+   ]
+  },
+  {
+   "policy_id": "P-static-b~hist-s502",
+   "reasons": [
+    "outside requested catalog (run kind transfer_measurement)"
+   ]
+  },
+  {
+   "policy_id": "scratch~cmp-s602",
+   "reasons": [
+    "outside requested catalog (run kind comparison)"
+   ]
+  },
+  {
+   "policy_id": "scratch~cmp-s601",
+   "reasons": [
+    "outside requested catalog (run kind comparison)"
+   ]
+  },
+  {
+   "policy_id": "scratch~cmp-s603",
+   "reasons": [
+    "outside requested catalog (run kind comparison)"
+   ]
+  },
+  {
+   "policy_id": "P-static-a~cmp-s601",
+   "reasons": [
+    "outside requested catalog (run kind comparison)"
+   ]
+  },
+  {
+   "policy_id": "P-static-a~cmp-s602",
+   "reasons": [
+    "outside requested catalog (run kind comparison)"
+   ]
+  },
+  {
+   "policy_id": "P-static-a~cmp-s603",
+   "reasons": [
+    "outside requested catalog (run kind comparison)"
+   ]
+  },
+  {
+   "policy_id": "P-static-b~cmp-s602",
+   "reasons": [
+    "outside requested catalog (run kind comparison)"
+   ]
+  },
+  {
+   "policy_id": "P-static-b~cmp-s601",
+   "reasons": [
+    "outside requested catalog (run kind comparison)"
+   ]
+  },
+  {
+   "policy_id": "P-static-b~cmp-s603",
+   "reasons": [
+    "outside requested catalog (run kind comparison)"
+   ]
+  },
+  {
+   "policy_id": "scratch~x2-s701",
+   "reasons": [
+    "outside requested catalog (run kind comparison)"
+   ]
+  },
+  {
+   "policy_id": "scratch~x2-s702",
+   "reasons": [
+    "outside requested catalog (run kind comparison)"
+   ]
+  },
+  {
+   "policy_id": "scratch~x2-s703",
+   "reasons": [
+    "outside requested catalog (run kind comparison)"
+   ]
+  },
+  {
+   "policy_id": "P-cross-a~x2-s701",
+   "reasons": [
+    "outside requested catalog (run kind comparison)"
+   ]
+  },
+  {
+   "policy_id": "P-cross-a~x2-s702",
+   "reasons": [
+    "outside requested catalog (run kind comparison)"
+   ]
+  },
+  {
+   "policy_id": "P-cross-a~x2-s703",
+   "reasons": [
+    "outside requested catalog (run kind comparison)"
+   ]
+  },
+  {
+   "policy_id": "P-static-b~x2-s701",
+   "reasons": [
+    "outside requested catalog (run kind comparison)"
+   ]
+  },
+  {
+   "policy_id": "P-static-b~x2-s702",
+   "reasons": [
+    "outside requested catalog (run kind comparison)"
+   ]
+  },
+  {
+   "policy_id": "P-static-b~x2-s703",
+   "reasons": [
+    "outside requested catalog (run kind comparison)"
+   ]
+  }
+ ],
+ "request": {
+  "budget": 150000,
+  "candidate_run_kinds": [
+   "library"
+  ],
+  "contract": "ew-contract-1:2f013b6f4849",
+  "mission": "static_crossing",
+  "recipe": "ppo-r1",
+  "robot": "ew-unicycle-r20",
+  "target_family": "static_crossing",
+  "target_family_id": "static_crossing@43ce902c",
+  "threshold_id": "thr-target-1"
+ },
+ "requirements": [
+  {
+   "competency": "avoid_static",
+   "suite_id": "val-static-v1"
+  },
+  {
+   "competency": "reach_goal",
+   "suite_id": "val-open-v1"
+  },
+  {
+   "competency": "static_crossing_mission",
+   "suite_id": "val-target-v1"
+  },
+  {
+   "competency": "yield_dynamic",
+   "suite_id": "val-crossing-v1"
+  }
+ ],
+ "rule_version": "ew-select-3",
+ "scratch_option": {
+  "n_completed": 6,
+  "n_reached": 1,
+  "n_trial_child_scores": 6,
+  "option_rank": 1,
+  "p_basis": "1/6 applicable scratch trials reached threshold",
+  "p_reach": 0.25,
+  "trial_child_score": 0.5695,
+  "trials": [
+   {
+    "consumed": 151552,
+    "hypothetical": false,
+    "reached": false,
+    "seed": 601,
+    "status": "completed",
+    "steps_to_threshold": null,
+    "trial_id": "trial-exp1-scratch-s601"
+   },
+   {
+    "consumed": 151552,
+    "hypothetical": false,
+    "reached": false,
+    "seed": 602,
+    "status": "completed",
+    "steps_to_threshold": null,
+    "trial_id": "trial-exp1-scratch-s602"
+   },
+   {
+    "consumed": 151552,
+    "hypothetical": false,
+    "reached": true,
+    "seed": 603,
+    "status": "completed",
+    "steps_to_threshold": 75000,
+    "trial_id": "trial-exp1-scratch-s603"
+   },
+   {
+    "consumed": 151552,
+    "hypothetical": false,
+    "reached": false,
+    "seed": 701,
+    "status": "completed",
+    "steps_to_threshold": null,
+    "trial_id": "trial-exp2-scratch-s701"
+   },
+   {
+    "consumed": 151552,
+    "hypothetical": false,
+    "reached": false,
+    "seed": 702,
+    "status": "completed",
+    "steps_to_threshold": null,
+    "trial_id": "trial-exp2-scratch-s702"
+   },
+   {
+    "consumed": 151552,
+    "hypothetical": false,
+    "reached": false,
+    "seed": 703,
+    "status": "completed",
+    "steps_to_threshold": null,
+    "trial_id": "trial-exp2-scratch-s703"
+   }
+  ]
+ },
+ "selected": null,
+ "suite_id": "val-target-v1",
+ "tie_broken_by_id": false
+}

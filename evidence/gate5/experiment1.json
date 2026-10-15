@@ -1,0 +1,1953 @@
+{
+ "protocol": {
+  "id": "exp-1",
+  "frozen_at": "2026-10-15T04:21:55+0000",
+  "target_family": "static_crossing",
+  "recipe": "ppo-r1",
+  "budget": 150000,
+  "threshold_id": "thr-target-1",
+  "validation_suite": "val-target-v1",
+  "validation_points": 4,
+  "final_test_suite": "test-target-v1",
+  "selection_rule": "ew-select-1",
+  "catalog": "library run kind only",
+  "history_seeds": [
+   501,
+   502
+  ],
+  "comparison_seeds": [
+   601,
+   602,
+   603
+  ],
+  "arms": {
+   "graph": "ew-select-1 on graph evidence after phase A",
+   "graph_nohist": "ew-select-1-nohist (matched validation only; same rule otherwise)",
+   "latest": "latest created_at among eligible library checkpoints",
+   "best_val": "max (success_rate - collision_rate) on val-target-v1, ties by policy id",
+   "scratch": "no parent weights, fresh VecNormalize"
+  },
+  "notes": "Identical (parent, seed) pairs are computed once and shared between arms that agree."
+ },
+ "decision_before_phase_a": "deci-20261015042155-5e3c49",
+ "decision_graph": "deci-20261015042530-80fc4b",
+ "decision_nohist": "deci-20261015042530-91d8e3",
+ "graph_revision_at_selection": 46,
+ "arms": {
+  "graph": "P-static-a",
+  "graph_nohist": "P-static-b",
+  "latest": "P-static-b",
+  "best_val": "P-static-b",
+  "scratch": null
+ },
+ "eligible": [
+  "P-cross-a",
+  "P-open-a",
+  "P-static-a",
+  "P-static-b"
+ ],
+ "rejected": [
+  {
+   "policy_id": "P-mirror",
+   "reasons": [
+    "semantic contract mismatch (ew-contract-1m:6fad9cbfe838 vs ew-contract-1:2f013b6f4849; differs in ray_order)"
+   ]
+  },
+  {
+   "policy_id": "P-static-a~cross-t1",
+   "reasons": [
+    "outside requested catalog (run kind transfer_measurement)"
+   ]
+  },
+  {
+   "policy_id": "P-static-b~tgt-s301",
+   "reasons": [
+    "outside requested catalog (run kind transfer_trial)"
+   ]
+  },
+  {
+   "policy_id": "P-static-b~6fcae1-s7",
+   "reasons": [
+    "outside requested catalog (run kind transfer_trial)"
+   ]
+  },
+  {
+   "policy_id": "P-open-a~hist-s501",
+   "reasons": [
+    "outside requested catalog (run kind transfer_measurement)"
+   ]
+  },
+  {
+   "policy_id": "P-cross-a~hist-s501",
+   "reasons": [
+    "outside requested catalog (run kind transfer_measurement)"
+   ]
+  },
+  {
+   "policy_id": "P-cross-a~hist-s502",
+   "reasons": [
+    "outside requested catalog (run kind transfer_measurement)"
+   ]
+  },
+  {
+   "policy_id": "P-open-a~hist-s502",
+   "reasons": [
+    "outside requested catalog (run kind transfer_measurement)"
+   ]
+  },
+  {
+   "policy_id": "P-static-a~hist-s501",
+   "reasons": [
+    "outside requested catalog (run kind transfer_measurement)"
+   ]
+  },
+  {
+   "policy_id": "P-static-a~hist-s502",
+   "reasons": [
+    "outside requested catalog (run kind transfer_measurement)"
+   ]
+  },
+  {
+   "policy_id": "P-static-b~hist-s501",
+   "reasons": [
+    "outside requested catalog (run kind transfer_measurement)"
+   ]
+  },
+  {
+   "policy_id": "P-static-b~hist-s502",
+   "reasons": [
+    "outside requested catalog (run kind transfer_measurement)"
+   ]
+  }
+ ],
+ "ranking_graph": [
+  {
+   "rank": 1,
+   "policy_id": "P-static-a",
+   "p_reach": 0.25,
+   "p_basis": "0/2 applicable trials reached threshold",
+   "validation": {
+    "evaluation_id": "eval-20261015040909-861253",
+    "success_rate": 0.2333,
+    "collision_rate": 0.65,
+    "episodes": 60,
+    "score": -0.4167
+   },
+   "n_completed": 2,
+   "n_reached": 0
+  },
+  {
+   "rank": 2,
+   "policy_id": "P-cross-a",
+   "p_reach": 0.25,
+   "p_basis": "0/2 applicable trials reached threshold",
+   "validation": {
+    "evaluation_id": "eval-20261015040914-b5aef7",
+    "success_rate": 0.0167,
+    "collision_rate": 0.55,
+    "episodes": 60,
+    "score": -0.5333
+   },
+   "n_completed": 2,
+   "n_reached": 0
+  },
+  {
+   "rank": 3,
+   "policy_id": "P-open-a",
+   "p_reach": 0.25,
+   "p_basis": "0/2 applicable trials reached threshold",
+   "validation": {
+    "evaluation_id": "eval-20261015040906-81b5d2",
+    "success_rate": 0.0167,
+    "collision_rate": 0.9833,
+    "episodes": 60,
+    "score": -0.9666
+   },
+   "n_completed": 2,
+   "n_reached": 0
+  },
+  {
+   "rank": 4,
+   "policy_id": "P-static-b",
+   "p_reach": 0.2,
+   "p_basis": "0/3 applicable trials reached threshold",
+   "validation": {
+    "evaluation_id": "eval-20261015040917-9c0df8",
+    "success_rate": 0.3667,
+    "collision_rate": 0.4833,
+    "episodes": 60,
+    "score": -0.1166
+   },
+   "n_completed": 3,
+   "n_reached": 0
+  }
+ ],
+ "phase_a": [
+  {
+   "parent": "P-cross-a",
+   "seed": 501,
+   "child": "P-cross-a~hist-s501",
+   "schedule": [
+    {
+     "steps": 37504,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.0167,
+     "collision_rate": 0.3833,
+     "timeout_rate": 0.6,
+     "mean_success_steps": 242.0,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 12,
+      "mover": 11
+     }
+    },
+    {
+     "steps": 75000,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.0333,
+     "collision_rate": 0.4167,
+     "timeout_rate": 0.55,
+     "mean_success_steps": 161.0,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 13,
+      "mover": 12
+     }
+    },
+    {
+     "steps": 112504,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.0833,
+     "collision_rate": 0.4167,
+     "timeout_rate": 0.5,
+     "mean_success_steps": 199.0,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 11,
+      "mover": 14
+     }
+    },
+    {
+     "steps": 150000,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.0667,
+     "collision_rate": 0.5,
+     "timeout_rate": 0.4333,
+     "mean_success_steps": 100.0,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 12,
+      "mover": 18
+     }
+    },
+    {
+     "steps": 151552,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.05,
+     "collision_rate": 0.4833,
+     "timeout_rate": 0.4667,
+     "mean_success_steps": 105.7,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 13,
+      "mover": 16
+     }
+    }
+   ],
+   "steps_to_threshold": null,
+   "reached": false,
+   "consumed": 151552,
+   "wall_s": 80.1,
+   "final_val": {
+    "episodes": 60,
+    "success_rate": 0.05,
+    "collision_rate": 0.4833,
+    "timeout_rate": 0.4667,
+    "mean_success_steps": 105.7,
+    "collisions_by_object": {
+     "wall": 0,
+     "static": 13,
+     "mover": 16
+    }
+   },
+   "final_val_id": "eval-20261015042315-91b889",
+   "trial_id": "trial-20261015042315-15342e",
+   "run_id": "run-20261015042155-183078"
+  },
+  {
+   "parent": "P-cross-a",
+   "seed": 502,
+   "child": "P-cross-a~hist-s502",
+   "schedule": [
+    {
+     "steps": 37504,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.0167,
+     "collision_rate": 0.4833,
+     "timeout_rate": 0.5,
+     "mean_success_steps": 238.0,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 23,
+      "mover": 6
+     }
+    },
+    {
+     "steps": 75000,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.0667,
+     "collision_rate": 0.3667,
+     "timeout_rate": 0.5667,
+     "mean_success_steps": 205.2,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 10,
+      "mover": 12
+     }
+    },
+    {
+     "steps": 112504,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.0667,
+     "collision_rate": 0.4,
+     "timeout_rate": 0.5333,
+     "mean_success_steps": 141.0,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 17,
+      "mover": 7
+     }
+    },
+    {
+     "steps": 150000,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.05,
+     "collision_rate": 0.4667,
+     "timeout_rate": 0.4833,
+     "mean_success_steps": 150.0,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 16,
+      "mover": 12
+     }
+    },
+    {
+     "steps": 151552,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.0333,
+     "collision_rate": 0.4667,
+     "timeout_rate": 0.5,
+     "mean_success_steps": 168.5,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 16,
+      "mover": 12
+     }
+    }
+   ],
+   "steps_to_threshold": null,
+   "reached": false,
+   "consumed": 151552,
+   "wall_s": 82.8,
+   "final_val": {
+    "episodes": 60,
+    "success_rate": 0.0333,
+    "collision_rate": 0.4667,
+    "timeout_rate": 0.5,
+    "mean_success_steps": 168.5,
+    "collisions_by_object": {
+     "wall": 0,
+     "static": 16,
+     "mover": 12
+    }
+   },
+   "final_val_id": "eval-20261015042318-2a593d",
+   "trial_id": "trial-20261015042318-3b21fc",
+   "run_id": "run-20261015042155-bbb2ab"
+  },
+  {
+   "parent": "P-open-a",
+   "seed": 501,
+   "child": "P-open-a~hist-s501",
+   "schedule": [
+    {
+     "steps": 37504,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.0167,
+     "collision_rate": 0.9833,
+     "timeout_rate": 0.0,
+     "mean_success_steps": 82.0,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 46,
+      "mover": 13
+     }
+    },
+    {
+     "steps": 75000,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.0167,
+     "collision_rate": 0.9833,
+     "timeout_rate": 0.0,
+     "mean_success_steps": 76.0,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 44,
+      "mover": 15
+     }
+    },
+    {
+     "steps": 112504,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.0667,
+     "collision_rate": 0.9333,
+     "timeout_rate": 0.0,
+     "mean_success_steps": 85.5,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 41,
+      "mover": 15
+     }
+    },
+    {
+     "steps": 150000,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.1,
+     "collision_rate": 0.9,
+     "timeout_rate": 0.0,
+     "mean_success_steps": 84.3,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 40,
+      "mover": 14
+     }
+    },
+    {
+     "steps": 151552,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.1,
+     "collision_rate": 0.9,
+     "timeout_rate": 0.0,
+     "mean_success_steps": 84.5,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 40,
+      "mover": 14
+     }
+    }
+   ],
+   "steps_to_threshold": null,
+   "reached": false,
+   "consumed": 151552,
+   "wall_s": 55.0,
+   "final_val": {
+    "episodes": 60,
+    "success_rate": 0.1,
+    "collision_rate": 0.9,
+    "timeout_rate": 0.0,
+    "mean_success_steps": 84.5,
+    "collisions_by_object": {
+     "wall": 0,
+     "static": 40,
+     "mover": 14
+    }
+   },
+   "final_val_id": "eval-20261015042250-025c19",
+   "trial_id": "trial-20261015042250-29c66d",
+   "run_id": "run-20261015042155-c542af"
+  },
+  {
+   "parent": "P-open-a",
+   "seed": 502,
+   "child": "P-open-a~hist-s502",
+   "schedule": [
+    {
+     "steps": 37504,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.0333,
+     "collision_rate": 0.9667,
+     "timeout_rate": 0.0,
+     "mean_success_steps": 81.0,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 46,
+      "mover": 12
+     }
+    },
+    {
+     "steps": 75000,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.0667,
+     "collision_rate": 0.9333,
+     "timeout_rate": 0.0,
+     "mean_success_steps": 80.5,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 39,
+      "mover": 17
+     }
+    },
+    {
+     "steps": 112504,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.0833,
+     "collision_rate": 0.9167,
+     "timeout_rate": 0.0,
+     "mean_success_steps": 114.4,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 30,
+      "mover": 25
+     }
+    },
+    {
+     "steps": 150000,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.1167,
+     "collision_rate": 0.8667,
+     "timeout_rate": 0.0167,
+     "mean_success_steps": 99.9,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 28,
+      "mover": 24
+     }
+    },
+    {
+     "steps": 151552,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.15,
+     "collision_rate": 0.8333,
+     "timeout_rate": 0.0167,
+     "mean_success_steps": 99.7,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 27,
+      "mover": 23
+     }
+    }
+   ],
+   "steps_to_threshold": null,
+   "reached": false,
+   "consumed": 151552,
+   "wall_s": 57.0,
+   "final_val": {
+    "episodes": 60,
+    "success_rate": 0.15,
+    "collision_rate": 0.8333,
+    "timeout_rate": 0.0167,
+    "mean_success_steps": 99.7,
+    "collisions_by_object": {
+     "wall": 0,
+     "static": 27,
+     "mover": 23
+    }
+   },
+   "final_val_id": "eval-20261015042347-4e9298",
+   "trial_id": "trial-20261015042347-eee6ff",
+   "run_id": "run-20261015042250-e1b180"
+  },
+  {
+   "parent": "P-static-a",
+   "seed": 501,
+   "child": "P-static-a~hist-s501",
+   "schedule": [
+    {
+     "steps": 37504,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.3167,
+     "collision_rate": 0.6,
+     "timeout_rate": 0.0833,
+     "mean_success_steps": 100.4,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 12,
+      "mover": 24
+     }
+    },
+    {
+     "steps": 75000,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.4167,
+     "collision_rate": 0.4,
+     "timeout_rate": 0.1833,
+     "mean_success_steps": 96.2,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 7,
+      "mover": 17
+     }
+    },
+    {
+     "steps": 112504,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.4,
+     "collision_rate": 0.3833,
+     "timeout_rate": 0.2167,
+     "mean_success_steps": 99.0,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 5,
+      "mover": 18
+     }
+    },
+    {
+     "steps": 150000,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.4333,
+     "collision_rate": 0.4333,
+     "timeout_rate": 0.1333,
+     "mean_success_steps": 101.2,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 7,
+      "mover": 19
+     }
+    },
+    {
+     "steps": 151552,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.4333,
+     "collision_rate": 0.45,
+     "timeout_rate": 0.1167,
+     "mean_success_steps": 101.0,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 8,
+      "mover": 19
+     }
+    }
+   ],
+   "steps_to_threshold": null,
+   "reached": false,
+   "consumed": 151552,
+   "wall_s": 67.4,
+   "final_val": {
+    "episodes": 60,
+    "success_rate": 0.4333,
+    "collision_rate": 0.45,
+    "timeout_rate": 0.1167,
+    "mean_success_steps": 101.0,
+    "collisions_by_object": {
+     "wall": 0,
+     "static": 8,
+     "mover": 19
+    }
+   },
+   "final_val_id": "eval-20261015042423-d02841",
+   "trial_id": "trial-20261015042423-dcf8b2",
+   "run_id": "run-20261015042315-e43062"
+  },
+  {
+   "parent": "P-static-a",
+   "seed": 502,
+   "child": "P-static-a~hist-s502",
+   "schedule": [
+    {
+     "steps": 37504,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.35,
+     "collision_rate": 0.5333,
+     "timeout_rate": 0.1167,
+     "mean_success_steps": 102.4,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 10,
+      "mover": 22
+     }
+    },
+    {
+     "steps": 75000,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.3667,
+     "collision_rate": 0.5,
+     "timeout_rate": 0.1333,
+     "mean_success_steps": 107.7,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 12,
+      "mover": 18
+     }
+    },
+    {
+     "steps": 112504,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.4333,
+     "collision_rate": 0.4333,
+     "timeout_rate": 0.1333,
+     "mean_success_steps": 101.2,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 9,
+      "mover": 17
+     }
+    },
+    {
+     "steps": 150000,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.4167,
+     "collision_rate": 0.4333,
+     "timeout_rate": 0.15,
+     "mean_success_steps": 97.8,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 9,
+      "mover": 17
+     }
+    },
+    {
+     "steps": 151552,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.4333,
+     "collision_rate": 0.4333,
+     "timeout_rate": 0.1333,
+     "mean_success_steps": 97.1,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 9,
+      "mover": 17
+     }
+    }
+   ],
+   "steps_to_threshold": null,
+   "reached": false,
+   "consumed": 151552,
+   "wall_s": 64.8,
+   "final_val": {
+    "episodes": 60,
+    "success_rate": 0.4333,
+    "collision_rate": 0.4333,
+    "timeout_rate": 0.1333,
+    "mean_success_steps": 97.1,
+    "collisions_by_object": {
+     "wall": 0,
+     "static": 9,
+     "mover": 17
+    }
+   },
+   "final_val_id": "eval-20261015042423-fefd98",
+   "trial_id": "trial-20261015042423-9f3a95",
+   "run_id": "run-20261015042318-ea7fd8"
+  },
+  {
+   "parent": "P-static-b",
+   "seed": 501,
+   "child": "P-static-b~hist-s501",
+   "schedule": [
+    {
+     "steps": 37504,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.3833,
+     "collision_rate": 0.4667,
+     "timeout_rate": 0.15,
+     "mean_success_steps": 102.6,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 8,
+      "mover": 20
+     }
+    },
+    {
+     "steps": 75000,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.3667,
+     "collision_rate": 0.4167,
+     "timeout_rate": 0.2167,
+     "mean_success_steps": 94.2,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 7,
+      "mover": 18
+     }
+    },
+    {
+     "steps": 112504,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.3833,
+     "collision_rate": 0.4,
+     "timeout_rate": 0.2167,
+     "mean_success_steps": 104.4,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 5,
+      "mover": 19
+     }
+    },
+    {
+     "steps": 150000,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.4667,
+     "collision_rate": 0.35,
+     "timeout_rate": 0.1833,
+     "mean_success_steps": 101.6,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 3,
+      "mover": 18
+     }
+    },
+    {
+     "steps": 151552,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.4333,
+     "collision_rate": 0.3833,
+     "timeout_rate": 0.1833,
+     "mean_success_steps": 100.1,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 4,
+      "mover": 19
+     }
+    }
+   ],
+   "steps_to_threshold": null,
+   "reached": false,
+   "consumed": 151552,
+   "wall_s": 66.2,
+   "final_val": {
+    "episodes": 60,
+    "success_rate": 0.4333,
+    "collision_rate": 0.3833,
+    "timeout_rate": 0.1833,
+    "mean_success_steps": 100.1,
+    "collisions_by_object": {
+     "wall": 0,
+     "static": 4,
+     "mover": 19
+    }
+   },
+   "final_val_id": "eval-20261015042453-d69eaa",
+   "trial_id": "trial-20261015042453-26b36d",
+   "run_id": "run-20261015042347-8c1591"
+  },
+  {
+   "parent": "P-static-b",
+   "seed": 502,
+   "child": "P-static-b~hist-s502",
+   "schedule": [
+    {
+     "steps": 37504,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.4333,
+     "collision_rate": 0.45,
+     "timeout_rate": 0.1167,
+     "mean_success_steps": 96.8,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 7,
+      "mover": 20
+     }
+    },
+    {
+     "steps": 75000,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.4667,
+     "collision_rate": 0.4,
+     "timeout_rate": 0.1333,
+     "mean_success_steps": 100.0,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 4,
+      "mover": 20
+     }
+    },
+    {
+     "steps": 112504,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.4333,
+     "collision_rate": 0.4,
+     "timeout_rate": 0.1667,
+     "mean_success_steps": 94.2,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 3,
+      "mover": 21
+     }
+    },
+    {
+     "steps": 150000,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.4,
+     "collision_rate": 0.4,
+     "timeout_rate": 0.2,
+     "mean_success_steps": 93.8,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 3,
+      "mover": 21
+     }
+    },
+    {
+     "steps": 151552,
+     "suite_id": "val-target-v1",
+     "episodes": 60,
+     "success_rate": 0.45,
+     "collision_rate": 0.35,
+     "timeout_rate": 0.2,
+     "mean_success_steps": 99.5,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 2,
+      "mover": 19
+     }
+    }
+   ],
+   "steps_to_threshold": null,
+   "reached": false,
+   "consumed": 151552,
+   "wall_s": 67.6,
+   "final_val": {
+    "episodes": 60,
+    "success_rate": 0.45,
+    "collision_rate": 0.35,
+    "timeout_rate": 0.2,
+    "mean_success_steps": 99.5,
+    "collisions_by_object": {
+     "wall": 0,
+     "static": 2,
+     "mover": 19
+    }
+   },
+   "final_val_id": "eval-20261015042530-4e0751",
+   "trial_id": "trial-20261015042530-8d9fe7",
+   "run_id": "run-20261015042423-828ba5"
+  }
+ ],
+ "phase_b": {
+  "null": [
+   {
+    "parent": null,
+    "seed": 601,
+    "child": "scratch~cmp-s601",
+    "schedule": [
+     {
+      "steps": 37504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4,
+      "collision_rate": 0.3667,
+      "timeout_rate": 0.2333,
+      "mean_success_steps": 183.0,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 8,
+       "mover": 14
+      }
+     },
+     {
+      "steps": 75000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.6667,
+      "collision_rate": 0.3333,
+      "timeout_rate": 0.0,
+      "mean_success_steps": 148.8,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 9,
+       "mover": 11
+      }
+     },
+     {
+      "steps": 112504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.6333,
+      "collision_rate": 0.2833,
+      "timeout_rate": 0.0833,
+      "mean_success_steps": 134.9,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 3,
+       "mover": 14
+      }
+     },
+     {
+      "steps": 150000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.6833,
+      "collision_rate": 0.2833,
+      "timeout_rate": 0.0333,
+      "mean_success_steps": 113.3,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 2,
+       "mover": 15
+      }
+     },
+     {
+      "steps": 151552,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.7167,
+      "collision_rate": 0.2167,
+      "timeout_rate": 0.0667,
+      "mean_success_steps": 114.8,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 3,
+       "mover": 10
+      }
+     }
+    ],
+    "steps_to_threshold": null,
+    "reached": false,
+    "consumed": 151552,
+    "wall_s": 67.9,
+    "final_val": {
+     "episodes": 60,
+     "success_rate": 0.7167,
+     "collision_rate": 0.2167,
+     "timeout_rate": 0.0667,
+     "mean_success_steps": 114.8,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 3,
+      "mover": 10
+     }
+    },
+    "final_val_id": "eval-20261015042638-a61529",
+    "trial_id": null,
+    "run_id": "run-20261015042530-6ae2e0",
+    "final_test": {
+     "evaluation_id": "eval-20261015042901-fe91a7",
+     "episodes": 100,
+     "success_rate": 0.75,
+     "collision_rate": 0.17,
+     "timeout_rate": 0.08,
+     "mean_success_steps": 128.0,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 7,
+      "mover": 10
+     }
+    }
+   },
+   {
+    "parent": null,
+    "seed": 602,
+    "child": "scratch~cmp-s602",
+    "schedule": [
+     {
+      "steps": 37504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.7,
+      "collision_rate": 0.3,
+      "timeout_rate": 0.0,
+      "mean_success_steps": 160.5,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 12,
+       "mover": 6
+      }
+     },
+     {
+      "steps": 75000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.7167,
+      "collision_rate": 0.25,
+      "timeout_rate": 0.0333,
+      "mean_success_steps": 146.1,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 8,
+       "mover": 7
+      }
+     },
+     {
+      "steps": 112504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.7167,
+      "collision_rate": 0.2333,
+      "timeout_rate": 0.05,
+      "mean_success_steps": 119.0,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 2,
+       "mover": 12
+      }
+     },
+     {
+      "steps": 150000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.8167,
+      "collision_rate": 0.1167,
+      "timeout_rate": 0.0667,
+      "mean_success_steps": 104.5,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 0,
+       "mover": 7
+      }
+     },
+     {
+      "steps": 151552,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.8,
+      "collision_rate": 0.15,
+      "timeout_rate": 0.05,
+      "mean_success_steps": 107.8,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 0,
+       "mover": 9
+      }
+     }
+    ],
+    "steps_to_threshold": null,
+    "reached": false,
+    "consumed": 151552,
+    "wall_s": 66.6,
+    "final_val": {
+     "episodes": 60,
+     "success_rate": 0.8,
+     "collision_rate": 0.15,
+     "timeout_rate": 0.05,
+     "mean_success_steps": 107.8,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 0,
+      "mover": 9
+     }
+    },
+    "final_val_id": "eval-20261015042637-6099d0",
+    "trial_id": null,
+    "run_id": "run-20261015042530-ae74d4",
+    "final_test": {
+     "evaluation_id": "eval-20261015042901-9b1dca",
+     "episodes": 100,
+     "success_rate": 0.81,
+     "collision_rate": 0.15,
+     "timeout_rate": 0.04,
+     "mean_success_steps": 109.1,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 0,
+      "mover": 15
+     }
+    }
+   },
+   {
+    "parent": null,
+    "seed": 603,
+    "child": "scratch~cmp-s603",
+    "schedule": [
+     {
+      "steps": 37504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.7,
+      "collision_rate": 0.2167,
+      "timeout_rate": 0.0833,
+      "mean_success_steps": 162.3,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 5,
+       "mover": 8
+      }
+     },
+     {
+      "steps": 75000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.9,
+      "collision_rate": 0.1,
+      "timeout_rate": 0.0,
+      "mean_success_steps": 141.6,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 3,
+       "mover": 3
+      }
+     },
+     {
+      "steps": 112504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.7333,
+      "collision_rate": 0.2667,
+      "timeout_rate": 0.0,
+      "mean_success_steps": 129.7,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 10,
+       "mover": 6
+      }
+     },
+     {
+      "steps": 150000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.7833,
+      "collision_rate": 0.2,
+      "timeout_rate": 0.0167,
+      "mean_success_steps": 120.1,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 4,
+       "mover": 8
+      }
+     },
+     {
+      "steps": 151552,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.75,
+      "collision_rate": 0.1333,
+      "timeout_rate": 0.1167,
+      "mean_success_steps": 117.4,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 5,
+       "mover": 3
+      }
+     }
+    ],
+    "steps_to_threshold": 75000,
+    "reached": true,
+    "consumed": 151552,
+    "wall_s": 68.7,
+    "final_val": {
+     "episodes": 60,
+     "success_rate": 0.75,
+     "collision_rate": 0.1333,
+     "timeout_rate": 0.1167,
+     "mean_success_steps": 117.4,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 5,
+      "mover": 3
+     }
+    },
+    "final_val_id": "eval-20261015042639-126f9f",
+    "trial_id": null,
+    "run_id": "run-20261015042530-4f78f2",
+    "final_test": {
+     "evaluation_id": "eval-20261015042901-d88d12",
+     "episodes": 100,
+     "success_rate": 0.73,
+     "collision_rate": 0.19,
+     "timeout_rate": 0.08,
+     "mean_success_steps": 126.0,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 12,
+      "mover": 7
+     }
+    }
+   }
+  ],
+  "P-static-a": [
+   {
+    "parent": "P-static-a",
+    "seed": 601,
+    "child": "P-static-a~cmp-s601",
+    "schedule": [
+     {
+      "steps": 37504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.3667,
+      "collision_rate": 0.55,
+      "timeout_rate": 0.0833,
+      "mean_success_steps": 100.5,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 11,
+       "mover": 22
+      }
+     },
+     {
+      "steps": 75000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.3833,
+      "collision_rate": 0.4667,
+      "timeout_rate": 0.15,
+      "mean_success_steps": 104.7,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 8,
+       "mover": 20
+      }
+     },
+     {
+      "steps": 112504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.3667,
+      "collision_rate": 0.4167,
+      "timeout_rate": 0.2167,
+      "mean_success_steps": 101.5,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 9,
+       "mover": 16
+      }
+     },
+     {
+      "steps": 150000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4167,
+      "collision_rate": 0.45,
+      "timeout_rate": 0.1333,
+      "mean_success_steps": 100.1,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 9,
+       "mover": 18
+      }
+     },
+     {
+      "steps": 151552,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4,
+      "collision_rate": 0.4667,
+      "timeout_rate": 0.1333,
+      "mean_success_steps": 100.4,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 9,
+       "mover": 19
+      }
+     }
+    ],
+    "steps_to_threshold": null,
+    "reached": false,
+    "consumed": 151552,
+    "wall_s": 65.0,
+    "final_val": {
+     "episodes": 60,
+     "success_rate": 0.4,
+     "collision_rate": 0.4667,
+     "timeout_rate": 0.1333,
+     "mean_success_steps": 100.4,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 9,
+      "mover": 19
+     }
+    },
+    "final_val_id": "eval-20261015042742-23a8d7",
+    "trial_id": "trial-20261015042742-e57d03",
+    "run_id": "run-20261015042637-e8ae90",
+    "final_test": {
+     "evaluation_id": "eval-20261015042906-148a0a",
+     "episodes": 100,
+     "success_rate": 0.35,
+     "collision_rate": 0.46,
+     "timeout_rate": 0.19,
+     "mean_success_steps": 98.1,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 11,
+      "mover": 35
+     }
+    }
+   },
+   {
+    "parent": "P-static-a",
+    "seed": 602,
+    "child": "P-static-a~cmp-s602",
+    "schedule": [
+     {
+      "steps": 37504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.2833,
+      "collision_rate": 0.6,
+      "timeout_rate": 0.1167,
+      "mean_success_steps": 90.2,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 15,
+       "mover": 21
+      }
+     },
+     {
+      "steps": 75000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.3167,
+      "collision_rate": 0.5,
+      "timeout_rate": 0.1833,
+      "mean_success_steps": 92.9,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 12,
+       "mover": 18
+      }
+     },
+     {
+      "steps": 112504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.3167,
+      "collision_rate": 0.5167,
+      "timeout_rate": 0.1667,
+      "mean_success_steps": 110.1,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 15,
+       "mover": 16
+      }
+     },
+     {
+      "steps": 150000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.3333,
+      "collision_rate": 0.4667,
+      "timeout_rate": 0.2,
+      "mean_success_steps": 98.2,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 12,
+       "mover": 16
+      }
+     },
+     {
+      "steps": 151552,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.35,
+      "collision_rate": 0.4667,
+      "timeout_rate": 0.1833,
+      "mean_success_steps": 98.0,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 9,
+       "mover": 19
+      }
+     }
+    ],
+    "steps_to_threshold": null,
+    "reached": false,
+    "consumed": 151552,
+    "wall_s": 64.3,
+    "final_val": {
+     "episodes": 60,
+     "success_rate": 0.35,
+     "collision_rate": 0.4667,
+     "timeout_rate": 0.1833,
+     "mean_success_steps": 98.0,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 9,
+      "mover": 19
+     }
+    },
+    "final_val_id": "eval-20261015042743-b3ca92",
+    "trial_id": "trial-20261015042743-37d3b9",
+    "run_id": "run-20261015042638-dc4a48",
+    "final_test": {
+     "evaluation_id": "eval-20261015042907-386efe",
+     "episodes": 100,
+     "success_rate": 0.31,
+     "collision_rate": 0.4,
+     "timeout_rate": 0.29,
+     "mean_success_steps": 96.1,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 6,
+      "mover": 34
+     }
+    }
+   },
+   {
+    "parent": "P-static-a",
+    "seed": 603,
+    "child": "P-static-a~cmp-s603",
+    "schedule": [
+     {
+      "steps": 37504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.3833,
+      "collision_rate": 0.4667,
+      "timeout_rate": 0.15,
+      "mean_success_steps": 104.2,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 11,
+       "mover": 17
+      }
+     },
+     {
+      "steps": 75000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4,
+      "collision_rate": 0.4667,
+      "timeout_rate": 0.1333,
+      "mean_success_steps": 106.9,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 8,
+       "mover": 20
+      }
+     },
+     {
+      "steps": 112504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4,
+      "collision_rate": 0.3833,
+      "timeout_rate": 0.2167,
+      "mean_success_steps": 98.5,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 5,
+       "mover": 18
+      }
+     },
+     {
+      "steps": 150000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4167,
+      "collision_rate": 0.4167,
+      "timeout_rate": 0.1667,
+      "mean_success_steps": 95.8,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 9,
+       "mover": 16
+      }
+     },
+     {
+      "steps": 151552,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4333,
+      "collision_rate": 0.3833,
+      "timeout_rate": 0.1833,
+      "mean_success_steps": 98.1,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 7,
+       "mover": 16
+      }
+     }
+    ],
+    "steps_to_threshold": null,
+    "reached": false,
+    "consumed": 151552,
+    "wall_s": 66.0,
+    "final_val": {
+     "episodes": 60,
+     "success_rate": 0.4333,
+     "collision_rate": 0.3833,
+     "timeout_rate": 0.1833,
+     "mean_success_steps": 98.1,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 7,
+      "mover": 16
+     }
+    },
+    "final_val_id": "eval-20261015042745-78f390",
+    "trial_id": "trial-20261015042745-903207",
+    "run_id": "run-20261015042639-2dd1c6",
+    "final_test": {
+     "evaluation_id": "eval-20261015042908-09e4a6",
+     "episodes": 100,
+     "success_rate": 0.33,
+     "collision_rate": 0.4,
+     "timeout_rate": 0.27,
+     "mean_success_steps": 95.1,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 7,
+      "mover": 33
+     }
+    }
+   }
+  ],
+  "P-static-b": [
+   {
+    "parent": "P-static-b",
+    "seed": 601,
+    "child": "P-static-b~cmp-s601",
+    "schedule": [
+     {
+      "steps": 37504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4,
+      "collision_rate": 0.5,
+      "timeout_rate": 0.1,
+      "mean_success_steps": 99.4,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 6,
+       "mover": 24
+      }
+     },
+     {
+      "steps": 75000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4,
+      "collision_rate": 0.3833,
+      "timeout_rate": 0.2167,
+      "mean_success_steps": 99.6,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 4,
+       "mover": 19
+      }
+     },
+     {
+      "steps": 112504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.3833,
+      "collision_rate": 0.4333,
+      "timeout_rate": 0.1833,
+      "mean_success_steps": 105.9,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 3,
+       "mover": 23
+      }
+     },
+     {
+      "steps": 150000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.3833,
+      "collision_rate": 0.3667,
+      "timeout_rate": 0.25,
+      "mean_success_steps": 106.3,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 1,
+       "mover": 21
+      }
+     },
+     {
+      "steps": 151552,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4333,
+      "collision_rate": 0.35,
+      "timeout_rate": 0.2167,
+      "mean_success_steps": 105.6,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 2,
+       "mover": 19
+      }
+     }
+    ],
+    "steps_to_threshold": null,
+    "reached": false,
+    "consumed": 151552,
+    "wall_s": 70.7,
+    "final_val": {
+     "episodes": 60,
+     "success_rate": 0.4333,
+     "collision_rate": 0.35,
+     "timeout_rate": 0.2167,
+     "mean_success_steps": 105.6,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 2,
+      "mover": 19
+     }
+    },
+    "final_val_id": "eval-20261015042853-ec334e",
+    "trial_id": "trial-20261015042853-110017",
+    "run_id": "run-20261015042742-29f8c1",
+    "final_test": {
+     "evaluation_id": "eval-20261015042911-8b46ac",
+     "episodes": 100,
+     "success_rate": 0.36,
+     "collision_rate": 0.42,
+     "timeout_rate": 0.22,
+     "mean_success_steps": 101.4,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 5,
+      "mover": 37
+     }
+    }
+   },
+   {
+    "parent": "P-static-b",
+    "seed": 602,
+    "child": "P-static-b~cmp-s602",
+    "schedule": [
+     {
+      "steps": 37504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.3667,
+      "collision_rate": 0.4333,
+      "timeout_rate": 0.2,
+      "mean_success_steps": 94.8,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 7,
+       "mover": 19
+      }
+     },
+     {
+      "steps": 75000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4333,
+      "collision_rate": 0.4333,
+      "timeout_rate": 0.1333,
+      "mean_success_steps": 97.7,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 6,
+       "mover": 20
+      }
+     },
+     {
+      "steps": 112504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.3667,
+      "collision_rate": 0.4333,
+      "timeout_rate": 0.2,
+      "mean_success_steps": 97.5,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 5,
+       "mover": 21
+      }
+     },
+     {
+      "steps": 150000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.45,
+      "collision_rate": 0.4167,
+      "timeout_rate": 0.1333,
+      "mean_success_steps": 106.1,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 3,
+       "mover": 22
+      }
+     },
+     {
+      "steps": 151552,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4833,
+      "collision_rate": 0.4,
+      "timeout_rate": 0.1167,
+      "mean_success_steps": 103.0,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 3,
+       "mover": 21
+      }
+     }
+    ],
+    "steps_to_threshold": null,
+    "reached": false,
+    "consumed": 151552,
+    "wall_s": 68.6,
+    "final_val": {
+     "episodes": 60,
+     "success_rate": 0.4833,
+     "collision_rate": 0.4,
+     "timeout_rate": 0.1167,
+     "mean_success_steps": 103.0,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 3,
+      "mover": 21
+     }
+    },
+    "final_val_id": "eval-20261015042851-d9d21c",
+    "trial_id": "trial-20261015042851-bac11e",
+    "run_id": "run-20261015042743-c70b18",
+    "final_test": {
+     "evaluation_id": "eval-20261015042913-ac3ade",
+     "episodes": 100,
+     "success_rate": 0.3,
+     "collision_rate": 0.45,
+     "timeout_rate": 0.25,
+     "mean_success_steps": 100.1,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 3,
+      "mover": 42
+     }
+    }
+   },
+   {
+    "parent": "P-static-b",
+    "seed": 603,
+    "child": "P-static-b~cmp-s603",
+    "schedule": [
+     {
+      "steps": 37504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.3667,
+      "collision_rate": 0.4833,
+      "timeout_rate": 0.15,
+      "mean_success_steps": 94.2,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 8,
+       "mover": 21
+      }
+     },
+     {
+      "steps": 75000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.45,
+      "collision_rate": 0.4167,
+      "timeout_rate": 0.1333,
+      "mean_success_steps": 100.0,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 6,
+       "mover": 19
+      }
+     },
+     {
+      "steps": 112504,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4833,
+      "collision_rate": 0.3333,
+      "timeout_rate": 0.1833,
+      "mean_success_steps": 95.3,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 2,
+       "mover": 18
+      }
+     },
+     {
+      "steps": 150000,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4333,
+      "collision_rate": 0.4,
+      "timeout_rate": 0.1667,
+      "mean_success_steps": 99.8,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 4,
+       "mover": 20
+      }
+     },
+     {
+      "steps": 151552,
+      "suite_id": "val-target-v1",
+      "episodes": 60,
+      "success_rate": 0.4333,
+      "collision_rate": 0.4167,
+      "timeout_rate": 0.15,
+      "mean_success_steps": 96.9,
+      "collisions_by_object": {
+       "wall": 0,
+       "static": 5,
+       "mover": 20
+      }
+     }
+    ],
+    "steps_to_threshold": null,
+    "reached": false,
+    "consumed": 151552,
+    "wall_s": 68.4,
+    "final_val": {
+     "episodes": 60,
+     "success_rate": 0.4333,
+     "collision_rate": 0.4167,
+     "timeout_rate": 0.15,
+     "mean_success_steps": 96.9,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 5,
+      "mover": 20
+     }
+    },
+    "final_val_id": "eval-20261015042854-9d2b29",
+    "trial_id": "trial-20261015042854-0a5abe",
+    "run_id": "run-20261015042745-b16749",
+    "final_test": {
+     "evaluation_id": "eval-20261015042912-7544be",
+     "episodes": 100,
+     "success_rate": 0.39,
+     "collision_rate": 0.42,
+     "timeout_rate": 0.19,
+     "mean_success_steps": 94.4,
+     "collisions_by_object": {
+      "wall": 0,
+      "static": 6,
+      "mover": 36
+     }
+    }
+   }
+  ]
+ },
+ "costs": {
+  "library_steps": 724992,
+  "library_wall_s": 192.6,
+  "transfer_measurement_steps": 1212416,
+  "phase_a_wall_s": 215.1,
+  "comparison_steps_per_arm_seed": 150000,
+  "phase_b_wall_s": 203.2
+ },
+ "completed_at": "2026-10-15T04:29:13+0000"
+}

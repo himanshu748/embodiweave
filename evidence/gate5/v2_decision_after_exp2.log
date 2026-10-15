@@ -1,0 +1,7 @@
+deci-20261015044402-fa5be6 train_from_parent P-open-a
+Selected P-open-a: p_reach 0.25 (0/2 applicable trials reached threshold), matched val-target-v1 success 0.02 / collision 0.98. Beats P-static-a on transfer evidence (0.25 vs 0.1429). Scratch option p_reach 0.25 (1/6 applicable scratch trials reached threshold) does not beat it.
+P-open-a 0.25 0/2 applicable trials reached threshold -0.9666
+P-static-a 0.1429 0/5 applicable trials reached threshold -0.4167
+P-cross-a 0.1429 0/5 applicable trials reached threshold -0.5333
+P-static-b 0.0909 0/9 applicable trials reached threshold -0.1166
+scratch 0.25 1/6 applicable scratch trials reached threshold

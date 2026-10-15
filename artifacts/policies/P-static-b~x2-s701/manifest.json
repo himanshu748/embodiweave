@@ -1,0 +1,47 @@
+{
+  "artifact_hash": "7fc6886c1b01c235b17ea99169bfa21e0eb0ce559243e873092b598c193c4718",
+  "budget_steps": 150000,
+  "consumed_steps": 151552,
+  "contract_id": "ew-contract-1:2f013b6f4849",
+  "created_at": "2026-10-15T04:43:13+0000",
+  "family": "static_crossing",
+  "family_id": "static_crossing@43ce902c",
+  "files": {
+    "model.zip": "349282e8c2a6cadff4db2b0387ddc6a956ad2d9dad68e2b2cd49131df3f3ae12",
+    "vecnormalize.pkl": "c07dd1df96b3444d81073b4ead7820c117b1af25c8748cfdced60b66b6f92b7f"
+  },
+  "parent_id": "P-static-b",
+  "policy_id": "P-static-b~x2-s701",
+  "recipe": "ppo-r1",
+  "recipe_params": {
+    "batch_size": 256,
+    "clip_range": 0.2,
+    "ent_coef": 0.0,
+    "gae_lambda": 0.95,
+    "gamma": 0.99,
+    "learning_rate": 0.0003,
+    "n_envs": 8,
+    "n_epochs": 5,
+    "n_steps": 256,
+    "net_arch": [
+      64,
+      64
+    ]
+  },
+  "robot": "ew-unicycle-r20",
+  "run_id": "run-20261015044216-a78c36",
+  "runtime": {
+    "dynamics": "ew-dyn-1",
+    "gymnasium": "1.4.0",
+    "machine": "x86_64",
+    "numpy": "2.5.4",
+    "python": "3.13.16",
+    "reward": "ew-reward-1",
+    "stable_baselines3": "2.9.0",
+    "torch": "2.14.1+cu130"
+  },
+  "seed": 701,
+  "status": "completed",
+  "wall_s": 54.22,
+  "weight_delta_l2": 5.136209011077881
+}
