@@ -1,0 +1,2634 @@
+{
+ "final_text": "",
+ "id": "agent-20261015053827-2f1a08",
+ "kind": "agent_trace",
+ "mode": "llm-agent",
+ "model": "openai/gpt-oss-120b",
+ "models_offered": [
+  "allam-2-7b",
+  "canopylabs/orpheus-arabic-saudi",
+  "canopylabs/orpheus-v1-english",
+  "meta-llama/llama-prompt-guard-2-22m",
+  "meta-llama/llama-prompt-guard-2-86m",
+  "openai/gpt-oss-120b",
+  "openai/gpt-oss-20b",
+  "openai/gpt-oss-safeguard-20b",
+  "qwen/qwen3.8-27b",
+  "whisper-large-v3",
+  "whisper-large-v3-turbo"
+ ],
+ "provider": "groq",
+ "recorded_at": "2026-10-15T05:51:54+0000",
+ "rejected_tool_calls": [],
+ "transcript": [
+  {
+   "args": {},
+   "result": {
+    "deployed_policy": "P-static-b",
+    "deployed_target_evaluation": {
+     "evaluation_id": "eval-20261015040917-9c0df8",
+     "summary": {
+      "collision_rate": 0.4833,
+      "collisions_by_object": {
+       "mover": 21,
+       "static": 8,
+       "wall": 0
+      },
+      "episodes": 60,
+      "mean_success_steps": 94.2,
+      "success_rate": 0.3667,
+      "timeout_rate": 0.15
+     }
+    },
+    "failure_evidence": [
+     {
+      "collision_rate": 0.4833,
+      "count": 21,
+      "episodes": [
+       1,
+       2,
+       6,
+       8,
+       9,
+       14,
+       16,
+       17,
+       23,
+       25,
+       26,
+       27,
+       32,
+       33,
+       34,
+       36,
+       39,
+       43,
+       52,
+       56,
+       58
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:collision:mover",
+      "hit": "mover",
+      "hypothesis": "Collisions with the moving obstacle MAY indicate weak yielding to dynamic obstacles. Authored hypothesis, not a measured cause.",
+      "hypothesis_id": "hyp-mover-yield",
+      "outcome": "collision",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": "yield_dynamic",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "collision_rate": 0.4833,
+      "count": 8,
+      "episodes": [
+       5,
+       10,
+       12,
+       13,
+       28,
+       31,
+       42,
+       49
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:collision:static",
+      "hit": "static",
+      "hypothesis": "Collisions with static obstacles MAY indicate weak static avoidance. Authored hypothesis.",
+      "hypothesis_id": "hyp-static-avoid",
+      "outcome": "collision",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": "avoid_static",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "collision_rate": 0.4833,
+      "count": 9,
+      "episodes": [
+       0,
+       3,
+       11,
+       20,
+       37,
+       41,
+       44,
+       48,
+       55
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:timeout",
+      "hit": null,
+      "hypothesis": null,
+      "hypothesis_id": null,
+      "outcome": "timeout",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": null,
+      "suite_id": "val-target-v1"
+     }
+    ],
+    "graph_revision": 2,
+    "mission": "static_crossing",
+    "note": "Failure rows are measured; hypothesis rows are authored and unverified.",
+    "requirements": [
+     {
+      "competency": "avoid_static",
+      "suite_id": "val-static-v1"
+     },
+     {
+      "competency": "reach_goal",
+      "suite_id": "val-open-v1"
+     },
+     {
+      "competency": "static_crossing_mission",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "competency": "yield_dynamic",
+      "suite_id": "val-crossing-v1"
+     }
+    ],
+    "robot": "ew-unicycle-r20"
+   },
+   "tool": "inspect_mission",
+   "turn": 0
+  },
+  {
+   "args": {
+    "params": {},
+    "template": "candidate_eligibility('static_crossing','ew-unicycle-r20')"
+   },
+   "result": {
+    "error": "PermissionError: template candidate_eligibility('static_crossing','ew-unicycle-r20') not allowed"
+   },
+   "tool": "query_graph",
+   "turn": 1
+  },
+  {
+   "args": {
+    "params": {},
+    "template": "policy_lineage_graph()"
+   },
+   "result": {
+    "error": "PermissionError: template policy_lineage_graph() not allowed"
+   },
+   "tool": "query_graph",
+   "turn": 2
+  },
+  {
+   "args": {
+    "params": {},
+    "template": "MATCH (p:Policy) RETURN p.id LIMIT 20"
+   },
+   "result": {
+    "error": "PermissionError: template MATCH (p:Policy) RETURN p.id LIMIT 20 not allowed"
+   },
+   "tool": "query_graph",
+   "turn": 3
+  },
+  {
+   "args": {
+    "params": {
+     "contract": "static_crossing",
+     "robot": "ew-unicycle-r20"
+    },
+    "template": "candidate_eligibility(contract, robot)"
+   },
+   "result": {
+    "error": "PermissionError: template candidate_eligibility(contract, robot) not allowed"
+   },
+   "tool": "query_graph",
+   "turn": 4
+  },
+  {
+   "args": {
+    "params": {
+     "contract": "static_crossing",
+     "robot": "ew-unicycle-r20"
+    },
+    "template": "candidate_eligibility(contract, robot)"
+   },
+   "result": {
+    "error": "PermissionError: template candidate_eligibility(contract, robot) not allowed"
+   },
+   "tool": "query_graph",
+   "turn": 5
+  },
+  {
+   "args": {
+    "params": {
+     "contract": "static_crossing",
+     "robot": "ew-unicycle-r20"
+    },
+    "template": "candidate_eligibility($contract, $robot)"
+   },
+   "result": {
+    "error": "PermissionError: template candidate_eligibility($contract, $robot) not allowed"
+   },
+   "tool": "query_graph",
+   "turn": 6
+  },
+  {
+   "args": {
+    "params": {
+     "contract": "static_crossing",
+     "robot": "ew-unicycle-r20"
+    },
+    "template": "candidate_eligibility($contract, $robot)"
+   },
+   "result": {
+    "error": "PermissionError: template candidate_eligibility($contract, $robot) not allowed"
+   },
+   "tool": "query_graph",
+   "turn": 7
+  },
+  {
+   "args": {
+    "params": {
+     "contract": "static_crossing",
+     "robot": "ew-unicycle-r20"
+    },
+    "template": "candidate_eligibility"
+   },
+   "result": {
+    "cypher": "MATCH (tc:Contract {id:$contract})-[:FOR_ROBOT]->(tr:Robot {id:$robot})\nMATCH (p:Policy)-[:USES_CONTRACT]->(pc:Contract)-[:FOR_ROBOT]->(pr:Robot)\nOPTIONAL MATCH (run:Run)-[:PRODUCED]->(p)\nRETURN p.id AS policy_id, p.artifact_hash AS artifact_hash, p.status AS status, p.created_at AS created_at,\n       run.kind AS run_kind, pc.id AS contract_id, pr.id AS robot_id,\n       pc.id = tc.id AS contract_match, pr.id = tr.id AS robot_match,\n       [k IN ['ray_order','n_rays','history','history_reset','dt_s','action_map','normalization'] WHERE pc[k] <> tc[k]] AS differing_fields\nORDER BY created_at\nLIMIT 200",
+    "graph_revision": 2,
+    "row_count": 0,
+    "rows": [],
+    "template": "candidate_eligibility"
+   },
+   "tool": "query_graph",
+   "turn": 8
+  },
+  {
+   "args": {
+    "params": {
+     "contract": "static_crossing",
+     "robot": "ew-unicycle-r20"
+    },
+    "template": "candidate_eligibility"
+   },
+   "result": {
+    "cypher": "MATCH (tc:Contract {id:$contract})-[:FOR_ROBOT]->(tr:Robot {id:$robot})\nMATCH (p:Policy)-[:USES_CONTRACT]->(pc:Contract)-[:FOR_ROBOT]->(pr:Robot)\nOPTIONAL MATCH (run:Run)-[:PRODUCED]->(p)\nRETURN p.id AS policy_id, p.artifact_hash AS artifact_hash, p.status AS status, p.created_at AS created_at,\n       run.kind AS run_kind, pc.id AS contract_id, pr.id AS robot_id,\n       pc.id = tc.id AS contract_match, pr.id = tr.id AS robot_match,\n       [k IN ['ray_order','n_rays','history','history_reset','dt_s','action_map','normalization'] WHERE pc[k] <> tc[k]] AS differing_fields\nORDER BY created_at\nLIMIT 200",
+    "graph_revision": 2,
+    "row_count": 0,
+    "rows": [],
+    "template": "candidate_eligibility"
+   },
+   "tool": "query_graph",
+   "turn": 9
+  },
+  {
+   "args": {
+    "params": {
+     "budget": 150000,
+     "contract": "static_crossing",
+     "family": "static_crossing",
+     "ids": [],
+     "recipe": "static_crossing",
+     "threshold": 0.9
+    },
+    "template": "relevant_trials"
+   },
+   "result": {
+    "cypher": "UNWIND $ids AS pid\nMATCH (p:Policy {id:pid})\nOPTIONAL MATCH (t:Trial)-[:FROM_PARENT]->(p)\nWHERE t.threshold_id = $threshold AND t.recipe = $recipe AND t.budget = $budget\n  AND (t)-[:TARGETS]->(:Family {id:$family})\n  AND (t)-[:UNDER_CONTRACT]->(:Contract {id:$contract})\nOPTIONAL MATCH (t)-[:PRODUCED]->(child:Policy)\nRETURN pid AS policy_id, t.id AS trial_id, t.status AS status, t.threshold_reached AS reached,\n       t.steps_to_threshold AS steps_to_threshold, t.consumed AS consumed, t.budget AS budget,\n       t.seed AS seed, child.id AS child_id, coalesce(t.hypothetical, false) AS hypothetical\nORDER BY policy_id, trial_id",
+    "graph_revision": 2,
+    "row_count": 0,
+    "rows": [],
+    "template": "relevant_trials"
+   },
+   "tool": "query_graph",
+   "turn": 10
+  },
+  {
+   "args": {
+    "params": {
+     "ids": [
+      "P-static-b"
+     ]
+    },
+    "template": "candidate_ancestry"
+   },
+   "result": {
+    "cypher": "UNWIND $ids AS pid\nMATCH (p:Policy {id:pid})\nMATCH path = (p)-[:DERIVED_FROM*0..8]->(a:Policy)\nOPTIONAL MATCH (run:Run)-[:PRODUCED]->(a)\nOPTIONAL MATCH (run)-[:TRAINED_ON]->(f:Family)\nRETURN pid AS policy_id, length(path) AS depth, a.id AS ancestor_id, a.artifact_hash AS ancestor_hash,\n       run.id AS run_id, run.kind AS run_kind, f.name AS trained_on, run.consumed AS steps\nORDER BY policy_id, depth",
+    "graph_revision": 2,
+    "row_count": 3,
+    "rows": [
+     {
+      "ancestor_hash": "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+      "ancestor_id": "P-static-b",
+      "depth": 0,
+      "policy_id": "P-static-b",
+      "run_id": "run-20261015040548-a267ec",
+      "run_kind": "library",
+      "steps": 100352,
+      "trained_on": "static+custom"
+     },
+     {
+      "ancestor_hash": "390485ae8caaba1babb63257a97f8d18fe86d19c1af3266135f36bf2f760cf64",
+      "ancestor_id": "P-static-a",
+      "depth": 1,
+      "policy_id": "P-static-b",
+      "run_id": "run-20261015040331-2ce08c",
+      "run_kind": "library",
+      "steps": 151552,
+      "trained_on": "static"
+     },
+     {
+      "ancestor_hash": "b004eccbb87e06576657e2c2816e422b07e838b43b0d736b6a86482282a5787a",
+      "ancestor_id": "P-open-a",
+      "depth": 2,
+      "policy_id": "P-static-b",
+      "run_id": "run-20261015040303-5486a3",
+      "run_kind": "library",
+      "steps": 120832,
+      "trained_on": "open"
+     }
+    ],
+    "template": "candidate_ancestry"
+   },
+   "tool": "query_graph",
+   "turn": 11
+  },
+  {
+   "args": {
+    "params": {
+     "mission": "static_crossing"
+    },
+    "template": "mission_requirements"
+   },
+   "result": {
+    "cypher": "MATCH (m:Mission {id:$mission})-[:REQUIRES*1..6]->(c:Competency)\nOPTIONAL MATCH (s:Suite)-[:EVALUATES]->(c) WHERE s.role = 'validation'\nRETURN DISTINCT c.id AS competency, s.id AS suite_id\nORDER BY competency",
+    "graph_revision": 2,
+    "row_count": 4,
+    "rows": [
+     {
+      "competency": "avoid_static",
+      "suite_id": "val-static-v1"
+     },
+     {
+      "competency": "reach_goal",
+      "suite_id": "val-open-v1"
+     },
+     {
+      "competency": "static_crossing_mission",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "competency": "yield_dynamic",
+      "suite_id": "val-crossing-v1"
+     }
+    ],
+    "template": "mission_requirements"
+   },
+   "tool": "query_graph",
+   "turn": 12
+  },
+  {
+   "args": {},
+   "result": {
+    "deployed_policy": "P-static-b",
+    "deployed_target_evaluation": {
+     "evaluation_id": "eval-20261015040917-9c0df8",
+     "summary": {
+      "collision_rate": 0.4833,
+      "collisions_by_object": {
+       "mover": 21,
+       "static": 8,
+       "wall": 0
+      },
+      "episodes": 60,
+      "mean_success_steps": 94.2,
+      "success_rate": 0.3667,
+      "timeout_rate": 0.15
+     }
+    },
+    "failure_evidence": [
+     {
+      "collision_rate": 0.4833,
+      "count": 21,
+      "episodes": [
+       1,
+       2,
+       6,
+       8,
+       9,
+       14,
+       16,
+       17,
+       23,
+       25,
+       26,
+       27,
+       32,
+       33,
+       34,
+       36,
+       39,
+       43,
+       52,
+       56,
+       58
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:collision:mover",
+      "hit": "mover",
+      "hypothesis": "Collisions with the moving obstacle MAY indicate weak yielding to dynamic obstacles. Authored hypothesis, not a measured cause.",
+      "hypothesis_id": "hyp-mover-yield",
+      "outcome": "collision",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": "yield_dynamic",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "collision_rate": 0.4833,
+      "count": 8,
+      "episodes": [
+       5,
+       10,
+       12,
+       13,
+       28,
+       31,
+       42,
+       49
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:collision:static",
+      "hit": "static",
+      "hypothesis": "Collisions with static obstacles MAY indicate weak static avoidance. Authored hypothesis.",
+      "hypothesis_id": "hyp-static-avoid",
+      "outcome": "collision",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": "avoid_static",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "collision_rate": 0.4833,
+      "count": 9,
+      "episodes": [
+       0,
+       3,
+       11,
+       20,
+       37,
+       41,
+       44,
+       48,
+       55
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:timeout",
+      "hit": null,
+      "hypothesis": null,
+      "hypothesis_id": null,
+      "outcome": "timeout",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": null,
+      "suite_id": "val-target-v1"
+     }
+    ],
+    "graph_revision": 2,
+    "mission": "static_crossing",
+    "note": "Failure rows are measured; hypothesis rows are authored and unverified.",
+    "requirements": [
+     {
+      "competency": "avoid_static",
+      "suite_id": "val-static-v1"
+     },
+     {
+      "competency": "reach_goal",
+      "suite_id": "val-open-v1"
+     },
+     {
+      "competency": "static_crossing_mission",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "competency": "yield_dynamic",
+      "suite_id": "val-crossing-v1"
+     }
+    ],
+    "robot": "ew-unicycle-r20"
+   },
+   "tool": "inspect_mission",
+   "turn": 13
+  },
+  {
+   "args": {
+    "params": {
+     "ids": [
+      "P-static-b",
+      "P-static-a",
+      "P-open-a"
+     ],
+     "suite": "val-static-v1"
+    },
+    "template": "matched_validation"
+   },
+   "result": {
+    "cypher": "MATCH (s:Suite {id:$suite}) WHERE s.role = 'validation'\nUNWIND $ids AS pid\nMATCH (p:Policy {id:pid})\nOPTIONAL MATCH (e:Evaluation)-[:ASSESSED]->(p)\nWHERE (e)-[:ON_SUITE]->(s) AND e.artifact_hash = p.artifact_hash\nRETURN pid AS policy_id, p.artifact_hash AS artifact_hash, e.id AS evaluation_id,\n       e.success_rate AS success_rate, e.collision_rate AS collision_rate, e.timeout_rate AS timeout_rate,\n       e.episodes AS episodes, e.at AS at\nORDER BY policy_id, at",
+    "graph_revision": 2,
+    "row_count": 3,
+    "rows": [
+     {
+      "artifact_hash": "b004eccbb87e06576657e2c2816e422b07e838b43b0d736b6a86482282a5787a",
+      "at": null,
+      "collision_rate": null,
+      "episodes": null,
+      "evaluation_id": null,
+      "policy_id": "P-open-a",
+      "success_rate": null,
+      "timeout_rate": null
+     },
+     {
+      "artifact_hash": "390485ae8caaba1babb63257a97f8d18fe86d19c1af3266135f36bf2f760cf64",
+      "at": "2026-10-15T04:06:21+0000",
+      "collision_rate": 0.175,
+      "episodes": 40,
+      "evaluation_id": "eval-20261015040621-3617b1",
+      "policy_id": "P-static-a",
+      "success_rate": 0.375,
+      "timeout_rate": 0.45
+     },
+     {
+      "artifact_hash": "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+      "at": "2026-10-15T04:06:29+0000",
+      "collision_rate": 0.175,
+      "episodes": 40,
+      "evaluation_id": "eval-20261015040629-a5924e",
+      "policy_id": "P-static-b",
+      "success_rate": 0.425,
+      "timeout_rate": 0.4
+     }
+    ],
+    "template": "matched_validation"
+   },
+   "tool": "query_graph",
+   "turn": 14
+  },
+  {
+   "args": {
+    "params": {
+     "evaluation": "eval-202610150406??",
+     "suite": "val-static-v1"
+    },
+    "template": "failure_inspection"
+   },
+   "result": {
+    "cypher": "MATCH (e:Evaluation {id:$evaluation})-[:ASSESSED]->(p:Policy)\nMATCH (e)-[:ON_SUITE]->(s:Suite)\nOPTIONAL MATCH (f:Failure)-[:OBSERVED_IN]->(e)\nOPTIONAL MATCH (h:Hypothesis)-[:ABOUT]->(f)\nOPTIONAL MATCH (h)-[:SUGGESTS]->(c:Competency)\nRETURN p.id AS policy_id, s.id AS suite_id, e.success_rate AS success_rate, e.collision_rate AS collision_rate,\n       f.id AS failure_id, f.outcome AS outcome, f.hit AS hit, f.count AS count, f.episodes AS episodes,\n       h.id AS hypothesis_id, h.text AS hypothesis, c.id AS suggests_competency",
+    "graph_revision": 2,
+    "row_count": 0,
+    "rows": [],
+    "template": "failure_inspection"
+   },
+   "tool": "query_graph",
+   "turn": 15
+  },
+  {
+   "args": {
+    "params": {
+     "contract": "static_crossing",
+     "robot": "ew-unicycle-r20"
+    },
+    "template": "candidate_eligibility"
+   },
+   "result": {
+    "cypher": "MATCH (tc:Contract {id:$contract})-[:FOR_ROBOT]->(tr:Robot {id:$robot})\nMATCH (p:Policy)-[:USES_CONTRACT]->(pc:Contract)-[:FOR_ROBOT]->(pr:Robot)\nOPTIONAL MATCH (run:Run)-[:PRODUCED]->(p)\nRETURN p.id AS policy_id, p.artifact_hash AS artifact_hash, p.status AS status, p.created_at AS created_at,\n       run.kind AS run_kind, pc.id AS contract_id, pr.id AS robot_id,\n       pc.id = tc.id AS contract_match, pr.id = tr.id AS robot_match,\n       [k IN ['ray_order','n_rays','history','history_reset','dt_s','action_map','normalization'] WHERE pc[k] <> tc[k]] AS differing_fields\nORDER BY created_at\nLIMIT 200",
+    "graph_revision": 2,
+    "row_count": 0,
+    "rows": [],
+    "template": "candidate_eligibility"
+   },
+   "tool": "query_graph",
+   "turn": 16
+  },
+  {
+   "args": {},
+   "result": {
+    "deployed_policy": "P-static-b",
+    "deployed_target_evaluation": {
+     "evaluation_id": "eval-20261015040917-9c0df8",
+     "summary": {
+      "collision_rate": 0.4833,
+      "collisions_by_object": {
+       "mover": 21,
+       "static": 8,
+       "wall": 0
+      },
+      "episodes": 60,
+      "mean_success_steps": 94.2,
+      "success_rate": 0.3667,
+      "timeout_rate": 0.15
+     }
+    },
+    "failure_evidence": [
+     {
+      "collision_rate": 0.4833,
+      "count": 21,
+      "episodes": [
+       1,
+       2,
+       6,
+       8,
+       9,
+       14,
+       16,
+       17,
+       23,
+       25,
+       26,
+       27,
+       32,
+       33,
+       34,
+       36,
+       39,
+       43,
+       52,
+       56,
+       58
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:collision:mover",
+      "hit": "mover",
+      "hypothesis": "Collisions with the moving obstacle MAY indicate weak yielding to dynamic obstacles. Authored hypothesis, not a measured cause.",
+      "hypothesis_id": "hyp-mover-yield",
+      "outcome": "collision",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": "yield_dynamic",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "collision_rate": 0.4833,
+      "count": 8,
+      "episodes": [
+       5,
+       10,
+       12,
+       13,
+       28,
+       31,
+       42,
+       49
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:collision:static",
+      "hit": "static",
+      "hypothesis": "Collisions with static obstacles MAY indicate weak static avoidance. Authored hypothesis.",
+      "hypothesis_id": "hyp-static-avoid",
+      "outcome": "collision",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": "avoid_static",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "collision_rate": 0.4833,
+      "count": 9,
+      "episodes": [
+       0,
+       3,
+       11,
+       20,
+       37,
+       41,
+       44,
+       48,
+       55
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:timeout",
+      "hit": null,
+      "hypothesis": null,
+      "hypothesis_id": null,
+      "outcome": "timeout",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": null,
+      "suite_id": "val-target-v1"
+     }
+    ],
+    "graph_revision": 2,
+    "mission": "static_crossing",
+    "note": "Failure rows are measured; hypothesis rows are authored and unverified.",
+    "requirements": [
+     {
+      "competency": "avoid_static",
+      "suite_id": "val-static-v1"
+     },
+     {
+      "competency": "reach_goal",
+      "suite_id": "val-open-v1"
+     },
+     {
+      "competency": "static_crossing_mission",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "competency": "yield_dynamic",
+      "suite_id": "val-crossing-v1"
+     }
+    ],
+    "robot": "ew-unicycle-r20"
+   },
+   "tool": "inspect_mission",
+   "turn": 17
+  },
+  {
+   "args": {
+    "params": {
+     "contract": "static_crossing",
+     "robot": "ew-unicycle-r20"
+    },
+    "template": "candidate_eligibility"
+   },
+   "result": {
+    "cypher": "MATCH (tc:Contract {id:$contract})-[:FOR_ROBOT]->(tr:Robot {id:$robot})\nMATCH (p:Policy)-[:USES_CONTRACT]->(pc:Contract)-[:FOR_ROBOT]->(pr:Robot)\nOPTIONAL MATCH (run:Run)-[:PRODUCED]->(p)\nRETURN p.id AS policy_id, p.artifact_hash AS artifact_hash, p.status AS status, p.created_at AS created_at,\n       run.kind AS run_kind, pc.id AS contract_id, pr.id AS robot_id,\n       pc.id = tc.id AS contract_match, pr.id = tr.id AS robot_match,\n       [k IN ['ray_order','n_rays','history','history_reset','dt_s','action_map','normalization'] WHERE pc[k] <> tc[k]] AS differing_fields\nORDER BY created_at\nLIMIT 200",
+    "graph_revision": 2,
+    "row_count": 0,
+    "rows": [],
+    "template": "candidate_eligibility"
+   },
+   "tool": "query_graph",
+   "turn": 18
+  },
+  {
+   "args": {},
+   "result": {
+    "deployed_policy": "P-static-b",
+    "deployed_target_evaluation": {
+     "evaluation_id": "eval-20261015040917-9c0df8",
+     "summary": {
+      "collision_rate": 0.4833,
+      "collisions_by_object": {
+       "mover": 21,
+       "static": 8,
+       "wall": 0
+      },
+      "episodes": 60,
+      "mean_success_steps": 94.2,
+      "success_rate": 0.3667,
+      "timeout_rate": 0.15
+     }
+    },
+    "failure_evidence": [
+     {
+      "collision_rate": 0.4833,
+      "count": 21,
+      "episodes": [
+       1,
+       2,
+       6,
+       8,
+       9,
+       14,
+       16,
+       17,
+       23,
+       25,
+       26,
+       27,
+       32,
+       33,
+       34,
+       36,
+       39,
+       43,
+       52,
+       56,
+       58
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:collision:mover",
+      "hit": "mover",
+      "hypothesis": "Collisions with the moving obstacle MAY indicate weak yielding to dynamic obstacles. Authored hypothesis, not a measured cause.",
+      "hypothesis_id": "hyp-mover-yield",
+      "outcome": "collision",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": "yield_dynamic",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "collision_rate": 0.4833,
+      "count": 8,
+      "episodes": [
+       5,
+       10,
+       12,
+       13,
+       28,
+       31,
+       42,
+       49
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:collision:static",
+      "hit": "static",
+      "hypothesis": "Collisions with static obstacles MAY indicate weak static avoidance. Authored hypothesis.",
+      "hypothesis_id": "hyp-static-avoid",
+      "outcome": "collision",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": "avoid_static",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "collision_rate": 0.4833,
+      "count": 9,
+      "episodes": [
+       0,
+       3,
+       11,
+       20,
+       37,
+       41,
+       44,
+       48,
+       55
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:timeout",
+      "hit": null,
+      "hypothesis": null,
+      "hypothesis_id": null,
+      "outcome": "timeout",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": null,
+      "suite_id": "val-target-v1"
+     }
+    ],
+    "graph_revision": 2,
+    "mission": "static_crossing",
+    "note": "Failure rows are measured; hypothesis rows are authored and unverified.",
+    "requirements": [
+     {
+      "competency": "avoid_static",
+      "suite_id": "val-static-v1"
+     },
+     {
+      "competency": "reach_goal",
+      "suite_id": "val-open-v1"
+     },
+     {
+      "competency": "static_crossing_mission",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "competency": "yield_dynamic",
+      "suite_id": "val-crossing-v1"
+     }
+    ],
+    "robot": "ew-unicycle-r20"
+   },
+   "tool": "inspect_mission",
+   "turn": 19
+  },
+  {
+   "args": {
+    "params": {
+     "ids": [
+      "P-static-b"
+     ]
+    },
+    "template": "candidate_ancestry"
+   },
+   "result": {
+    "cypher": "UNWIND $ids AS pid\nMATCH (p:Policy {id:pid})\nMATCH path = (p)-[:DERIVED_FROM*0..8]->(a:Policy)\nOPTIONAL MATCH (run:Run)-[:PRODUCED]->(a)\nOPTIONAL MATCH (run)-[:TRAINED_ON]->(f:Family)\nRETURN pid AS policy_id, length(path) AS depth, a.id AS ancestor_id, a.artifact_hash AS ancestor_hash,\n       run.id AS run_id, run.kind AS run_kind, f.name AS trained_on, run.consumed AS steps\nORDER BY policy_id, depth",
+    "graph_revision": 2,
+    "row_count": 3,
+    "rows": [
+     {
+      "ancestor_hash": "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+      "ancestor_id": "P-static-b",
+      "depth": 0,
+      "policy_id": "P-static-b",
+      "run_id": "run-20261015040548-a267ec",
+      "run_kind": "library",
+      "steps": 100352,
+      "trained_on": "static+custom"
+     },
+     {
+      "ancestor_hash": "390485ae8caaba1babb63257a97f8d18fe86d19c1af3266135f36bf2f760cf64",
+      "ancestor_id": "P-static-a",
+      "depth": 1,
+      "policy_id": "P-static-b",
+      "run_id": "run-20261015040331-2ce08c",
+      "run_kind": "library",
+      "steps": 151552,
+      "trained_on": "static"
+     },
+     {
+      "ancestor_hash": "b004eccbb87e06576657e2c2816e422b07e838b43b0d736b6a86482282a5787a",
+      "ancestor_id": "P-open-a",
+      "depth": 2,
+      "policy_id": "P-static-b",
+      "run_id": "run-20261015040303-5486a3",
+      "run_kind": "library",
+      "steps": 120832,
+      "trained_on": "open"
+     }
+    ],
+    "template": "candidate_ancestry"
+   },
+   "tool": "query_graph",
+   "turn": 20
+  },
+  {
+   "args": {
+    "params": {
+     "ids": [
+      "P-deployed"
+     ]
+    },
+    "template": "candidate_ancestry"
+   },
+   "result": {
+    "cypher": "UNWIND $ids AS pid\nMATCH (p:Policy {id:pid})\nMATCH path = (p)-[:DERIVED_FROM*0..8]->(a:Policy)\nOPTIONAL MATCH (run:Run)-[:PRODUCED]->(a)\nOPTIONAL MATCH (run)-[:TRAINED_ON]->(f:Family)\nRETURN pid AS policy_id, length(path) AS depth, a.id AS ancestor_id, a.artifact_hash AS ancestor_hash,\n       run.id AS run_id, run.kind AS run_kind, f.name AS trained_on, run.consumed AS steps\nORDER BY policy_id, depth",
+    "graph_revision": 2,
+    "row_count": 0,
+    "rows": [],
+    "template": "candidate_ancestry"
+   },
+   "tool": "query_graph",
+   "turn": 21
+  },
+  {
+   "args": {
+    "params": {
+     "contract": "static_crossing"
+    },
+    "template": "MATCH (c:Contract {id:$contract})-[:DEPLOYS]->(p:Policy) RETURN p.id, p.artifact_hash"
+   },
+   "result": {
+    "error": "PermissionError: template MATCH (c:Contract {id:$contract})-[:DEPLOYS]->(p:Policy) RETURN p.id, p.artifact_hash not allowed"
+   },
+   "tool": "query_graph",
+   "turn": 22
+  },
+  {
+   "args": {
+    "params": {
+     "contract": "static_crossing"
+    },
+    "template": "MATCH (c:Contract {id:$contract})-[:DEPLOYS]->(p:Policy) RETURN p.id, p.artifact_hash"
+   },
+   "result": {
+    "error": "PermissionError: template MATCH (c:Contract {id:$contract})-[:DEPLOYS]->(p:Policy) RETURN p.id, p.artifact_hash not allowed"
+   },
+   "tool": "query_graph",
+   "turn": 23
+  },
+  {
+   "args": {},
+   "result": {
+    "deployed_policy": "P-static-b",
+    "deployed_target_evaluation": {
+     "evaluation_id": "eval-20261015040917-9c0df8",
+     "summary": {
+      "collision_rate": 0.4833,
+      "collisions_by_object": {
+       "mover": 21,
+       "static": 8,
+       "wall": 0
+      },
+      "episodes": 60,
+      "mean_success_steps": 94.2,
+      "success_rate": 0.3667,
+      "timeout_rate": 0.15
+     }
+    },
+    "failure_evidence": [
+     {
+      "collision_rate": 0.4833,
+      "count": 21,
+      "episodes": [
+       1,
+       2,
+       6,
+       8,
+       9,
+       14,
+       16,
+       17,
+       23,
+       25,
+       26,
+       27,
+       32,
+       33,
+       34,
+       36,
+       39,
+       43,
+       52,
+       56,
+       58
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:collision:mover",
+      "hit": "mover",
+      "hypothesis": "Collisions with the moving obstacle MAY indicate weak yielding to dynamic obstacles. Authored hypothesis, not a measured cause.",
+      "hypothesis_id": "hyp-mover-yield",
+      "outcome": "collision",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": "yield_dynamic",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "collision_rate": 0.4833,
+      "count": 8,
+      "episodes": [
+       5,
+       10,
+       12,
+       13,
+       28,
+       31,
+       42,
+       49
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:collision:static",
+      "hit": "static",
+      "hypothesis": "Collisions with static obstacles MAY indicate weak static avoidance. Authored hypothesis.",
+      "hypothesis_id": "hyp-static-avoid",
+      "outcome": "collision",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": "avoid_static",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "collision_rate": 0.4833,
+      "count": 9,
+      "episodes": [
+       0,
+       3,
+       11,
+       20,
+       37,
+       41,
+       44,
+       48,
+       55
+      ],
+      "failure_id": "eval-20261015040917-9c0df8:timeout",
+      "hit": null,
+      "hypothesis": null,
+      "hypothesis_id": null,
+      "outcome": "timeout",
+      "policy_id": "P-static-b",
+      "success_rate": 0.3667,
+      "suggests_competency": null,
+      "suite_id": "val-target-v1"
+     }
+    ],
+    "graph_revision": 2,
+    "mission": "static_crossing",
+    "note": "Failure rows are measured; hypothesis rows are authored and unverified.",
+    "requirements": [
+     {
+      "competency": "avoid_static",
+      "suite_id": "val-static-v1"
+     },
+     {
+      "competency": "reach_goal",
+      "suite_id": "val-open-v1"
+     },
+     {
+      "competency": "static_crossing_mission",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "competency": "yield_dynamic",
+      "suite_id": "val-crossing-v1"
+     }
+    ],
+    "robot": "ew-unicycle-r20"
+   },
+   "tool": "inspect_mission",
+   "turn": 24
+  },
+  {
+   "args": {
+    "budget": 150000
+   },
+   "result": {
+    "action": "train_from_scratch",
+    "decision_id": "deci-20261015054527-10715f",
+    "explanation": "Selected scratch: p_reach 0.2727 (2/9 applicable scratch trials reached threshold), trial children score 0.5537 (n=9). Beats P-static-a: p_reach 0.1429 (0/5 applicable trials reached threshold), trial children score -0.03 (n=5) on transfer estimate.",
+    "graph_revision": 2,
+    "needs_evaluation": null,
+    "queries": [
+     {
+      "params": {
+       "mission": "static_crossing"
+      },
+      "returned_ids": [
+       "avoid_static",
+       "reach_goal",
+       "static_crossing_mission",
+       "val-crossing-v1",
+       "val-open-v1",
+       "val-static-v1",
+       "val-target-v1",
+       "yield_dynamic"
+      ],
+      "template": "mission_requirements"
+     },
+     {
+      "params": {
+       "contract": "ew-contract-1:2f013b6f4849",
+       "robot": "ew-unicycle-r20"
+      },
+      "returned_ids": [
+       "P-cross-a",
+       "P-cross-a~hist-s501",
+       "P-cross-a~hist-s502",
+       "P-cross-a~x2-s701",
+       "P-cross-a~x2-s702",
+       "P-cross-a~x2-s703",
+       "P-mirror",
+       "P-open-a",
+       "P-open-a~hist-s501",
+       "P-open-a~hist-s502",
+       "P-open-a~x3-s801",
+       "P-open-a~x3-s802",
+       "P-open-a~x3-s803",
+       "P-static-a",
+       "P-static-a~cmp-s601",
+       "P-static-a~cmp-s602",
+       "P-static-a~cmp-s603",
+       "P-static-a~cross-t1",
+       "P-static-a~hist-s501",
+       "P-static-a~hist-s502",
+       "P-static-b",
+       "P-static-b~6fcae1-s7",
+       "P-static-b~cmp-s601",
+       "P-static-b~cmp-s602",
+       "P-static-b~cmp-s603",
+       "P-static-b~hist-s501",
+       "P-static-b~hist-s502",
+       "P-static-b~tgt-s301",
+       "P-static-b~x2-s701",
+       "P-static-b~x2-s702",
+       "P-static-b~x2-s703",
+       "P-static-b~x3-s801",
+       "P-static-b~x3-s802",
+       "P-static-b~x3-s803",
+       "scratch~cmp-s601",
+       "scratch~cmp-s602",
+       "scratch~cmp-s603",
+       "scratch~x2-s701",
+       "scratch~x2-s702",
+       "scratch~x2-s703",
+       "scratch~x3-s801",
+       "scratch~x3-s802",
+       "scratch~x3-s803"
+      ],
+      "template": "candidate_eligibility"
+     },
+     {
+      "params": {
+       "ids": [
+        "P-open-a",
+        "P-static-a",
+        "P-cross-a",
+        "P-static-b"
+       ]
+      },
+      "returned_ids": [
+       "P-cross-a",
+       "P-open-a",
+       "P-static-a",
+       "P-static-b",
+       "run-20261015040303-5486a3",
+       "run-20261015040331-2ce08c",
+       "run-20261015040413-21549a",
+       "run-20261015040548-a267ec"
+      ],
+      "template": "candidate_ancestry"
+     },
+     {
+      "params": {
+       "ids": [
+        "P-open-a",
+        "P-static-a",
+        "P-cross-a",
+        "P-static-b"
+       ],
+       "suite": "val-target-v1"
+      },
+      "returned_ids": [
+       "P-cross-a",
+       "P-open-a",
+       "P-static-a",
+       "P-static-b",
+       "eval-20261015040906-81b5d2",
+       "eval-20261015040909-861253",
+       "eval-20261015040914-b5aef7",
+       "eval-20261015040917-9c0df8"
+      ],
+      "template": "matched_validation"
+     },
+     {
+      "params": {
+       "budget": 150000,
+       "contract": "ew-contract-1:2f013b6f4849",
+       "family": "static_crossing@43ce902c",
+       "ids": [
+        "P-open-a",
+        "P-static-a",
+        "P-cross-a",
+        "P-static-b"
+       ],
+       "recipe": "ppo-r1",
+       "threshold": "thr-target-1"
+      },
+      "returned_ids": [
+       "P-cross-a",
+       "P-cross-a~hist-s501",
+       "P-cross-a~hist-s502",
+       "P-cross-a~x2-s701",
+       "P-cross-a~x2-s702",
+       "P-cross-a~x2-s703",
+       "P-open-a",
+       "P-open-a~hist-s501",
+       "P-open-a~hist-s502",
+       "P-open-a~x3-s801",
+       "P-open-a~x3-s802",
+       "P-open-a~x3-s803",
+       "P-static-a",
+       "P-static-a~cmp-s601",
+       "P-static-a~cmp-s602",
+       "P-static-a~cmp-s603",
+       "P-static-a~hist-s501",
+       "P-static-a~hist-s502",
+       "P-static-b",
+       "P-static-b~6fcae1-s7",
+       "P-static-b~cmp-s601",
+       "P-static-b~cmp-s602",
+       "P-static-b~cmp-s603",
+       "P-static-b~hist-s501",
+       "P-static-b~hist-s502",
+       "P-static-b~x2-s701",
+       "P-static-b~x2-s702",
+       "P-static-b~x2-s703",
+       "P-static-b~x3-s801",
+       "P-static-b~x3-s802",
+       "P-static-b~x3-s803",
+       "trial-20261015042250-29c66d",
+       "trial-20261015042315-15342e",
+       "trial-20261015042318-3b21fc",
+       "trial-20261015042347-eee6ff",
+       "trial-20261015042423-9f3a95",
+       "trial-20261015042423-dcf8b2",
+       "trial-20261015042453-26b36d",
+       "trial-20261015042530-8d9fe7",
+       "trial-20261015042742-e57d03",
+       "trial-20261015042743-37d3b9",
+       "trial-20261015042745-903207",
+       "trial-20261015042851-bac11e",
+       "trial-20261015042853-110017",
+       "trial-20261015042854-0a5abe",
+       "trial-6fcae1-s7",
+       "trial-exp2-P-cross-a-s701",
+       "trial-exp2-P-cross-a-s702",
+       "trial-exp2-P-cross-a-s703",
+       "trial-exp2-P-static-b-s701",
+       "trial-exp2-P-static-b-s702",
+       "trial-exp2-P-static-b-s703",
+       "trial-exp3-P-open-a-s801",
+       "trial-exp3-P-open-a-s802",
+       "trial-exp3-P-open-a-s803",
+       "trial-exp3-P-static-b-s801",
+       "trial-exp3-P-static-b-s802",
+       "trial-exp3-P-static-b-s803"
+      ],
+      "template": "relevant_trials"
+     },
+     {
+      "params": {
+       "budget": 150000,
+       "family": "static_crossing@43ce902c",
+       "ids": [
+        "P-open-a",
+        "P-static-a",
+        "P-cross-a",
+        "P-static-b"
+       ],
+       "recipe": "ppo-r1",
+       "threshold": "thr-target-1"
+      },
+      "returned_ids": [
+       "P-static-a",
+       "P-static-b",
+       "trial-20261015040704-e327c6",
+       "trial-20261015040948-bb36e2"
+      ],
+      "template": "non_applicable_trials"
+     },
+     {
+      "params": {
+       "budget": 150000,
+       "contract": "ew-contract-1:2f013b6f4849",
+       "family": "static_crossing@43ce902c",
+       "recipe": "ppo-r1",
+       "threshold": "thr-target-1"
+      },
+      "returned_ids": [
+       "trial-exp1-scratch-s601",
+       "trial-exp1-scratch-s602",
+       "trial-exp1-scratch-s603",
+       "trial-exp2-scratch-s701",
+       "trial-exp2-scratch-s702",
+       "trial-exp2-scratch-s703",
+       "trial-exp3-scratch-s801",
+       "trial-exp3-scratch-s802",
+       "trial-exp3-scratch-s803"
+      ],
+      "template": "scratch_trials"
+     },
+     {
+      "params": {
+       "suite": "val-target-v1",
+       "trial_ids": [
+        "trial-20261015042423-9f3a95",
+        "trial-20261015042423-dcf8b2",
+        "trial-20261015042742-e57d03",
+        "trial-20261015042743-37d3b9",
+        "trial-20261015042745-903207",
+        "trial-20261015042315-15342e",
+        "trial-20261015042318-3b21fc",
+        "trial-exp2-P-cross-a-s701",
+        "trial-exp2-P-cross-a-s702",
+        "trial-exp2-P-cross-a-s703",
+        "trial-20261015042250-29c66d",
+        "trial-20261015042347-eee6ff",
+        "trial-exp3-P-open-a-s801",
+        "trial-exp3-P-open-a-s802",
+        "trial-exp3-P-open-a-s803",
+        "trial-20261015042453-26b36d",
+        "trial-20261015042530-8d9fe7",
+        "trial-20261015042851-bac11e",
+        "trial-20261015042853-110017",
+        "trial-20261015042854-0a5abe",
+        "trial-6fcae1-s7",
+        "trial-exp2-P-static-b-s701",
+        "trial-exp2-P-static-b-s702",
+        "trial-exp2-P-static-b-s703",
+        "trial-exp3-P-static-b-s801",
+        "trial-exp3-P-static-b-s802",
+        "trial-exp3-P-static-b-s803",
+        "trial-exp1-scratch-s601",
+        "trial-exp1-scratch-s602",
+        "trial-exp1-scratch-s603",
+        "trial-exp2-scratch-s701",
+        "trial-exp2-scratch-s702",
+        "trial-exp2-scratch-s703",
+        "trial-exp3-scratch-s801",
+        "trial-exp3-scratch-s802",
+        "trial-exp3-scratch-s803"
+       ]
+      },
+      "returned_ids": [
+       "P-cross-a~hist-s501",
+       "P-cross-a~hist-s502",
+       "P-cross-a~x2-s701",
+       "P-cross-a~x2-s702",
+       "P-cross-a~x2-s703",
+       "P-open-a~hist-s501",
+       "P-open-a~hist-s502",
+       "P-open-a~x3-s801",
+       "P-open-a~x3-s802",
+       "P-open-a~x3-s803",
+       "P-static-a~cmp-s601",
+       "P-static-a~cmp-s602",
+       "P-static-a~cmp-s603",
+       "P-static-a~hist-s501",
+       "P-static-a~hist-s502",
+       "P-static-b~6fcae1-s7",
+       "P-static-b~cmp-s601",
+       "P-static-b~cmp-s602",
+       "P-static-b~cmp-s603",
+       "P-static-b~hist-s501",
+       "P-static-b~hist-s502",
+       "P-static-b~x2-s701",
+       "P-static-b~x2-s702",
+       "P-static-b~x2-s703",
+       "P-static-b~x3-s801",
+       "P-static-b~x3-s802",
+       "P-static-b~x3-s803",
+       "eval-20261015041745-ed2eb3",
+       "eval-20261015042250-025c19",
+       "eval-20261015042315-91b889",
+       "eval-20261015042318-2a593d",
+       "eval-20261015042347-4e9298",
+       "eval-20261015042423-d02841",
+       "eval-20261015042423-fefd98",
+       "eval-20261015042453-d69eaa",
+       "eval-20261015042530-4e0751",
+       "eval-20261015042637-6099d0",
+       "eval-20261015042638-a61529",
+       "eval-20261015042639-126f9f",
+       "eval-20261015042742-23a8d7",
+       "eval-20261015042743-b3ca92",
+       "eval-20261015042745-78f390",
+       "eval-20261015042851-d9d21c",
+       "eval-20261015042853-ec334e",
+       "eval-20261015042854-9d2b29",
+       "eval-20261015044105-433802",
+       "eval-20261015044105-c85c47",
+       "eval-20261015044106-eab718",
+       "eval-20261015044216-791fe9",
+       "eval-20261015044218-78aff5",
+       "eval-20261015044219-8d87f6",
+       "eval-20261015044316-456a97",
+       "eval-20261015044319-8b4639",
+       "eval-20261015044320-160f8f",
+       "eval-20261015044936-303170",
+       "eval-20261015044939-6578c6",
+       "eval-20261015044941-af7e46",
+       "eval-20261015045027-107d36",
+       "eval-20261015045032-114fe3",
+       "eval-20261015045033-f85066",
+       "eval-20261015045129-e4f694",
+       "eval-20261015045133-d6d940",
+       "eval-20261015045135-95d9fb",
+       "scratch~cmp-s601",
+       "scratch~cmp-s602",
+       "scratch~cmp-s603",
+       "scratch~x2-s701",
+       "scratch~x2-s702",
+       "scratch~x2-s703",
+       "scratch~x3-s801",
+       "scratch~x3-s802",
+       "scratch~x3-s803",
+       "trial-20261015042250-29c66d",
+       "trial-20261015042315-15342e",
+       "trial-20261015042318-3b21fc",
+       "trial-20261015042347-eee6ff",
+       "trial-20261015042423-9f3a95",
+       "trial-20261015042423-dcf8b2",
+       "trial-20261015042453-26b36d",
+       "trial-20261015042530-8d9fe7",
+       "trial-20261015042742-e57d03",
+       "trial-20261015042743-37d3b9",
+       "trial-20261015042745-903207",
+       "trial-20261015042851-bac11e",
+       "trial-20261015042853-110017",
+       "trial-20261015042854-0a5abe",
+       "trial-6fcae1-s7",
+       "trial-exp1-scratch-s601",
+       "trial-exp1-scratch-s602",
+       "trial-exp1-scratch-s603",
+       "trial-exp2-P-cross-a-s701",
+       "trial-exp2-P-cross-a-s702",
+       "trial-exp2-P-cross-a-s703",
+       "trial-exp2-P-static-b-s701",
+       "trial-exp2-P-static-b-s702",
+       "trial-exp2-P-static-b-s703",
+       "trial-exp2-scratch-s701",
+       "trial-exp2-scratch-s702",
+       "trial-exp2-scratch-s703",
+       "trial-exp3-P-open-a-s801",
+       "trial-exp3-P-open-a-s802",
+       "trial-exp3-P-open-a-s803",
+       "trial-exp3-P-static-b-s801",
+       "trial-exp3-P-static-b-s802",
+       "trial-exp3-P-static-b-s803",
+       "trial-exp3-scratch-s801",
+       "trial-exp3-scratch-s802",
+       "trial-exp3-scratch-s803"
+      ],
+      "template": "trial_outcomes"
+     }
+    ],
+    "ranking": [
+     {
+      "median_steps_to_threshold": null,
+      "n_completed": 5,
+      "n_not_reached_within_budget": 5,
+      "n_reached": 0,
+      "p_basis": "0/5 applicable trials reached threshold",
+      "p_reach": 0.1429,
+      "policy_id": "P-static-a",
+      "rank": 1,
+      "validation": {
+       "collision_rate": 0.65,
+       "episodes": 60,
+       "evaluation_id": "eval-20261015040909-861253",
+       "score": -0.4167,
+       "success_rate": 0.2333
+      }
+     },
+     {
+      "median_steps_to_threshold": null,
+      "n_completed": 5,
+      "n_not_reached_within_budget": 5,
+      "n_reached": 0,
+      "p_basis": "0/5 applicable trials reached threshold",
+      "p_reach": 0.1429,
+      "policy_id": "P-cross-a",
+      "rank": 2,
+      "validation": {
+       "collision_rate": 0.55,
+       "episodes": 60,
+       "evaluation_id": "eval-20261015040914-b5aef7",
+       "score": -0.5333,
+       "success_rate": 0.0167
+      }
+     },
+     {
+      "median_steps_to_threshold": null,
+      "n_completed": 5,
+      "n_not_reached_within_budget": 5,
+      "n_reached": 0,
+      "p_basis": "0/5 applicable trials reached threshold",
+      "p_reach": 0.1429,
+      "policy_id": "P-open-a",
+      "rank": 3,
+      "validation": {
+       "collision_rate": 0.9833,
+       "episodes": 60,
+       "evaluation_id": "eval-20261015040906-81b5d2",
+       "score": -0.9666,
+       "success_rate": 0.0167
+      }
+     },
+     {
+      "median_steps_to_threshold": null,
+      "n_completed": 12,
+      "n_not_reached_within_budget": 12,
+      "n_reached": 0,
+      "p_basis": "0/12 applicable trials reached threshold",
+      "p_reach": 0.0714,
+      "policy_id": "P-static-b",
+      "rank": 4,
+      "validation": {
+       "collision_rate": 0.4833,
+       "episodes": 60,
+       "evaluation_id": "eval-20261015040917-9c0df8",
+       "score": -0.1166,
+       "success_rate": 0.3667
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "policy_id": "P-mirror",
+      "reasons": [
+       "semantic contract mismatch (ew-contract-1m:6fad9cbfe838 vs ew-contract-1:2f013b6f4849; differs in ray_order)"
+      ]
+     },
+     {
+      "policy_id": "P-static-a~cross-t1",
+      "reasons": [
+       "outside requested catalog (run kind transfer_measurement)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~tgt-s301",
+      "reasons": [
+       "outside requested catalog (run kind transfer_trial)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~6fcae1-s7",
+      "reasons": [
+       "outside requested catalog (run kind transfer_trial)"
+      ]
+     },
+     {
+      "policy_id": "P-open-a~hist-s501",
+      "reasons": [
+       "outside requested catalog (run kind transfer_measurement)"
+      ]
+     },
+     {
+      "policy_id": "P-cross-a~hist-s501",
+      "reasons": [
+       "outside requested catalog (run kind transfer_measurement)"
+      ]
+     },
+     {
+      "policy_id": "P-cross-a~hist-s502",
+      "reasons": [
+       "outside requested catalog (run kind transfer_measurement)"
+      ]
+     },
+     {
+      "policy_id": "P-open-a~hist-s502",
+      "reasons": [
+       "outside requested catalog (run kind transfer_measurement)"
+      ]
+     },
+     {
+      "policy_id": "P-static-a~hist-s501",
+      "reasons": [
+       "outside requested catalog (run kind transfer_measurement)"
+      ]
+     },
+     {
+      "policy_id": "P-static-a~hist-s502",
+      "reasons": [
+       "outside requested catalog (run kind transfer_measurement)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~hist-s501",
+      "reasons": [
+       "outside requested catalog (run kind transfer_measurement)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~hist-s502",
+      "reasons": [
+       "outside requested catalog (run kind transfer_measurement)"
+      ]
+     },
+     {
+      "policy_id": "scratch~cmp-s602",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "scratch~cmp-s601",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "scratch~cmp-s603",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-a~cmp-s601",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-a~cmp-s602",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-a~cmp-s603",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~cmp-s602",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~cmp-s601",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~cmp-s603",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "scratch~x2-s701",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "scratch~x2-s702",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "scratch~x2-s703",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-cross-a~x2-s701",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-cross-a~x2-s702",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-cross-a~x2-s703",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~x2-s701",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~x2-s702",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~x2-s703",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "scratch~x3-s803",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "scratch~x3-s802",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "scratch~x3-s801",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-open-a~x3-s801",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-open-a~x3-s802",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-open-a~x3-s803",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~x3-s801",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~x3-s802",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     },
+     {
+      "policy_id": "P-static-b~x3-s803",
+      "reasons": [
+       "outside requested catalog (run kind comparison)"
+      ]
+     }
+    ],
+    "rule": "ew-select-3",
+    "selected": null
+   },
+   "tool": "propose_adaptation",
+   "turn": 25
+  },
+  {
+   "args": {
+    "decision_id": "deci-20261015054527-10715f",
+    "seed": 7
+   },
+   "result": {
+    "budget": 150000,
+    "child_policy_id": "scratch~10715f-s7",
+    "created": true,
+    "job_id": "job-20261015054605-2f31d9",
+    "parent": null,
+    "quota_steps": 3000000,
+    "quota_used_steps": 301552,
+    "state": "queued"
+   },
+   "tool": "start_training",
+   "turn": 26
+  },
+  {
+   "args": {
+    "job_id": "job-20261015054605-2f31d9",
+    "timeout_s": 240
+   },
+   "result": {
+    "consumed_steps": 151552,
+    "error": null,
+    "id": "job-20261015054605-2f31d9",
+    "kind": "transfer_trial",
+    "progress": {
+     "at": 1792043222.0572858,
+     "episodes": 1086,
+     "steps": 150000,
+     "train_success_recent": 0.79
+    },
+    "result": {
+     "child_artifact_hash": "121f741e502d6f1478d7aa3db8954dad7c011440d0a9848d6c5aef1144a73be2",
+     "child_policy_id": "scratch~10715f-s7",
+     "final_evaluation_id": "eval-20261015054707-2975e5",
+     "run_id": "run-20261015054606-098a9e",
+     "schedule": [
+      {
+       "collision_rate": 0.3167,
+       "collisions_by_object": {
+        "mover": 16,
+        "static": 3,
+        "wall": 0
+       },
+       "episodes": 60,
+       "mean_success_steps": 161.3,
+       "steps": 37504,
+       "success_rate": 0.6,
+       "suite_id": "val-target-v1",
+       "timeout_rate": 0.0833
+      },
+      {
+       "collision_rate": 0.25,
+       "collisions_by_object": {
+        "mover": 8,
+        "static": 7,
+        "wall": 0
+       },
+       "episodes": 60,
+       "mean_success_steps": 140.9,
+       "steps": 75000,
+       "success_rate": 0.75,
+       "suite_id": "val-target-v1",
+       "timeout_rate": 0.0
+      },
+      {
+       "collision_rate": 0.2333,
+       "collisions_by_object": {
+        "mover": 11,
+        "static": 3,
+        "wall": 0
+       },
+       "episodes": 60,
+       "mean_success_steps": 113.6,
+       "steps": 112504,
+       "success_rate": 0.7667,
+       "suite_id": "val-target-v1",
+       "timeout_rate": 0.0
+      },
+      {
+       "collision_rate": 0.15,
+       "collisions_by_object": {
+        "mover": 7,
+        "static": 2,
+        "wall": 0
+       },
+       "episodes": 60,
+       "mean_success_steps": 112.9,
+       "steps": 150000,
+       "success_rate": 0.85,
+       "suite_id": "val-target-v1",
+       "timeout_rate": 0.0
+      },
+      {
+       "collision_rate": 0.1333,
+       "collisions_by_object": {
+        "mover": 6,
+        "static": 2,
+        "wall": 0
+       },
+       "episodes": 60,
+       "mean_success_steps": 112.5,
+       "steps": 151552,
+       "success_rate": 0.8667,
+       "suite_id": "val-target-v1",
+       "timeout_rate": 0.0
+      }
+     ],
+     "steps_to_threshold": null,
+     "threshold_reached": false,
+     "trial_id": "trial-10715f-s7",
+     "trial_status": "completed"
+    },
+    "state": "completed"
+   },
+   "tool": "wait_for_job",
+   "turn": 27
+  },
+  {
+   "args": {
+    "policy_id": "scratch~10715f-s7",
+    "suite_id": "val-open-v1"
+   },
+   "result": {
+    "created": true,
+    "job_id": "job-20261015054710-0f730a",
+    "state": "queued"
+   },
+   "tool": "evaluate_checkpoint",
+   "turn": 28
+  },
+  {
+   "args": {
+    "job_id": "job-20261015054710-0f730a",
+    "timeout_s": 240
+   },
+   "result": {
+    "consumed_steps": null,
+    "error": null,
+    "id": "job-20261015054710-0f730a",
+    "kind": "evaluate",
+    "progress": null,
+    "result": {
+     "artifact_hash": "121f741e502d6f1478d7aa3db8954dad7c011440d0a9848d6c5aef1144a73be2",
+     "evaluation_id": "eval-20261015054713-502afb",
+     "summary": {
+      "collision_rate": 0.0,
+      "collisions_by_object": {
+       "mover": 0,
+       "static": 0,
+       "wall": 0
+      },
+      "episodes": 40,
+      "mean_success_steps": 94.8,
+      "success_rate": 0.725,
+      "timeout_rate": 0.275
+     }
+    },
+    "state": "completed"
+   },
+   "tool": "wait_for_job",
+   "turn": 29
+  },
+  {
+   "args": {
+    "params": {
+     "decision": "deci-20261015054527-10715f"
+    },
+    "template": "decision_provenance"
+   },
+   "result": {
+    "cypher": "MATCH (d:Decision {id:$decision})\nOPTIONAL MATCH (d)-[c:CONSIDERED]->(p:Policy)\nOPTIONAL MATCH (d)-[:SELECTED]->(sel:Policy)\nOPTIONAL MATCH (d)-[:LAUNCHED]->(r:Run)-[:PRODUCED]->(child:Policy)\nOPTIONAL MATCH (t:Trial)-[:VIA_RUN]->(r)\nRETURN d.id AS decision_id, d.rule_version AS rule, d.graph_revision AS revision, d.action AS action,\n       sel.id AS selected, collect(DISTINCT [p.id, c.rank]) AS considered, r.id AS run_id, child.id AS child_id,\n       t.threshold_reached AS reached, t.steps_to_threshold AS steps_to_threshold",
+    "graph_revision": 7,
+    "row_count": 1,
+    "rows": [
+     {
+      "action": "train_from_scratch",
+      "child_id": "scratch~10715f-s7",
+      "considered": [
+       [
+        "P-open-a",
+        3
+       ],
+       [
+        "P-static-a",
+        1
+       ],
+       [
+        "P-cross-a",
+        2
+       ],
+       [
+        "P-static-b",
+        4
+       ]
+      ],
+      "decision_id": "deci-20261015054527-10715f",
+      "reached": false,
+      "revision": 2,
+      "rule": "ew-select-3",
+      "run_id": "run-20261015054606-098a9e",
+      "selected": null,
+      "steps_to_threshold": null
+     }
+    ],
+    "template": "decision_provenance"
+   },
+   "tool": "query_graph",
+   "turn": 30
+  },
+  {
+   "args": {
+    "params": {
+     "ids": [
+      "P-open-a",
+      "P-static-a",
+      "P-cross-a",
+      "P-static-b"
+     ],
+     "suite": "val-static-v1"
+    },
+    "template": "matched_validation"
+   },
+   "result": {
+    "cypher": "MATCH (s:Suite {id:$suite}) WHERE s.role = 'validation'\nUNWIND $ids AS pid\nMATCH (p:Policy {id:pid})\nOPTIONAL MATCH (e:Evaluation)-[:ASSESSED]->(p)\nWHERE (e)-[:ON_SUITE]->(s) AND e.artifact_hash = p.artifact_hash\nRETURN pid AS policy_id, p.artifact_hash AS artifact_hash, e.id AS evaluation_id,\n       e.success_rate AS success_rate, e.collision_rate AS collision_rate, e.timeout_rate AS timeout_rate,\n       e.episodes AS episodes, e.at AS at\nORDER BY policy_id, at",
+    "graph_revision": 7,
+    "row_count": 4,
+    "rows": [
+     {
+      "artifact_hash": "e539fe5a99c0284b4d5e076743123dca96cb44340b3d613b2fd95bbd0ae7f1c1",
+      "at": null,
+      "collision_rate": null,
+      "episodes": null,
+      "evaluation_id": null,
+      "policy_id": "P-cross-a",
+      "success_rate": null,
+      "timeout_rate": null
+     },
+     {
+      "artifact_hash": "b004eccbb87e06576657e2c2816e422b07e838b43b0d736b6a86482282a5787a",
+      "at": null,
+      "collision_rate": null,
+      "episodes": null,
+      "evaluation_id": null,
+      "policy_id": "P-open-a",
+      "success_rate": null,
+      "timeout_rate": null
+     },
+     {
+      "artifact_hash": "390485ae8caaba1babb63257a97f8d18fe86d19c1af3266135f36bf2f760cf64",
+      "at": "2026-10-15T04:06:21+0000",
+      "collision_rate": 0.175,
+      "episodes": 40,
+      "evaluation_id": "eval-20261015040621-3617b1",
+      "policy_id": "P-static-a",
+      "success_rate": 0.375,
+      "timeout_rate": 0.45
+     },
+     {
+      "artifact_hash": "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+      "at": "2026-10-15T04:06:29+0000",
+      "collision_rate": 0.175,
+      "episodes": 40,
+      "evaluation_id": "eval-20261015040629-a5924e",
+      "policy_id": "P-static-b",
+      "success_rate": 0.425,
+      "timeout_rate": 0.4
+     }
+    ],
+    "template": "matched_validation"
+   },
+   "tool": "query_graph",
+   "turn": 31
+  },
+  {
+   "args": {
+    "params": {
+     "evaluation": "eval-20261015054713-502afb"
+    },
+    "template": "failure_inspection"
+   },
+   "result": {
+    "cypher": "MATCH (e:Evaluation {id:$evaluation})-[:ASSESSED]->(p:Policy)\nMATCH (e)-[:ON_SUITE]->(s:Suite)\nOPTIONAL MATCH (f:Failure)-[:OBSERVED_IN]->(e)\nOPTIONAL MATCH (h:Hypothesis)-[:ABOUT]->(f)\nOPTIONAL MATCH (h)-[:SUGGESTS]->(c:Competency)\nRETURN p.id AS policy_id, s.id AS suite_id, e.success_rate AS success_rate, e.collision_rate AS collision_rate,\n       f.id AS failure_id, f.outcome AS outcome, f.hit AS hit, f.count AS count, f.episodes AS episodes,\n       h.id AS hypothesis_id, h.text AS hypothesis, c.id AS suggests_competency",
+    "graph_revision": 7,
+    "row_count": 1,
+    "rows": [
+     {
+      "collision_rate": 0.0,
+      "count": 11,
+      "episodes": [
+       3,
+       9,
+       11,
+       13,
+       15,
+       22,
+       24,
+       26,
+       33,
+       34,
+       35
+      ],
+      "failure_id": "eval-20261015054713-502afb:timeout",
+      "hit": null,
+      "hypothesis": null,
+      "hypothesis_id": null,
+      "outcome": "timeout",
+      "policy_id": "scratch~10715f-s7",
+      "success_rate": 0.725,
+      "suggests_competency": null,
+      "suite_id": "val-open-v1"
+     }
+    ],
+    "template": "failure_inspection"
+   },
+   "tool": "query_graph",
+   "turn": 32
+  },
+  {
+   "args": {
+    "params": {
+     "mission": "static_crossing"
+    },
+    "template": "mission_requirements"
+   },
+   "result": {
+    "cypher": "MATCH (m:Mission {id:$mission})-[:REQUIRES*1..6]->(c:Competency)\nOPTIONAL MATCH (s:Suite)-[:EVALUATES]->(c) WHERE s.role = 'validation'\nRETURN DISTINCT c.id AS competency, s.id AS suite_id\nORDER BY competency",
+    "graph_revision": 7,
+    "row_count": 4,
+    "rows": [
+     {
+      "competency": "avoid_static",
+      "suite_id": "val-static-v1"
+     },
+     {
+      "competency": "reach_goal",
+      "suite_id": "val-open-v1"
+     },
+     {
+      "competency": "static_crossing_mission",
+      "suite_id": "val-target-v1"
+     },
+     {
+      "competency": "yield_dynamic",
+      "suite_id": "val-crossing-v1"
+     }
+    ],
+    "template": "mission_requirements"
+   },
+   "tool": "query_graph",
+   "turn": 33
+  },
+  {
+   "args": {
+    "params": {
+     "decision": "deci-20261015054527-10715f"
+    },
+    "template": "decision_provenance"
+   },
+   "result": {
+    "cypher": "MATCH (d:Decision {id:$decision})\nOPTIONAL MATCH (d)-[c:CONSIDERED]->(p:Policy)\nOPTIONAL MATCH (d)-[:SELECTED]->(sel:Policy)\nOPTIONAL MATCH (d)-[:LAUNCHED]->(r:Run)-[:PRODUCED]->(child:Policy)\nOPTIONAL MATCH (t:Trial)-[:VIA_RUN]->(r)\nRETURN d.id AS decision_id, d.rule_version AS rule, d.graph_revision AS revision, d.action AS action,\n       sel.id AS selected, collect(DISTINCT [p.id, c.rank]) AS considered, r.id AS run_id, child.id AS child_id,\n       t.threshold_reached AS reached, t.steps_to_threshold AS steps_to_threshold",
+    "graph_revision": 7,
+    "row_count": 1,
+    "rows": [
+     {
+      "action": "train_from_scratch",
+      "child_id": "scratch~10715f-s7",
+      "considered": [
+       [
+        "P-open-a",
+        3
+       ],
+       [
+        "P-static-a",
+        1
+       ],
+       [
+        "P-cross-a",
+        2
+       ],
+       [
+        "P-static-b",
+        4
+       ]
+      ],
+      "decision_id": "deci-20261015054527-10715f",
+      "reached": false,
+      "revision": 2,
+      "rule": "ew-select-3",
+      "run_id": "run-20261015054606-098a9e",
+      "selected": null,
+      "steps_to_threshold": null
+     }
+    ],
+    "template": "decision_provenance"
+   },
+   "tool": "query_graph",
+   "turn": 34
+  },
+  {
+   "args": {
+    "policy_id": "scratch~10715f-s7",
+    "suite_id": "val-static-v1"
+   },
+   "result": {
+    "created": true,
+    "job_id": "job-20261015054955-d27cbc",
+    "state": "queued"
+   },
+   "tool": "evaluate_checkpoint",
+   "turn": 35
+  },
+  {
+   "args": {
+    "job_id": "job-20261015054955-d27cbc",
+    "timeout_s": 240
+   },
+   "result": {
+    "consumed_steps": null,
+    "error": null,
+    "id": "job-20261015054955-d27cbc",
+    "kind": "evaluate",
+    "progress": null,
+    "result": {
+     "artifact_hash": "121f741e502d6f1478d7aa3db8954dad7c011440d0a9848d6c5aef1144a73be2",
+     "evaluation_id": "eval-20261015054958-424d26",
+     "summary": {
+      "collision_rate": 0.025,
+      "collisions_by_object": {
+       "mover": 0,
+       "static": 1,
+       "wall": 0
+      },
+      "episodes": 40,
+      "mean_success_steps": 112.9,
+      "success_rate": 0.95,
+      "timeout_rate": 0.025
+     }
+    },
+    "state": "completed"
+   },
+   "tool": "wait_for_job",
+   "turn": 36
+  },
+  {
+   "args": {
+    "policy_id": "scratch~10715f-s7",
+    "suite_id": "val-crossing-v1"
+   },
+   "result": {
+    "created": true,
+    "job_id": "job-20261015055045-308bd7",
+    "state": "queued"
+   },
+   "tool": "evaluate_checkpoint",
+   "turn": 37
+  },
+  {
+   "args": {
+    "job_id": "job-20261015055045-308bd7",
+    "timeout_s": 240
+   },
+   "result": {
+    "consumed_steps": null,
+    "error": null,
+    "id": "job-20261015055045-308bd7",
+    "kind": "evaluate",
+    "progress": null,
+    "result": {
+     "artifact_hash": "121f741e502d6f1478d7aa3db8954dad7c011440d0a9848d6c5aef1144a73be2",
+     "evaluation_id": "eval-20261015055047-91e360",
+     "summary": {
+      "collision_rate": 0.175,
+      "collisions_by_object": {
+       "mover": 7,
+       "static": 0,
+       "wall": 0
+      },
+      "episodes": 40,
+      "mean_success_steps": 115.5,
+      "success_rate": 0.725,
+      "timeout_rate": 0.1
+     }
+    },
+    "state": "completed"
+   },
+   "tool": "wait_for_job",
+   "turn": 38
+  },
+  {
+   "args": {
+    "params": {
+     "evaluation": "eval-20261015054713-502afb"
+    },
+    "template": "failure_inspection"
+   },
+   "result": {
+    "cypher": "MATCH (e:Evaluation {id:$evaluation})-[:ASSESSED]->(p:Policy)\nMATCH (e)-[:ON_SUITE]->(s:Suite)\nOPTIONAL MATCH (f:Failure)-[:OBSERVED_IN]->(e)\nOPTIONAL MATCH (h:Hypothesis)-[:ABOUT]->(f)\nOPTIONAL MATCH (h)-[:SUGGESTS]->(c:Competency)\nRETURN p.id AS policy_id, s.id AS suite_id, e.success_rate AS success_rate, e.collision_rate AS collision_rate,\n       f.id AS failure_id, f.outcome AS outcome, f.hit AS hit, f.count AS count, f.episodes AS episodes,\n       h.id AS hypothesis_id, h.text AS hypothesis, c.id AS suggests_competency",
+    "graph_revision": 9,
+    "row_count": 1,
+    "rows": [
+     {
+      "collision_rate": 0.0,
+      "count": 11,
+      "episodes": [
+       3,
+       9,
+       11,
+       13,
+       15,
+       22,
+       24,
+       26,
+       33,
+       34,
+       35
+      ],
+      "failure_id": "eval-20261015054713-502afb:timeout",
+      "hit": null,
+      "hypothesis": null,
+      "hypothesis_id": null,
+      "outcome": "timeout",
+      "policy_id": "scratch~10715f-s7",
+      "success_rate": 0.725,
+      "suggests_competency": null,
+      "suite_id": "val-open-v1"
+     }
+    ],
+    "template": "failure_inspection"
+   },
+   "tool": "query_graph",
+   "turn": 39
+  }
+ ],
+ "usage": [
+  {
+   "input": 932,
+   "model": "openai/gpt-oss-120b",
+   "output": 39,
+   "stop": "tool_calls",
+   "turn": 0
+  },
+  {
+   "input": 1671,
+   "model": "openai/gpt-oss-120b",
+   "output": 179,
+   "stop": "tool_calls",
+   "turn": 1
+  },
+  {
+   "input": 1739,
+   "model": "openai/gpt-oss-120b",
+   "output": 70,
+   "stop": "tool_calls",
+   "turn": 2
+  },
+  {
+   "input": 1787,
+   "model": "openai/gpt-oss-120b",
+   "output": 144,
+   "stop": "tool_calls",
+   "turn": 3
+  },
+  {
+   "input": 1849,
+   "model": "openai/gpt-oss-120b",
+   "output": 206,
+   "stop": "tool_calls",
+   "turn": 4
+  },
+  {
+   "input": 1916,
+   "model": "openai/gpt-oss-120b",
+   "output": 224,
+   "stop": "tool_calls",
+   "turn": 5
+  },
+  {
+   "input": 1983,
+   "model": "openai/gpt-oss-120b",
+   "output": 220,
+   "stop": "tool_calls",
+   "turn": 6
+  },
+  {
+   "input": 2054,
+   "model": "openai/gpt-oss-120b",
+   "output": 220,
+   "stop": "tool_calls",
+   "turn": 7
+  },
+  {
+   "input": 2125,
+   "model": "openai/gpt-oss-120b",
+   "output": 191,
+   "stop": "tool_calls",
+   "turn": 8
+  },
+  {
+   "input": 2387,
+   "model": "openai/gpt-oss-120b",
+   "output": 210,
+   "stop": "tool_calls",
+   "turn": 9
+  },
+  {
+   "input": 2649,
+   "model": "openai/gpt-oss-120b",
+   "output": 146,
+   "stop": "tool_calls",
+   "turn": 10
+  },
+  {
+   "input": 2933,
+   "model": "openai/gpt-oss-120b",
+   "output": 365,
+   "stop": "tool_calls",
+   "turn": 11
+  },
+  {
+   "input": 3449,
+   "model": "openai/gpt-oss-120b",
+   "output": 463,
+   "stop": "tool_calls",
+   "turn": 12
+  },
+  {
+   "input": 3019,
+   "model": "openai/gpt-oss-120b",
+   "output": 63,
+   "stop": "tool_calls",
+   "turn": 13
+  },
+  {
+   "input": 3359,
+   "model": "openai/gpt-oss-120b",
+   "output": 316,
+   "stop": "tool_calls",
+   "turn": 14
+  },
+  {
+   "input": 2783,
+   "model": "openai/gpt-oss-120b",
+   "output": 82,
+   "stop": "tool_calls",
+   "turn": 15
+  },
+  {
+   "input": 3027,
+   "model": "openai/gpt-oss-120b",
+   "output": 185,
+   "stop": "tool_calls",
+   "turn": 16
+  },
+  {
+   "input": 2882,
+   "model": "openai/gpt-oss-120b",
+   "output": 99,
+   "stop": "tool_calls",
+   "turn": 17
+  },
+  {
+   "input": 3377,
+   "model": "openai/gpt-oss-120b",
+   "output": 311,
+   "stop": "tool_calls",
+   "turn": 18
+  },
+  {
+   "input": 2999,
+   "model": "openai/gpt-oss-120b",
+   "output": 108,
+   "stop": "tool_calls",
+   "turn": 19
+  },
+  {
+   "input": 3606,
+   "model": "openai/gpt-oss-120b",
+   "output": 127,
+   "stop": "tool_calls",
+   "turn": 20
+  },
+  {
+   "input": 3482,
+   "model": "openai/gpt-oss-120b",
+   "output": 110,
+   "stop": "tool_calls",
+   "turn": 21
+  },
+  {
+   "input": 3302,
+   "model": "openai/gpt-oss-120b",
+   "output": 146,
+   "stop": "tool_calls",
+   "turn": 22
+  },
+  {
+   "input": 3331,
+   "model": "openai/gpt-oss-120b",
+   "output": 151,
+   "stop": "tool_calls",
+   "turn": 23
+  },
+  {
+   "input": 3435,
+   "model": "openai/gpt-oss-120b",
+   "output": 115,
+   "stop": "tool_calls",
+   "turn": 24
+  },
+  {
+   "input": 4174,
+   "model": "openai/gpt-oss-120b",
+   "output": 291,
+   "stop": "tool_calls",
+   "turn": 25
+  },
+  {
+   "input": 4692,
+   "model": "openai/gpt-oss-120b",
+   "output": 176,
+   "stop": "tool_calls",
+   "turn": 26
+  },
+  {
+   "input": 3764,
+   "model": "openai/gpt-oss-120b",
+   "output": 128,
+   "stop": "tool_calls",
+   "turn": 27
+  },
+  {
+   "input": 4465,
+   "model": "openai/gpt-oss-120b",
+   "output": 146,
+   "stop": "tool_calls",
+   "turn": 28
+  },
+  {
+   "input": 3970,
+   "model": "openai/gpt-oss-120b",
+   "output": 106,
+   "stop": "tool_calls",
+   "turn": 29
+  },
+  {
+   "input": 4195,
+   "model": "openai/gpt-oss-120b",
+   "output": 100,
+   "stop": "tool_calls",
+   "turn": 30
+  },
+  {
+   "input": 4470,
+   "model": "openai/gpt-oss-120b",
+   "output": 120,
+   "stop": "tool_calls",
+   "turn": 31
+  },
+  {
+   "input": 4869,
+   "model": "openai/gpt-oss-120b",
+   "output": 166,
+   "stop": "tool_calls",
+   "turn": 32
+  },
+  {
+   "input": 4750,
+   "model": "openai/gpt-oss-120b",
+   "output": 102,
+   "stop": "tool_calls",
+   "turn": 33
+  },
+  {
+   "input": 4715,
+   "model": "openai/gpt-oss-120b",
+   "output": 177,
+   "stop": "tool_calls",
+   "turn": 34
+  },
+  {
+   "input": 4984,
+   "model": "openai/gpt-oss-120b",
+   "output": 141,
+   "stop": "tool_calls",
+   "turn": 35
+  },
+  {
+   "input": 4809,
+   "model": "openai/gpt-oss-120b",
+   "output": 193,
+   "stop": "tool_calls",
+   "turn": 36
+  },
+  {
+   "input": 5031,
+   "model": "openai/gpt-oss-120b",
+   "output": 161,
+   "stop": "tool_calls",
+   "turn": 37
+  },
+  {
+   "input": 5005,
+   "model": "openai/gpt-oss-120b",
+   "output": 50,
+   "stop": "tool_calls",
+   "turn": 38
+  },
+  {
+   "input": 5229,
+   "model": "openai/gpt-oss-120b",
+   "output": 179,
+   "stop": "tool_calls",
+   "turn": 39
+  }
+ ],
+ "wall_s": 807.1
+}

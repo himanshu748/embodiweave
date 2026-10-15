@@ -94,7 +94,7 @@ def query_graph(template: str, params: dict) -> dict:
 
 @tool
 def propose_adaptation(budget: int = 150_000) -> dict:
-    """Apply the frozen selection rule (ew-select-2: reuse a parent or train from scratch) to current FalkorDB evidence and record a decision."""
+    """Apply the frozen selection rule (select.RULE_VERSION: reuse a parent or train from scratch) to current FalkorDB evidence and record a decision."""
     if budget not in ALLOWED_BUDGETS:
         raise ValueError(f"budget must be one of {ALLOWED_BUDGETS}")
     req = {**service.target_request(budget=budget), "candidate_run_kinds": ["library"]}

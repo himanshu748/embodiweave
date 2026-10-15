@@ -47,7 +47,8 @@ def _result(res) -> dict:
 def _server(session_id: str, mode: str) -> StdioServerParameters:
     env = {**os.environ, "EW_AGENT_SESSION": session_id, "EW_AGENT_MODE": mode,
            "PYTHONPATH": os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}
-    env.pop("ANTHROPIC_API_KEY", None)  # the tool server never sees model credentials
+    for k in ("ANTHROPIC_API_KEY", "GROQ_API_KEY"):  # the tool server never sees model credentials
+        env.pop(k, None)
     return StdioServerParameters(command=sys.executable, args=["-m", "ew.mcp_server"], env=env)
 
 
@@ -125,6 +126,11 @@ async def run_llm(session_id: str) -> dict:
 
 GROQ_MODEL = os.environ.get("EW_GROQ_MODEL", "auto")
 # Strongest tool-calling families first. "auto" takes the first one the account offers and records which.
+# Groq's free tier caps tokens per minute (8000 on gpt-oss-120b), and that cap counts the prompt plus the
+# requested completion. Keep each request under it: bounded output, older tool results trimmed, wait on 429.
+GROQ_MAX_OUTPUT = int(os.environ.get("EW_GROQ_MAX_OUTPUT", "2048"))
+GROQ_CONTEXT_CHARS = int(os.environ.get("EW_GROQ_CONTEXT_CHARS", "10000"))
+GROQ_RESULT_CHARS = 4000
 GROQ_PREFERENCE = ("kimi-k2", "gpt-oss-120b", "llama-4-maverick", "qwen3-32b", "llama-3.3-70b", "gpt-oss-20b")
 
 
@@ -140,13 +146,51 @@ def pick_groq_model(available: set[str], wanted: str = GROQ_MODEL) -> str:
     raise SystemExit(f"no known tool-calling model among {sorted(available)}; set EW_GROQ_MODEL")
 
 
+def _fit(messages: list, budget: int = GROQ_CONTEXT_CHARS) -> list:
+    """Trim the oldest tool results until the conversation fits the character budget. The newest stays whole."""
+    size = lambda: sum(len(m.get("content") or "") + len(json.dumps(m.get("tool_calls", ""))) for m in messages)
+    tools = [m for m in messages if m["role"] == "tool"][:-1]
+    for m in tools:
+        if size() <= budget:
+            break
+        if len(m["content"]) > 240:
+            m["content"] = m["content"][:200] + ' ..."[trimmed to fit the rate limit; call the tool again if needed]"'
+    return messages
+
+
+def _groq_create(client, budget: int, rejected: list, **kw):
+    """One completion, waiting out per-minute rate limits and shrinking the context if a request is too large."""
+    import groq
+    for attempt in range(12):
+        try:
+            return client.chat.completions.create(messages=_fit(kw["messages"], budget),
+                                                  **{k: v for k, v in kw.items() if k != "messages"})
+        except groq.APIStatusError as e:
+            body = getattr(e, "body", None) or {}
+            err = body.get("error", body) if isinstance(body, dict) else {}
+            if e.status_code == 400 and isinstance(err, dict) and err.get("code") == "tool_use_failed":
+                # The model named a tool that does not exist (e.g. a query template). Tell it and let it retry.
+                names = sorted(t["function"]["name"] for t in kw.get("tools", []))
+                kw["messages"].append({"role": "user", "content": f"Your last tool call was rejected: {err.get('message', '')[:300]}. "
+                                       f"Call only these tools: {', '.join(names)}. Graph templates run through query_graph."})
+                rejected.append(err.get("failed_generation", "")[:300])
+                continue
+            if e.status_code == 413:
+                budget = int(budget * 0.7)
+            elif e.status_code != 429:
+                raise
+            wait = float(e.response.headers.get("retry-after", 0) or 0) or 15.0
+            time.sleep(min(wait, 65.0))
+    raise SystemExit("Groq kept rate-limiting after 12 attempts")
+
+
 async def run_groq(session_id: str) -> dict:
     """Same MCP tools and loop, with Groq's OpenAI-style chat completions as the runtime LLM."""
     from groq import Groq
     client = Groq()  # reads GROQ_API_KEY
     available = {m.id for m in client.models.list().data}
     model = pick_groq_model(available)
-    transcript, usage = [], []
+    transcript, usage, rejected = [], [], []
     async with stdio_client(_server(session_id, "llm-agent")) as (r, w):
         async with ClientSession(r, w) as s:
             await s.initialize()
@@ -157,8 +201,8 @@ async def run_groq(session_id: str) -> dict:
                         {"role": "user", "content": "Investigate the failing deployed policy and run the failure-to-fix loop."}]
             final_text = ""
             for turn in range(MAX_TURNS):
-                resp = client.chat.completions.create(model=model, messages=messages, tools=tools,
-                                                      tool_choice="auto", max_completion_tokens=8000)
+                resp = _groq_create(client, GROQ_CONTEXT_CHARS, rejected, model=model, messages=messages, tools=tools,
+                                    tool_choice="auto", max_completion_tokens=GROQ_MAX_OUTPUT)
                 ch = resp.choices[0]
                 usage.append({"turn": turn, "model": resp.model, "input": resp.usage.prompt_tokens,
                               "output": resp.usage.completion_tokens, "stop": ch.finish_reason})
@@ -180,8 +224,10 @@ async def run_groq(session_id: str) -> dict:
                     except json.JSONDecodeError as e:
                         args, out = c.function.arguments, {"error": f"INVALID_JSON: {e}"}
                     transcript.append({"turn": turn, "tool": c.function.name, "args": args, "result": out})
-                    messages.append({"role": "tool", "tool_call_id": c.id, "content": json.dumps(out, default=str)[:20000]})
-    return {"provider": "groq", "model": model, "models_offered": sorted(available), "transcript": transcript, "usage": usage, "final_text": final_text}
+                    messages.append({"role": "tool", "tool_call_id": c.id,
+                                     "content": json.dumps(out, default=str)[:GROQ_RESULT_CHARS]})
+    return {"provider": "groq", "model": model, "models_offered": sorted(available),
+            "rejected_tool_calls": rejected, "transcript": transcript, "usage": usage, "final_text": final_text}
 
 
 def main():

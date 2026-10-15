@@ -4,13 +4,25 @@ from __future__ import annotations
 from mcp.server.mcpserver import MCPServer
 
 from . import agent_tools as T
+from .select import RULE_VERSION
 
 mcp = MCPServer("embodiweave", instructions=(
     "Tools for a graph-guided RL studio. FalkorDB holds checkpoint lineage, semantic contracts, matched "
     "validation, conditioned transfer trials and decisions. You choose which bounded operation to run; trusted "
     "code enforces compatibility, budgets and promotion. You cannot run shell, write the graph, or see final-test results."))
 
-TEMPLATES = ", ".join(sorted(T.AGENT_TEMPLATES))
+def _template_help() -> str:
+    """Each allowed template with the parameters its Cypher needs, so a model can fill them first time."""
+    import re
+    from .graph.queries import TEMPLATES as ALL
+    out = []
+    for name in sorted(T.AGENT_TEMPLATES):
+        ps = sorted(set(re.findall(r"\$(\w+)", str(ALL[name]))))
+        out.append(f"{name}({', '.join(ps)})")
+    return "; ".join(out)
+
+
+TEMPLATES = _template_help()
 
 
 @mcp.tool(description="Mission requirements (prerequisite closure), deployed policy and its measured failure evidence with authored hypotheses labelled.")
@@ -19,12 +31,13 @@ def inspect_mission() -> dict:
 
 
 @mcp.tool(description=f"Run one named read-only Cypher template on FalkorDB. Templates: {TEMPLATES}. "
-                      "Params are template parameters, e.g. {'ids': ['P-open-a']} or {'evaluation': 'eval-...'}.")
+                      "Every listed param is required. ids is a list of policy ids, contract is the contract_id and robot the robot "
+                      "name from inspect_mission, suite a validation suite id, evaluation an evaluation id.")
 def query_graph(template: str, params: dict) -> dict:
     return T.query_graph(template=template, params=params)
 
 
-@mcp.tool(description="Apply the frozen parent-selection rule ew-select-1 to current graph evidence for the static_crossing "
+@mcp.tool(description=f"Apply the frozen parent-selection rule {RULE_VERSION} to current graph evidence for the static_crossing "
                       "mission and record a decision. budget is 60000 or 150000 PPO steps. Returns action, ranking, rejections.")
 def propose_adaptation(budget: int = 150000) -> dict:
     return T.propose_adaptation(budget=budget)
