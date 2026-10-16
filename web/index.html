@@ -92,6 +92,17 @@
       <tr><th scope="row">Fixed gate</th><td>Pass</td><td>Pass</td><td>Pass</td><td>Pass</td></tr>
     </tbody></table>
   </div>
+  <details><summary>Inspect the recorded FalkorDB shortest-path query</summary><p class="note">The returned rehearsal ancestor was one hop away. The agent used this recovery option alongside the full candidate evidence. Unweighted distance does not predict safety.</p><pre class="code" tabindex="0">MATCH (p:Policy {id:$policy})-[:USES_CONTRACT]-&gt;(c:Contract)&lt;-[:USES_CONTRACT]-(a:Policy)
+WITH p,a,shortestPath((p)-[:DERIVED_FROM*1..8]-&gt;(a)) AS path
+WHERE path IS NOT NULL AND length(path) &lt;= $max_hops AND a.status = &#x27;completed&#x27;
+MATCH (a)&lt;-[:ASSESSED]-(e:Evaluation)-[:ON_SUITE]-&gt;(s:Suite {id:$suite})
+WHERE s.role = &#x27;validation&#x27; AND e.complete_suite = true AND e.artifact_hash = a.artifact_hash
+  AND e.suite_fingerprint = s.fingerprint AND e.success_rate &gt;= $min_success
+  AND e.collision_rate &lt;= $max_collision
+RETURN a.id AS ancestor_id, a.artifact_hash AS artifact_hash, length(path) AS hops,
+       [n IN nodes(path) | n.id] AS path, e.id AS evaluation_id,
+       e.success_rate AS success_rate, e.collision_rate AS collision_rate
+ORDER BY hops, collision_rate, ancestor_id LIMIT 20</pre></details>
   <p class="note">4/4 passed. Target and crossing collisions were worse than the chosen parent's 2/60 and 0/40. This proves the action path; it does not establish a safety improvement. The default policy stayed unchanged.</p>
   <p class="note"><a href="https://github.com/himanshu748/embodiweave/tree/main/evidence/mcp-agent-v2">Actual tool trace, query, checkpoint and checksums →</a> · <a href="/api/decisions/deci-20261016121309-c0c93f">Inspect the Decision node →</a> · <a href="live.html#investigate">Try the agent yourself →</a></p>
 </section>
@@ -224,7 +235,7 @@ RETURN pid AS policy_id, t.id AS trial_id,
         <li><b>Transfer history is conditional.</b> A past trial only counts if its target family, recipe, budget, threshold and contract all match, a relationship traversal through the evidence graph.</li>
         <li><b>Contracts gate reuse.</b> A checkpoint with a different ray order is rejected before ranking, with the differing fields named.</li>
         <li><b>Every decision is provenance.</b> The decision records the graph revision and the exact queries it read, so it can be replayed.</li>
-        <li><b>The graph query templates are read-only</b> and run through GRAPH.RO_QUERY, so the agent cannot write the graph.</li>
+        <li><b>Reads and actions have separate boundaries.</b> Read tools run GRAPH.RO_QUERY. Trusted action code records Decisions and launches only the consented, guarded training job.</li>
       </ul>
     </div>
   </div>

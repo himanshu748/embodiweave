@@ -43,7 +43,7 @@ Show the new run's saved learning curve and actual requested versus consumed ste
 
 Show all four suite results and the collision limits: target 10%, open 5%, static 10%, crossing 15%. Read the real gate verdict and exact-artifact metrics from the new bundle. Compare to the chosen origin on matched validation, and say plainly if a measure regressed. Do not say “safer” merely because a gate passed.
 
-“The fixed gate passed all four suites. Target collisions were three in sixty; open, zero in forty; static and crossing, one in forty each. But the parent had two target collisions and no crossing collisions. Passing the gate didn't make this child safer. I kept the results, and the demo policy stayed unchanged.”
+“The fixed gate passed all four suites. Target collisions were three in sixty; open, zero in forty; static and crossing, one in forty each. But the parent had two target collisions and no crossing collisions. These results do not establish a safety improvement. I kept the results, and the demo policy stayed unchanged.”
 
 On-screen limits: 10%, 5%, 10%, 15%, respectively. [Gate and matched parent measurements](../../../evidence/mcp-agent-v2/README.md#fixed-gate-result). Keep this measured regression central; do not replace it with the earlier confirmation result.
 
