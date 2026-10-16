@@ -19,7 +19,7 @@ async function connect() {
     config = await request("/api/judge/config");
     const graph = await request("/api/status");
     $("#availability").textContent = !graph.graph.up ? "FalkorDB unavailable. Investigations will stop until it recovers."
-      : config.enabled ? `FalkorDB live · revision ${graph.graph.revision} · ${config.provider} agent ready` : config.reason;
+      : config.enabled ? `FalkorDB live · revision ${graph.graph.revision} · ${config.provider} model configured` : config.reason;
     $("#providerName").textContent = config.provider || "the configured provider";
     $("#consent").disabled = !config.enabled;
     $("#limits").textContent = `Up to ${config.max_turns} model turns, ${config.max_tools} tool calls and 2 minutes. One investigation at a time; ${config.daily_runs} shared starts per UTC day, ${config.visitor_hourly} per browser per hour. ${config.ephemeral ? "Allowances reset if the free service restarts." : "Completed receipts and allowances persist on this server."}`;

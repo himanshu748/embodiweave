@@ -25,7 +25,7 @@ def public_agent(tmp_path, monkeypatch):
 def test_session_consent_isolation_and_no_secret_exposure(public_agent):
     c, other = TestClient(api.app), TestClient(api.app)
     cfg = c.get("/api/judge/config")
-    assert cfg.json()["enabled"] is True and cfg.json()["model"] == "nvidia/nemotron-3-ultra-550b-a55b:free"
+    assert cfg.json()["enabled"] is True and cfg.json()["model"] == J.FREE_NVIDIA_MODELS[0]
     assert "HttpOnly" in cfg.headers["set-cookie"] and "SameSite=strict" in cfg.headers["set-cookie"]
     assert c.post("/api/judge/start", json={"question": "Investigate failure", "consent": False}).status_code == 403
     r = c.post("/api/judge/start", json={"question": "Investigate failure", "consent": True})
@@ -73,10 +73,55 @@ def test_dispatch_refuses_unbounded_tools_and_arguments(public_agent):
 def test_lineage_report_uses_overall_recorded_verdict_not_model_interpretation():
     row = {"decision":"d1", "origin":"parent", "candidate":"longer-child", "intervention":"longer", "verdict":"rejected"}
     report = J._lineage_report([{"result":{"queries":[{"template":"search_lineage", "graph_revision":10, "rows":[row, row]}]}}])
-    assert report.count("Overall validation gate: rejected") == 1
+    assert report.count("Canonical 2D validation gate: rejected") == 1
     assert "does not mean every suite failed" in report
     assert "longer-child" in report and "Graph revision: 10" in report
     assert J._lineage_report([{"result":{"error":"graph unavailable"}}]) is None
+
+
+def test_lineage_report_focuses_checked_artifact_and_separates_physics():
+    rows = [{"decision": "old", "origin": "root", "candidate": "old-child", "intervention": "longer", "verdict": "rejected"},
+            {"decision": "new", "origin": "old-child", "candidate": "confirmed", "intervention": "collision", "verdict": "promoted", "rationale": "Recorded selection reason"}]
+    calls = [{"result": {"queries": [{"template": "search_lineage", "params": {"rule": "robustness-v2"}, "graph_revision": 10, "rows": rows}]}},
+             {"result": {"preview": True, "policy_id": "confirmed", "artifact_hash": "exact", "verdict": "promoted", "checks": [{"pass": True}]*4, "missing": []}}]
+    report = J._lineage_report(calls)
+    assert "4/4 required 2D validation suites" in report and "Recorded selection reason" in report
+    assert "(old)" not in report and "Exact artifact: exact" in report
+    rows[1]["candidate"] = "physics-child"
+    report = J._lineage_report(calls[:1])
+    assert "does not establish physics clearance or confirmation" in report
+
+
+def test_provider_failure_keeps_only_actual_completed_graph_evidence(public_agent, monkeypatch):
+    owner = J.visitor(None)
+    s = J.start("Explain the confirmed result", True, owner)
+    turn = 0
+    def completion(*args):
+        nonlocal turn
+        turn += 1
+        if turn == 1:
+            return {"choices": [{"message": {"tool_calls": [{"id": "read", "function": {"name": "query_evidence", "arguments": '{"topic":"robustness_lineage"}'}}]}}]}
+        raise J.ProviderFailure("Free provider busy")
+    monkeypatch.setattr(J, "_completion", completion)
+    monkeypatch.setattr(J, "execute", lambda *args: {"queries": [{"template": "search_lineage", "graph_revision": 10,
+        "rows": [{"decision": "actual-d", "origin": "actual-parent", "candidate": "actual-child", "intervention": "collision", "verdict": "promoted"}]}]})
+    J._run(json.loads(J._path(s["id"]).read_text()))
+    result = J.status(s["id"], owner)
+    assert result["state"] == "failed" and result["answer_source"] == "compiled_live_graph_evidence"
+    assert "actual-child" in result["answer"] and "Free provider busy" in result["detail"]
+    assert result["training_started"] is False
+
+
+def test_invalid_model_arguments_return_schema_without_executing_tool(public_agent, monkeypatch):
+    owner = J.visitor(None)
+    s = J.start("Explain the confirmed result", True, owner)
+    responses = iter([{"choices": [{"message": {"tool_calls": [{"id": "bad", "function": {"name": "inspect_mission", "arguments": '{"topic":"mission"}'}}]}}]},
+                      {"choices": [{"message": {"content": "Could not read evidence"}, "finish_reason": "stop"}]}])
+    monkeypatch.setattr(J, "_completion", lambda *args: next(responses))
+    J._run(json.loads(J._path(s["id"]).read_text()))
+    result = J.status(s["id"], owner)["calls"][0]["result"]
+    assert result["argument_schema"] == {"type": "object", "properties": {}, "required": [], "additionalProperties": False}
+    assert "no action was performed" in result["error"]
 
 
 @pytest.mark.parametrize("finish", ["stop", "length"])
@@ -140,7 +185,7 @@ def test_provider_request_is_free_only_and_http_errors_are_sanitized(public_agen
     with pytest.raises(J.ProviderFailure, match="rate limited") as exc:
         J._completion([{}, {}], J.configuration(), 60)
     assert "test-provider-secret" not in str(exc.value)
-    assert sent[0]["model"] == "nvidia/nemotron-3-ultra-550b-a55b:free" and sent[0]["max_tokens"] == 1200
+    assert sent[0]["model"] == J.FREE_NVIDIA_MODELS[0] and sent[0]["max_tokens"] == 1200
     assert sent[0]["provider"] == {"only": ["nvidia"], "allow_fallbacks": False}
 
 
@@ -203,3 +248,16 @@ def test_overload_fallback_uses_only_free_nvidia_models(public_agent, monkeypatc
     assert result["model"] == J.FREE_NVIDIA_MODELS[1]
     assert [r["model"] for r in sent] == list(J.FREE_NVIDIA_MODELS)
     assert all(r["model"].endswith(":free") and r["provider"] == {"only": ["nvidia"], "allow_fallbacks": False} for r in sent)
+
+
+def test_subsequent_turn_keeps_working_allowed_model(public_agent, monkeypatch):
+    sent = []
+    def unavailable(req, **kwargs):
+        sent.append(json.loads(req.data)["model"])
+        raise HTTPError(req.full_url, 429, "rate limited", {}, None)
+    monkeypatch.setattr(J.urllib.request, "urlopen", unavailable)
+    for preferred, expected in [(J.FREE_NVIDIA_MODELS[1], J.FREE_NVIDIA_MODELS[1]),
+                                ("paid-or-other-provider", J.FREE_NVIDIA_MODELS[0])]:
+        with pytest.raises(J.ProviderFailure):
+            J._completion([{}, {}], {**J.configuration(), "last_working_model": preferred}, 60)
+        assert sent[-1] == expected
