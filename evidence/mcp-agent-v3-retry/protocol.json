@@ -1,0 +1,55 @@
+{
+  "study": "v3-retry",
+  "registered_at_utc": "2026-10-16T17:47:35.348483+00:00",
+  "implementation_base": "bbd7ab3d231b501c687947cb2a83af233d28cd86",
+  "hypothesis": "A bounded-context agent reads and cites the measured v2 regression, then chooses an eligible origin while explaining how that evidence affected the choice. Same origin is permitted. A different origin is not proof of learning.",
+  "max_agent_attempts": 1,
+  "max_training_runs": 1,
+  "model": "openai/gpt-4.1-mini",
+  "provider_route": "OpenRouter -> Azure only",
+  "target_policy": "robust-20261016140226-352fd7",
+  "previous_origin": "physics-20261016150004-25da9c",
+  "required_prior_outcome": "outcome-deci-20261016121309-c0c93f",
+  "requested_steps": 60000,
+  "expected_consumed_steps": 61440,
+  "budget_explanation": "Unchanged v2 PPO rollout rounding: 60000 requested, 61440 consumed. No training budget change.",
+  "training_seed": 29,
+  "recipe": "ppo-r1",
+  "training_domain": "original 2D simulator",
+  "validation_suites": [
+    "val-target-v1",
+    "val-open-v1",
+    "val-static-v1",
+    "val-crossing-v1"
+  ],
+  "validation_episodes": 180,
+  "promotion_rule": "promo-1 unchanged",
+  "final_evaluations": 0,
+  "deployment_change": false,
+  "process_pass_criteria": [
+    "Actual LLM calls both outcome tools over MCP",
+    "Proposal cites the v2 outcome ID and explains the prior regression",
+    "Guardrail permits the model-selected compatible origin",
+    "Exactly 61440 consumed PPO steps and all 180 canonical validation episodes complete",
+    "A Decision, full tool trace, gate and connected child-parent outcome are retained"
+  ],
+  "candidate_pass_criteria": "Pass all four unchanged promo-1 checks. Report parent-child collision and goal deltas separately. A gate pass alone establishes no improvement.",
+  "interpretation": "Report whether the origin changed and whether any suite regressed. No learning, causal planner advantage, physical safety or parent improvement claim from this single run.",
+  "failure_policy": "One attempt only. No further retry, provider fallback or deterministic substitute. Record failure even before training.",
+  "completion_cutoff_utc": "2026-10-18T06:30:00Z",
+  "safe_start_condition": "Idle public worker, healthy FalkorDB, adequate AWS disk/memory, and at least 600 seconds before cutoff. Existing 120-second agent and 480-second worker limits remain.",
+  "context_budgets": {
+    "per_tool_text_token_upper_bound": 2000,
+    "all_retained_tool_text_token_upper_bound": 12000,
+    "token_bound_method": "UTF-8 byte count is a conservative byte-BPE text-token upper bound; no tokenizer estimate",
+    "serialized_request_bytes": 28000,
+    "max_exchange_groups": 6,
+    "summary_policy": "Top-ranked candidate rows, observed regression rows first, exact IDs and per-suite deltas; omitted rows labelled. Full graph properties fetchable by ID and full results retained in Decision."
+  },
+  "protected_source_hashes": {
+    "ew/criteria.py": "bd2c8ed348181520160181272b641f91500b37820e7762956d9b03f80f5b34ed",
+    "ew/scenarios.py": "18396d0c9ac7e9221e72b7d0ad3bb4563647850793e3baf3ab47ae779d1a0168",
+    "evidence/mcp-agent-v3/agent-receipt.json": "c54190dd43b46cb2ae90998d2e1bde4623219cc4f28061c9183331d571da2d5d",
+    "web/media/embodiweave-demo-v5.mp4": "2dfe700299b8b30ad6143b4279268b191ed057d4d34385ec10503faa8b7d9e2e"
+  }
+}
