@@ -8,6 +8,7 @@ import numpy as np
 import pytest
 
 from scripts.film.voice import pcm_wav, tokens
+from scripts.film.mcp_update import normalized_tokens, validate_transcript
 
 
 def test_streamed_wav_header_is_finalized_without_changing_pcm():
@@ -26,6 +27,20 @@ def test_streamed_wav_header_is_finalized_without_changing_pcm():
 def test_transcript_comparison_keeps_claim_numbers():
     assert tokens("Falkor-D-B, thirteen collisions in forty episodes.") == tokens("FalkorDB: 13 collisions in 40 episodes.")
     assert tokens("13 collisions") != tokens("3 collisions")
+
+
+def test_mcp_film_transcript_accepts_spoken_rollout_count():
+    script = 'Sixty-one thousand, four hundred forty P-P-O steps. One hundred eighty episodes.'
+    transcript = '61,440 PPO steps. 180 episodes.'
+    assert normalized_tokens(script) == normalized_tokens(transcript)
+    assert validate_transcript(script, transcript) == 1
+
+
+def test_mcp_film_refuses_a_changed_spoken_collision_count():
+    with pytest.raises(ValueError, match='numbers differ'):
+        validate_transcript('Three collisions in sixty episodes.', 'Six collisions in 60 episodes.')
+    with pytest.raises(ValueError, match='numbers differ'):
+        validate_transcript('Zero collisions in forty episodes.', 'Collisions in 40 episodes.')
 
 
 def test_recorded_transfer_motion_reproduces_from_actions():
