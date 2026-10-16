@@ -261,14 +261,14 @@ function renderDecision() {
       t.child_policy_id ? [" · child ", el("span", { class: "chip", onclick: () => inspect(t.child_policy_id) }, t.child_policy_id)] : ""));
   }
   const tbl = $("#rankTbl"); tbl.innerHTML = "";
-  const search = d.rule_version === "search-v1";
-  tbl.append(el("tr", {}, ...(search ? ["#", "Checkpoint", "Suites passed", "Worst deficit", "Validation evidence", "Selection key"] :
+  const search = ["search-v1", "robustness-v2"].includes(d.rule_version);
+  tbl.append(el("tr", {}, ...(search ? ["#", "Checkpoint", "Suites passed", d.rule_version === "robustness-v2" ? "Collision clearance deficit" : "Worst deficit", "Validation evidence", "Selection key"] :
     ["#", "Checkpoint", "Transfer estimate", "Matched validation", "Applicable trials", "Lineage"]).map((h) => el("th", {}, h))));
   for (const c of d.ranking || []) {
     if (search) {
       tbl.append(el("tr", {class:c.policy_id === d.selected ? "sel" : ""}, el("td", {}, c.rank),
         el("td", {}, el("span", {class:"chip", onclick:()=>inspect(c.policy_id)}, c.policy_id)),
-        el("td", {}, `${c.passed}/4`), el("td", {}, pct(c.sort_key[1])),
+        el("td", {}, `${c.passed}/4`), el("td", {}, c.clearance_deficit === undefined ? pct(c.sort_key[1]) : `${c.clearance_deficit} episodes`),
         el("td", {}, ...Object.values(c.validation).map(v=>el("span", {class:"chip", onclick:()=>inspect(v.evaluation_id)}, v.suite_id))),
         el("td", {class:"hint"}, JSON.stringify(c.sort_key.slice(0,4)))));
       continue;
@@ -542,6 +542,10 @@ async function init() {
   const after = (requestedPolicy && tgt.filter((e) => e.policy_id === requestedPolicy).pop()) || (prefix && children.filter((e) => e.policy_id.startsWith(prefix)).pop()) || children.pop();
   if (before) { $("#evalA").value = before.id; await loadReplay("A", before.id); }
   if (after) { $("#evalB").value = after.id; await loadReplay("B", after.id); }
-  try { await loadDecisions(); } catch (_) {}
+  try {
+    const trials = requestedPolicy ? await api("/api/trials") : [];
+    const associated = trials.filter(t => t.child_policy_id === requestedPolicy).at(-1)?.decision_id;
+    await loadDecisions(associated);
+  } catch (_) {}
 }
 init();

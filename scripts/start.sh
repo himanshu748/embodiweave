@@ -7,6 +7,8 @@ DB_NAME="${EW_DB_CONTAINER:-embodiweave-db}"
 PYTHON="${EW_PYTHON:-.venv/bin/python}"
 export EW_FALKOR_PORT="${EW_FALKOR_PORT:-6379}"
 export PYTHONPATH=.
+export EW_DEPLOYED_POLICY="${EW_DEPLOYED_POLICY:-robust-20261016140226-352fd7}"
+export EW_LATEST_VALIDATION_POLICY="${EW_LATEST_VALIDATION_POLICY:-robust-20261016140226-352fd7}"
 if ! docker inspect "$DB_NAME" >/dev/null 2>&1; then
   docker run -d --name "$DB_NAME" -p "127.0.0.1:$EW_FALKOR_PORT:6379" "$IMG" >/dev/null
 else

@@ -1,0 +1,505 @@
+{
+  "metadata": {
+    "transaction_key": "deprecated",
+    "request_id": "01a143e3-0926-7bf1-86e4-24c2542145ed",
+    "sha256": "200d3dbad88fa87e97a13daa5abef599a5456dd573852c925b416e04ead1147c",
+    "created": "2026-10-16T08:45:15.514Z",
+    "duration": 11.84,
+    "channels": 1,
+    "models": [
+      "2187e11a-3532-4498-b076-81fa530bdd49"
+    ],
+    "model_info": {
+      "2187e11a-3532-4498-b076-81fa530bdd49": {
+        "name": "general-nova-3",
+        "version": "2025-07-31.0",
+        "arch": "nova-3"
+      }
+    }
+  },
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "I froze its hash before a fresh confirmation batch. All four suites passed. Target collisions eight and one hundred. The limit stayed 10%. The earlier failure remains visible.",
+            "confidence": 0.99902344,
+            "words": [
+              {
+                "word": "i",
+                "start": 0.0,
+                "end": 0.24,
+                "confidence": 0.9902344,
+                "punctuated_word": "I"
+              },
+              {
+                "word": "froze",
+                "start": 0.24,
+                "end": 0.56,
+                "confidence": 0.99902344,
+                "punctuated_word": "froze"
+              },
+              {
+                "word": "its",
+                "start": 0.56,
+                "end": 0.71999997,
+                "confidence": 0.9941406,
+                "punctuated_word": "its"
+              },
+              {
+                "word": "hash",
+                "start": 0.71999997,
+                "end": 0.96,
+                "confidence": 0.9902344,
+                "punctuated_word": "hash"
+              },
+              {
+                "word": "before",
+                "start": 0.96,
+                "end": 1.28,
+                "confidence": 1.0,
+                "punctuated_word": "before"
+              },
+              {
+                "word": "a",
+                "start": 1.28,
+                "end": 1.52,
+                "confidence": 0.9980469,
+                "punctuated_word": "a"
+              },
+              {
+                "word": "fresh",
+                "start": 1.52,
+                "end": 1.76,
+                "confidence": 1.0,
+                "punctuated_word": "fresh"
+              },
+              {
+                "word": "confirmation",
+                "start": 1.76,
+                "end": 2.24,
+                "confidence": 0.9980469,
+                "punctuated_word": "confirmation"
+              },
+              {
+                "word": "batch",
+                "start": 2.24,
+                "end": 3.04,
+                "confidence": 0.9946289,
+                "punctuated_word": "batch."
+              },
+              {
+                "word": "all",
+                "start": 3.28,
+                "end": 3.6,
+                "confidence": 1.0,
+                "punctuated_word": "All"
+              },
+              {
+                "word": "four",
+                "start": 3.6,
+                "end": 3.9199998,
+                "confidence": 1.0,
+                "punctuated_word": "four"
+              },
+              {
+                "word": "suites",
+                "start": 3.9199998,
+                "end": 4.3199997,
+                "confidence": 0.70751953,
+                "punctuated_word": "suites"
+              },
+              {
+                "word": "passed",
+                "start": 4.3199997,
+                "end": 5.04,
+                "confidence": 0.99365234,
+                "punctuated_word": "passed."
+              },
+              {
+                "word": "target",
+                "start": 5.52,
+                "end": 5.92,
+                "confidence": 0.99902344,
+                "punctuated_word": "Target"
+              },
+              {
+                "word": "collisions",
+                "start": 5.92,
+                "end": 6.3199997,
+                "confidence": 0.9980469,
+                "punctuated_word": "collisions"
+              },
+              {
+                "word": "eight",
+                "start": 6.3199997,
+                "end": 6.64,
+                "confidence": 0.96240234,
+                "punctuated_word": "eight"
+              },
+              {
+                "word": "and",
+                "start": 6.64,
+                "end": 6.7999997,
+                "confidence": 0.8354492,
+                "punctuated_word": "and"
+              },
+              {
+                "word": "one",
+                "start": 6.7999997,
+                "end": 6.96,
+                "confidence": 1.0,
+                "punctuated_word": "one"
+              },
+              {
+                "word": "hundred",
+                "start": 6.96,
+                "end": 7.6,
+                "confidence": 0.99560547,
+                "punctuated_word": "hundred."
+              },
+              {
+                "word": "the",
+                "start": 7.7599998,
+                "end": 8.0,
+                "confidence": 1.0,
+                "punctuated_word": "The"
+              },
+              {
+                "word": "limit",
+                "start": 8.0,
+                "end": 8.32,
+                "confidence": 0.99121094,
+                "punctuated_word": "limit"
+              },
+              {
+                "word": "stayed",
+                "start": 8.32,
+                "end": 8.639999,
+                "confidence": 0.99902344,
+                "punctuated_word": "stayed"
+              },
+              {
+                "word": "10%",
+                "start": 8.639999,
+                "end": 9.599999,
+                "confidence": 0.99975586,
+                "punctuated_word": "10%."
+              },
+              {
+                "word": "the",
+                "start": 9.84,
+                "end": 10.08,
+                "confidence": 1.0,
+                "punctuated_word": "The"
+              },
+              {
+                "word": "earlier",
+                "start": 10.08,
+                "end": 10.48,
+                "confidence": 1.0,
+                "punctuated_word": "earlier"
+              },
+              {
+                "word": "failure",
+                "start": 10.48,
+                "end": 10.88,
+                "confidence": 1.0,
+                "punctuated_word": "failure"
+              },
+              {
+                "word": "remains",
+                "start": 10.88,
+                "end": 11.36,
+                "confidence": 1.0,
+                "punctuated_word": "remains"
+              },
+              {
+                "word": "visible",
+                "start": 11.36,
+                "end": 11.84,
+                "confidence": 0.98706055,
+                "punctuated_word": "visible."
+              }
+            ],
+            "paragraphs": {
+              "transcript": "\nI froze its hash before a fresh confirmation batch. All four suites passed. Target collisions eight and one hundred. The limit stayed 10%. The earlier failure remains visible.",
+              "paragraphs": [
+                {
+                  "sentences": [
+                    {
+                      "text": "I froze its hash before a fresh confirmation batch.",
+                      "start": 0.0,
+                      "end": 3.04
+                    },
+                    {
+                      "text": "All four suites passed.",
+                      "start": 3.28,
+                      "end": 5.04
+                    },
+                    {
+                      "text": "Target collisions eight and one hundred.",
+                      "start": 5.52,
+                      "end": 7.6
+                    },
+                    {
+                      "text": "The limit stayed 10%.",
+                      "start": 7.7599998,
+                      "end": 9.599999
+                    },
+                    {
+                      "text": "The earlier failure remains visible.",
+                      "start": 9.84,
+                      "end": 11.84
+                    }
+                  ],
+                  "num_words": 28,
+                  "start": 0.0,
+                  "end": 11.84
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "utterances": [
+      {
+        "start": 0.0,
+        "end": 3.04,
+        "confidence": 0.9960395,
+        "channel": 0,
+        "transcript": "I froze its hash before a fresh confirmation batch.",
+        "words": [
+          {
+            "word": "i",
+            "start": 0.0,
+            "end": 0.24,
+            "confidence": 0.9902344,
+            "punctuated_word": "I"
+          },
+          {
+            "word": "froze",
+            "start": 0.24,
+            "end": 0.56,
+            "confidence": 0.99902344,
+            "punctuated_word": "froze"
+          },
+          {
+            "word": "its",
+            "start": 0.56,
+            "end": 0.71999997,
+            "confidence": 0.9941406,
+            "punctuated_word": "its"
+          },
+          {
+            "word": "hash",
+            "start": 0.71999997,
+            "end": 0.96,
+            "confidence": 0.9902344,
+            "punctuated_word": "hash"
+          },
+          {
+            "word": "before",
+            "start": 0.96,
+            "end": 1.28,
+            "confidence": 1.0,
+            "punctuated_word": "before"
+          },
+          {
+            "word": "a",
+            "start": 1.28,
+            "end": 1.52,
+            "confidence": 0.9980469,
+            "punctuated_word": "a"
+          },
+          {
+            "word": "fresh",
+            "start": 1.52,
+            "end": 1.76,
+            "confidence": 1.0,
+            "punctuated_word": "fresh"
+          },
+          {
+            "word": "confirmation",
+            "start": 1.76,
+            "end": 2.24,
+            "confidence": 0.9980469,
+            "punctuated_word": "confirmation"
+          },
+          {
+            "word": "batch",
+            "start": 2.24,
+            "end": 3.04,
+            "confidence": 0.9946289,
+            "punctuated_word": "batch."
+          }
+        ],
+        "id": "1f611165-92e4-4830-8e11-ca3b259c819c"
+      },
+      {
+        "start": 3.28,
+        "end": 5.04,
+        "confidence": 0.92529297,
+        "channel": 0,
+        "transcript": "All four suites passed.",
+        "words": [
+          {
+            "word": "all",
+            "start": 3.28,
+            "end": 3.6,
+            "confidence": 1.0,
+            "punctuated_word": "All"
+          },
+          {
+            "word": "four",
+            "start": 3.6,
+            "end": 3.9199998,
+            "confidence": 1.0,
+            "punctuated_word": "four"
+          },
+          {
+            "word": "suites",
+            "start": 3.9199998,
+            "end": 4.3199997,
+            "confidence": 0.70751953,
+            "punctuated_word": "suites"
+          },
+          {
+            "word": "passed",
+            "start": 4.3199997,
+            "end": 5.04,
+            "confidence": 0.99365234,
+            "punctuated_word": "passed."
+          }
+        ],
+        "id": "01783bbd-0e52-4cc6-aece-f430ab89ada6"
+      },
+      {
+        "start": 5.52,
+        "end": 9.599999,
+        "confidence": 0.9780518,
+        "channel": 0,
+        "transcript": "Target collisions eight and one hundred. The limit stayed 10%.",
+        "words": [
+          {
+            "word": "target",
+            "start": 5.52,
+            "end": 5.92,
+            "confidence": 0.99902344,
+            "punctuated_word": "Target"
+          },
+          {
+            "word": "collisions",
+            "start": 5.92,
+            "end": 6.3199997,
+            "confidence": 0.9980469,
+            "punctuated_word": "collisions"
+          },
+          {
+            "word": "eight",
+            "start": 6.3199997,
+            "end": 6.64,
+            "confidence": 0.96240234,
+            "punctuated_word": "eight"
+          },
+          {
+            "word": "and",
+            "start": 6.64,
+            "end": 6.7999997,
+            "confidence": 0.8354492,
+            "punctuated_word": "and"
+          },
+          {
+            "word": "one",
+            "start": 6.7999997,
+            "end": 6.96,
+            "confidence": 1.0,
+            "punctuated_word": "one"
+          },
+          {
+            "word": "hundred",
+            "start": 6.96,
+            "end": 7.6,
+            "confidence": 0.99560547,
+            "punctuated_word": "hundred."
+          },
+          {
+            "word": "the",
+            "start": 7.7599998,
+            "end": 8.0,
+            "confidence": 1.0,
+            "punctuated_word": "The"
+          },
+          {
+            "word": "limit",
+            "start": 8.0,
+            "end": 8.32,
+            "confidence": 0.99121094,
+            "punctuated_word": "limit"
+          },
+          {
+            "word": "stayed",
+            "start": 8.32,
+            "end": 8.639999,
+            "confidence": 0.99902344,
+            "punctuated_word": "stayed"
+          },
+          {
+            "word": "10%",
+            "start": 8.639999,
+            "end": 9.599999,
+            "confidence": 0.99975586,
+            "punctuated_word": "10%."
+          }
+        ],
+        "id": "db162415-1612-4622-bb05-d5d8e0de08c4"
+      },
+      {
+        "start": 9.84,
+        "end": 11.84,
+        "confidence": 0.9974121,
+        "channel": 0,
+        "transcript": "The earlier failure remains visible.",
+        "words": [
+          {
+            "word": "the",
+            "start": 9.84,
+            "end": 10.08,
+            "confidence": 1.0,
+            "punctuated_word": "The"
+          },
+          {
+            "word": "earlier",
+            "start": 10.08,
+            "end": 10.48,
+            "confidence": 1.0,
+            "punctuated_word": "earlier"
+          },
+          {
+            "word": "failure",
+            "start": 10.48,
+            "end": 10.88,
+            "confidence": 1.0,
+            "punctuated_word": "failure"
+          },
+          {
+            "word": "remains",
+            "start": 10.88,
+            "end": 11.36,
+            "confidence": 1.0,
+            "punctuated_word": "remains"
+          },
+          {
+            "word": "visible",
+            "start": 11.36,
+            "end": 11.84,
+            "confidence": 0.98706055,
+            "punctuated_word": "visible."
+          }
+        ],
+        "id": "54597286-9b14-41dc-bdc3-342a59dabe9d"
+      }
+    ]
+  }
+}

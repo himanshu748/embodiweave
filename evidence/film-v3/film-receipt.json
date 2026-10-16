@@ -1,0 +1,38 @@
+{
+  "seconds": 116.66666666666667,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "narration_model": "aura-2-thalia-en",
+  "narration_seconds": 108.51975,
+  "assets": {
+    "embodiweave-demo-v3.mp4": {
+      "bytes": 8141700,
+      "sha256": "84283a271914f1fc9f062a1e146155ecc8341ec24c92d3e4ebd4e82621b45e05"
+    },
+    "embodiweave-demo-v3-720p.mp4": {
+      "bytes": 4212955,
+      "sha256": "77fced18bace4a397a8caf3a77ee4449263dca2a5e8ab239d0c307a87e1b6475"
+    },
+    "embodiweave-demo-v3-narration-free.mp4": {
+      "bytes": 8008083,
+      "sha256": "678722e376a4eb61267ce465f4169d8392fbe17c9bf67de2407dc593baa7ed67"
+    },
+    "embodiweave-demo-v3.gif": {
+      "bytes": 1841863,
+      "sha256": "9be41f1e4135c3bc617cb54d2e32b08eed611e2f2ae2fbf7448b24a4b9f80f9c"
+    }
+  },
+  "reused_v2_sha256": "cd99adbc657a24d242caa615023ff36812a452ae8f36ab998623b46d787ee8c7",
+  "physics": "Recorded MuJoCo-v2 joint states, no interpolation or policy retraining. Selected episode; complete aggregates visible.",
+  "history": "Scenes 1-8 are frozen search-v1 history. Scenes 9-11 are the separately preregistered robustness-v2 study. Old failure remains visible.",
+  "music": {
+    "title": "Cipher",
+    "artist": "Kevin MacLeod",
+    "licence": "CC BY 3.0",
+    "source": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Cipher2.mp3",
+    "source_sha256": "d3d0614535a61d748e2fd8d5117fc4d781022a7624794802a2462d8af3fdd522",
+    "edits": "Excerpt, fades, loudness normalization, music 18 dB below normalized narration"
+  },
+  "caption_note": "Two Nova-3 word-recognition substitutions corrected to the narration script, with original timestamps and raw transcripts retained in voice receipts."
+}

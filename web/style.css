@@ -148,3 +148,4 @@ button[disabled][title] { cursor: help; }
 .consent input { width:20px; height:20px; flex:none; }
 
 .tag3d { background: var(--ink, #1b2026); color: #fbfaf7; border-left: 3px solid var(--c); }
+.physics-film { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: var(--bg); }

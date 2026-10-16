@@ -1,0 +1,90 @@
+{
+  "seed": 5203012,
+  "before": {
+    "goal_distance": 5.619229880184971,
+    "hit": "mover",
+    "layout": {
+      "goal": [
+        8.411724860236863,
+        7.829378553694872
+      ],
+      "movers": [
+        [
+          2.152215350380156,
+          8.206685752710484,
+          0.48238783467298285,
+          -0.8551352603647646,
+          0.5
+        ]
+      ],
+      "start": [
+        1.2949815874436617,
+        3.814773453886634,
+        1.3635240779188174
+      ],
+      "statics": [
+        [
+          2.9508928731110817,
+          5.337859989242523,
+          0.4872454457133364
+        ],
+        [
+          6.381700067627281,
+          6.610073815383177,
+          0.5999479540759064
+        ]
+      ]
+    },
+    "model_xml_sha256": "0acbc73ae28c43877a1e0f476014cbc5cad8955a97a440c83483fd5a5c4b43ac",
+    "outcome": "collision",
+    "seconds": 3.569999999999946,
+    "seed": 5203012,
+    "steps": 36,
+    "trajectory": "trajectories/deployed-static_crossing-5203012.npz",
+    "trajectory_sha256": "c9f5b83f589431ecd5211c868ac2aa00b77ce11e3e0b24206b5adc915376b0bf"
+  },
+  "after": {
+    "goal_distance": 0.2664197678176244,
+    "hit": null,
+    "layout": {
+      "goal": [
+        8.411724860236863,
+        7.829378553694872
+      ],
+      "movers": [
+        [
+          2.152215350380156,
+          8.206685752710484,
+          0.48238783467298285,
+          -0.8551352603647646,
+          0.5
+        ]
+      ],
+      "start": [
+        1.2949815874436617,
+        3.814773453886634,
+        1.3635240779188174
+      ],
+      "statics": [
+        [
+          2.9508928731110817,
+          5.337859989242523,
+          0.4872454457133364
+        ],
+        [
+          6.381700067627281,
+          6.610073815383177,
+          0.5999479540759064
+        ]
+      ]
+    },
+    "model_xml_sha256": "0acbc73ae28c43877a1e0f476014cbc5cad8955a97a440c83483fd5a5c4b43ac",
+    "outcome": "success",
+    "seconds": 10.100000000000179,
+    "seed": 5203012,
+    "steps": 101,
+    "trajectory": "trajectories/robust-static_crossing-5203012.npz",
+    "trajectory_sha256": "46495f18fbdecb9e9386624dfd6904581380ebd47d5879c60e4313f8697d3790"
+  },
+  "selection": "Earliest historical-baseline mover collision among paired new-candidate successes. Selected illustration; all 320 episodes are reported."
+}

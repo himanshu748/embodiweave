@@ -1,0 +1,155 @@
+1
+00:00:00,000 --> 00:00:02,800
+This robot passed its open arena test.
+
+2
+00:00:02,960 --> 00:00:05,280
+Watch what happens when a pedestrian crosses.
+
+3
+00:00:06,900 --> 00:00:09,620
+I built EmbodiWeave to answer two questions.
+
+4
+00:00:09,860 --> 00:00:12,580
+Which robot checkpoint should I retrain, and
+
+5
+00:00:12,580 --> 00:00:14,020
+is the result safe to ship?
+
+6
+00:00:14,600 --> 00:00:20,040
+FalkorDB connects policies, training runs, trials, evaluations,
+
+7
+00:00:20,280 --> 00:00:23,400
+failures, and decisions. The links preserve what
+
+8
+00:00:23,400 --> 00:00:24,120
+produced what.
+
+9
+00:00:24,633 --> 00:00:27,913
+First, the agent queries failed validation suites,
+
+10
+00:00:27,913 --> 00:00:31,033
+matching the exact artifact hash. A lookalike
+
+11
+00:00:31,033 --> 00:00:33,593
+checkpoint cannot substitute for measured evidence.
+
+12
+00:00:34,233 --> 00:00:37,673
+Matching tensor shapes are not enough. FalkorDB
+
+13
+00:00:37,673 --> 00:00:41,273
+links sensor and action contracts, so incompatible
+
+14
+00:00:41,273 --> 00:00:42,713
+starting points are excluded.
+
+15
+00:00:43,413 --> 00:00:46,053
+The planner ranks eligible origins by failed
+
+16
+00:00:46,053 --> 00:00:49,253
+suites and deficits. Before training, its decision
+
+17
+00:00:49,253 --> 00:00:52,293
+records the Cypher, parameters, and returned evidence
+
+18
+00:00:52,293 --> 00:00:53,173
+in FalkorDB.
+
+19
+00:00:54,047 --> 00:00:57,887
+If FalkorDB is unavailable, planning stops. There
+
+20
+00:00:57,887 --> 00:00:59,327
+is no silent fallback.
+
+21
+00:00:59,933 --> 00:01:03,213
+Longer training came first. A retained task
+
+22
+00:01:03,213 --> 00:01:05,613
+failure then led to rehearsal across training
+
+23
+00:01:05,613 --> 00:01:09,613
+families. Each attempt added about 300,000 PPO
+
+24
+00:01:09,613 --> 00:01:10,093
+steps.
+
+25
+00:01:10,767 --> 00:01:14,847
+FalkorDB chose the rehearsal checkpoint for 600,000
+
+26
+00:01:14,847 --> 00:01:18,047
+more PPO steps with double the collision
+
+27
+00:01:18,047 --> 00:01:21,407
+penalty. The saved candidate passed all four
+
+28
+00:01:21,407 --> 00:01:23,327
+unchanged validation suites.
+
+29
+00:01:24,000 --> 00:01:25,760
+I froze its hash before a fresh
+
+30
+00:01:25,760 --> 00:01:29,920
+confirmation batch. All four suites passed. Target
+
+31
+00:01:29,920 --> 00:01:32,320
+collisions eight in one hundred. The limit
+
+32
+00:01:32,320 --> 00:01:35,840
+stayed 10%. The earlier failure remains visible.
+
+33
+00:01:36,607 --> 00:01:39,087
+Physics still exposed a gap. The same
+
+34
+00:01:39,087 --> 00:01:42,527
+checkpoint, without retraining in MuJoCo, collided six
+
+35
+00:01:42,527 --> 00:01:44,927
+times in 40 target episodes, and four
+
+36
+00:01:44,927 --> 00:01:47,327
+times in crossing. This is no physical
+
+37
+00:01:47,327 --> 00:01:48,287
+safety certificate.
+
+38
+00:01:49,160 --> 00:01:51,240
+The graph and checksummed evidence make these
+
+39
+00:01:51,240 --> 00:01:55,000
+results inspectable. EmbodiWeave. Built on FalkorDB.

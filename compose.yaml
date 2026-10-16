@@ -7,6 +7,8 @@ services:
       EW_ARTIFACTS: /data
       EW_STATIC: "1"
       EW_PERSISTENT_ARTIFACTS: "1"
+      EW_DEPLOYED_POLICY: robust-20261016140226-352fd7
+      EW_LATEST_VALIDATION_POLICY: robust-20261016140226-352fd7
     volumes:
       - evidence:/data
     mem_limit: 1536m

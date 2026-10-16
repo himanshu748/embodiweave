@@ -2,7 +2,7 @@
 
 An agent uses connected robot failures and checkpoint history in FalkorDB to choose what to train next, then checks the saved policy against a fixed deployment gate.
 
-**[Live demo](https://embodiweave.52.202.25.181.sslip.io) · [Judge walkthrough](https://embodiweave.52.202.25.181.sslip.io/robustness.html) · [2-minute film](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v2.mp4) · [Train in your browser](https://embodiweave.52.202.25.181.sslip.io/live.html#training)**
+**[Live demo](https://embodiweave.52.202.25.181.sslip.io) · [Judge walkthrough](https://embodiweave.52.202.25.181.sslip.io/robustness.html) · [2-minute film](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v3.mp4) · [Train in your browser](https://embodiweave.52.202.25.181.sslip.io/live.html#training)**
 
 [![Tests](https://github.com/himanshu748/embodiweave/actions/workflows/tests.yml/badge.svg)](https://github.com/himanshu748/embodiweave/actions/workflows/tests.yml)
 
@@ -26,6 +26,8 @@ Current checkpoint: `robust-20261016140226-352fd7`, hash `b027851f2ffe5595de6742
 [Measured study and checksums](evidence/robustness-v2/) · [Protocol and diagnosis](docs/robustness-v2.md) · [Download checkpoint + evidence](https://embodiweave.52.202.25.181.sslip.io/api/download/robust-20261016140226-352fd7-b027851f2ffe-repro-v3.zip).
 
 MuJoCo uses fresh paired seeds and unchanged 2D-trained weights. Its **6/40 target collisions (15%)** exceed the 10% reference limit; crossing is **4/40 (10%)**. This study is separate from the earlier 24/40 baseline result below. No physics safety claim is made, and no MuJoCo outcome is used for further tuning. [All 320 transfer episodes](evidence/mujoco-v2/).
+
+[![Fresh MuJoCo paired replay, illustrative seed 5203012](web/media/embodiweave-demo-v3.gif)](https://embodiweave.52.202.25.181.sslip.io/guide.html#film)
 
 ## Earlier study: search-v1
 
@@ -135,7 +137,7 @@ ORDER BY s.id, p.id
 · [Checksums](evidence/mujoco-v1/checksums.json)
 · [Observation mapping and known mismatches](docs/mujoco-transfer.md).
 
-[![Real MuJoCo same-seed replay, illustrative episode 5103011](web/media/embodiweave-demo-v2.gif)](https://embodiweave.52.202.25.181.sslip.io/guide.html#film)
+[![Earlier MuJoCo replay, illustrative episode 5103011](web/media/embodiweave-demo-v2.gif)](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v2.mp4)
 
 The GIF is an illustrative recorded episode. Full-suite results are in the table above.
 
@@ -225,9 +227,9 @@ Bundles include saved model weights, normalization, contract, validation records
 
 ## Film and credits
 
-The v2 film is **119.23 seconds, 1920×1080 at 30 fps, 8.75 MB**. Robot motion comes from recorded MuJoCo states produced by the saved PPO checkpoints. Graph layouts, titles, camera moves, sensor overlays and learning-curve plots are editorial graphics backed by the evidence. No robot footage was keyframed or AI-generated.
+The v3 film is **116.67 seconds, 1920×1080 at 30 fps, 8.14 MB**, with **108.52 seconds** of Deepgram Thalia narration. Scenes 1-8 preserve the earlier recorded history; scenes 9-11 report the new confirmed checkpoint and MuJoCo-v2 results. Robot motion comes from recorded MuJoCo states produced by the saved PPO checkpoints. Graph layouts, titles, camera moves, sensor overlays and learning-curve plots are editorial graphics backed by the evidence. No robot footage was keyframed or AI-generated.
 
-[Watch v2](https://embodiweave.52.202.25.181.sslip.io/guide.html#film) · [v1 fallback](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo.mp4) · [Timed script](docs/demo/SCRIPT.md) · [SRT](docs/demo/embodiweave-demo-v2.srt) · [YouTube upload notes](docs/demo/YOUTUBE.md) · [Voice receipts](evidence/film/voice-receipts.json).
+[Watch v3](https://embodiweave.52.202.25.181.sslip.io/guide.html#film) · [v2 fallback](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v2.mp4) · [v1 fallback](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo.mp4) · [Timed script](docs/demo/v3/SCRIPT.md) · [SRT](docs/demo/v3/embodiweave-demo-v3.srt) · [YouTube upload notes](docs/demo/v3/YOUTUBE.md) · [Voice receipts](evidence/film-v3/voice-receipts.json).
 
 Narration: Deepgram Aura-2. Captions: Deepgram Nova-3. Music: “Cipher” by Kevin MacLeod (incompetech.com), [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/), edited and mixed under narration. [Full credits and reproduction steps](docs/demo/CREDITS.md).
 

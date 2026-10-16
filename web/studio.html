@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
-<link rel="stylesheet" href="style.css?v=live1">
+<link rel="stylesheet" href="style.css?v=robust2">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Ctext y=%2714%27 font-size=%2714%27%3E%E2%97%88%3C/text%3E%3C/svg%3E">
 </head>
 <body>
@@ -34,6 +34,11 @@
 
 <main class="layout">
   <section class="col-left" aria-label="Arena">
+    <details class="panel">
+      <summary>Watch the recorded MuJoCo physics comparison</summary>
+      <p>Actual recorded contact-physics states, with the same seed on both sides. Both checkpoints were trained in 2D and run unchanged in MuJoCo. This is a selected illustration; <a href="robustness.html">all transfer results, including failures, are reported</a>.</p>
+      <video controls preload="none" playsinline class="physics-film" poster="media/demo-v3-poster.webp"><source src="media/mujoco-v2-replay.mp4" type="video/mp4">Your browser cannot play this recording. <a href="media/mujoco-v2-replay.mp4">Download the physics replay.</a></video>
+    </details>
     <div class="panel">
       <div class="panel-head">
         <h2>Arena replay</h2>
@@ -181,6 +186,6 @@
   <div id="inspKind"></div>
   <pre id="inspBody" class="code"></pre>
 </aside>
-<script src="app.js?v=search4"></script>
+<script src="app.js?v=robust2-search4"></script>
 </body>
 </html>

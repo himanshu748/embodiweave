@@ -1,0 +1,197 @@
+[
+  [
+    0.0,
+    2.8,
+    "This robot passed its open arena test."
+  ],
+  [
+    2.96,
+    5.2799997,
+    "Watch what happens when a pedestrian crosses."
+  ],
+  [
+    6.9,
+    9.6199998,
+    "I built EmbodiWeave to answer two questions."
+  ],
+  [
+    9.86,
+    12.58,
+    "Which robot checkpoint should I retrain, and"
+  ],
+  [
+    12.58,
+    14.02,
+    "is the result safe to ship?"
+  ],
+  [
+    14.600000000000001,
+    20.040000000000003,
+    "FalkorDB connects policies, training runs, trials, evaluations,"
+  ],
+  [
+    20.28,
+    23.400000000000002,
+    "failures, and decisions. The links preserve what"
+  ],
+  [
+    23.400000000000002,
+    24.119999500000002,
+    "produced what."
+  ],
+  [
+    24.633333333333333,
+    27.913333333333334,
+    "First, the agent queries failed validation suites,"
+  ],
+  [
+    27.913333333333334,
+    31.033332933333334,
+    "matching the exact artifact hash. A lookalike"
+  ],
+  [
+    31.033332933333334,
+    33.593333333333334,
+    "checkpoint cannot substitute for measured evidence."
+  ],
+  [
+    34.233333333333334,
+    37.67333313333334,
+    "Matching tensor shapes are not enough. FalkorDB"
+  ],
+  [
+    37.67333313333334,
+    41.27333333333333,
+    "links sensor and action contracts, so incompatible"
+  ],
+  [
+    41.27333333333333,
+    42.71333333333334,
+    "starting points are excluded."
+  ],
+  [
+    43.413333333333334,
+    46.053333333333335,
+    "The planner ranks eligible origins by failed"
+  ],
+  [
+    46.053333333333335,
+    49.25333333333334,
+    "suites and deficits. Before training, its decision"
+  ],
+  [
+    49.25333333333334,
+    52.29333333333334,
+    "records the Cypher, parameters, and returned evidence"
+  ],
+  [
+    52.29333333333334,
+    53.17333333333333,
+    "in FalkorDB."
+  ],
+  [
+    54.04666666666667,
+    57.88666646666667,
+    "If FalkorDB is unavailable, planning stops. There"
+  ],
+  [
+    57.88666646666667,
+    59.32666636666667,
+    "is no silent fallback."
+  ],
+  [
+    59.93333333333334,
+    63.21333333333334,
+    "Longer training came first. A retained task"
+  ],
+  [
+    63.21333333333334,
+    65.61333333333334,
+    "failure then led to rehearsal across training"
+  ],
+  [
+    65.61333333333334,
+    69.61333233333333,
+    "families. Each attempt added about 300,000 PPO"
+  ],
+  [
+    69.61333233333333,
+    70.09333333333333,
+    "steps."
+  ],
+  [
+    70.76666666666667,
+    74.84666666666666,
+    "FalkorDB chose the rehearsal checkpoint for 600,000"
+  ],
+  [
+    74.84666666666666,
+    78.04666636666667,
+    "more PPO steps with double the collision"
+  ],
+  [
+    78.04666636666667,
+    81.40666566666667,
+    "penalty. The saved candidate passed all four"
+  ],
+  [
+    81.40666566666667,
+    83.32666566666667,
+    "unchanged validation suites."
+  ],
+  [
+    84.0,
+    85.76,
+    "I froze its hash before a fresh"
+  ],
+  [
+    85.76,
+    89.92,
+    "confirmation batch. All four suites passed. Target"
+  ],
+  [
+    89.92,
+    92.32,
+    "collisions eight in one hundred. The limit"
+  ],
+  [
+    92.32,
+    95.84,
+    "stayed 10%. The earlier failure remains visible."
+  ],
+  [
+    96.60666666666667,
+    99.08666666666667,
+    "Physics still exposed a gap. The same"
+  ],
+  [
+    99.08666666666667,
+    102.52666666666667,
+    "checkpoint, without retraining in MuJoCo, collided six"
+  ],
+  [
+    102.52666666666667,
+    104.92666566666668,
+    "times in 40 target episodes, and four"
+  ],
+  [
+    104.92666566666668,
+    107.32666666666668,
+    "times in crossing. This is no physical"
+  ],
+  [
+    107.32666666666668,
+    108.28666666666668,
+    "safety certificate."
+  ],
+  [
+    109.16,
+    111.24,
+    "The graph and checksummed evidence make these"
+  ],
+  [
+    111.24,
+    115.0,
+    "results inspectable. EmbodiWeave. Built on FalkorDB."
+  ]
+]
