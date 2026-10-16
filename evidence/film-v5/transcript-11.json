@@ -1,0 +1,395 @@
+{
+  "metadata": {
+    "transaction_key": "deprecated",
+    "request_id": "01a1458c-238d-7592-ba27-e9aa2d7887ad",
+    "sha256": "01d2caf31e88951e85e15ceb38a718e3885646e5dffe042443ed704d8d6d3fdd",
+    "created": "2026-10-16T16:29:35.117Z",
+    "duration": 7.88,
+    "channels": 1,
+    "models": [
+      "2187e11a-3532-4498-b076-81fa530bdd49"
+    ],
+    "model_info": {
+      "2187e11a-3532-4498-b076-81fa530bdd49": {
+        "name": "general-nova-3",
+        "version": "2025-07-31.0",
+        "arch": "nova-3"
+      }
+    }
+  },
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "The next agent read that regression and the weighted graph ranking. Its context limit stopped the attempt before training. I did not retry.",
+            "confidence": 0.99902344,
+            "words": [
+              {
+                "word": "the",
+                "start": 0.0,
+                "end": 0.24,
+                "confidence": 0.99609375,
+                "punctuated_word": "The"
+              },
+              {
+                "word": "next",
+                "start": 0.24,
+                "end": 0.48,
+                "confidence": 1.0,
+                "punctuated_word": "next"
+              },
+              {
+                "word": "agent",
+                "start": 0.48,
+                "end": 0.88,
+                "confidence": 1.0,
+                "punctuated_word": "agent"
+              },
+              {
+                "word": "read",
+                "start": 0.88,
+                "end": 1.1999999,
+                "confidence": 1.0,
+                "punctuated_word": "read"
+              },
+              {
+                "word": "that",
+                "start": 1.1999999,
+                "end": 1.36,
+                "confidence": 0.99902344,
+                "punctuated_word": "that"
+              },
+              {
+                "word": "regression",
+                "start": 1.36,
+                "end": 1.8399999,
+                "confidence": 1.0,
+                "punctuated_word": "regression"
+              },
+              {
+                "word": "and",
+                "start": 1.8399999,
+                "end": 2.08,
+                "confidence": 0.9970703,
+                "punctuated_word": "and"
+              },
+              {
+                "word": "the",
+                "start": 2.08,
+                "end": 2.24,
+                "confidence": 0.99902344,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "weighted",
+                "start": 2.24,
+                "end": 2.48,
+                "confidence": 0.9941406,
+                "punctuated_word": "weighted"
+              },
+              {
+                "word": "graph",
+                "start": 2.48,
+                "end": 2.8,
+                "confidence": 1.0,
+                "punctuated_word": "graph"
+              },
+              {
+                "word": "ranking",
+                "start": 2.8,
+                "end": 3.6,
+                "confidence": 0.9970703,
+                "punctuated_word": "ranking."
+              },
+              {
+                "word": "its",
+                "start": 3.6,
+                "end": 3.9199998,
+                "confidence": 0.9970703,
+                "punctuated_word": "Its"
+              },
+              {
+                "word": "context",
+                "start": 3.9199998,
+                "end": 4.3199997,
+                "confidence": 1.0,
+                "punctuated_word": "context"
+              },
+              {
+                "word": "limit",
+                "start": 4.3199997,
+                "end": 4.72,
+                "confidence": 0.9707031,
+                "punctuated_word": "limit"
+              },
+              {
+                "word": "stopped",
+                "start": 4.72,
+                "end": 5.12,
+                "confidence": 0.82128906,
+                "punctuated_word": "stopped"
+              },
+              {
+                "word": "the",
+                "start": 5.12,
+                "end": 5.2799997,
+                "confidence": 1.0,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "attempt",
+                "start": 5.2799997,
+                "end": 5.6,
+                "confidence": 0.99902344,
+                "punctuated_word": "attempt"
+              },
+              {
+                "word": "before",
+                "start": 5.6,
+                "end": 6.0,
+                "confidence": 1.0,
+                "punctuated_word": "before"
+              },
+              {
+                "word": "training",
+                "start": 6.0,
+                "end": 6.72,
+                "confidence": 0.9975586,
+                "punctuated_word": "training."
+              },
+              {
+                "word": "i",
+                "start": 6.7999997,
+                "end": 6.96,
+                "confidence": 1.0,
+                "punctuated_word": "I"
+              },
+              {
+                "word": "did",
+                "start": 6.96,
+                "end": 7.2,
+                "confidence": 1.0,
+                "punctuated_word": "did"
+              },
+              {
+                "word": "not",
+                "start": 7.2,
+                "end": 7.3599997,
+                "confidence": 1.0,
+                "punctuated_word": "not"
+              },
+              {
+                "word": "retry",
+                "start": 7.3599997,
+                "end": 7.8399997,
+                "confidence": 0.99609375,
+                "punctuated_word": "retry."
+              }
+            ],
+            "paragraphs": {
+              "transcript": "\nThe next agent read that regression and the weighted graph ranking. Its context limit stopped the attempt before training. I did not retry.",
+              "paragraphs": [
+                {
+                  "sentences": [
+                    {
+                      "text": "The next agent read that regression and the weighted graph ranking.",
+                      "start": 0.0,
+                      "end": 3.6
+                    },
+                    {
+                      "text": "Its context limit stopped the attempt before training.",
+                      "start": 3.6,
+                      "end": 6.72
+                    },
+                    {
+                      "text": "I did not retry.",
+                      "start": 6.7999997,
+                      "end": 7.8399997
+                    }
+                  ],
+                  "num_words": 23,
+                  "start": 0.0,
+                  "end": 7.8399997
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "utterances": [
+      {
+        "start": 0.0,
+        "end": 7.8399997,
+        "confidence": 0.9897461,
+        "channel": 0,
+        "transcript": "The next agent read that regression and the weighted graph ranking. Its context limit stopped the attempt before training. I did not retry.",
+        "words": [
+          {
+            "word": "the",
+            "start": 0.0,
+            "end": 0.24,
+            "confidence": 0.99609375,
+            "punctuated_word": "The"
+          },
+          {
+            "word": "next",
+            "start": 0.24,
+            "end": 0.48,
+            "confidence": 1.0,
+            "punctuated_word": "next"
+          },
+          {
+            "word": "agent",
+            "start": 0.48,
+            "end": 0.88,
+            "confidence": 1.0,
+            "punctuated_word": "agent"
+          },
+          {
+            "word": "read",
+            "start": 0.88,
+            "end": 1.1999999,
+            "confidence": 1.0,
+            "punctuated_word": "read"
+          },
+          {
+            "word": "that",
+            "start": 1.1999999,
+            "end": 1.36,
+            "confidence": 0.99902344,
+            "punctuated_word": "that"
+          },
+          {
+            "word": "regression",
+            "start": 1.36,
+            "end": 1.8399999,
+            "confidence": 1.0,
+            "punctuated_word": "regression"
+          },
+          {
+            "word": "and",
+            "start": 1.8399999,
+            "end": 2.08,
+            "confidence": 0.9970703,
+            "punctuated_word": "and"
+          },
+          {
+            "word": "the",
+            "start": 2.08,
+            "end": 2.24,
+            "confidence": 0.99902344,
+            "punctuated_word": "the"
+          },
+          {
+            "word": "weighted",
+            "start": 2.24,
+            "end": 2.48,
+            "confidence": 0.9941406,
+            "punctuated_word": "weighted"
+          },
+          {
+            "word": "graph",
+            "start": 2.48,
+            "end": 2.8,
+            "confidence": 1.0,
+            "punctuated_word": "graph"
+          },
+          {
+            "word": "ranking",
+            "start": 2.8,
+            "end": 3.6,
+            "confidence": 0.9970703,
+            "punctuated_word": "ranking."
+          },
+          {
+            "word": "its",
+            "start": 3.6,
+            "end": 3.9199998,
+            "confidence": 0.9970703,
+            "punctuated_word": "Its"
+          },
+          {
+            "word": "context",
+            "start": 3.9199998,
+            "end": 4.3199997,
+            "confidence": 1.0,
+            "punctuated_word": "context"
+          },
+          {
+            "word": "limit",
+            "start": 4.3199997,
+            "end": 4.72,
+            "confidence": 0.9707031,
+            "punctuated_word": "limit"
+          },
+          {
+            "word": "stopped",
+            "start": 4.72,
+            "end": 5.12,
+            "confidence": 0.82128906,
+            "punctuated_word": "stopped"
+          },
+          {
+            "word": "the",
+            "start": 5.12,
+            "end": 5.2799997,
+            "confidence": 1.0,
+            "punctuated_word": "the"
+          },
+          {
+            "word": "attempt",
+            "start": 5.2799997,
+            "end": 5.6,
+            "confidence": 0.99902344,
+            "punctuated_word": "attempt"
+          },
+          {
+            "word": "before",
+            "start": 5.6,
+            "end": 6.0,
+            "confidence": 1.0,
+            "punctuated_word": "before"
+          },
+          {
+            "word": "training",
+            "start": 6.0,
+            "end": 6.72,
+            "confidence": 0.9975586,
+            "punctuated_word": "training."
+          },
+          {
+            "word": "i",
+            "start": 6.7999997,
+            "end": 6.96,
+            "confidence": 1.0,
+            "punctuated_word": "I"
+          },
+          {
+            "word": "did",
+            "start": 6.96,
+            "end": 7.2,
+            "confidence": 1.0,
+            "punctuated_word": "did"
+          },
+          {
+            "word": "not",
+            "start": 7.2,
+            "end": 7.3599997,
+            "confidence": 1.0,
+            "punctuated_word": "not"
+          },
+          {
+            "word": "retry",
+            "start": 7.3599997,
+            "end": 7.8399997,
+            "confidence": 0.99609375,
+            "punctuated_word": "retry."
+          }
+        ],
+        "id": "d269c39a-4896-4eb4-8508-eb27e135ad7f"
+      }
+    ]
+  }
+}

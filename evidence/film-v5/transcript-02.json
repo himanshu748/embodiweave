@@ -1,0 +1,316 @@
+{
+  "metadata": {
+    "transaction_key": "deprecated",
+    "request_id": "01a144ee-509c-7751-889e-aa1ae6ef1ccc",
+    "sha256": "3909b2bdf7a81f788fdeffc2bc9bc1d0a260f3eee81aa1101c9f8dc9804b0507",
+    "created": "2026-10-16T13:37:11.935Z",
+    "duration": 7.32,
+    "channels": 1,
+    "models": [
+      "2187e11a-3532-4498-b076-81fa530bdd49"
+    ],
+    "model_info": {
+      "2187e11a-3532-4498-b076-81fa530bdd49": {
+        "name": "general-nova-3",
+        "version": "2025-07-31.0",
+        "arch": "nova-3"
+      }
+    }
+  },
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "My agent used MCP and FalkorDB to launch real robot training. The run passed four validation gates.",
+            "confidence": 0.99572754,
+            "words": [
+              {
+                "word": "my",
+                "start": 0.0,
+                "end": 0.32,
+                "confidence": 0.99609375,
+                "punctuated_word": "My"
+              },
+              {
+                "word": "agent",
+                "start": 0.32,
+                "end": 0.64,
+                "confidence": 0.9980469,
+                "punctuated_word": "agent"
+              },
+              {
+                "word": "used",
+                "start": 0.64,
+                "end": 0.96,
+                "confidence": 0.96972656,
+                "punctuated_word": "used"
+              },
+              {
+                "word": "mcp",
+                "start": 0.96,
+                "end": 1.5999999,
+                "confidence": 0.99853516,
+                "punctuated_word": "MCP"
+              },
+              {
+                "word": "and",
+                "start": 1.5999999,
+                "end": 1.8399999,
+                "confidence": 1.0,
+                "punctuated_word": "and"
+              },
+              {
+                "word": "falkordb",
+                "start": 1.8399999,
+                "end": 2.6399999,
+                "confidence": 0.99572754,
+                "punctuated_word": "FalkorDB"
+              },
+              {
+                "word": "to",
+                "start": 2.6399999,
+                "end": 2.96,
+                "confidence": 1.0,
+                "punctuated_word": "to"
+              },
+              {
+                "word": "launch",
+                "start": 2.96,
+                "end": 3.1999998,
+                "confidence": 1.0,
+                "punctuated_word": "launch"
+              },
+              {
+                "word": "real",
+                "start": 3.1999998,
+                "end": 3.6,
+                "confidence": 0.97265625,
+                "punctuated_word": "real"
+              },
+              {
+                "word": "robot",
+                "start": 3.6,
+                "end": 4.08,
+                "confidence": 0.99902344,
+                "punctuated_word": "robot"
+              },
+              {
+                "word": "training",
+                "start": 4.08,
+                "end": 4.8,
+                "confidence": 0.9863281,
+                "punctuated_word": "training."
+              },
+              {
+                "word": "the",
+                "start": 5.04,
+                "end": 5.2799997,
+                "confidence": 0.9921875,
+                "punctuated_word": "The"
+              },
+              {
+                "word": "run",
+                "start": 5.2799997,
+                "end": 5.52,
+                "confidence": 0.99316406,
+                "punctuated_word": "run"
+              },
+              {
+                "word": "passed",
+                "start": 5.52,
+                "end": 5.92,
+                "confidence": 0.890625,
+                "punctuated_word": "passed"
+              },
+              {
+                "word": "four",
+                "start": 5.92,
+                "end": 6.24,
+                "confidence": 0.99316406,
+                "punctuated_word": "four"
+              },
+              {
+                "word": "validation",
+                "start": 6.24,
+                "end": 6.72,
+                "confidence": 1.0,
+                "punctuated_word": "validation"
+              },
+              {
+                "word": "gates",
+                "start": 6.72,
+                "end": 7.2,
+                "confidence": 0.99316406,
+                "punctuated_word": "gates."
+              }
+            ],
+            "paragraphs": {
+              "transcript": "\nMy agent used MCP and FalkorDB to launch real robot training. The run passed four validation gates.",
+              "paragraphs": [
+                {
+                  "sentences": [
+                    {
+                      "text": "My agent used MCP and FalkorDB to launch real robot training.",
+                      "start": 0.0,
+                      "end": 4.8
+                    },
+                    {
+                      "text": "The run passed four validation gates.",
+                      "start": 5.04,
+                      "end": 7.2
+                    }
+                  ],
+                  "num_words": 17,
+                  "start": 0.0,
+                  "end": 7.2
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "utterances": [
+      {
+        "start": 0.0,
+        "end": 4.8,
+        "confidence": 0.99237615,
+        "channel": 0,
+        "transcript": "My agent used MCP and FalkorDB to launch real robot training.",
+        "words": [
+          {
+            "word": "my",
+            "start": 0.0,
+            "end": 0.32,
+            "confidence": 0.99609375,
+            "punctuated_word": "My"
+          },
+          {
+            "word": "agent",
+            "start": 0.32,
+            "end": 0.64,
+            "confidence": 0.9980469,
+            "punctuated_word": "agent"
+          },
+          {
+            "word": "used",
+            "start": 0.64,
+            "end": 0.96,
+            "confidence": 0.96972656,
+            "punctuated_word": "used"
+          },
+          {
+            "word": "mcp",
+            "start": 0.96,
+            "end": 1.5999999,
+            "confidence": 0.99853516,
+            "punctuated_word": "MCP"
+          },
+          {
+            "word": "and",
+            "start": 1.5999999,
+            "end": 1.8399999,
+            "confidence": 1.0,
+            "punctuated_word": "and"
+          },
+          {
+            "word": "falkordb",
+            "start": 1.8399999,
+            "end": 2.6399999,
+            "confidence": 0.99572754,
+            "punctuated_word": "FalkorDB"
+          },
+          {
+            "word": "to",
+            "start": 2.6399999,
+            "end": 2.96,
+            "confidence": 1.0,
+            "punctuated_word": "to"
+          },
+          {
+            "word": "launch",
+            "start": 2.96,
+            "end": 3.1999998,
+            "confidence": 1.0,
+            "punctuated_word": "launch"
+          },
+          {
+            "word": "real",
+            "start": 3.1999998,
+            "end": 3.6,
+            "confidence": 0.97265625,
+            "punctuated_word": "real"
+          },
+          {
+            "word": "robot",
+            "start": 3.6,
+            "end": 4.08,
+            "confidence": 0.99902344,
+            "punctuated_word": "robot"
+          },
+          {
+            "word": "training",
+            "start": 4.08,
+            "end": 4.8,
+            "confidence": 0.9863281,
+            "punctuated_word": "training."
+          }
+        ],
+        "id": "4e815e91-fffc-4e02-a5b4-6e961c863cd0"
+      },
+      {
+        "start": 5.04,
+        "end": 7.2,
+        "confidence": 0.9770508,
+        "channel": 0,
+        "transcript": "The run passed four validation gates.",
+        "words": [
+          {
+            "word": "the",
+            "start": 5.04,
+            "end": 5.2799997,
+            "confidence": 0.9921875,
+            "punctuated_word": "The"
+          },
+          {
+            "word": "run",
+            "start": 5.2799997,
+            "end": 5.52,
+            "confidence": 0.99316406,
+            "punctuated_word": "run"
+          },
+          {
+            "word": "passed",
+            "start": 5.52,
+            "end": 5.92,
+            "confidence": 0.890625,
+            "punctuated_word": "passed"
+          },
+          {
+            "word": "four",
+            "start": 5.92,
+            "end": 6.24,
+            "confidence": 0.99316406,
+            "punctuated_word": "four"
+          },
+          {
+            "word": "validation",
+            "start": 6.24,
+            "end": 6.72,
+            "confidence": 1.0,
+            "punctuated_word": "validation"
+          },
+          {
+            "word": "gates",
+            "start": 6.72,
+            "end": 7.2,
+            "confidence": 0.99316406,
+            "punctuated_word": "gates."
+          }
+        ],
+        "id": "62eddd1c-7e1f-46ca-b5e3-61d5ac8a561b"
+      }
+    ]
+  }
+}

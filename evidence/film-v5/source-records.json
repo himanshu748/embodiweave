@@ -1,0 +1,7 @@
+{
+  "mcp_v2": "evidence/mcp-agent-v2/summary.json",
+  "mcp_v3": "evidence/mcp-agent-v3/summary.json",
+  "confirmed": "evidence/robustness-v2/selected.json",
+  "robot_motion": "Recorded policy-driven 2D simulator poses, no interpolation or new evaluation.",
+  "editorial": "Graph layout, titles, highlights and replayed browser capture framing are editorial; no invented learning curve."
+}

@@ -1,0 +1,289 @@
+{
+  "metadata": {
+    "transaction_key": "deprecated",
+    "request_id": "01a144c8-4ed0-7ce3-9d84-62d64afcda9f",
+    "sha256": "967cf8c94f158bfe3a9e530c14fbc2e838306e4e03191cfd9a492ab5f6e6490a",
+    "created": "2026-10-16T12:55:41.160Z",
+    "duration": 8.44,
+    "channels": 1,
+    "models": [
+      "2187e11a-3532-4498-b076-81fa530bdd49"
+    ],
+    "model_info": {
+      "2187e11a-3532-4498-b076-81fa530bdd49": {
+        "name": "general-nova-3",
+        "version": "2025-07-31.0",
+        "arch": "nova-3"
+      }
+    }
+  },
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "The worker trained 61,440 PPO steps, then reloaded the checkpoint for 180 validation episodes.",
+            "confidence": 0.9970703,
+            "words": [
+              {
+                "word": "the",
+                "start": 0.0,
+                "end": 0.39999998,
+                "confidence": 0.9970703,
+                "punctuated_word": "The"
+              },
+              {
+                "word": "worker",
+                "start": 0.39999998,
+                "end": 0.71999997,
+                "confidence": 1.0,
+                "punctuated_word": "worker"
+              },
+              {
+                "word": "trained",
+                "start": 0.71999997,
+                "end": 1.04,
+                "confidence": 0.9902344,
+                "punctuated_word": "trained"
+              },
+              {
+                "word": "61,440",
+                "start": 1.04,
+                "end": 3.12,
+                "confidence": 0.9847819,
+                "punctuated_word": "61,440"
+              },
+              {
+                "word": "ppo",
+                "start": 3.12,
+                "end": 3.6799998,
+                "confidence": 0.9838867,
+                "punctuated_word": "PPO"
+              },
+              {
+                "word": "steps",
+                "start": 3.6799998,
+                "end": 4.48,
+                "confidence": 0.85595703,
+                "punctuated_word": "steps,"
+              },
+              {
+                "word": "then",
+                "start": 4.64,
+                "end": 4.7999997,
+                "confidence": 1.0,
+                "punctuated_word": "then"
+              },
+              {
+                "word": "reloaded",
+                "start": 4.7999997,
+                "end": 5.2799997,
+                "confidence": 0.9970703,
+                "punctuated_word": "reloaded"
+              },
+              {
+                "word": "the",
+                "start": 5.2799997,
+                "end": 5.44,
+                "confidence": 1.0,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "checkpoint",
+                "start": 5.44,
+                "end": 5.8399997,
+                "confidence": 0.96875,
+                "punctuated_word": "checkpoint"
+              },
+              {
+                "word": "for",
+                "start": 5.8399997,
+                "end": 6.16,
+                "confidence": 1.0,
+                "punctuated_word": "for"
+              },
+              {
+                "word": "180",
+                "start": 6.16,
+                "end": 6.96,
+                "confidence": 0.97184247,
+                "punctuated_word": "180"
+              },
+              {
+                "word": "validation",
+                "start": 6.96,
+                "end": 7.52,
+                "confidence": 0.99609375,
+                "punctuated_word": "validation"
+              },
+              {
+                "word": "episodes",
+                "start": 7.52,
+                "end": 8.24,
+                "confidence": 0.99609375,
+                "punctuated_word": "episodes."
+              }
+            ],
+            "paragraphs": {
+              "transcript": "\nThe worker trained 61,440 PPO steps, then reloaded the checkpoint for 180 validation episodes.",
+              "paragraphs": [
+                {
+                  "sentences": [
+                    {
+                      "text": "The worker trained 61,440 PPO steps, then reloaded the checkpoint for 180 validation episodes.",
+                      "start": 0.0,
+                      "end": 8.24
+                    }
+                  ],
+                  "num_words": 14,
+                  "start": 0.0,
+                  "end": 8.24
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "utterances": [
+      {
+        "start": 0.0,
+        "end": 3.12,
+        "confidence": 0.99302167,
+        "channel": 0,
+        "transcript": "The worker trained 61,440",
+        "words": [
+          {
+            "word": "the",
+            "start": 0.0,
+            "end": 0.39999998,
+            "confidence": 0.9970703,
+            "punctuated_word": "The"
+          },
+          {
+            "word": "worker",
+            "start": 0.39999998,
+            "end": 0.71999997,
+            "confidence": 1.0,
+            "punctuated_word": "worker"
+          },
+          {
+            "word": "trained",
+            "start": 0.71999997,
+            "end": 1.04,
+            "confidence": 0.9902344,
+            "punctuated_word": "trained"
+          },
+          {
+            "word": "61,440",
+            "start": 1.04,
+            "end": 3.12,
+            "confidence": 0.9847819,
+            "punctuated_word": "61,440"
+          }
+        ],
+        "id": "614eccba-ac3f-4ef1-b69f-8a7c923a751d"
+      },
+      {
+        "start": 3.12,
+        "end": 4.48,
+        "confidence": 0.9199219,
+        "channel": 0,
+        "transcript": "PPO steps,",
+        "words": [
+          {
+            "word": "ppo",
+            "start": 3.12,
+            "end": 3.6799998,
+            "confidence": 0.9838867,
+            "punctuated_word": "PPO"
+          },
+          {
+            "word": "steps",
+            "start": 3.6799998,
+            "end": 4.48,
+            "confidence": 0.85595703,
+            "punctuated_word": "steps,"
+          }
+        ],
+        "id": "770eb4b7-a0dc-440a-8b76-b4f426c86776"
+      },
+      {
+        "start": 4.64,
+        "end": 6.96,
+        "confidence": 0.98961043,
+        "channel": 0,
+        "transcript": "then reloaded the checkpoint for 180",
+        "words": [
+          {
+            "word": "then",
+            "start": 4.64,
+            "end": 4.7999997,
+            "confidence": 1.0,
+            "punctuated_word": "then"
+          },
+          {
+            "word": "reloaded",
+            "start": 4.7999997,
+            "end": 5.2799997,
+            "confidence": 0.9970703,
+            "punctuated_word": "reloaded"
+          },
+          {
+            "word": "the",
+            "start": 5.2799997,
+            "end": 5.44,
+            "confidence": 1.0,
+            "punctuated_word": "the"
+          },
+          {
+            "word": "checkpoint",
+            "start": 5.44,
+            "end": 5.8399997,
+            "confidence": 0.96875,
+            "punctuated_word": "checkpoint"
+          },
+          {
+            "word": "for",
+            "start": 5.8399997,
+            "end": 6.16,
+            "confidence": 1.0,
+            "punctuated_word": "for"
+          },
+          {
+            "word": "180",
+            "start": 6.16,
+            "end": 6.96,
+            "confidence": 0.97184247,
+            "punctuated_word": "180"
+          }
+        ],
+        "id": "9ee49d02-54e1-4d7d-b75b-b58c439d02a8"
+      },
+      {
+        "start": 6.96,
+        "end": 8.24,
+        "confidence": 0.99609375,
+        "channel": 0,
+        "transcript": "validation episodes.",
+        "words": [
+          {
+            "word": "validation",
+            "start": 6.96,
+            "end": 7.52,
+            "confidence": 0.99609375,
+            "punctuated_word": "validation"
+          },
+          {
+            "word": "episodes",
+            "start": 7.52,
+            "end": 8.24,
+            "confidence": 0.99609375,
+            "punctuated_word": "episodes."
+          }
+        ],
+        "id": "b8e32606-ed65-46fe-a866-b419493ac27a"
+      }
+    ]
+  }
+}

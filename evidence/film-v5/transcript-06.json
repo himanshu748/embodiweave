@@ -1,0 +1,374 @@
+{
+  "metadata": {
+    "transaction_key": "deprecated",
+    "request_id": "01a1458b-c871-7952-ab64-97ed57dd30fe",
+    "sha256": "b6f03bd24e5aa8bfb6f892def9ff12b56becf8f5bd5059c8cac3227f28932553",
+    "created": "2026-10-16T16:29:11.967Z",
+    "duration": 9.08,
+    "channels": 1,
+    "models": [
+      "2187e11a-3532-4498-b076-81fa530bdd49"
+    ],
+    "model_info": {
+      "2187e11a-3532-4498-b076-81fa530bdd49": {
+        "name": "general-nova-3",
+        "version": "2025-07-31.0",
+        "arch": "nova-3"
+      }
+    }
+  },
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "The guardrail check sensor contracts, artifact hashes, complete validation, and the training budget. It can veto an incompatible origin.",
+            "confidence": 0.9977214,
+            "words": [
+              {
+                "word": "the",
+                "start": 0.0,
+                "end": 0.16,
+                "confidence": 0.98095703,
+                "punctuated_word": "The"
+              },
+              {
+                "word": "guardrail",
+                "start": 0.16,
+                "end": 0.79999995,
+                "confidence": 0.9772949,
+                "punctuated_word": "guardrail"
+              },
+              {
+                "word": "check",
+                "start": 0.79999995,
+                "end": 1.04,
+                "confidence": 0.5073242,
+                "punctuated_word": "check"
+              },
+              {
+                "word": "sensor",
+                "start": 1.04,
+                "end": 1.52,
+                "confidence": 0.94140625,
+                "punctuated_word": "sensor"
+              },
+              {
+                "word": "contracts",
+                "start": 1.52,
+                "end": 2.3999999,
+                "confidence": 0.98657227,
+                "punctuated_word": "contracts,"
+              },
+              {
+                "word": "artifact",
+                "start": 2.48,
+                "end": 2.96,
+                "confidence": 0.99902344,
+                "punctuated_word": "artifact"
+              },
+              {
+                "word": "hashes",
+                "start": 2.96,
+                "end": 3.84,
+                "confidence": 0.9977214,
+                "punctuated_word": "hashes,"
+              },
+              {
+                "word": "complete",
+                "start": 3.9199998,
+                "end": 4.3199997,
+                "confidence": 1.0,
+                "punctuated_word": "complete"
+              },
+              {
+                "word": "validation",
+                "start": 4.3199997,
+                "end": 5.2000003,
+                "confidence": 0.9797363,
+                "punctuated_word": "validation,"
+              },
+              {
+                "word": "and",
+                "start": 5.2799997,
+                "end": 5.3599997,
+                "confidence": 1.0,
+                "punctuated_word": "and"
+              },
+              {
+                "word": "the",
+                "start": 5.3599997,
+                "end": 5.52,
+                "confidence": 1.0,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "training",
+                "start": 5.52,
+                "end": 5.8399997,
+                "confidence": 1.0,
+                "punctuated_word": "training"
+              },
+              {
+                "word": "budget",
+                "start": 5.8399997,
+                "end": 6.56,
+                "confidence": 0.99560547,
+                "punctuated_word": "budget."
+              },
+              {
+                "word": "it",
+                "start": 6.7999997,
+                "end": 7.04,
+                "confidence": 1.0,
+                "punctuated_word": "It"
+              },
+              {
+                "word": "can",
+                "start": 7.04,
+                "end": 7.2,
+                "confidence": 0.99902344,
+                "punctuated_word": "can"
+              },
+              {
+                "word": "veto",
+                "start": 7.2,
+                "end": 7.6,
+                "confidence": 0.99609375,
+                "punctuated_word": "veto"
+              },
+              {
+                "word": "an",
+                "start": 7.6,
+                "end": 7.7599998,
+                "confidence": 0.99902344,
+                "punctuated_word": "an"
+              },
+              {
+                "word": "incompatible",
+                "start": 7.7599998,
+                "end": 8.48,
+                "confidence": 1.0,
+                "punctuated_word": "incompatible"
+              },
+              {
+                "word": "origin",
+                "start": 8.48,
+                "end": 8.96,
+                "confidence": 0.9885254,
+                "punctuated_word": "origin."
+              }
+            ],
+            "paragraphs": {
+              "transcript": "\nThe guardrail check sensor contracts, artifact hashes, complete validation, and the training budget. It can veto an incompatible origin.",
+              "paragraphs": [
+                {
+                  "sentences": [
+                    {
+                      "text": "The guardrail check sensor contracts, artifact hashes, complete validation, and the training budget.",
+                      "start": 0.0,
+                      "end": 6.56
+                    },
+                    {
+                      "text": "It can veto an incompatible origin.",
+                      "start": 6.7999997,
+                      "end": 8.96
+                    }
+                  ],
+                  "num_words": 19,
+                  "start": 0.0,
+                  "end": 8.96
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "utterances": [
+      {
+        "start": 0.0,
+        "end": 2.3999999,
+        "confidence": 0.8787109,
+        "channel": 0,
+        "transcript": "The guardrail check sensor contracts,",
+        "words": [
+          {
+            "word": "the",
+            "start": 0.0,
+            "end": 0.16,
+            "confidence": 0.98095703,
+            "punctuated_word": "The"
+          },
+          {
+            "word": "guardrail",
+            "start": 0.16,
+            "end": 0.79999995,
+            "confidence": 0.9772949,
+            "punctuated_word": "guardrail"
+          },
+          {
+            "word": "check",
+            "start": 0.79999995,
+            "end": 1.04,
+            "confidence": 0.5073242,
+            "punctuated_word": "check"
+          },
+          {
+            "word": "sensor",
+            "start": 1.04,
+            "end": 1.52,
+            "confidence": 0.94140625,
+            "punctuated_word": "sensor"
+          },
+          {
+            "word": "contracts",
+            "start": 1.52,
+            "end": 2.3999999,
+            "confidence": 0.98657227,
+            "punctuated_word": "contracts,"
+          }
+        ],
+        "id": "c4c7c41e-5c19-454c-82e0-6d90ea325b51"
+      },
+      {
+        "start": 2.48,
+        "end": 3.84,
+        "confidence": 0.99837244,
+        "channel": 0,
+        "transcript": "artifact hashes,",
+        "words": [
+          {
+            "word": "artifact",
+            "start": 2.48,
+            "end": 2.96,
+            "confidence": 0.99902344,
+            "punctuated_word": "artifact"
+          },
+          {
+            "word": "hashes",
+            "start": 2.96,
+            "end": 3.84,
+            "confidence": 0.9977214,
+            "punctuated_word": "hashes,"
+          }
+        ],
+        "id": "4918db33-c594-4a5e-8b4c-33a51f80c0d1"
+      },
+      {
+        "start": 3.9199998,
+        "end": 5.2000003,
+        "confidence": 0.98986816,
+        "channel": 0,
+        "transcript": "complete validation,",
+        "words": [
+          {
+            "word": "complete",
+            "start": 3.9199998,
+            "end": 4.3199997,
+            "confidence": 1.0,
+            "punctuated_word": "complete"
+          },
+          {
+            "word": "validation",
+            "start": 4.3199997,
+            "end": 5.2000003,
+            "confidence": 0.9797363,
+            "punctuated_word": "validation,"
+          }
+        ],
+        "id": "70c213b9-cd00-4fdf-8f8c-9eca05b1d138"
+      },
+      {
+        "start": 5.2799997,
+        "end": 6.56,
+        "confidence": 0.99890137,
+        "channel": 0,
+        "transcript": "and the training budget.",
+        "words": [
+          {
+            "word": "and",
+            "start": 5.2799997,
+            "end": 5.3599997,
+            "confidence": 1.0,
+            "punctuated_word": "and"
+          },
+          {
+            "word": "the",
+            "start": 5.3599997,
+            "end": 5.52,
+            "confidence": 1.0,
+            "punctuated_word": "the"
+          },
+          {
+            "word": "training",
+            "start": 5.52,
+            "end": 5.8399997,
+            "confidence": 1.0,
+            "punctuated_word": "training"
+          },
+          {
+            "word": "budget",
+            "start": 5.8399997,
+            "end": 6.56,
+            "confidence": 0.99560547,
+            "punctuated_word": "budget."
+          }
+        ],
+        "id": "4af9880b-b9c3-408e-ad25-4be2745ffc10"
+      },
+      {
+        "start": 6.7999997,
+        "end": 8.96,
+        "confidence": 0.997111,
+        "channel": 0,
+        "transcript": "It can veto an incompatible origin.",
+        "words": [
+          {
+            "word": "it",
+            "start": 6.7999997,
+            "end": 7.04,
+            "confidence": 1.0,
+            "punctuated_word": "It"
+          },
+          {
+            "word": "can",
+            "start": 7.04,
+            "end": 7.2,
+            "confidence": 0.99902344,
+            "punctuated_word": "can"
+          },
+          {
+            "word": "veto",
+            "start": 7.2,
+            "end": 7.6,
+            "confidence": 0.99609375,
+            "punctuated_word": "veto"
+          },
+          {
+            "word": "an",
+            "start": 7.6,
+            "end": 7.7599998,
+            "confidence": 0.99902344,
+            "punctuated_word": "an"
+          },
+          {
+            "word": "incompatible",
+            "start": 7.7599998,
+            "end": 8.48,
+            "confidence": 1.0,
+            "punctuated_word": "incompatible"
+          },
+          {
+            "word": "origin",
+            "start": 8.48,
+            "end": 8.96,
+            "confidence": 0.9885254,
+            "punctuated_word": "origin."
+          }
+        ],
+        "id": "7849fac2-766d-44f6-b0bc-703e828f03e9"
+      }
+    ]
+  }
+}

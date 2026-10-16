@@ -1,0 +1,12 @@
+[
+  {
+    "scene": 1,
+    "model": "aura-2-thalia-en",
+    "dg_request_id": "01a14589-f15c-71f2-8796-d7847d7f1541",
+    "characters": 153,
+    "text_sha256": "ba3121f457c2d4617656d7e27182a33a5768695a754717dd860eb64fe43acafe",
+    "audio_sha256": "c3ea78760e3505f94792907ee7da1b548fe20b475235c9ada56974e7823c9777",
+    "stt_request_id": "01a1458a-0d8b-74f1-af85-941d7dfd3155",
+    "stt_model": "nova-3"
+  }
+]

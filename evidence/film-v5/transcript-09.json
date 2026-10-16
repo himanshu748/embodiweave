@@ -1,0 +1,434 @@
+{
+  "metadata": {
+    "transaction_key": "deprecated",
+    "request_id": "01a144c8-6a77-78e2-9a85-a52dffb8b01f",
+    "sha256": "188a901cbfd7ea6545ee3335eee8e1487e68652160c9eb8d4fd3d20a20a50cc8",
+    "created": "2026-10-16T12:55:48.309Z",
+    "duration": 9.32,
+    "channels": 1,
+    "models": [
+      "2187e11a-3532-4498-b076-81fa530bdd49"
+    ],
+    "model_info": {
+      "2187e11a-3532-4498-b076-81fa530bdd49": {
+        "name": "general-nova-3",
+        "version": "2025-07-31.0",
+        "arch": "nova-3"
+      }
+    }
+  },
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "All four suites passed the unchanged gate. Target collisions were three and sixty. Open had zero. Static and crossing had one each in 40.",
+            "confidence": 0.99853516,
+            "words": [
+              {
+                "word": "all",
+                "start": 0.0,
+                "end": 0.48,
+                "confidence": 0.9970703,
+                "punctuated_word": "All"
+              },
+              {
+                "word": "four",
+                "start": 0.48,
+                "end": 0.71999997,
+                "confidence": 1.0,
+                "punctuated_word": "four"
+              },
+              {
+                "word": "suites",
+                "start": 0.71999997,
+                "end": 1.12,
+                "confidence": 0.98291016,
+                "punctuated_word": "suites"
+              },
+              {
+                "word": "passed",
+                "start": 1.12,
+                "end": 1.4399999,
+                "confidence": 0.95166016,
+                "punctuated_word": "passed"
+              },
+              {
+                "word": "the",
+                "start": 1.4399999,
+                "end": 1.68,
+                "confidence": 1.0,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "unchanged",
+                "start": 1.68,
+                "end": 2.1599998,
+                "confidence": 1.0,
+                "punctuated_word": "unchanged"
+              },
+              {
+                "word": "gate",
+                "start": 2.1599998,
+                "end": 2.8799999,
+                "confidence": 0.95336914,
+                "punctuated_word": "gate."
+              },
+              {
+                "word": "target",
+                "start": 3.04,
+                "end": 3.4399998,
+                "confidence": 0.99902344,
+                "punctuated_word": "Target"
+              },
+              {
+                "word": "collisions",
+                "start": 3.4399998,
+                "end": 3.84,
+                "confidence": 0.9995117,
+                "punctuated_word": "collisions"
+              },
+              {
+                "word": "were",
+                "start": 3.84,
+                "end": 4.08,
+                "confidence": 1.0,
+                "punctuated_word": "were"
+              },
+              {
+                "word": "three",
+                "start": 4.08,
+                "end": 4.3199997,
+                "confidence": 1.0,
+                "punctuated_word": "three"
+              },
+              {
+                "word": "and",
+                "start": 4.3199997,
+                "end": 4.56,
+                "confidence": 0.7319336,
+                "punctuated_word": "and"
+              },
+              {
+                "word": "sixty",
+                "start": 4.56,
+                "end": 5.28,
+                "confidence": 0.9975586,
+                "punctuated_word": "sixty."
+              },
+              {
+                "word": "open",
+                "start": 5.44,
+                "end": 5.8399997,
+                "confidence": 1.0,
+                "punctuated_word": "Open"
+              },
+              {
+                "word": "had",
+                "start": 5.8399997,
+                "end": 6.16,
+                "confidence": 1.0,
+                "punctuated_word": "had"
+              },
+              {
+                "word": "zero",
+                "start": 6.16,
+                "end": 6.8,
+                "confidence": 0.79052734,
+                "punctuated_word": "zero."
+              },
+              {
+                "word": "static",
+                "start": 6.8799996,
+                "end": 7.2799997,
+                "confidence": 0.99853516,
+                "punctuated_word": "Static"
+              },
+              {
+                "word": "and",
+                "start": 7.2799997,
+                "end": 7.52,
+                "confidence": 0.9902344,
+                "punctuated_word": "and"
+              },
+              {
+                "word": "crossing",
+                "start": 7.52,
+                "end": 7.8399997,
+                "confidence": 0.98095703,
+                "punctuated_word": "crossing"
+              },
+              {
+                "word": "had",
+                "start": 7.8399997,
+                "end": 8.16,
+                "confidence": 1.0,
+                "punctuated_word": "had"
+              },
+              {
+                "word": "one",
+                "start": 8.16,
+                "end": 8.4,
+                "confidence": 1.0,
+                "punctuated_word": "one"
+              },
+              {
+                "word": "each",
+                "start": 8.4,
+                "end": 8.639999,
+                "confidence": 0.9658203,
+                "punctuated_word": "each"
+              },
+              {
+                "word": "in",
+                "start": 8.639999,
+                "end": 8.88,
+                "confidence": 0.8198242,
+                "punctuated_word": "in"
+              },
+              {
+                "word": "40",
+                "start": 8.88,
+                "end": 9.2,
+                "confidence": 0.99853516,
+                "punctuated_word": "40."
+              }
+            ],
+            "paragraphs": {
+              "transcript": "\nAll four suites passed the unchanged gate. Target collisions were three and sixty. Open had zero. Static and crossing had one each in 40.",
+              "paragraphs": [
+                {
+                  "sentences": [
+                    {
+                      "text": "All four suites passed the unchanged gate.",
+                      "start": 0.0,
+                      "end": 2.8799999
+                    },
+                    {
+                      "text": "Target collisions were three and sixty.",
+                      "start": 3.04,
+                      "end": 5.28
+                    },
+                    {
+                      "text": "Open had zero.",
+                      "start": 5.44,
+                      "end": 6.8
+                    },
+                    {
+                      "text": "Static and crossing had one each in 40.",
+                      "start": 6.8799996,
+                      "end": 9.2
+                    }
+                  ],
+                  "num_words": 24,
+                  "start": 0.0,
+                  "end": 9.2
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "utterances": [
+      {
+        "start": 0.0,
+        "end": 2.8799999,
+        "confidence": 0.98357284,
+        "channel": 0,
+        "transcript": "All four suites passed the unchanged gate.",
+        "words": [
+          {
+            "word": "all",
+            "start": 0.0,
+            "end": 0.48,
+            "confidence": 0.9970703,
+            "punctuated_word": "All"
+          },
+          {
+            "word": "four",
+            "start": 0.48,
+            "end": 0.71999997,
+            "confidence": 1.0,
+            "punctuated_word": "four"
+          },
+          {
+            "word": "suites",
+            "start": 0.71999997,
+            "end": 1.12,
+            "confidence": 0.98291016,
+            "punctuated_word": "suites"
+          },
+          {
+            "word": "passed",
+            "start": 1.12,
+            "end": 1.4399999,
+            "confidence": 0.95166016,
+            "punctuated_word": "passed"
+          },
+          {
+            "word": "the",
+            "start": 1.4399999,
+            "end": 1.68,
+            "confidence": 1.0,
+            "punctuated_word": "the"
+          },
+          {
+            "word": "unchanged",
+            "start": 1.68,
+            "end": 2.1599998,
+            "confidence": 1.0,
+            "punctuated_word": "unchanged"
+          },
+          {
+            "word": "gate",
+            "start": 2.1599998,
+            "end": 2.8799999,
+            "confidence": 0.95336914,
+            "punctuated_word": "gate."
+          }
+        ],
+        "id": "619cc745-4b08-4da8-a3d9-52a3baca47ed"
+      },
+      {
+        "start": 3.04,
+        "end": 5.28,
+        "confidence": 0.9546712,
+        "channel": 0,
+        "transcript": "Target collisions were three and sixty.",
+        "words": [
+          {
+            "word": "target",
+            "start": 3.04,
+            "end": 3.4399998,
+            "confidence": 0.99902344,
+            "punctuated_word": "Target"
+          },
+          {
+            "word": "collisions",
+            "start": 3.4399998,
+            "end": 3.84,
+            "confidence": 0.9995117,
+            "punctuated_word": "collisions"
+          },
+          {
+            "word": "were",
+            "start": 3.84,
+            "end": 4.08,
+            "confidence": 1.0,
+            "punctuated_word": "were"
+          },
+          {
+            "word": "three",
+            "start": 4.08,
+            "end": 4.3199997,
+            "confidence": 1.0,
+            "punctuated_word": "three"
+          },
+          {
+            "word": "and",
+            "start": 4.3199997,
+            "end": 4.56,
+            "confidence": 0.7319336,
+            "punctuated_word": "and"
+          },
+          {
+            "word": "sixty",
+            "start": 4.56,
+            "end": 5.28,
+            "confidence": 0.9975586,
+            "punctuated_word": "sixty."
+          }
+        ],
+        "id": "c857439c-f1cc-4fd0-8ff9-80e3e834c1e9"
+      },
+      {
+        "start": 5.44,
+        "end": 9.2,
+        "confidence": 0.95858485,
+        "channel": 0,
+        "transcript": "Open had zero. Static and crossing had one each in 40.",
+        "words": [
+          {
+            "word": "open",
+            "start": 5.44,
+            "end": 5.8399997,
+            "confidence": 1.0,
+            "punctuated_word": "Open"
+          },
+          {
+            "word": "had",
+            "start": 5.8399997,
+            "end": 6.16,
+            "confidence": 1.0,
+            "punctuated_word": "had"
+          },
+          {
+            "word": "zero",
+            "start": 6.16,
+            "end": 6.8,
+            "confidence": 0.79052734,
+            "punctuated_word": "zero."
+          },
+          {
+            "word": "static",
+            "start": 6.8799996,
+            "end": 7.2799997,
+            "confidence": 0.99853516,
+            "punctuated_word": "Static"
+          },
+          {
+            "word": "and",
+            "start": 7.2799997,
+            "end": 7.52,
+            "confidence": 0.9902344,
+            "punctuated_word": "and"
+          },
+          {
+            "word": "crossing",
+            "start": 7.52,
+            "end": 7.8399997,
+            "confidence": 0.98095703,
+            "punctuated_word": "crossing"
+          },
+          {
+            "word": "had",
+            "start": 7.8399997,
+            "end": 8.16,
+            "confidence": 1.0,
+            "punctuated_word": "had"
+          },
+          {
+            "word": "one",
+            "start": 8.16,
+            "end": 8.4,
+            "confidence": 1.0,
+            "punctuated_word": "one"
+          },
+          {
+            "word": "each",
+            "start": 8.4,
+            "end": 8.639999,
+            "confidence": 0.9658203,
+            "punctuated_word": "each"
+          },
+          {
+            "word": "in",
+            "start": 8.639999,
+            "end": 8.88,
+            "confidence": 0.8198242,
+            "punctuated_word": "in"
+          },
+          {
+            "word": "40",
+            "start": 8.88,
+            "end": 9.2,
+            "confidence": 0.99853516,
+            "punctuated_word": "40."
+          }
+        ],
+        "id": "a0334481-3130-475b-a314-aaa5d8595ed6"
+      }
+    ]
+  }
+}

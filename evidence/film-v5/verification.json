@@ -1,0 +1,27 @@
+{
+  "v4_files_unchanged": 55,
+  "full_video_decode_errors": "",
+  "success_replay_final_outcome": "success",
+  "success_replay_seed": 1100000,
+  "master_probe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "30/1"
+      },
+      {
+        "codec_name": "aac",
+        "r_frame_rate": "0/0"
+      }
+    ],
+    "format": {
+      "duration": "118.100000",
+      "size": "5168663"
+    }
+  },
+  "review": "All thirteen scene previews reviewed; titles and numeric overlays checked against the saved records. Captions use Nova-3 timings. No new training or evaluation for the edit."
+}

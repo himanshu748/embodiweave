@@ -1,0 +1,414 @@
+{
+  "metadata": {
+    "transaction_key": "deprecated",
+    "request_id": "01a1458c-390e-7b70-80ac-bd2c90c0802f",
+    "sha256": "0d339aa5e5230553ae8e9559fc1f5d1bc72cf8126e67e57e54595f49f64447f4",
+    "created": "2026-10-16T16:29:40.633Z",
+    "duration": 9.92,
+    "channels": 1,
+    "models": [
+      "2187e11a-3532-4498-b076-81fa530bdd49"
+    ],
+    "model_info": {
+      "2187e11a-3532-4498-b076-81fa530bdd49": {
+        "name": "general-nova-3",
+        "version": "2025-07-31.0",
+        "arch": "nova-3"
+      }
+    }
+  },
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "The shipped graph selected checkpoint passed all four validation suites and fresh confirmation. Eight target collisions in a 100 episodes below the 10% limit.",
+            "confidence": 0.9980469,
+            "words": [
+              {
+                "word": "the",
+                "start": 0.0,
+                "end": 0.39999998,
+                "confidence": 0.9970703,
+                "punctuated_word": "The"
+              },
+              {
+                "word": "shipped",
+                "start": 0.39999998,
+                "end": 0.71999997,
+                "confidence": 0.7607422,
+                "punctuated_word": "shipped"
+              },
+              {
+                "word": "graph",
+                "start": 0.71999997,
+                "end": 1.04,
+                "confidence": 0.95703125,
+                "punctuated_word": "graph"
+              },
+              {
+                "word": "selected",
+                "start": 1.04,
+                "end": 1.52,
+                "confidence": 0.99902344,
+                "punctuated_word": "selected"
+              },
+              {
+                "word": "checkpoint",
+                "start": 1.52,
+                "end": 2.08,
+                "confidence": 0.99609375,
+                "punctuated_word": "checkpoint"
+              },
+              {
+                "word": "passed",
+                "start": 2.08,
+                "end": 2.48,
+                "confidence": 0.9614258,
+                "punctuated_word": "passed"
+              },
+              {
+                "word": "all",
+                "start": 2.48,
+                "end": 2.8,
+                "confidence": 1.0,
+                "punctuated_word": "all"
+              },
+              {
+                "word": "four",
+                "start": 2.8,
+                "end": 3.04,
+                "confidence": 0.99902344,
+                "punctuated_word": "four"
+              },
+              {
+                "word": "validation",
+                "start": 3.04,
+                "end": 3.6,
+                "confidence": 1.0,
+                "punctuated_word": "validation"
+              },
+              {
+                "word": "suites",
+                "start": 3.6,
+                "end": 4.0,
+                "confidence": 0.9941406,
+                "punctuated_word": "suites"
+              },
+              {
+                "word": "and",
+                "start": 4.0,
+                "end": 4.24,
+                "confidence": 0.9819336,
+                "punctuated_word": "and"
+              },
+              {
+                "word": "fresh",
+                "start": 4.24,
+                "end": 4.56,
+                "confidence": 0.9980469,
+                "punctuated_word": "fresh"
+              },
+              {
+                "word": "confirmation",
+                "start": 4.56,
+                "end": 5.52,
+                "confidence": 0.9030762,
+                "punctuated_word": "confirmation."
+              },
+              {
+                "word": "eight",
+                "start": 5.92,
+                "end": 6.24,
+                "confidence": 0.99902344,
+                "punctuated_word": "Eight"
+              },
+              {
+                "word": "target",
+                "start": 6.24,
+                "end": 6.64,
+                "confidence": 0.99902344,
+                "punctuated_word": "target"
+              },
+              {
+                "word": "collisions",
+                "start": 6.64,
+                "end": 7.12,
+                "confidence": 1.0,
+                "punctuated_word": "collisions"
+              },
+              {
+                "word": "in",
+                "start": 7.12,
+                "end": 7.2799997,
+                "confidence": 0.86865234,
+                "punctuated_word": "in"
+              },
+              {
+                "word": "a",
+                "start": 7.2799997,
+                "end": 7.44,
+                "confidence": 0.9980469,
+                "punctuated_word": "a"
+              },
+              {
+                "word": "100",
+                "start": 7.44,
+                "end": 7.68,
+                "confidence": 0.99902344,
+                "punctuated_word": "100"
+              },
+              {
+                "word": "episodes",
+                "start": 7.68,
+                "end": 8.24,
+                "confidence": 1.0,
+                "punctuated_word": "episodes"
+              },
+              {
+                "word": "below",
+                "start": 8.24,
+                "end": 8.72,
+                "confidence": 0.96240234,
+                "punctuated_word": "below"
+              },
+              {
+                "word": "the",
+                "start": 8.72,
+                "end": 8.88,
+                "confidence": 1.0,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "10%",
+                "start": 8.88,
+                "end": 9.36,
+                "confidence": 1.0,
+                "punctuated_word": "10%"
+              },
+              {
+                "word": "limit",
+                "start": 9.36,
+                "end": 9.76,
+                "confidence": 0.8544922,
+                "punctuated_word": "limit."
+              }
+            ],
+            "paragraphs": {
+              "transcript": "\nThe shipped graph selected checkpoint passed all four validation suites and fresh confirmation. Eight target collisions in a 100 episodes below the 10% limit.",
+              "paragraphs": [
+                {
+                  "sentences": [
+                    {
+                      "text": "The shipped graph selected checkpoint passed all four validation suites and fresh confirmation.",
+                      "start": 0.0,
+                      "end": 5.52
+                    },
+                    {
+                      "text": "Eight target collisions in a 100 episodes below the 10% limit.",
+                      "start": 5.92,
+                      "end": 9.76
+                    }
+                  ],
+                  "num_words": 24,
+                  "start": 0.0,
+                  "end": 9.76
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "utterances": [
+      {
+        "start": 0.0,
+        "end": 5.52,
+        "confidence": 0.96520054,
+        "channel": 0,
+        "transcript": "The shipped graph selected checkpoint passed all four validation suites and fresh confirmation.",
+        "words": [
+          {
+            "word": "the",
+            "start": 0.0,
+            "end": 0.39999998,
+            "confidence": 0.9970703,
+            "punctuated_word": "The"
+          },
+          {
+            "word": "shipped",
+            "start": 0.39999998,
+            "end": 0.71999997,
+            "confidence": 0.7607422,
+            "punctuated_word": "shipped"
+          },
+          {
+            "word": "graph",
+            "start": 0.71999997,
+            "end": 1.04,
+            "confidence": 0.95703125,
+            "punctuated_word": "graph"
+          },
+          {
+            "word": "selected",
+            "start": 1.04,
+            "end": 1.52,
+            "confidence": 0.99902344,
+            "punctuated_word": "selected"
+          },
+          {
+            "word": "checkpoint",
+            "start": 1.52,
+            "end": 2.08,
+            "confidence": 0.99609375,
+            "punctuated_word": "checkpoint"
+          },
+          {
+            "word": "passed",
+            "start": 2.08,
+            "end": 2.48,
+            "confidence": 0.9614258,
+            "punctuated_word": "passed"
+          },
+          {
+            "word": "all",
+            "start": 2.48,
+            "end": 2.8,
+            "confidence": 1.0,
+            "punctuated_word": "all"
+          },
+          {
+            "word": "four",
+            "start": 2.8,
+            "end": 3.04,
+            "confidence": 0.99902344,
+            "punctuated_word": "four"
+          },
+          {
+            "word": "validation",
+            "start": 3.04,
+            "end": 3.6,
+            "confidence": 1.0,
+            "punctuated_word": "validation"
+          },
+          {
+            "word": "suites",
+            "start": 3.6,
+            "end": 4.0,
+            "confidence": 0.9941406,
+            "punctuated_word": "suites"
+          },
+          {
+            "word": "and",
+            "start": 4.0,
+            "end": 4.24,
+            "confidence": 0.9819336,
+            "punctuated_word": "and"
+          },
+          {
+            "word": "fresh",
+            "start": 4.24,
+            "end": 4.56,
+            "confidence": 0.9980469,
+            "punctuated_word": "fresh"
+          },
+          {
+            "word": "confirmation",
+            "start": 4.56,
+            "end": 5.52,
+            "confidence": 0.9030762,
+            "punctuated_word": "confirmation."
+          }
+        ],
+        "id": "4471d546-7aad-492f-9f29-d23756bfe77b"
+      },
+      {
+        "start": 5.92,
+        "end": 9.76,
+        "confidence": 0.97096944,
+        "channel": 0,
+        "transcript": "Eight target collisions in a 100 episodes below the 10% limit.",
+        "words": [
+          {
+            "word": "eight",
+            "start": 5.92,
+            "end": 6.24,
+            "confidence": 0.99902344,
+            "punctuated_word": "Eight"
+          },
+          {
+            "word": "target",
+            "start": 6.24,
+            "end": 6.64,
+            "confidence": 0.99902344,
+            "punctuated_word": "target"
+          },
+          {
+            "word": "collisions",
+            "start": 6.64,
+            "end": 7.12,
+            "confidence": 1.0,
+            "punctuated_word": "collisions"
+          },
+          {
+            "word": "in",
+            "start": 7.12,
+            "end": 7.2799997,
+            "confidence": 0.86865234,
+            "punctuated_word": "in"
+          },
+          {
+            "word": "a",
+            "start": 7.2799997,
+            "end": 7.44,
+            "confidence": 0.9980469,
+            "punctuated_word": "a"
+          },
+          {
+            "word": "100",
+            "start": 7.44,
+            "end": 7.68,
+            "confidence": 0.99902344,
+            "punctuated_word": "100"
+          },
+          {
+            "word": "episodes",
+            "start": 7.68,
+            "end": 8.24,
+            "confidence": 1.0,
+            "punctuated_word": "episodes"
+          },
+          {
+            "word": "below",
+            "start": 8.24,
+            "end": 8.72,
+            "confidence": 0.96240234,
+            "punctuated_word": "below"
+          },
+          {
+            "word": "the",
+            "start": 8.72,
+            "end": 8.88,
+            "confidence": 1.0,
+            "punctuated_word": "the"
+          },
+          {
+            "word": "10%",
+            "start": 8.88,
+            "end": 9.36,
+            "confidence": 1.0,
+            "punctuated_word": "10%"
+          },
+          {
+            "word": "limit",
+            "start": 9.36,
+            "end": 9.76,
+            "confidence": 0.8544922,
+            "punctuated_word": "limit."
+          }
+        ],
+        "id": "1050082b-f958-43bd-b5e2-e80c96b13dd9"
+      }
+    ]
+  }
+}

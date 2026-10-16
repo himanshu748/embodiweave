@@ -1,0 +1,53 @@
+{
+  "seconds": 118.10000000000001,
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "narration_model": "aura-2-thalia-en",
+  "narration_seconds": 114.63972916666667,
+  "assets": {
+    "embodiweave-demo-v5.mp4": {
+      "bytes": 5168663,
+      "sha256": "2dfe700299b8b30ad6143b4279268b191ed057d4d34385ec10503faa8b7d9e2e"
+    },
+    "embodiweave-demo-v5-720p.mp4": {
+      "bytes": 3275834,
+      "sha256": "0c7e68f8097b73d83f2569ceb89e859505aac5ce98fc74dac40560ce0b1401f0"
+    },
+    "embodiweave-demo-v5-narration-free.mp4": {
+      "bytes": 5021254,
+      "sha256": "79cfffefd008be663a25f1451b0c0db820ffdb2434d526065ba81e208a3c5491"
+    },
+    "embodiweave-demo-v5.gif": {
+      "bytes": 210173,
+      "sha256": "6bfe0d9dba438aa9133d4e7a870d675e071295878ff07258d8ed13e46d9b1efa"
+    }
+  },
+  "scene_video_sha256": {
+    "scene-01.mp4": "14327ae656c77d8130aa724c2cbbc24a455a2c7c54eb93ac8db794ae3096cc4a",
+    "scene-02.mp4": "0cdf9f4915bf3e8bb048af0ccb326808df0a0f580da471a288ccf438dad8ee4f",
+    "scene-03.mp4": "0baf00b76b0908acd3dcd64d9ba953be55dbc57cd2c60052bf182bd553ccae85",
+    "scene-04.mp4": "600fa573634b3057c2e002e14e25bc7995e711311082d83ea468e38305930e9f",
+    "scene-05.mp4": "475cf48d91af32656334e1deda22871faa083d517403b591822182cde44280ba",
+    "scene-06.mp4": "379557c21a58ba51972938211b21414be890a0e9dea1e2fe4d97a8a8dabb0c5a",
+    "scene-07.mp4": "e476d22d70649c29b9a920409619e573dffb3fd9926f4c171bcd2652141b0fb6",
+    "scene-08.mp4": "aa370d12cec9633dcac0462ac296bab128cd8d12d51850a41daaa4206e07b97c",
+    "scene-09.mp4": "9ff5439ebf9de82fd6973231afd788b23d5b0b5712277241647bdcc34395d481",
+    "scene-10.mp4": "8b43c38bd71efb9c3ee4f190e547497e95c36ccca0b695bf2e9ddd2c3c674ad8",
+    "scene-11.mp4": "c76f1b6e6a235376fdb228f43502e7a84af76faf38e0929b7ab647497f8ba48a",
+    "scene-12.mp4": "d9ab226aa753ecb13242597163c0926350de7a962469c4a8c6b871d47be89c2c",
+    "scene-13.mp4": "ffffb970c354884bd8d6debe60ffabb4670c23ba61010f011fb3497a83ae780c"
+  },
+  "music": {
+    "title": "Cipher",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 3.0",
+    "sha256": "d3d0614535a61d748e2fd8d5117fc4d781022a7624794802a2462d8af3fdd522",
+    "gain_below_normalized_voice_db": 18
+  },
+  "new_experiments_for_film": false,
+  "v3_result": "Five reads; context limit; no chosen origin or training; no retry.",
+  "v4_unchanged": true,
+  "robot_motion": "Saved v2 child collision and robust confirmed-checkpoint validation success. No new simulation or interpolated poses.",
+  "editorial": "Titles, layout and highlights are editorial. V4 browser captures replay completed evidence. No learning curves invented."
+}

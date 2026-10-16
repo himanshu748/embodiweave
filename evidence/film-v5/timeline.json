@@ -1,0 +1,145 @@
+{
+  "model": "aura-2-thalia-en",
+  "seconds": 118.10000000000001,
+  "scenes": [
+    {
+      "id": 1,
+      "title": "A failure needs its history",
+      "narration": "This robot collided. Choosing a checkpoint to retrain needs its lineage, sensor contract and exact test results. Falkor-D-B connects that evidence.",
+      "visual": "problem",
+      "start": 0,
+      "duration": 10.1,
+      "voice_seconds": 9.839979166666666,
+      "audio": "docs/demo/v5/voice/01.wav"
+    },
+    {
+      "id": 2,
+      "title": "A complete MCP run: four gates passed",
+      "narration": "My agent used M-C-P and Falkor-D-B to launch real robot training. The run passed four validation gates.",
+      "visual": "v4-1",
+      "reuse_v4_scene": 1,
+      "start": 10.1,
+      "duration": 7.6,
+      "voice_seconds": 7.319979166666666,
+      "audio": "docs/demo/v5/voice/02.wav"
+    },
+    {
+      "id": 3,
+      "title": "The agent launches training",
+      "narration": "It chooses a starting checkpoint and calls start training. The guardrail approves the evidence and budget before the worker starts.",
+      "visual": "v4-2",
+      "reuse_v4_scene": 2,
+      "start": 17.7,
+      "duration": 7.5,
+      "voice_seconds": 7.239979166666667,
+      "audio": "docs/demo/v5/voice/03.wav"
+    },
+    {
+      "id": 4,
+      "title": "FalkorDB connects the evidence",
+      "narration": "Falkor-D-B connects each policy to its training run, evaluations, failures and recorded decisions.",
+      "visual": "v4-3",
+      "reuse_v4_scene": 3,
+      "start": 25.2,
+      "duration": 8.2,
+      "voice_seconds": 7.919979166666667,
+      "audio": "docs/demo/v5/voice/04.wav"
+    },
+    {
+      "id": 5,
+      "title": "A shortest path through real lineage",
+      "narration": "Its shortest-path query returned a passing ancestor, one hop away. The agent compared seventeen eligible origins and chose a different checkpoint.",
+      "visual": "v4-4",
+      "reuse_v4_scene": 4,
+      "start": 33.4,
+      "duration": 9.5,
+      "voice_seconds": 9.239979166666666,
+      "audio": "docs/demo/v5/voice/05.wav"
+    },
+    {
+      "id": 6,
+      "title": "The guardrail can veto the agent",
+      "narration": "The guardrail checks sensor contracts, artifact hashes, complete validation and the training budget. It can veto an incompatible origin.",
+      "visual": "v4-5",
+      "reuse_v4_scene": 5,
+      "start": 42.9,
+      "duration": 9.333333333333334,
+      "voice_seconds": 9.079979166666666,
+      "audio": "docs/demo/v5/voice/06.wav"
+    },
+    {
+      "id": 7,
+      "title": "The Decision precedes the action",
+      "narration": "Before training, a Decision saves the model, tool calls, Cypher, parameters and returned records. Planning stops without Falkor-D-B.",
+      "visual": "v4-6",
+      "reuse_v4_scene": 6,
+      "start": 52.233333333333334,
+      "duration": 8.9,
+      "voice_seconds": 8.639979166666667,
+      "audio": "docs/demo/v5/voice/07.wav"
+    },
+    {
+      "id": 8,
+      "title": "Real PPO, then saved-policy evaluation",
+      "narration": "The worker trained sixty-one thousand, four hundred forty P-P-O steps, then reloaded the checkpoint for one hundred eighty validation episodes.",
+      "visual": "v4-7",
+      "reuse_v4_scene": 7,
+      "start": 61.13333333333333,
+      "duration": 8.7,
+      "voice_seconds": 8.439979166666667,
+      "audio": "docs/demo/v5/voice/08.wav"
+    },
+    {
+      "id": 9,
+      "title": "Four suites. The same fixed gate.",
+      "narration": "All four suites passed the unchanged gate. Target collisions were three in sixty. Open had zero; static and crossing had one each in forty.",
+      "visual": "v4-8",
+      "reuse_v4_scene": 8,
+      "start": 69.83333333333333,
+      "duration": 9.6,
+      "voice_seconds": 9.319979166666666,
+      "audio": "docs/demo/v5/voice/09.wav"
+    },
+    {
+      "id": 10,
+      "title": "Target and crossing regressed",
+      "narration": "But the parent had two target collisions and no crossing collisions. Both measures got worse. Passing the gate does not establish an improvement, so I kept the demo policy unchanged.",
+      "visual": "v4-9",
+      "reuse_v4_scene": 9,
+      "start": 79.43333333333332,
+      "duration": 10.933333333333334,
+      "voice_seconds": 10.679979166666667,
+      "audio": "docs/demo/v5/voice/10.wav"
+    },
+    {
+      "id": 11,
+      "title": "The next agent read the regression",
+      "narration": "The next agent read that regression and the weighted graph ranking. Its context limit stopped the attempt before training. I did not retry.",
+      "visual": "v3",
+      "start": 90.36666666666666,
+      "duration": 8.133333333333333,
+      "voice_seconds": 7.879979166666667,
+      "audio": "docs/demo/v5/voice/11.wav"
+    },
+    {
+      "id": 12,
+      "title": "The shipped checkpoint passed fresh confirmation",
+      "narration": "The shipped graph-selected checkpoint passed all four validation suites and fresh confirmation. Eight target collisions in a hundred episodes, below the ten percent limit.",
+      "visual": "success",
+      "start": 98.5,
+      "duration": 10.2,
+      "voice_seconds": 9.919979166666666,
+      "audio": "docs/demo/v5/voice/12.wav"
+    },
+    {
+      "id": 13,
+      "title": "Every action is a node you can query",
+      "narration": "Every action is a node you can query. Inspect the Decision, the live demo and the evidence. EmbodiWeave. Built on Falkor-D-B.",
+      "visual": "close",
+      "start": 108.7,
+      "duration": 9.4,
+      "voice_seconds": 9.119979166666667,
+      "audio": "docs/demo/v5/voice/13.wav"
+    }
+  ]
+}

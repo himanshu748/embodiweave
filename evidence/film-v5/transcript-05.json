@@ -1,0 +1,386 @@
+{
+  "metadata": {
+    "transaction_key": "deprecated",
+    "request_id": "01a1458b-acd8-7fc0-b0f1-623bb80628dc",
+    "sha256": "291199740c093b014a66fe57375dc6ecf0816831f50af900e81aacb667789425",
+    "created": "2026-10-16T16:29:04.801Z",
+    "duration": 9.24,
+    "channels": 1,
+    "models": [
+      "2187e11a-3532-4498-b076-81fa530bdd49"
+    ],
+    "model_info": {
+      "2187e11a-3532-4498-b076-81fa530bdd49": {
+        "name": "general-nova-3",
+        "version": "2025-07-31.0",
+        "arch": "nova-3"
+      }
+    }
+  },
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "Its shortest path query returned a passing ancestor one hop away. The agent compared 17 eligible origins and chose a different checkpoint.",
+            "confidence": 0.99902344,
+            "words": [
+              {
+                "word": "its",
+                "start": 0.0,
+                "end": 0.32,
+                "confidence": 0.94921875,
+                "punctuated_word": "Its"
+              },
+              {
+                "word": "shortest",
+                "start": 0.32,
+                "end": 0.71999997,
+                "confidence": 0.9951172,
+                "punctuated_word": "shortest"
+              },
+              {
+                "word": "path",
+                "start": 0.71999997,
+                "end": 1.04,
+                "confidence": 0.9506836,
+                "punctuated_word": "path"
+              },
+              {
+                "word": "query",
+                "start": 1.04,
+                "end": 1.4399999,
+                "confidence": 1.0,
+                "punctuated_word": "query"
+              },
+              {
+                "word": "returned",
+                "start": 1.4399999,
+                "end": 1.92,
+                "confidence": 0.99902344,
+                "punctuated_word": "returned"
+              },
+              {
+                "word": "a",
+                "start": 1.92,
+                "end": 2.08,
+                "confidence": 0.97998047,
+                "punctuated_word": "a"
+              },
+              {
+                "word": "passing",
+                "start": 2.08,
+                "end": 2.3999999,
+                "confidence": 1.0,
+                "punctuated_word": "passing"
+              },
+              {
+                "word": "ancestor",
+                "start": 2.3999999,
+                "end": 3.1999998,
+                "confidence": 0.99934894,
+                "punctuated_word": "ancestor"
+              },
+              {
+                "word": "one",
+                "start": 3.1999998,
+                "end": 3.52,
+                "confidence": 0.5058594,
+                "punctuated_word": "one"
+              },
+              {
+                "word": "hop",
+                "start": 3.52,
+                "end": 3.84,
+                "confidence": 1.0,
+                "punctuated_word": "hop"
+              },
+              {
+                "word": "away",
+                "start": 3.84,
+                "end": 4.48,
+                "confidence": 0.99609375,
+                "punctuated_word": "away."
+              },
+              {
+                "word": "the",
+                "start": 4.7999997,
+                "end": 4.96,
+                "confidence": 1.0,
+                "punctuated_word": "The"
+              },
+              {
+                "word": "agent",
+                "start": 4.96,
+                "end": 5.3599997,
+                "confidence": 0.99902344,
+                "punctuated_word": "agent"
+              },
+              {
+                "word": "compared",
+                "start": 5.3599997,
+                "end": 5.7599998,
+                "confidence": 1.0,
+                "punctuated_word": "compared"
+              },
+              {
+                "word": "17",
+                "start": 5.7599998,
+                "end": 6.3199997,
+                "confidence": 1.0,
+                "punctuated_word": "17"
+              },
+              {
+                "word": "eligible",
+                "start": 6.3199997,
+                "end": 6.8799996,
+                "confidence": 0.99902344,
+                "punctuated_word": "eligible"
+              },
+              {
+                "word": "origins",
+                "start": 6.8799996,
+                "end": 7.52,
+                "confidence": 0.99853516,
+                "punctuated_word": "origins"
+              },
+              {
+                "word": "and",
+                "start": 7.52,
+                "end": 7.7599998,
+                "confidence": 0.91748047,
+                "punctuated_word": "and"
+              },
+              {
+                "word": "chose",
+                "start": 7.7599998,
+                "end": 8.08,
+                "confidence": 0.9970703,
+                "punctuated_word": "chose"
+              },
+              {
+                "word": "a",
+                "start": 8.08,
+                "end": 8.32,
+                "confidence": 1.0,
+                "punctuated_word": "a"
+              },
+              {
+                "word": "different",
+                "start": 8.32,
+                "end": 8.559999,
+                "confidence": 1.0,
+                "punctuated_word": "different"
+              },
+              {
+                "word": "checkpoint",
+                "start": 8.559999,
+                "end": 9.12,
+                "confidence": 0.98779297,
+                "punctuated_word": "checkpoint."
+              }
+            ],
+            "paragraphs": {
+              "transcript": "\nIts shortest path query returned a passing ancestor one hop away. The agent compared 17 eligible origins and chose a different checkpoint.",
+              "paragraphs": [
+                {
+                  "sentences": [
+                    {
+                      "text": "Its shortest path query returned a passing ancestor one hop away.",
+                      "start": 0.0,
+                      "end": 4.48
+                    },
+                    {
+                      "text": "The agent compared 17 eligible origins and chose a different checkpoint.",
+                      "start": 4.7999997,
+                      "end": 9.12
+                    }
+                  ],
+                  "num_words": 22,
+                  "start": 0.0,
+                  "end": 9.12
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "utterances": [
+      {
+        "start": 0.0,
+        "end": 4.48,
+        "confidence": 0.9432115,
+        "channel": 0,
+        "transcript": "Its shortest path query returned a passing ancestor one hop away.",
+        "words": [
+          {
+            "word": "its",
+            "start": 0.0,
+            "end": 0.32,
+            "confidence": 0.94921875,
+            "punctuated_word": "Its"
+          },
+          {
+            "word": "shortest",
+            "start": 0.32,
+            "end": 0.71999997,
+            "confidence": 0.9951172,
+            "punctuated_word": "shortest"
+          },
+          {
+            "word": "path",
+            "start": 0.71999997,
+            "end": 1.04,
+            "confidence": 0.9506836,
+            "punctuated_word": "path"
+          },
+          {
+            "word": "query",
+            "start": 1.04,
+            "end": 1.4399999,
+            "confidence": 1.0,
+            "punctuated_word": "query"
+          },
+          {
+            "word": "returned",
+            "start": 1.4399999,
+            "end": 1.92,
+            "confidence": 0.99902344,
+            "punctuated_word": "returned"
+          },
+          {
+            "word": "a",
+            "start": 1.92,
+            "end": 2.08,
+            "confidence": 0.97998047,
+            "punctuated_word": "a"
+          },
+          {
+            "word": "passing",
+            "start": 2.08,
+            "end": 2.3999999,
+            "confidence": 1.0,
+            "punctuated_word": "passing"
+          },
+          {
+            "word": "ancestor",
+            "start": 2.3999999,
+            "end": 3.1999998,
+            "confidence": 0.99934894,
+            "punctuated_word": "ancestor"
+          },
+          {
+            "word": "one",
+            "start": 3.1999998,
+            "end": 3.52,
+            "confidence": 0.5058594,
+            "punctuated_word": "one"
+          },
+          {
+            "word": "hop",
+            "start": 3.52,
+            "end": 3.84,
+            "confidence": 1.0,
+            "punctuated_word": "hop"
+          },
+          {
+            "word": "away",
+            "start": 3.84,
+            "end": 4.48,
+            "confidence": 0.99609375,
+            "punctuated_word": "away."
+          }
+        ],
+        "id": "a26bf597-bcc6-4cd7-a8cd-03945e76ca10"
+      },
+      {
+        "start": 4.7999997,
+        "end": 9.12,
+        "confidence": 0.9908114,
+        "channel": 0,
+        "transcript": "The agent compared 17 eligible origins and chose a different checkpoint.",
+        "words": [
+          {
+            "word": "the",
+            "start": 4.7999997,
+            "end": 4.96,
+            "confidence": 1.0,
+            "punctuated_word": "The"
+          },
+          {
+            "word": "agent",
+            "start": 4.96,
+            "end": 5.3599997,
+            "confidence": 0.99902344,
+            "punctuated_word": "agent"
+          },
+          {
+            "word": "compared",
+            "start": 5.3599997,
+            "end": 5.7599998,
+            "confidence": 1.0,
+            "punctuated_word": "compared"
+          },
+          {
+            "word": "17",
+            "start": 5.7599998,
+            "end": 6.3199997,
+            "confidence": 1.0,
+            "punctuated_word": "17"
+          },
+          {
+            "word": "eligible",
+            "start": 6.3199997,
+            "end": 6.8799996,
+            "confidence": 0.99902344,
+            "punctuated_word": "eligible"
+          },
+          {
+            "word": "origins",
+            "start": 6.8799996,
+            "end": 7.52,
+            "confidence": 0.99853516,
+            "punctuated_word": "origins"
+          },
+          {
+            "word": "and",
+            "start": 7.52,
+            "end": 7.7599998,
+            "confidence": 0.91748047,
+            "punctuated_word": "and"
+          },
+          {
+            "word": "chose",
+            "start": 7.7599998,
+            "end": 8.08,
+            "confidence": 0.9970703,
+            "punctuated_word": "chose"
+          },
+          {
+            "word": "a",
+            "start": 8.08,
+            "end": 8.32,
+            "confidence": 1.0,
+            "punctuated_word": "a"
+          },
+          {
+            "word": "different",
+            "start": 8.32,
+            "end": 8.559999,
+            "confidence": 1.0,
+            "punctuated_word": "different"
+          },
+          {
+            "word": "checkpoint",
+            "start": 8.559999,
+            "end": 9.12,
+            "confidence": 0.98779297,
+            "punctuated_word": "checkpoint."
+          }
+        ],
+        "id": "024ec259-506c-427c-97c1-85fcdcdac69b"
+      }
+    ]
+  }
+}

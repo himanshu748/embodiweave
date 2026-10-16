@@ -1,0 +1,89 @@
+[
+  {
+    "id": 1,
+    "title": "A failure needs its history",
+    "narration": "When this robot fails, which checkpoint should I retrain? Lineage, sensor contracts and exact-artifact test results live apart. Falkor-D-B connects them.",
+    "visual": "problem"
+  },
+  {
+    "id": 2,
+    "title": "A complete MCP run: four gates passed",
+    "narration": "My agent used M-C-P and Falkor-D-B to launch real robot training. The run passed four validation gates.",
+    "visual": "v4-1",
+    "reuse_v4_scene": 1
+  },
+  {
+    "id": 3,
+    "title": "The agent launches training",
+    "narration": "It chooses a starting checkpoint and calls start training. The guardrail approves the evidence and budget before the worker starts.",
+    "visual": "v4-2",
+    "reuse_v4_scene": 2
+  },
+  {
+    "id": 4,
+    "title": "FalkorDB connects the evidence",
+    "narration": "Falkor-D-B connects policies, training runs, trials, evaluations, failures and decisions. The links preserve what produced what.",
+    "visual": "v4-3",
+    "reuse_v4_scene": 3
+  },
+  {
+    "id": 5,
+    "title": "A shortest path through real lineage",
+    "narration": "The shortest-path tool runs inside Falkor-D-B. It returned the nearest passing ancestor, one hop away. The agent considered it alongside seventeen eligible origins.",
+    "visual": "v4-4",
+    "reuse_v4_scene": 4
+  },
+  {
+    "id": 6,
+    "title": "The guardrail can veto the agent",
+    "narration": "Contracts tie a checkpoint to sensor and action meanings. The guardrail vetoes incompatible origins, stale hashes, incomplete validation, or unsupported budgets.",
+    "visual": "v4-5",
+    "reuse_v4_scene": 5
+  },
+  {
+    "id": 7,
+    "title": "The Decision precedes the action",
+    "narration": "Before training, the Decision saves the model, tool calls, Cypher, parameters and returned records. If Falkor-D-B is unavailable, planning stops.",
+    "visual": "v4-6",
+    "reuse_v4_scene": 6
+  },
+  {
+    "id": 8,
+    "title": "Real PPO, then saved-policy evaluation",
+    "narration": "The worker trained sixty-one thousand, four hundred forty P-P-O steps, then reloaded the checkpoint for one hundred eighty validation episodes.",
+    "visual": "v4-7",
+    "reuse_v4_scene": 7
+  },
+  {
+    "id": 9,
+    "title": "Four suites. The same fixed gate.",
+    "narration": "All four suites passed the unchanged gate. Target collisions were three in sixty. Open had zero; static and crossing had one each in forty.",
+    "visual": "v4-8",
+    "reuse_v4_scene": 8
+  },
+  {
+    "id": 10,
+    "title": "Target and crossing regressed",
+    "narration": "But the parent had two target collisions and no crossing collisions. Both measures got worse. Passing the gate does not establish an improvement, so I kept the demo policy unchanged.",
+    "visual": "v4-9",
+    "reuse_v4_scene": 9
+  },
+  {
+    "id": 11,
+    "title": "The next agent read the regression",
+    "narration": "The next agent read that regression and the weighted graph ranking. Its context limit stopped the attempt before training. I did not retry.",
+    "visual": "v3"
+  },
+  {
+    "id": 12,
+    "title": "The shipped checkpoint passed fresh confirmation",
+    "narration": "The shipped graph-selected checkpoint passed all four validation suites and fresh confirmation. Eight target collisions in a hundred episodes, below the ten percent limit.",
+    "visual": "success"
+  },
+  {
+    "id": 13,
+    "title": "Every action is a node you can query",
+    "narration": "Every action is a node you can query. Inspect the Decision, the live demo and the evidence. EmbodiWeave. Built on Falkor-D-B.",
+    "visual": "close"
+  }
+]

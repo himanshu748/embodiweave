@@ -1,0 +1,217 @@
+[
+  [
+    0.08,
+    3.1999998,
+    "This robot collided. Choosing a checkpoint to"
+  ],
+  [
+    3.1999998,
+    5.92,
+    "retrain needs its lineage, sensor contract, and"
+  ],
+  [
+    5.92,
+    9.679999,
+    "exact test results. FalkorDB connects that evidence."
+  ],
+  [
+    10.1,
+    13.059999999999999,
+    "My agent used MCP and FalkorDB to"
+  ],
+  [
+    13.059999999999999,
+    16.02,
+    "launch real robot training. The run passed"
+  ],
+  [
+    16.02,
+    17.3,
+    "four validation gates."
+  ],
+  [
+    17.86,
+    19.939999999999998,
+    "It chooses a starting checkpoint and calls"
+  ],
+  [
+    19.939999999999998,
+    22.82,
+    "start training. The guardrail approves the evidence"
+  ],
+  [
+    22.82,
+    24.82,
+    "and budget before the worker starts."
+  ],
+  [
+    25.2,
+    28.48,
+    "FalkorDB connects each policy to its training"
+  ],
+  [
+    28.48,
+    32.9599998,
+    "run, evaluations, failures, and recorded decisions."
+  ],
+  [
+    33.4,
+    35.799999899999996,
+    "Its shortest path query returned a passing"
+  ],
+  [
+    35.799999899999996,
+    39.1599998,
+    "ancestor one hop away. The agent compared"
+  ],
+  [
+    39.1599998,
+    41.959998999999996,
+    "17 eligible origins and chose a different"
+  ],
+  [
+    41.959998999999996,
+    42.519999999999996,
+    "checkpoint."
+  ],
+  [
+    42.9,
+    46.739999999999995,
+    "The guardrail check sensor contracts, artifact hashes,"
+  ],
+  [
+    46.8199998,
+    49.94,
+    "complete validation, and the training budget. It"
+  ],
+  [
+    49.94,
+    51.86,
+    "can veto an incompatible origin."
+  ],
+  [
+    52.31333333333333,
+    55.03333333333333,
+    "Before training, a decision saves the model,"
+  ],
+  [
+    55.03333333333333,
+    58.63333333333333,
+    "tool calls, Cypher, parameters, and returned records."
+  ],
+  [
+    58.95333333333333,
+    60.87333233333334,
+    "Planning stops without FalkorDB."
+  ],
+  [
+    61.13333333333333,
+    65.93333303333333,
+    "The worker trained 61,440 PPO steps, then"
+  ],
+  [
+    65.93333303333333,
+    69.37333333333333,
+    "reloaded the checkpoint for 180 validation episodes."
+  ],
+  [
+    69.83333333333333,
+    72.71333323333333,
+    "All four suites passed the unchanged gate."
+  ],
+  [
+    72.87333333333333,
+    75.67333303333334,
+    "Target collisions were three in sixty. Open"
+  ],
+  [
+    75.67333303333334,
+    78.23333333333333,
+    "had zero. Static and crossing had one"
+  ],
+  [
+    78.23333333333333,
+    79.03333333333333,
+    "each in 40."
+  ],
+  [
+    79.43333333333332,
+    81.43333333333332,
+    "But the parent had two target collisions"
+  ],
+  [
+    81.43333333333332,
+    84.39333333333332,
+    "and no crossing collisions. Both measures got"
+  ],
+  [
+    84.39333333333332,
+    86.95333333333332,
+    "worse. Passing the gate does not establish"
+  ],
+  [
+    86.95333333333332,
+    88.95333283333332,
+    "an improvement, so I kept the demo"
+  ],
+  [
+    88.95333283333332,
+    89.99333233333333,
+    "policy unchanged."
+  ],
+  [
+    90.36666666666666,
+    92.44666666666666,
+    "The next agent read that regression and"
+  ],
+  [
+    92.44666666666666,
+    95.08666666666666,
+    "the weighted graph ranking. Its context limit"
+  ],
+  [
+    95.08666666666666,
+    97.56666666666666,
+    "stopped the attempt before training. I did"
+  ],
+  [
+    97.56666666666666,
+    98.20666636666667,
+    "not retry."
+  ],
+  [
+    98.5,
+    101.3,
+    "The shipped graph selected checkpoint passed all"
+  ],
+  [
+    101.3,
+    104.74,
+    "four validation suites and fresh confirmation. Eight"
+  ],
+  [
+    104.74,
+    107.22,
+    "target collisions in a 100 episodes below"
+  ],
+  [
+    107.22,
+    108.26,
+    "the 10% limit."
+  ],
+  [
+    108.78,
+    110.46000000000001,
+    "Every action is a node you can"
+  ],
+  [
+    110.46000000000001,
+    113.66,
+    "query. Inspect the decision, the live demo,"
+  ],
+  [
+    113.66,
+    117.66,
+    "and the evidence. EmbodiWeave. Built on FalkorDB."
+  ]
+]

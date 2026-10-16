@@ -1,0 +1,330 @@
+{
+  "metadata": {
+    "transaction_key": "deprecated",
+    "request_id": "01a1458c-0a66-7ed3-a626-f3247e3ac5b1",
+    "sha256": "2aa36f0c5d80db5433530c46f5e70bd3aa58d7fc32c161a0230c98fdc9f7a1e9",
+    "created": "2026-10-16T16:29:28.680Z",
+    "duration": 8.64,
+    "channels": 1,
+    "models": [
+      "2187e11a-3532-4498-b076-81fa530bdd49"
+    ],
+    "model_info": {
+      "2187e11a-3532-4498-b076-81fa530bdd49": {
+        "name": "general-nova-3",
+        "version": "2025-07-31.0",
+        "arch": "nova-3"
+      }
+    }
+  },
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "Before training, a decision saves the model, tool calls, Cypher, parameters, and returned records. Planning stops without FalkorDB.",
+            "confidence": 0.99902344,
+            "words": [
+              {
+                "word": "before",
+                "start": 0.08,
+                "end": 0.56,
+                "confidence": 0.9980469,
+                "punctuated_word": "Before"
+              },
+              {
+                "word": "training",
+                "start": 0.56,
+                "end": 1.1999999,
+                "confidence": 0.99658203,
+                "punctuated_word": "training,"
+              },
+              {
+                "word": "a",
+                "start": 1.1999999,
+                "end": 1.36,
+                "confidence": 1.0,
+                "punctuated_word": "a"
+              },
+              {
+                "word": "decision",
+                "start": 1.36,
+                "end": 1.68,
+                "confidence": 1.0,
+                "punctuated_word": "decision"
+              },
+              {
+                "word": "saves",
+                "start": 1.68,
+                "end": 2.0,
+                "confidence": 1.0,
+                "punctuated_word": "saves"
+              },
+              {
+                "word": "the",
+                "start": 2.0,
+                "end": 2.24,
+                "confidence": 1.0,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "model",
+                "start": 2.24,
+                "end": 2.8,
+                "confidence": 0.99658203,
+                "punctuated_word": "model,"
+              },
+              {
+                "word": "tool",
+                "start": 2.8,
+                "end": 3.12,
+                "confidence": 1.0,
+                "punctuated_word": "tool"
+              },
+              {
+                "word": "calls",
+                "start": 3.12,
+                "end": 3.6799998,
+                "confidence": 0.984375,
+                "punctuated_word": "calls,"
+              },
+              {
+                "word": "cypher",
+                "start": 3.6799998,
+                "end": 4.4,
+                "confidence": 0.97302246,
+                "punctuated_word": "Cypher,"
+              },
+              {
+                "word": "parameters",
+                "start": 4.4,
+                "end": 5.04,
+                "confidence": 0.97680664,
+                "punctuated_word": "parameters,"
+              },
+              {
+                "word": "and",
+                "start": 5.04,
+                "end": 5.2,
+                "confidence": 1.0,
+                "punctuated_word": "and"
+              },
+              {
+                "word": "returned",
+                "start": 5.2,
+                "end": 5.6,
+                "confidence": 0.9941406,
+                "punctuated_word": "returned"
+              },
+              {
+                "word": "records",
+                "start": 5.6,
+                "end": 6.4,
+                "confidence": 0.99902344,
+                "punctuated_word": "records."
+              },
+              {
+                "word": "planning",
+                "start": 6.72,
+                "end": 7.04,
+                "confidence": 0.99902344,
+                "punctuated_word": "Planning"
+              },
+              {
+                "word": "stops",
+                "start": 7.04,
+                "end": 7.44,
+                "confidence": 1.0,
+                "punctuated_word": "stops"
+              },
+              {
+                "word": "without",
+                "start": 7.44,
+                "end": 7.7599998,
+                "confidence": 1.0,
+                "punctuated_word": "without"
+              },
+              {
+                "word": "falkordb",
+                "start": 7.7599998,
+                "end": 8.639999,
+                "confidence": 0.9957031,
+                "punctuated_word": "FalkorDB."
+              }
+            ],
+            "paragraphs": {
+              "transcript": "\nBefore training, a decision saves the model, tool calls, Cypher, parameters, and returned records. Planning stops without FalkorDB.",
+              "paragraphs": [
+                {
+                  "sentences": [
+                    {
+                      "text": "Before training, a decision saves the model, tool calls, Cypher, parameters, and returned records.",
+                      "start": 0.08,
+                      "end": 6.4
+                    },
+                    {
+                      "text": "Planning stops without FalkorDB.",
+                      "start": 6.72,
+                      "end": 8.639999
+                    }
+                  ],
+                  "num_words": 18,
+                  "start": 0.08,
+                  "end": 8.639999
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "utterances": [
+      {
+        "start": 0.08,
+        "end": 6.4,
+        "confidence": 0.9941842,
+        "channel": 0,
+        "transcript": "Before training, a decision saves the model, tool calls, Cypher, parameters, and returned records.",
+        "words": [
+          {
+            "word": "before",
+            "start": 0.08,
+            "end": 0.56,
+            "confidence": 0.9980469,
+            "punctuated_word": "Before"
+          },
+          {
+            "word": "training",
+            "start": 0.56,
+            "end": 1.1999999,
+            "confidence": 0.99658203,
+            "punctuated_word": "training,"
+          },
+          {
+            "word": "a",
+            "start": 1.1999999,
+            "end": 1.36,
+            "confidence": 1.0,
+            "punctuated_word": "a"
+          },
+          {
+            "word": "decision",
+            "start": 1.36,
+            "end": 1.68,
+            "confidence": 1.0,
+            "punctuated_word": "decision"
+          },
+          {
+            "word": "saves",
+            "start": 1.68,
+            "end": 2.0,
+            "confidence": 1.0,
+            "punctuated_word": "saves"
+          },
+          {
+            "word": "the",
+            "start": 2.0,
+            "end": 2.24,
+            "confidence": 1.0,
+            "punctuated_word": "the"
+          },
+          {
+            "word": "model",
+            "start": 2.24,
+            "end": 2.8,
+            "confidence": 0.99658203,
+            "punctuated_word": "model,"
+          },
+          {
+            "word": "tool",
+            "start": 2.8,
+            "end": 3.12,
+            "confidence": 1.0,
+            "punctuated_word": "tool"
+          },
+          {
+            "word": "calls",
+            "start": 3.12,
+            "end": 3.6799998,
+            "confidence": 0.984375,
+            "punctuated_word": "calls,"
+          },
+          {
+            "word": "cypher",
+            "start": 3.6799998,
+            "end": 4.4,
+            "confidence": 0.97302246,
+            "punctuated_word": "Cypher,"
+          },
+          {
+            "word": "parameters",
+            "start": 4.4,
+            "end": 5.04,
+            "confidence": 0.97680664,
+            "punctuated_word": "parameters,"
+          },
+          {
+            "word": "and",
+            "start": 5.04,
+            "end": 5.2,
+            "confidence": 1.0,
+            "punctuated_word": "and"
+          },
+          {
+            "word": "returned",
+            "start": 5.2,
+            "end": 5.6,
+            "confidence": 0.9941406,
+            "punctuated_word": "returned"
+          },
+          {
+            "word": "records",
+            "start": 5.6,
+            "end": 6.4,
+            "confidence": 0.99902344,
+            "punctuated_word": "records."
+          }
+        ],
+        "id": "1c3cbf17-fc86-4f13-b54c-7390251350df"
+      },
+      {
+        "start": 6.72,
+        "end": 8.639999,
+        "confidence": 0.99868166,
+        "channel": 0,
+        "transcript": "Planning stops without FalkorDB.",
+        "words": [
+          {
+            "word": "planning",
+            "start": 6.72,
+            "end": 7.04,
+            "confidence": 0.99902344,
+            "punctuated_word": "Planning"
+          },
+          {
+            "word": "stops",
+            "start": 7.04,
+            "end": 7.44,
+            "confidence": 1.0,
+            "punctuated_word": "stops"
+          },
+          {
+            "word": "without",
+            "start": 7.44,
+            "end": 7.7599998,
+            "confidence": 1.0,
+            "punctuated_word": "without"
+          },
+          {
+            "word": "falkordb",
+            "start": 7.7599998,
+            "end": 8.639999,
+            "confidence": 0.9957031,
+            "punctuated_word": "FalkorDB."
+          }
+        ],
+        "id": "65c0d5b0-b004-4986-b9d5-8524d45650a1"
+      }
+    ]
+  }
+}
