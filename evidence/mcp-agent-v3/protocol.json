@@ -1,0 +1,37 @@
+{
+  "study": "agent-mcp-v3",
+  "registered_at_utc": "2026-10-16T16:10:42.641178+00:00",
+  "implementation_base": "cb9225de660469cb487b694dbb41375a1d73cf57",
+  "purpose": "One second public LLM/MCP run after reading the measured v2 parent regression. No retries or seed sweep.",
+  "max_agent_attempts": 1,
+  "max_training_runs": 1,
+  "target_policy": "robust-20261016140226-352fd7",
+  "requested_steps": 60000,
+  "expected_consumed_steps": 61440,
+  "training_seed": 29,
+  "recipe": "ppo-r1",
+  "training_domain": "original 2D simulator",
+  "validation_suites": [
+    "val-target-v1",
+    "val-open-v1",
+    "val-static-v1",
+    "val-crossing-v1"
+  ],
+  "validation_episodes": 180,
+  "promotion_rule": "promo-1 unchanged",
+  "final_evaluations": 0,
+  "deployment_change": false,
+  "origin_selection": "GPT-4.1 Mini chooses any verified compatible origin after reading diagnosis, origins, shortestPath, prior Decision outcomes and weighted regression degree. Same origin is permitted; no authored substitution.",
+  "algorithm": "FalkorDB Cypher weighted incoming degree on COMPARED_AGAINST. Each child edge weights sum of positive per-suite collision-rate deltas. Unknown support stays null; degree is descriptive, not predicted risk.",
+  "previous_decision": "deci-20261016121309-c0c93f",
+  "model": "openai/gpt-4.1-mini",
+  "provider_route": "OpenRouter -> Azure only",
+  "max_model_turns": 6,
+  "max_tools": 10,
+  "failure_policy": "If trainer/provider unavailable, preserve the attempt and stop. No deterministic substitute training for this study.",
+  "release_comparison": "Append-only DecisionOutcome compares against parent evaluations cited before training. Any higher collision count or lower goal count marks regression. All outcomes remain unshipped; no automatic release.",
+  "protected_source_hashes": {
+    "ew/criteria.py": "bd2c8ed348181520160181272b641f91500b37820e7762956d9b03f80f5b34ed",
+    "ew/scenarios.py": "18396d0c9ac7e9221e72b7d0ad3bb4563647850793e3baf3ab47ae779d1a0168"
+  }
+}
