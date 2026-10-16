@@ -25,9 +25,28 @@ FalkorDB selected the rehearsal parent, whose crossing validation had no collisi
 Current checkpoint: `robust-20261016140226-352fd7`, hash `b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4`.
 [Measured study and checksums](evidence/robustness-v2/) · [Protocol and diagnosis](docs/robustness-v2.md) · [Download checkpoint + evidence](https://embodiweave.52.202.25.181.sslip.io/api/download/robust-20261016140226-352fd7-b027851f2ffe-repro-v3.zip).
 
-MuJoCo uses fresh paired seeds and unchanged 2D-trained weights. Its **6/40 target collisions (15%)** exceed the 10% reference limit; crossing is **4/40 (10%)**. This study is separate from the earlier 24/40 baseline result below. No physics safety claim is made, and no MuJoCo outcome is used for further tuning. [All 320 transfer episodes](evidence/mujoco-v2/).
+MuJoCo uses fresh paired seeds and unchanged 2D-trained weights. Its **6/40 target collisions (15%)** exceed the 10% reference limit; crossing is **4/40 (10%)**. This study is separate from the earlier 24/40 baseline result below. No physics safety claim is made. This transfer study remains frozen; the separately authorized adaptation below uses new physics development suites. [All 320 transfer episodes](evidence/mujoco-v2/).
 
 [![Fresh MuJoCo paired replay, illustrative seed 5203012](web/media/embodiweave-demo-v3.gif)](https://embodiweave.52.202.25.181.sslip.io/guide.html#film)
+
+<!-- physics-adapt-v1:start -->
+## Separate MuJoCo adaptation
+
+**These new checkpoints train in both 2D and MuJoCo.** The unchanged-weight transfer measurements above remain frozen. This preregistered study uses fresh physics development suites and keeps the confirmed 2D parent as the default 2D demo policy.
+
+| Completed trial | Original 2D gate | Physics target | Physics open | Physics static | Physics crossing |
+|---|---:|---:|---:|---:|---:|
+| **Collision limit (maximum)** | Four suites | **10%** | **5%** | **10%** | **15%** |
+| ppo-mixed-mujoco-v1 | 4/4 | 6/40 (Fail) | 0/40 (Pass) | 1/40 (Pass) | 5/40 (Pass) |
+
+Physics cells show collision counts on 40 development episodes per family. Pass also requires the original success floors: target 80%, open 90%, static 75%, crossing 75%. Every trial requests 300,000 steps with fixed seed 23; actual rollout-rounded steps and exact artifact hashes are in the evidence index. The authored graph rule requires all eight validation suites plus one episode of physics collision clearance before selection stops. Promo-1 code and thresholds are unchanged.
+
+No new child has completed the registered physics selection rule. The one-time physics confirmation remains unopened.
+
+[Physics judge page](https://embodiweave.52.202.25.181.sslip.io/physics.html) · [Protocol and interpretation](docs/physics-adaptation.md) · [Every episode and checksum](evidence/physics-adapt-v1/)
+
+Successful simulation does not establish hardware safety. The base uses velocity servos and scripted pedestrians; the documented dynamics and sensor mismatches remain.
+<!-- physics-adapt-v1:end -->
 
 ## Earlier study: search-v1
 
