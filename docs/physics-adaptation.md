@@ -36,3 +36,15 @@ ORDER BY d.id, s.id
 ## Limits
 
 These are small simulated tasks with scripted pedestrians and a fixed sensor/action contract. Successful simulation results do not establish physical robot safety or generalize to arbitrary pedestrians, environments or sensor faults. MuJoCo uses the documented velocity-servo mobile base, not a validated hardware model. The [transfer mapping](mujoco-transfer.md) lists the remaining mismatches. No claimed pass removes those limits.
+
+## Registered longer-training follow-up
+
+The original three-trial study stopped without meeting its extra clearance rule. The second and third children passed all eight validation suites; the third had 2/40 target collisions but 6/40 crossing collisions, exactly the crossing limit. None was frozen and no physics confirmation was opened.
+
+Before any further training, [physics-followup-v1](../evidence/physics-followup-v1/protocol.json) registered exactly one longer continuation: 600,000 requested steps, seed 23, retaining the graph-selected parent's complete recipe. The original three-attempt snapshot remains in [completed-three-trial-study.json](../evidence/physics-adapt-v1/completed-three-trial-study.json). This follow-up is a separate study, not an extension hidden inside the original budget. It reuses the same development validation suites, with no new final data. The same eight-suite pass and one-episode physics clearance are required before freezing. The already authorized single physics confirmation remains sealed until that requirement is met.
+
+## Final development outcome
+
+The longer continuation consumed 600,064 additional steps and regressed to 7/8 checks: target physics recorded 33 goals and 7 collisions in 40 episodes. The graph retained the third original child as the strongest measured lineage: 8/8 checks, with physics goals/collisions/timeouts of open 40/0/0, static 39/1/0, crossing 34/6/0 and target 38/2/0. Crossing is exactly its 15% limit and one episode short of the registered clearance.
+
+Both registered budgets are exhausted. No candidate is frozen, no physics confirmation is opened, and none of these children replaces the confirmed 2D release. Longer training was not reliably better. The remaining research issue is crossing collision margin, not target collision performance alone. Independent seeds and a new, prospectively registered training design would be needed before another selection study.

@@ -1,0 +1,352 @@
+{
+ "artifact_hash": "adaaef2cea6ed346715ff1c01b37cce88ef54002e0b9873bf27abb67407fdba5",
+ "contract_id": "ew-contract-1:2f013b6f4849",
+ "custom_family": false,
+ "episodes": [
+  {
+   "final_goal_dist": 0.296,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.025,
+   "steps": 79
+  },
+  {
+   "final_goal_dist": 0.299,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.148,
+   "steps": 92
+  },
+  {
+   "final_goal_dist": 0.226,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.567,
+   "steps": 86
+  },
+  {
+   "final_goal_dist": 0.278,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.813,
+   "steps": 77
+  },
+  {
+   "final_goal_dist": 0.263,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.092,
+   "steps": 85
+  },
+  {
+   "final_goal_dist": 0.209,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.779,
+   "steps": 79
+  },
+  {
+   "final_goal_dist": 0.275,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.289,
+   "steps": 83
+  },
+  {
+   "final_goal_dist": 0.213,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.394,
+   "steps": 80
+  },
+  {
+   "final_goal_dist": 0.218,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.368,
+   "steps": 81
+  },
+  {
+   "final_goal_dist": 0.296,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.026,
+   "steps": 80
+  },
+  {
+   "final_goal_dist": 0.206,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.818,
+   "steps": 87
+  },
+  {
+   "final_goal_dist": 0.208,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.345,
+   "steps": 96
+  },
+  {
+   "final_goal_dist": 0.219,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.177,
+   "steps": 77
+  },
+  {
+   "final_goal_dist": 0.246,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.043,
+   "steps": 80
+  },
+  {
+   "final_goal_dist": 0.246,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.129,
+   "steps": 81
+  },
+  {
+   "final_goal_dist": 0.249,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.443,
+   "steps": 72
+  },
+  {
+   "final_goal_dist": 0.289,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.357,
+   "steps": 76
+  },
+  {
+   "final_goal_dist": 0.23,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.372,
+   "steps": 100
+  },
+  {
+   "final_goal_dist": 0.208,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.296,
+   "steps": 109
+  },
+  {
+   "final_goal_dist": 0.297,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.543,
+   "steps": 78
+  },
+  {
+   "final_goal_dist": 0.22,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.009,
+   "steps": 81
+  },
+  {
+   "final_goal_dist": 0.295,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.551,
+   "steps": 73
+  },
+  {
+   "final_goal_dist": 0.246,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.822,
+   "steps": 77
+  },
+  {
+   "final_goal_dist": 0.203,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.114,
+   "steps": 96
+  },
+  {
+   "final_goal_dist": 0.269,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.411,
+   "steps": 85
+  },
+  {
+   "final_goal_dist": 0.231,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.092,
+   "steps": 79
+  },
+  {
+   "final_goal_dist": 0.251,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.028,
+   "steps": 83
+  },
+  {
+   "final_goal_dist": 0.275,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.899,
+   "steps": 82
+  },
+  {
+   "final_goal_dist": 0.256,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.938,
+   "steps": 78
+  },
+  {
+   "final_goal_dist": 0.211,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.711,
+   "steps": 72
+  },
+  {
+   "final_goal_dist": 0.238,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.874,
+   "steps": 81
+  },
+  {
+   "final_goal_dist": 0.23,
+   "hit": null,
+   "outcome": "success",
+   "return": 19.713,
+   "steps": 112
+  },
+  {
+   "final_goal_dist": 0.25,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.309,
+   "steps": 83
+  },
+  {
+   "final_goal_dist": 0.277,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.742,
+   "steps": 78
+  },
+  {
+   "final_goal_dist": 0.265,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.577,
+   "steps": 84
+  },
+  {
+   "final_goal_dist": 0.263,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.984,
+   "steps": 79
+  },
+  {
+   "final_goal_dist": 0.263,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.259,
+   "steps": 84
+  },
+  {
+   "final_goal_dist": 0.29,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.973,
+   "steps": 74
+  },
+  {
+   "final_goal_dist": 0.289,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.426,
+   "steps": 72
+  },
+  {
+   "final_goal_dist": 0.225,
+   "hit": null,
+   "outcome": "success",
+   "return": 19.489,
+   "steps": 111
+  }
+ ],
+ "experiment_id": null,
+ "family_id": "open@fbc3736d",
+ "id": "eval-20261016153122-43cbbb",
+ "kind": "evaluation",
+ "policy_id": "physics-20261016152618-fa1d89",
+ "purpose": "physics-adapt-v1",
+ "recorded_at": "2026-10-16T15:31:22+0530",
+ "seeds": [
+  1000000,
+  1000001,
+  1000002,
+  1000003,
+  1000004,
+  1000005,
+  1000006,
+  1000007,
+  1000008,
+  1000009,
+  1000010,
+  1000011,
+  1000012,
+  1000013,
+  1000014,
+  1000015,
+  1000016,
+  1000017,
+  1000018,
+  1000019,
+  1000020,
+  1000021,
+  1000022,
+  1000023,
+  1000024,
+  1000025,
+  1000026,
+  1000027,
+  1000028,
+  1000029,
+  1000030,
+  1000031,
+  1000032,
+  1000033,
+  1000034,
+  1000035,
+  1000036,
+  1000037,
+  1000038,
+  1000039
+ ],
+ "suite_id": "val-open-v1",
+ "suite_role": "validation",
+ "suite_version": "1",
+ "summary": {
+  "collision_rate": 0.0,
+  "collisions_by_object": {
+   "mover": 0,
+   "static": 0,
+   "wall": 0
+  },
+  "episodes": 40,
+  "mean_success_steps": 83.5,
+  "success_rate": 1.0,
+  "timeout_rate": 0.0
+ },
+ "wall_s": 0.57
+}

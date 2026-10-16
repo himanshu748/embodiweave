@@ -1,0 +1,93 @@
+{
+  "protocol_hash": "3f2ad250caed48dff0bd6d98d9b665c3f4841173da449e77cc17cf51e6b9e568",
+  "results": [
+    {
+      "artifact_hash": "ae6770107c6b7c4d6358f91cef8f084c440c753ab4dd6775615dfa25c2182150",
+      "family": "open",
+      "id": "pva1-candidate-open-ae6770107c6b",
+      "label": "candidate",
+      "policy_id": "physics-20261016150004-25da9c",
+      "suite_id": "val-physics-adapt-v1-open",
+      "summary": {
+        "collision": 0,
+        "collision_rate": 0.0,
+        "collisions_by_object": {
+          "mover": 0,
+          "static": 0,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 40,
+        "success_rate": 1.0,
+        "timeout": 0,
+        "timeout_rate": 0.0
+      }
+    },
+    {
+      "artifact_hash": "ae6770107c6b7c4d6358f91cef8f084c440c753ab4dd6775615dfa25c2182150",
+      "family": "static",
+      "id": "pva1-candidate-static-ae6770107c6b",
+      "label": "candidate",
+      "policy_id": "physics-20261016150004-25da9c",
+      "suite_id": "val-physics-adapt-v1-static",
+      "summary": {
+        "collision": 2,
+        "collision_rate": 0.05,
+        "collisions_by_object": {
+          "mover": 0,
+          "static": 2,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 38,
+        "success_rate": 0.95,
+        "timeout": 0,
+        "timeout_rate": 0.0
+      }
+    },
+    {
+      "artifact_hash": "ae6770107c6b7c4d6358f91cef8f084c440c753ab4dd6775615dfa25c2182150",
+      "family": "crossing",
+      "id": "pva1-candidate-crossing-ae6770107c6b",
+      "label": "candidate",
+      "policy_id": "physics-20261016150004-25da9c",
+      "suite_id": "val-physics-adapt-v1-crossing",
+      "summary": {
+        "collision": 6,
+        "collision_rate": 0.15,
+        "collisions_by_object": {
+          "mover": 6,
+          "static": 0,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 34,
+        "success_rate": 0.85,
+        "timeout": 0,
+        "timeout_rate": 0.0
+      }
+    },
+    {
+      "artifact_hash": "ae6770107c6b7c4d6358f91cef8f084c440c753ab4dd6775615dfa25c2182150",
+      "family": "static_crossing",
+      "id": "pva1-candidate-static_crossing-ae6770107c6b",
+      "label": "candidate",
+      "policy_id": "physics-20261016150004-25da9c",
+      "suite_id": "val-physics-adapt-v1-static_crossing",
+      "summary": {
+        "collision": 4,
+        "collision_rate": 0.1,
+        "collisions_by_object": {
+          "mover": 2,
+          "static": 2,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 36,
+        "success_rate": 0.9,
+        "timeout": 0,
+        "timeout_rate": 0.0
+      }
+    }
+  ]
+}

@@ -1,0 +1,352 @@
+{
+ "artifact_hash": "ae6770107c6b7c4d6358f91cef8f084c440c753ab4dd6775615dfa25c2182150",
+ "contract_id": "ew-contract-1:2f013b6f4849",
+ "custom_family": false,
+ "episodes": [
+  {
+   "final_goal_dist": 0.29,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.879,
+   "steps": 84
+  },
+  {
+   "final_goal_dist": 6.258,
+   "hit": "wall",
+   "outcome": "collision",
+   "return": -9.348,
+   "steps": 18
+  },
+  {
+   "final_goal_dist": 0.261,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.177,
+   "steps": 104
+  },
+  {
+   "final_goal_dist": 0.269,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.872,
+   "steps": 89
+  },
+  {
+   "final_goal_dist": 0.258,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.23,
+   "steps": 92
+  },
+  {
+   "final_goal_dist": 0.263,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.934,
+   "steps": 100
+  },
+  {
+   "final_goal_dist": 0.255,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.478,
+   "steps": 85
+  },
+  {
+   "final_goal_dist": 0.229,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.27,
+   "steps": 97
+  },
+  {
+   "final_goal_dist": 0.235,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.585,
+   "steps": 102
+  },
+  {
+   "final_goal_dist": 0.269,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.257,
+   "steps": 97
+  },
+  {
+   "final_goal_dist": 0.26,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.499,
+   "steps": 101
+  },
+  {
+   "final_goal_dist": 0.279,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.927,
+   "steps": 116
+  },
+  {
+   "final_goal_dist": 0.209,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.271,
+   "steps": 110
+  },
+  {
+   "final_goal_dist": 0.295,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.413,
+   "steps": 84
+  },
+  {
+   "final_goal_dist": 0.238,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.134,
+   "steps": 87
+  },
+  {
+   "final_goal_dist": 0.255,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.558,
+   "steps": 94
+  },
+  {
+   "final_goal_dist": 0.276,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.048,
+   "steps": 101
+  },
+  {
+   "final_goal_dist": 0.299,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.456,
+   "steps": 95
+  },
+  {
+   "final_goal_dist": 0.251,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.908,
+   "steps": 110
+  },
+  {
+   "final_goal_dist": 0.231,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.436,
+   "steps": 101
+  },
+  {
+   "final_goal_dist": 0.254,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.218,
+   "steps": 91
+  },
+  {
+   "final_goal_dist": 0.252,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.047,
+   "steps": 93
+  },
+  {
+   "final_goal_dist": 0.249,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.884,
+   "steps": 88
+  },
+  {
+   "final_goal_dist": 0.229,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.275,
+   "steps": 94
+  },
+  {
+   "final_goal_dist": 0.228,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.292,
+   "steps": 88
+  },
+  {
+   "final_goal_dist": 0.264,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.343,
+   "steps": 84
+  },
+  {
+   "final_goal_dist": 0.231,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.997,
+   "steps": 100
+  },
+  {
+   "final_goal_dist": 0.258,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.23,
+   "steps": 96
+  },
+  {
+   "final_goal_dist": 0.265,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.325,
+   "steps": 80
+  },
+  {
+   "final_goal_dist": 0.24,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.073,
+   "steps": 95
+  },
+  {
+   "final_goal_dist": 0.25,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.303,
+   "steps": 113
+  },
+  {
+   "final_goal_dist": 0.278,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.495,
+   "steps": 105
+  },
+  {
+   "final_goal_dist": 0.231,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.627,
+   "steps": 88
+  },
+  {
+   "final_goal_dist": 0.207,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.4,
+   "steps": 86
+  },
+  {
+   "final_goal_dist": 0.216,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.906,
+   "steps": 118
+  },
+  {
+   "final_goal_dist": 0.267,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.87,
+   "steps": 86
+  },
+  {
+   "final_goal_dist": 0.218,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.517,
+   "steps": 87
+  },
+  {
+   "final_goal_dist": 0.285,
+   "hit": null,
+   "outcome": "success",
+   "return": 15.981,
+   "steps": 85
+  },
+  {
+   "final_goal_dist": 0.293,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.269,
+   "steps": 96
+  },
+  {
+   "final_goal_dist": 0.25,
+   "hit": null,
+   "outcome": "success",
+   "return": 20.063,
+   "steps": 130
+  }
+ ],
+ "experiment_id": null,
+ "family_id": "static@7069d847",
+ "id": "eval-20261016152512-d3ad78",
+ "kind": "evaluation",
+ "policy_id": "physics-20261016150004-25da9c",
+ "purpose": "physics-adapt-v1",
+ "recorded_at": "2026-10-16T15:25:12+0530",
+ "seeds": [
+  1100000,
+  1100001,
+  1100002,
+  1100003,
+  1100004,
+  1100005,
+  1100006,
+  1100007,
+  1100008,
+  1100009,
+  1100010,
+  1100011,
+  1100012,
+  1100013,
+  1100014,
+  1100015,
+  1100016,
+  1100017,
+  1100018,
+  1100019,
+  1100020,
+  1100021,
+  1100022,
+  1100023,
+  1100024,
+  1100025,
+  1100026,
+  1100027,
+  1100028,
+  1100029,
+  1100030,
+  1100031,
+  1100032,
+  1100033,
+  1100034,
+  1100035,
+  1100036,
+  1100037,
+  1100038,
+  1100039
+ ],
+ "suite_id": "val-static-v1",
+ "suite_role": "validation",
+ "suite_version": "1",
+ "summary": {
+  "collision_rate": 0.025,
+  "collisions_by_object": {
+   "mover": 0,
+   "static": 0,
+   "wall": 1
+  },
+  "episodes": 40,
+  "mean_success_steps": 96.2,
+  "success_rate": 0.975,
+  "timeout_rate": 0.0
+ },
+ "wall_s": 0.78
+}

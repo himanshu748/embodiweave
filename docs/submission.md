@@ -22,9 +22,6 @@ passed all four unchanged validation suites. Its hash was frozen before one
 fresh, four-family confirmation: target collisions were 8/100 against a 10% limit,
 and all four families passed. It is now the 2D demo policy.
 
-I also ran unchanged checkpoints in MuJoCo contact physics. The new policy still
-collided in 6/40 target episodes, above the 10% reference limit. Real physics
-footage, failures and evidence remain visible.
+Unchanged 2D weights still had 6/40 target collisions in MuJoCo. Separate mixed-domain adaptation produced two children passing all eight development checks. The strongest had 2/40 target collisions, but crossing remained at its 15% limit. It missed the preregistered extra clearance, so physics confirmation stays unopened. A separately registered longer run regressed; its rejection remains visible.
 
-Next is preregistered physics adaptation and independent training seeds. This is
-a simulated research prototype, not a hardware-safety or training-efficiency claim.
+Next are independent training seeds and stronger crossing behaviour. This is a simulated research prototype, not a hardware-safety or training-efficiency claim.

@@ -1,0 +1,352 @@
+{
+ "artifact_hash": "ae6770107c6b7c4d6358f91cef8f084c440c753ab4dd6775615dfa25c2182150",
+ "contract_id": "ew-contract-1:2f013b6f4849",
+ "custom_family": false,
+ "episodes": [
+  {
+   "final_goal_dist": 0.233,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.083,
+   "steps": 80
+  },
+  {
+   "final_goal_dist": 0.215,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.232,
+   "steps": 92
+  },
+  {
+   "final_goal_dist": 0.202,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.591,
+   "steps": 86
+  },
+  {
+   "final_goal_dist": 0.249,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.841,
+   "steps": 77
+  },
+  {
+   "final_goal_dist": 0.249,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.106,
+   "steps": 85
+  },
+  {
+   "final_goal_dist": 0.207,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.781,
+   "steps": 79
+  },
+  {
+   "final_goal_dist": 0.286,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.278,
+   "steps": 83
+  },
+  {
+   "final_goal_dist": 0.286,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.327,
+   "steps": 79
+  },
+  {
+   "final_goal_dist": 0.211,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.375,
+   "steps": 81
+  },
+  {
+   "final_goal_dist": 0.208,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.115,
+   "steps": 80
+  },
+  {
+   "final_goal_dist": 0.237,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.792,
+   "steps": 86
+  },
+  {
+   "final_goal_dist": 0.245,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.308,
+   "steps": 96
+  },
+  {
+   "final_goal_dist": 0.297,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.105,
+   "steps": 76
+  },
+  {
+   "final_goal_dist": 0.237,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.052,
+   "steps": 80
+  },
+  {
+   "final_goal_dist": 0.237,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.138,
+   "steps": 81
+  },
+  {
+   "final_goal_dist": 0.256,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.436,
+   "steps": 72
+  },
+  {
+   "final_goal_dist": 0.279,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.367,
+   "steps": 76
+  },
+  {
+   "final_goal_dist": 0.202,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.4,
+   "steps": 100
+  },
+  {
+   "final_goal_dist": 0.204,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.35,
+   "steps": 99
+  },
+  {
+   "final_goal_dist": 0.294,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.545,
+   "steps": 78
+  },
+  {
+   "final_goal_dist": 0.267,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.966,
+   "steps": 80
+  },
+  {
+   "final_goal_dist": 0.279,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.567,
+   "steps": 73
+  },
+  {
+   "final_goal_dist": 0.252,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.816,
+   "steps": 77
+  },
+  {
+   "final_goal_dist": 0.276,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.046,
+   "steps": 95
+  },
+  {
+   "final_goal_dist": 0.235,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.446,
+   "steps": 85
+  },
+  {
+   "final_goal_dist": 0.208,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.115,
+   "steps": 79
+  },
+  {
+   "final_goal_dist": 0.277,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.007,
+   "steps": 82
+  },
+  {
+   "final_goal_dist": 0.27,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.903,
+   "steps": 82
+  },
+  {
+   "final_goal_dist": 0.28,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.914,
+   "steps": 78
+  },
+  {
+   "final_goal_dist": 0.269,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.658,
+   "steps": 71
+  },
+  {
+   "final_goal_dist": 0.256,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.856,
+   "steps": 81
+  },
+  {
+   "final_goal_dist": 0.239,
+   "hit": null,
+   "outcome": "success",
+   "return": 19.709,
+   "steps": 111
+  },
+  {
+   "final_goal_dist": 0.213,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.346,
+   "steps": 83
+  },
+  {
+   "final_goal_dist": 0.236,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.782,
+   "steps": 78
+  },
+  {
+   "final_goal_dist": 0.235,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.608,
+   "steps": 84
+  },
+  {
+   "final_goal_dist": 0.247,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.0,
+   "steps": 79
+  },
+  {
+   "final_goal_dist": 0.28,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.248,
+   "steps": 83
+  },
+  {
+   "final_goal_dist": 0.277,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.986,
+   "steps": 74
+  },
+  {
+   "final_goal_dist": 0.219,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.49,
+   "steps": 73
+  },
+  {
+   "final_goal_dist": 0.252,
+   "hit": null,
+   "outcome": "success",
+   "return": 19.467,
+   "steps": 110
+  }
+ ],
+ "experiment_id": null,
+ "family_id": "open@fbc3736d",
+ "id": "eval-20261016152511-290328",
+ "kind": "evaluation",
+ "policy_id": "physics-20261016150004-25da9c",
+ "purpose": "physics-adapt-v1",
+ "recorded_at": "2026-10-16T15:25:11+0530",
+ "seeds": [
+  1000000,
+  1000001,
+  1000002,
+  1000003,
+  1000004,
+  1000005,
+  1000006,
+  1000007,
+  1000008,
+  1000009,
+  1000010,
+  1000011,
+  1000012,
+  1000013,
+  1000014,
+  1000015,
+  1000016,
+  1000017,
+  1000018,
+  1000019,
+  1000020,
+  1000021,
+  1000022,
+  1000023,
+  1000024,
+  1000025,
+  1000026,
+  1000027,
+  1000028,
+  1000029,
+  1000030,
+  1000031,
+  1000032,
+  1000033,
+  1000034,
+  1000035,
+  1000036,
+  1000037,
+  1000038,
+  1000039
+ ],
+ "suite_id": "val-open-v1",
+ "suite_role": "validation",
+ "suite_version": "1",
+ "summary": {
+  "collision_rate": 0.0,
+  "collisions_by_object": {
+   "mover": 0,
+   "static": 0,
+   "wall": 0
+  },
+  "episodes": 40,
+  "mean_success_steps": 83.1,
+  "success_rate": 1.0,
+  "timeout_rate": 0.0
+ },
+ "wall_s": 0.57
+}

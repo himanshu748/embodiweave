@@ -1,0 +1,352 @@
+{
+ "artifact_hash": "ae6770107c6b7c4d6358f91cef8f084c440c753ab4dd6775615dfa25c2182150",
+ "contract_id": "ew-contract-1:2f013b6f4849",
+ "custom_family": false,
+ "episodes": [
+  {
+   "final_goal_dist": 0.262,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.646,
+   "steps": 99
+  },
+  {
+   "final_goal_dist": 0.25,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.86,
+   "steps": 93
+  },
+  {
+   "final_goal_dist": 0.207,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.087,
+   "steps": 80
+  },
+  {
+   "final_goal_dist": 0.257,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.394,
+   "steps": 110
+  },
+  {
+   "final_goal_dist": 0.288,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.855,
+   "steps": 80
+  },
+  {
+   "final_goal_dist": 0.24,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.833,
+   "steps": 95
+  },
+  {
+   "final_goal_dist": 0.269,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.397,
+   "steps": 95
+  },
+  {
+   "final_goal_dist": 0.296,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.692,
+   "steps": 90
+  },
+  {
+   "final_goal_dist": 0.271,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.791,
+   "steps": 92
+  },
+  {
+   "final_goal_dist": 0.281,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.16,
+   "steps": 86
+  },
+  {
+   "final_goal_dist": 0.215,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.17,
+   "steps": 103
+  },
+  {
+   "final_goal_dist": 0.214,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.088,
+   "steps": 80
+  },
+  {
+   "final_goal_dist": 0.284,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.205,
+   "steps": 104
+  },
+  {
+   "final_goal_dist": 0.202,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.819,
+   "steps": 123
+  },
+  {
+   "final_goal_dist": 0.269,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.837,
+   "steps": 103
+  },
+  {
+   "final_goal_dist": 0.264,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.613,
+   "steps": 85
+  },
+  {
+   "final_goal_dist": 0.291,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.332,
+   "steps": 87
+  },
+  {
+   "final_goal_dist": 0.245,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.613,
+   "steps": 85
+  },
+  {
+   "final_goal_dist": 0.289,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.564,
+   "steps": 85
+  },
+  {
+   "final_goal_dist": 0.24,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.577,
+   "steps": 102
+  },
+  {
+   "final_goal_dist": 0.205,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.163,
+   "steps": 86
+  },
+  {
+   "final_goal_dist": 0.209,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.701,
+   "steps": 77
+  },
+  {
+   "final_goal_dist": 0.228,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.133,
+   "steps": 116
+  },
+  {
+   "final_goal_dist": 0.249,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.532,
+   "steps": 88
+  },
+  {
+   "final_goal_dist": 0.269,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.103,
+   "steps": 91
+  },
+  {
+   "final_goal_dist": 0.211,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.681,
+   "steps": 105
+  },
+  {
+   "final_goal_dist": 0.274,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.176,
+   "steps": 82
+  },
+  {
+   "final_goal_dist": 0.297,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.447,
+   "steps": 91
+  },
+  {
+   "final_goal_dist": 0.205,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.108,
+   "steps": 94
+  },
+  {
+   "final_goal_dist": 0.221,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.902,
+   "steps": 99
+  },
+  {
+   "final_goal_dist": 0.233,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.991,
+   "steps": 111
+  },
+  {
+   "final_goal_dist": 0.265,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.684,
+   "steps": 97
+  },
+  {
+   "final_goal_dist": 0.249,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.649,
+   "steps": 78
+  },
+  {
+   "final_goal_dist": 0.217,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.847,
+   "steps": 116
+  },
+  {
+   "final_goal_dist": 0.268,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.659,
+   "steps": 87
+  },
+  {
+   "final_goal_dist": 0.226,
+   "hit": null,
+   "outcome": "success",
+   "return": 19.318,
+   "steps": 125
+  },
+  {
+   "final_goal_dist": 0.233,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.061,
+   "steps": 101
+  },
+  {
+   "final_goal_dist": 0.217,
+   "hit": null,
+   "outcome": "success",
+   "return": 17.212,
+   "steps": 127
+  },
+  {
+   "final_goal_dist": 0.244,
+   "hit": null,
+   "outcome": "success",
+   "return": 18.792,
+   "steps": 116
+  },
+  {
+   "final_goal_dist": 0.21,
+   "hit": null,
+   "outcome": "success",
+   "return": 16.642,
+   "steps": 103
+  }
+ ],
+ "experiment_id": null,
+ "family_id": "crossing@74a53a4b",
+ "id": "eval-20261016152513-619214",
+ "kind": "evaluation",
+ "policy_id": "physics-20261016150004-25da9c",
+ "purpose": "physics-adapt-v1",
+ "recorded_at": "2026-10-16T15:25:13+0530",
+ "seeds": [
+  1200000,
+  1200001,
+  1200002,
+  1200003,
+  1200004,
+  1200005,
+  1200006,
+  1200007,
+  1200008,
+  1200009,
+  1200010,
+  1200011,
+  1200012,
+  1200013,
+  1200014,
+  1200015,
+  1200016,
+  1200017,
+  1200018,
+  1200019,
+  1200020,
+  1200021,
+  1200022,
+  1200023,
+  1200024,
+  1200025,
+  1200026,
+  1200027,
+  1200028,
+  1200029,
+  1200030,
+  1200031,
+  1200032,
+  1200033,
+  1200034,
+  1200035,
+  1200036,
+  1200037,
+  1200038,
+  1200039
+ ],
+ "suite_id": "val-crossing-v1",
+ "suite_role": "validation",
+ "suite_version": "1",
+ "summary": {
+  "collision_rate": 0.0,
+  "collisions_by_object": {
+   "mover": 0,
+   "static": 0,
+   "wall": 0
+  },
+  "episodes": 40,
+  "mean_success_steps": 96.7,
+  "success_rate": 1.0,
+  "timeout_rate": 0.0
+ },
+ "wall_s": 0.78
+}

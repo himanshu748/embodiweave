@@ -1,0 +1,49 @@
+{
+ "budget_steps": 600000,
+ "child_artifact_hash": "10b9eee89085605b7adf4c2dbb5a04a266f862a0ebeb52b1c17327f035058f1d",
+ "child_policy_id": "physics-20261016153658-3c4c36",
+ "consumed_steps": 600064,
+ "contract_id": "ew-contract-1:2f013b6f4849",
+ "decision_id": "deci-20261016153658-778fcc",
+ "final_evaluation_id": "eval-20261016154602-1ea643",
+ "id": "tria-20261016154627-1ec916",
+ "intervention": "longer_training",
+ "kind": "trial",
+ "parent_artifact_hash": "adaaef2cea6ed346715ff1c01b37cce88ef54002e0b9873bf27abb67407fdba5",
+ "parent_id": "physics-20261016152618-fa1d89",
+ "protocol_sha256": "5adec9ec1762ed3b3457c134bdc4e82861802f8b5412af94b93d1a9f96a76eb2",
+ "recipe": "ppo-mixed-mujoco-lr-v1",
+ "recorded_at": "2026-10-16T15:46:27+0530",
+ "run_id": "run-20261016153658-90f6db",
+ "schedule": [
+  {
+   "collision_rate": 0.0333,
+   "collisions_by_object": {
+    "mover": 1,
+    "static": 1,
+    "wall": 0
+   },
+   "episodes": 60,
+   "mean_success_steps": 96.5,
+   "steps": 600064,
+   "success_rate": 0.95,
+   "suite_id": "val-target-v1",
+   "timeout_rate": 0.0167
+  }
+ ],
+ "search_rule": "physics-followup-v1",
+ "seed": 23,
+ "status": "completed",
+ "steps_to_threshold": 600064,
+ "suite_id": "val-target-v1",
+ "target_family": "static_crossing",
+ "target_family_id": "static_crossing@43ce902c",
+ "threshold": {
+  "max_collision": 0.1,
+  "min_success": 0.8,
+  "suite_id": "val-target-v1"
+ },
+ "threshold_id": "thr-target-1",
+ "threshold_reached": true,
+ "validation_every": null
+}

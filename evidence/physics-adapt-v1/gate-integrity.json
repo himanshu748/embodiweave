@@ -1,0 +1,12 @@
+{
+  "reference_commit": "49b80d7663d9e25bcb2da4e0d7c3946f1d4418f3",
+  "promotion_functions": {
+    "promotion_preview": "AST identical",
+    "promote": "AST identical"
+  },
+  "frozen_files": {
+    "ew/criteria.py": "bd2c8ed348181520160181272b641f91500b37820e7762956d9b03f80f5b34ed",
+    "ew/scenarios.py": "18396d0c9ac7e9221e72b7d0ad3bb4563647850793e3baf3ab47ae779d1a0168"
+  },
+  "physics_confirmation": "Not opened. No selected policy or confirmation-started marker exists."
+}

@@ -1,0 +1,13 @@
+{
+  "seconds": 15,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "video_sha256": "ed1abcc14455be0ffcb0a3571c9a2835c6983c745f2e7ec781d8d82d7efc0821",
+  "script_sha256": "9d0bf28de8b0da9e396e5465a3ab4350e229448bc140ada3cda9ba405898b7c9",
+  "pair_sha256": "21611755086c5f520496d37639a1d4c2a2a21e683fc1522a501f9f4e03d46e50",
+  "motion": "Actual recorded MuJoCo qpos and mocap poses, sampled and held without interpolation. Titles, camera movement, rays and trail are render overlays. Silent companion replay; main film narration remains Deepgram Aura-2.",
+  "policy_selection": "deci-20261016153658-778fcc"
+}

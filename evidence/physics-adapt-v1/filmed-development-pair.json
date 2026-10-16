@@ -1,0 +1,93 @@
+{
+  "seed": 6403036,
+  "before_policy": "robust-20261016140226-352fd7",
+  "after_policy": "physics-20261016152618-fa1d89",
+  "decision_id": "deci-20261016153658-778fcc",
+  "before": {
+    "goal_distance": 4.583452196587343,
+    "hit": "mover",
+    "layout": {
+      "goal": [
+        8.383321613136905,
+        5.385707529572731
+      ],
+      "movers": [
+        [
+          5.353972432101877,
+          9.197630890435132,
+          -0.21407486769086215,
+          -0.688370112224689,
+          0.5
+        ]
+      ],
+      "start": [
+        1.5645609771851992,
+        7.506260492337848,
+        0.07294423139669343
+      ],
+      "statics": [
+        [
+          3.8636164723730153,
+          7.8059395965754135,
+          0.4753606688421248
+        ],
+        [
+          6.721338546352745,
+          5.98221601659097,
+          0.4640325496720291
+        ]
+      ]
+    },
+    "model_xml_sha256": "646cbc840b7783f548770715031755b6c9639f362d44658673a1525d8c312657",
+    "outcome": "collision",
+    "seconds": 3.154999999999955,
+    "seed": 6403036,
+    "steps": 32,
+    "trajectory": "trajectories/candidate-static_crossing-6403036.npz",
+    "trajectory_sha256": "bd647b8114d90630b0561788bdf73f3e7c0c36bc1c7c21e5e7a851c4016736d9"
+  },
+  "after": {
+    "goal_distance": 0.27271813621379476,
+    "hit": null,
+    "layout": {
+      "goal": [
+        8.383321613136905,
+        5.385707529572731
+      ],
+      "movers": [
+        [
+          5.353972432101877,
+          9.197630890435132,
+          -0.21407486769086215,
+          -0.688370112224689,
+          0.5
+        ]
+      ],
+      "start": [
+        1.5645609771851992,
+        7.506260492337848,
+        0.07294423139669343
+      ],
+      "statics": [
+        [
+          3.8636164723730153,
+          7.8059395965754135,
+          0.4753606688421248
+        ],
+        [
+          6.721338546352745,
+          5.98221601659097,
+          0.4640325496720291
+        ]
+      ]
+    },
+    "model_xml_sha256": "646cbc840b7783f548770715031755b6c9639f362d44658673a1525d8c312657",
+    "outcome": "success",
+    "seconds": 9.900000000000148,
+    "seed": 6403036,
+    "steps": 99,
+    "trajectory": "trajectories/candidate-static_crossing-6403036.npz",
+    "trajectory_sha256": "441fe37517a07496c36e7f479ec1c705999875d89e01e07fa8e60551c307515f"
+  },
+  "selection": "Earliest 2D-parent pedestrian collision among same-seed physics-development successes of the graph-ranked origin. Illustrative development episode only. No confirmation access."
+}
