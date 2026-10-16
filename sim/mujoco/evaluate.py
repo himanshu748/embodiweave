@@ -60,21 +60,24 @@ def save_trajectory(env, path, actions):
                         control_poses=[f["robot"] for f in env.trace])
 
 
-def run():
-    p = protocol()
-    OUT.mkdir(parents=True, exist_ok=True)
-    if (OUT / "protocol.json").exists():
-        if json.loads((OUT / "protocol.json").read_text()) != p:
+def run(protocol_data=None, output=None):
+    p = protocol_data if protocol_data is not None else protocol()
+    out = Path(output) if output is not None else OUT
+    out.mkdir(parents=True, exist_ok=True)
+    if (out / "protocol.json").exists():
+        if json.loads((out / "protocol.json").read_text()) != p:
             raise RuntimeError("Frozen transfer protocol differs. Do not overwrite evidence.")
     else:
-        write_new(OUT / "protocol.json", p)
+        write_new(out / "protocol.json", p)
     ph = digest(p)
     results = []
-    for label, policy in POLICIES.items():
+    for label, policy_info in p["policies"].items():
+        policy = policy_info["id"]
         model, vn, contract, manifest, artifact_hash = load_policy(policy)
+        assert artifact_hash == policy_info["artifact_hash"]
         assert contract.contract_id == CONTRACT_V1.contract_id
         for suite in p["suites"]:
-            path = OUT / f"{label}-{suite['family']}.json"
+            path = out / f"{label}-{suite['family']}.json"
             if path.exists():
                 result = json.loads(path.read_text())
                 assert result["protocol_hash"] == ph and result["artifact_hash"] == artifact_hash
@@ -95,7 +98,7 @@ def run():
                     if term or trunc:
                         break
                 relative = f"trajectories/{label}-{suite['family']}-{seed}.npz"
-                target = OUT / relative
+                target = out / relative
                 target.parent.mkdir(exist_ok=True)
                 # A crashed incomplete suite can be resumed from scratch; no completed result is replaced.
                 save_trajectory(env, target, actions)
@@ -108,7 +111,7 @@ def run():
             summary = {"episodes": len(episodes), **counts,
                        **{f"{k}_rate": counts[k]/len(episodes) for k in counts},
                        "collisions_by_object": {k: sum(e["hit"] == k for e in episodes) for k in ("wall", "static", "mover")}}
-            result = {"id": f"mj1-{label}-{suite['family']}-{artifact_hash[:12]}", "policy_id": policy,
+            result = {"id": f"{p.get('record_prefix', 'mj1')}-{label}-{suite['family']}-{artifact_hash[:12]}", "policy_id": policy,
                       "label": label, "artifact_hash": artifact_hash, "contract_id": contract.contract_id,
                       "suite_id": suite["id"], "family": suite["family"], "role": "sim2sim", "physics": "mujoco",
                       "protocol_hash": ph, "suite_fingerprint": digest({"protocol": ph, "suite": suite}),
@@ -120,11 +123,11 @@ def run():
         vn.close()
     summary = {"protocol_hash": ph, "results": [{k: r[k] for k in
                ("id", "policy_id", "label", "artifact_hash", "suite_id", "family", "summary")} for r in results]}
-    if not (OUT / "summary.json").exists(): write_new(OUT / "summary.json", summary)
-    checksums = {str(f.relative_to(OUT)): sha256_file(f) for f in sorted(OUT.rglob("*"))
+    if not (out / "summary.json").exists(): write_new(out / "summary.json", summary)
+    checksums = {str(f.relative_to(out)): sha256_file(f) for f in sorted(out.rglob("*"))
                  if f.is_file() and f.name != "checksums.json"}
-    if not (OUT / "checksums.json").exists(): write_new(OUT / "checksums.json", checksums)
-    print("Complete: evidence/mujoco-v1/summary.json", flush=True)
+    if not (out / "checksums.json").exists(): write_new(out / "checksums.json", checksums)
+    print(f"Complete: {out}/summary.json", flush=True)
 
 
 if __name__ == "__main__":
