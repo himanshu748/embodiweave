@@ -1,0 +1,9 @@
+{
+  "evidence/landing-current/graph-action.json": "97ec930ba43d1ab5ed9265aabf9a066300e7cf699b6787c8b5ba29064b6f22f7",
+  "evidence/landing-current/README.md": "e4342f51199eec375457a8a583efc86f7d57e1556f41a7ec0311679b9fd57062",
+  "web/index.html": "2416f307a6273769cdfc1d121d6add67037c52a459f6ff7e36c8c1290700537c",
+  "web/landing.js": "59f4b9da1b9ea477894477010f431a9b5e9fbdeafc9a9b335b264b17ab7f2f4e",
+  "web/landing.css": "8b34b690a6b4d7f21a1417abeee126fd5adf94cf17e96375441133ccdb78c44d",
+  "evidence/mcp-agent-v2/summary.json": "ae90492e79db48d4eace156c8690a96b9c03ad109fc27cbe1582ea041fd936a7",
+  "evidence/robustness-v2/summary.json": "faeda02c6261c0566a8f0ddde3787ef9d8691afdbdd1eab3b49c4af222a077b7"
+}

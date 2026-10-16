@@ -10,13 +10,13 @@ A robotics test lab on engineering paper. Existing product identity takes preced
 - 24px engineering grid, restrained borders and 8–12px radii. No stock AI illustrations or invented robot footage.
 
 ## Information architecture
-- Landing: paired recorded replay, live FalkorDB console, selection, gate, experiments and schema.
+- Landing: current recorded MCP action and film, live agent entry point, matched parent comparison, graph schema and confirmed demo policy. Preserve the original paired replay, authored planner, rejected outcomes and older benchmarks in clearly labelled history sections.
 - Judge guide: short route, live/recorded/local boundaries, demo film, graph rationale, local reproduction and limitations.
 - Live execution: a 2D/3D simulator beside training controls, followed by test results and an optional agent question sheet. Use plain labels and keep training completion separate from deployment approval. Hide hashes and raw JSON in expandable run details.
 - Studio: detailed evidence and interactive local workflows. Public controls link to live training. Generic experiment controls still use the local stack.
 
 ## Signature interaction
-Replay two recorded episodes on seed 1300032. Deployed policy collision at step 51; new checkpoint goal at step 112. Keep aggregate validation separate: 87% success, 13% collision, promotion rejected. Do not imply one successful episode passed the overall gate.
+The first screen presents the actual MCP tool choice and training launch through the current recorded film. Its result is a completed action with 4/4 validation gates, alongside the measured parent regression. Keep the current confirmed 2D demo policy separate from this new child. The preserved historical replay uses seed 1300032: baseline collision at step 51 and original adaptation goal at step 112. Keep its aggregate validation separate: 87% success, 13% collision, promotion rejected. Do not imply one successful episode passed the overall gate.
 
 ## Motion
 Entrance 500ms, stagger 80–180ms, section reveal 320ms, feedback 120–240ms; cubic-bezier(.2,0,0,1). Animate opacity and transform. Respect prefers-reduced-motion: no automatic replay, show final frame, no entrance or pulse animation. Preserve visible content if JavaScript fails.

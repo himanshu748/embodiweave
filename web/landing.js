@@ -1,5 +1,5 @@
-// Landing page. Every number comes from the studio API (records and live FalkorDB) or from
-// hero-replay.json, a trimmed copy of two stored simulator replays (scripts/make_hero_replay.py).
+// Current action figures are bound to evidence/mcp-agent-v2/summary.json.
+// Historical panels read the studio API or the original hero-replay.json.
 import { Arena3D, webglOK } from "./robot3d.js?v=labels2";
 
 const $ = (s) => document.querySelector(s);
@@ -63,7 +63,7 @@ const READ = {
     return `Rule <b>${esc(d.rule)}</b> at graph revision ${esc(d.revision)} chose <b>${esc(d.action)}</b>, launched <span class="mono">${esc(d.run_id)}</span> and produced checkpoint <span class="mono">${esc(d.child_id)}</span>. Reached the threshold: ${esc(d.reached)}.`;
   },
   gate(r) {
-    return `<b>${r.rows.filter((x) => x[2]).length} validation suites</b> have evidence measured on the exact artifact hash of the new checkpoint. The gate compares each to its threshold below.`;
+    return `<b>${r.rows.filter((x) => x[2]).length} validation suites</b> have evidence measured on the exact artifact hash of this original checkpoint. The gate compares each to its threshold below.`;
   },
 };
 let currentQ = "failure";
@@ -106,7 +106,7 @@ async function heroQuery() {
     const pt = t.rows.filter((x) => x[1]), ps = sc.rows.filter((x) => x[0]);
     const okT = pt.filter((x) => x[3] === true).length, okS = ps.filter((x) => x[2] === true).length;
     $("#hqMs").textContent = `${(t.ms + sc.ms).toFixed(1)} ms`;
-    $("#hqOut").innerHTML = `Fine-tuning a parent: <b>${okT} of ${pt.length}</b> matching trials reached the threshold. From scratch: <b>${okS} of ${ps.length}</b>. The recorded agent read this pattern and trained from scratch. <span class="go">See the queries ↓</span>`;
+    $("#hqOut").innerHTML = `Fine-tuning a parent: <b>${okT} of ${pt.length}</b> matching trials reached the threshold. From scratch: <b>${okS} of ${ps.length}</b>. The original agent read this pattern and trained from scratch. <span class="go">See the queries ↓</span>`;
   } catch { $("#hqOut").textContent = "FalkorDB did not answer just now. The console below retries."; }
 }
 
@@ -114,7 +114,7 @@ async function heroQuery() {
 async function decisionChain() {
   try {
     const f = await get("api/live/featured");
-    $("#decideSub").innerHTML = `The LLM agent called the frozen rule <b class="mono">${esc(f.rule)}</b> at graph revision ${esc(f.graph_revision)}. It read ${f.query_count} graph queries, ranked every start option by its chance of reaching the target threshold and recorded <span class="mono">${esc(f.decision_id)}</span>.`;
+    $("#decideSub").innerHTML = `In the original case, the LLM called the authored rule <b class="mono">${esc(f.rule)}</b> at graph revision ${esc(f.graph_revision)}. The rule read ${f.query_count} graph queries and ranked the starting options, then recorded <span class="mono">${esc(f.decision_id)}</span>. The current MCP agent above proposes its own origin, subject to a guardrail.`;
     const chosen = f.action === "train_from_scratch" ? "scratch" : f.selected;
     const max = Math.max(...f.options.map((o) => o.p_reach || 0)) || 1;
     $("#bars").innerHTML = f.options.map((o) => `<li class="${o.option === chosen ? "win" : ""}">
@@ -303,7 +303,7 @@ function fillStats(calls) {
     const failed = (prom.checks || []).filter((c) => !c.pass).length, n = (prom.checks || []).length;
     $("#gate").textContent = prom.verdict === "promoted" ? "Promoted" : "Rejected";
     $("#gate").className = "num " + (prom.verdict === "promoted" ? "good" : "bad");
-    $("#gateCap").textContent = prom.verdict === "promoted" ? `all ${n} suites passed` : `${failed} of ${n} suites failed, deployed policy kept`;
+    $("#gateCap").textContent = prom.verdict === "promoted" ? `original run: all ${n} suites passed` : `original run: ${failed} of ${n} suites failed`;
   }
 }
 async function agent() {
@@ -317,7 +317,7 @@ async function agent() {
       const prom = calls.find((x) => x.tool === "request_promotion");
       if (!prom) continue;
       fillStats(calls);
-      sub.innerHTML = `<b class="mono">${esc(t.model)}</b> via ${esc(t.provider)} chose every tool call over MCP: ${calls.length} calls in ${Math.round(t.wall_s)} seconds. Trace <span class="mono">${esc(t.id)}</span>.`;
+      sub.innerHTML = `Original recording: <b class="mono">${esc(t.model)}</b> via ${esc(t.provider)}, ${calls.length} tool calls in ${Math.round(t.wall_s)} seconds. Trace <span class="mono">${esc(t.id)}</span>. The current public MCP action is documented above.`;
       const items = calls.map((c) => { const [k, v] = stepFor(c); return `<li class="step k-${k.toLowerCase()}"><span class="k">${k}</span><span class="v">${v}</span></li>`; });
       const ol = $("#agentSteps"), SHOW = 7;
       ol.innerHTML = items.slice(0, SHOW).join("");
@@ -330,11 +330,11 @@ async function agent() {
       const p = prom.result, ok = p.verdict === "promoted", v = $("#agentVerdict");
       v.className = "verdict " + (ok ? "ok" : "");
       v.innerHTML = `<h3>Promotion ${esc(p.verdict)}</h3><ul>${(p.reasons || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
-        <p>The gate makes the call, not the model. A rejected checkpoint stays out of deployment and its evidence stays in the graph for the next decision.</p>`;
+        <p>This original checkpoint stayed out of deployment. Its evaluation and rejection remain in the graph for later decisions.</p>`;
       v.hidden = false;
       return;
     }
-    sub.textContent = "No LLM run with a promotion request is recorded yet. Run python -m ew.agent llm locally to record one.";
+    sub.textContent = "The original runtime trace is unavailable here. The recorded MCP action and its evidence links above remain available.";
   } catch {
     sub.textContent = "Agent traces could not be loaded from the API. Refresh to retry.";
   }
@@ -342,10 +342,12 @@ async function agent() {
 
 // ---------- graph schema (hand-built SVG of the real node labels and relationship types) ----------
 const NODES = {
+  Decision: [90, 185],
   Robot: [590, 40], Contract: [470, 120], Run: [120, 70], Policy: [300, 215], Family: [610, 215],
   Trial: [470, 300], Origin: [620, 390], Evaluation: [120, 330], Suite: [120, 440], Failure: [300, 400], Hypothesis: [470, 440],
 };
 const EDGES = [
+  ["Decision", "Run", "LAUNCHED"], ["Decision", "Policy", "SELECTED"],
   ["Run", "Policy", "PRODUCED"], ["Policy", "Contract", "USES_CONTRACT"], ["Contract", "Robot", "FOR_ROBOT"],
   ["Evaluation", "Policy", "ASSESSED"], ["Evaluation", "Suite", "ON_SUITE"], ["Failure", "Evaluation", "OBSERVED_IN"],
   ["Hypothesis", "Failure", "ABOUT"], ["Trial", "Policy", "FROM_PARENT"], ["Trial", "Origin", "FROM_ORIGIN"],
