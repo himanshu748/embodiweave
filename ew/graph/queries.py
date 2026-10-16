@@ -12,6 +12,11 @@ from dataclasses import asdict, dataclass, field
 from . import db
 
 TEMPLATES = {
+    "mcp_evidence_record": """
+MATCH (n {id:$id}) WHERE $kind IN labels(n)
+OPTIONAL MATCH (n)-[:ON_SUITE]->(s:Suite)
+WITH n,s WHERE $kind <> 'Evaluation' OR (s.role='validation' AND s.id IN $suites)
+RETURN properties(n) AS record LIMIT 1""",
     "mcp_decision_outcomes": """
 MATCH (target:Policy {id:$policy})-[:USES_CONTRACT]->(contract:Contract)<-[:USES_CONTRACT]-(origin:Policy)
 MATCH (d:Decision)-[:SELECTED]->(origin), (d)-[:LAUNCHED]->(run:Run)-[:PRODUCED]->(child:Policy)

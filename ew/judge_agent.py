@@ -176,8 +176,12 @@ def start(question, consent, token, training_consent=False, training_requested=F
                 if s["owner"] == owner:
                     return _public(s)  # double click or reload never launches a second model loop
                 raise Limited("Another investigation is running. Please try again in two minutes.")
-        if os.environ.get("EW_AGENT_STUDY") == "agent-mcp-v3" and any(s.get("study_id") == "agent-mcp-v3" for s in sessions):
-            raise Limited("The single preregistered v3 attempt has already been used. Its evidence is retained.")
+        study = os.environ.get('EW_AGENT_STUDY', 'public-agent-mcp')
+        if study in ('agent-mcp-v3', 'v3-retry') and any(s.get('study_id') == study for s in sessions):
+            raise Limited('The single preregistered attempt for this study has already been used. Its evidence is retained.')
+        if study == 'v3-retry' and now + MAX_SECONDS + 480 >= 1792305000:
+            # 2026-10-18 12:00 IST; leave the existing agent and worker time limits.
+            raise Limited('The preregistered completion cutoff has passed; no attempt was started.')
         day = time.strftime("%Y-%m-%d", time.gmtime(now))
         today = [s for s in sessions if s["day"] == day]
         if len(today) >= DAILY_RUNS:
@@ -317,6 +321,11 @@ def _completion(messages, config, remaining):
             if not paid:
                 body["reasoning"] = {"enabled": False, "exclude": True}
         encoded = json.dumps(body).encode()
+        if config.get('mcp_bounded_context'):
+            from .agent_context import REQUEST_BYTE_BUDGET
+            if len(encoded) > REQUEST_BYTE_BUDGET:
+                raise ProviderFailure('The bounded MCP request is full; no model request was sent.')
+            config['_last_request_bytes'] = len(encoded)
         # Six requests maximum. Bound paid input and output as well as provider pricing.
         if openrouter and paid and len(encoded) > 32000:
             raise ProviderFailure("The bounded model context is full. Completed MCP evidence remains available.")

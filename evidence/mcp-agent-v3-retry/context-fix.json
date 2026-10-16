@@ -1,0 +1,458 @@
+{
+  "root_cause": "Five original v3 tool results totalled 33515 bytes before prompt and schemas, exceeding the application paid-request cap of 32000 bytes. The provider was not called for that overflowing request.",
+  "original_result_bytes": {
+    "diagnose_policy": 2668,
+    "find_training_origins": 18468,
+    "nearest_passing_ancestor": 1716,
+    "get_decision_outcomes": 2861,
+    "rank_regression_origins": 7802
+  },
+  "snapshot_sha256": "21b796bb2f449bc7760b5d50219f4deb6a52524e56d2083103081e15c98d2c64",
+  "bounds": {
+    "single_tool_text_token_upper_bound": 2000,
+    "retained_tool_text_token_upper_bound": 12000,
+    "serialized_request_bytes": 28000,
+    "history_groups": 6
+  },
+  "token_bound": "UTF-8 bytes upper-bound byte-BPE text tokens conservatively; actual model token counts are recorded separately in provider usage.",
+  "full_current_graph_reads": [
+    {
+      "tool": "diagnose_policy",
+      "unbounded_result_bytes": 6025,
+      "bounded_text_token_upper_bound": 918,
+      "summary": {
+        "bounded_tool_summary": true,
+        "tool": "diagnose_policy",
+        "graph_revision": 10,
+        "full_records": "get_evidence_record(record_type, record_id); full query rows remain in the Decision audit",
+        "policy": {
+          "policy_id": "robust-20261016140226-352fd7",
+          "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+          "contract_id": "ew-contract-1:2f013b6f4849"
+        },
+        "validation": [
+          {
+            "suite_id": "val-crossing-v1",
+            "evaluation_id": "eval-20261016140422-a2e964",
+            "episodes": 40,
+            "success_rate": 1.0,
+            "collision_rate": 0.0
+          },
+          {
+            "suite_id": "val-open-v1",
+            "evaluation_id": "eval-20261016140420-e4a5fa",
+            "episodes": 40,
+            "success_rate": 1.0,
+            "collision_rate": 0.0
+          },
+          {
+            "suite_id": "val-static-v1",
+            "evaluation_id": "eval-20261016140421-14d22c",
+            "episodes": 40,
+            "success_rate": 0.975,
+            "collision_rate": 0.025
+          },
+          {
+            "suite_id": "val-target-v1",
+            "evaluation_id": "eval-20261016140420-2a0258",
+            "episodes": 60,
+            "success_rate": 0.95,
+            "collision_rate": 0.0333
+          }
+        ],
+        "total_evaluations": 4
+      }
+    },
+    {
+      "tool": "lineage",
+      "unbounded_result_bytes": 3003,
+      "bounded_text_token_upper_bound": 908,
+      "summary": {
+        "bounded_tool_summary": true,
+        "tool": "lineage",
+        "graph_revision": 10,
+        "full_records": "get_evidence_record(record_type, record_id); full query rows remain in the Decision audit",
+        "ancestors": [
+          {
+            "ancestor_id": "search-20261015185749-4a6581",
+            "artifact_hash": "b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565",
+            "hops": 1,
+            "path": [
+              "robust-20261016140226-352fd7",
+              "search-20261015185749-4a6581"
+            ]
+          },
+          {
+            "ancestor_id": "search-20261015185536-6720c9",
+            "artifact_hash": "a08219d163fdb404bf481f544ceb158c63e33e49baf75685e5e7aae07b87941b",
+            "hops": 2,
+            "path": [
+              "robust-20261016140226-352fd7",
+              "search-20261015185749-4a6581",
+              "search-20261015185536-6720c9"
+            ]
+          },
+          {
+            "ancestor_id": "scratch~10715f-s7",
+            "artifact_hash": "121f741e502d6f1478d7aa3db8954dad7c011440d0a9848d6c5aef1144a73be2",
+            "hops": 3,
+            "path": [
+              "robust-20261016140226-352fd7",
+              "search-20261015185749-4a6581",
+              "search-20261015185536-6720c9",
+              "scratch~10715f-s7"
+            ]
+          }
+        ],
+        "total_ancestors": 3
+      }
+    },
+    {
+      "tool": "find_training_origins",
+      "unbounded_result_bytes": 62324,
+      "bounded_text_token_upper_bound": 1853,
+      "summary": {
+        "bounded_tool_summary": true,
+        "tool": "find_training_origins",
+        "graph_revision": 10,
+        "full_records": "get_evidence_record(record_type, record_id); full query rows remain in the Decision audit",
+        "total_candidates": 18,
+        "candidate_order": "authored eligibility rank; not a safety prediction",
+        "candidates": [
+          {
+            "policy_id": "physics-20261016150004-25da9c",
+            "rank": 1,
+            "passed": 4,
+            "training_domain": "mixed_2d_mujoco",
+            "validation": [
+              {
+                "suite": "val-crossing-v1",
+                "success": 1.0,
+                "collisions": 0.0
+              },
+              {
+                "suite": "val-open-v1",
+                "success": 1.0,
+                "collisions": 0.0
+              },
+              {
+                "suite": "val-static-v1",
+                "success": 0.975,
+                "collisions": 0.025
+              },
+              {
+                "suite": "val-target-v1",
+                "success": 0.9667,
+                "collisions": 0.0333
+              }
+            ]
+          },
+          {
+            "policy_id": "robust-20261016140226-352fd7",
+            "rank": 2,
+            "passed": 4,
+            "training_domain": "2d",
+            "validation": [
+              {
+                "suite": "val-crossing-v1",
+                "success": 1.0,
+                "collisions": 0.0
+              },
+              {
+                "suite": "val-open-v1",
+                "success": 1.0,
+                "collisions": 0.0
+              },
+              {
+                "suite": "val-static-v1",
+                "success": 0.975,
+                "collisions": 0.025
+              },
+              {
+                "suite": "val-target-v1",
+                "success": 0.95,
+                "collisions": 0.0333
+              }
+            ]
+          },
+          {
+            "policy_id": "physics-20261016153658-3c4c36",
+            "rank": 3,
+            "passed": 4,
+            "training_domain": "mixed_2d_mujoco",
+            "validation": [
+              {
+                "suite": "val-crossing-v1",
+                "success": 0.975,
+                "collisions": 0.025
+              },
+              {
+                "suite": "val-open-v1",
+                "success": 1.0,
+                "collisions": 0.0
+              },
+              {
+                "suite": "val-static-v1",
+                "success": 0.975,
+                "collisions": 0.025
+              },
+              {
+                "suite": "val-target-v1",
+                "success": 0.95,
+                "collisions": 0.0333
+              }
+            ]
+          },
+          {
+            "policy_id": "physics-20261016152618-fa1d89",
+            "rank": 4,
+            "passed": 4,
+            "training_domain": "mixed_2d_mujoco",
+            "validation": [
+              {
+                "suite": "val-crossing-v1",
+                "success": 1.0,
+                "collisions": 0.0
+              },
+              {
+                "suite": "val-open-v1",
+                "success": 1.0,
+                "collisions": 0.0
+              },
+              {
+                "suite": "val-static-v1",
+                "success": 0.975,
+                "collisions": 0.025
+              },
+              {
+                "suite": "val-target-v1",
+                "success": 0.9333,
+                "collisions": 0.0667
+              }
+            ]
+          }
+        ],
+        "rejected_count": 43,
+        "omitted_candidates": 14,
+        "more": "Use diagnose_policy(policy_id) for exact validation. Full eligible rows are retained in the audit."
+      }
+    },
+    {
+      "tool": "nearest_passing_ancestor",
+      "unbounded_result_bytes": 4135,
+      "bounded_text_token_upper_bound": 571,
+      "summary": {
+        "bounded_tool_summary": true,
+        "tool": "nearest_passing_ancestor",
+        "graph_revision": 10,
+        "full_records": "get_evidence_record(record_type, record_id); full query rows remain in the Decision audit",
+        "nearest": {
+          "ancestor_id": "search-20261015185749-4a6581",
+          "artifact_hash": "b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565",
+          "hops": 1,
+          "path": [
+            "robust-20261016140226-352fd7",
+            "search-20261015185749-4a6581"
+          ],
+          "evaluation_id": "eval-20261015185833-82fb12",
+          "success_rate": 0.95,
+          "collision_rate": 0.05
+        },
+        "algorithm": "FalkorDB shortestPath, minimum unweighted DERIVED_FROM hops"
+      }
+    },
+    {
+      "tool": "get_decision_outcomes",
+      "unbounded_result_bytes": 6883,
+      "bounded_text_token_upper_bound": 986,
+      "summary": {
+        "bounded_tool_summary": true,
+        "tool": "get_decision_outcomes",
+        "graph_revision": 10,
+        "full_records": "get_evidence_record(record_type, record_id); full query rows remain in the Decision audit",
+        "total_outcomes": 1,
+        "outcomes": [
+          {
+            "decision_id": "deci-20261016121309-c0c93f",
+            "origin_id": "physics-20261016150004-25da9c",
+            "child_id": "judge-a524ef1f3d677cd255354736e0cba609",
+            "id": "outcome-deci-20261016121309-c0c93f",
+            "regressed": true,
+            "gate_verdict": "promoted",
+            "release_verdict": "not_released_regression",
+            "suites": [
+              {
+                "suite_id": "val-target-v1",
+                "episodes": 60,
+                "parent_collisions": 2,
+                "child_collisions": 3,
+                "collision_delta": 1,
+                "goal_delta": -1
+              },
+              {
+                "suite_id": "val-open-v1",
+                "episodes": 40,
+                "parent_collisions": 0,
+                "child_collisions": 0,
+                "collision_delta": 0,
+                "goal_delta": 0
+              },
+              {
+                "suite_id": "val-static-v1",
+                "episodes": 40,
+                "parent_collisions": 1,
+                "child_collisions": 1,
+                "collision_delta": 0,
+                "goal_delta": 0
+              },
+              {
+                "suite_id": "val-crossing-v1",
+                "episodes": 40,
+                "parent_collisions": 0,
+                "child_collisions": 1,
+                "collision_delta": 1,
+                "goal_delta": -1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "tool": "rank_regression_origins",
+      "unbounded_result_bytes": 53607,
+      "bounded_text_token_upper_bound": 1218,
+      "summary": {
+        "bounded_tool_summary": true,
+        "tool": "rank_regression_origins",
+        "graph_revision": 10,
+        "full_records": "get_evidence_record(record_type, record_id); full query rows remain in the Decision audit",
+        "total_origins": 18,
+        "weight": "sum of positive per-suite child-minus-parent collision-rate deltas",
+        "unknown_means": "no observations, not safer",
+        "ranking": [
+          {
+            "origin_id": "physics-20261016150004-25da9c",
+            "observed_children": 1,
+            "weighted_regression_degree": 0.0416666666666667
+          },
+          {
+            "origin_id": "P-static-b~6fcae1-s7",
+            "observed_children": 0,
+            "weighted_regression_degree": null
+          },
+          {
+            "origin_id": "judge-0511c5c5d376343e496f2ca54b5b8887",
+            "observed_children": 0,
+            "weighted_regression_degree": null
+          },
+          {
+            "origin_id": "judge-27ff7301f84d6a015f3db57323320203",
+            "observed_children": 0,
+            "weighted_regression_degree": null
+          },
+          {
+            "origin_id": "judge-434d266258a58e3a552b53d0a343af80",
+            "observed_children": 0,
+            "weighted_regression_degree": null
+          },
+          {
+            "origin_id": "judge-6b4896fe6ae4d2b0e7988bd313f8530b",
+            "observed_children": 0,
+            "weighted_regression_degree": null
+          },
+          {
+            "origin_id": "judge-71515a570c0970792c2669d07df10e1f",
+            "observed_children": 0,
+            "weighted_regression_degree": null
+          },
+          {
+            "origin_id": "judge-7bc67868efd431dcf0a3ff4c980b3fc8",
+            "observed_children": 0,
+            "weighted_regression_degree": null
+          }
+        ]
+      }
+    },
+    {
+      "tool": "check_gate",
+      "unbounded_result_bytes": 3303,
+      "bounded_text_token_upper_bound": 1126,
+      "summary": {
+        "bounded_tool_summary": true,
+        "tool": "check_gate",
+        "graph_revision": 0,
+        "full_records": "get_evidence_record(record_type, record_id); full query rows remain in the Decision audit",
+        "policy_id": "robust-20261016140226-352fd7",
+        "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+        "preview": true,
+        "verdict": "promoted",
+        "checks": [
+          {
+            "suite_id": "val-target-v1",
+            "evaluation_id": "eval-20261016140420-2a0258",
+            "success_rate": 0.95,
+            "collision_rate": 0.0333,
+            "min_success": 0.8,
+            "max_collision": 0.1,
+            "pass": true,
+            "role": "target"
+          },
+          {
+            "suite_id": "val-open-v1",
+            "evaluation_id": "eval-20261016140420-e4a5fa",
+            "success_rate": 1.0,
+            "collision_rate": 0.0,
+            "min_success": 0.9,
+            "max_collision": 0.05,
+            "pass": true,
+            "role": "retained"
+          },
+          {
+            "suite_id": "val-static-v1",
+            "evaluation_id": "eval-20261016140421-14d22c",
+            "success_rate": 0.975,
+            "collision_rate": 0.025,
+            "min_success": 0.75,
+            "max_collision": 0.1,
+            "pass": true,
+            "role": "retained"
+          },
+          {
+            "suite_id": "val-crossing-v1",
+            "evaluation_id": "eval-20261016140422-a2e964",
+            "success_rate": 1.0,
+            "collision_rate": 0.0,
+            "min_success": 0.75,
+            "max_collision": 0.15,
+            "pass": true,
+            "role": "retained"
+          }
+        ],
+        "missing": [],
+        "deployment_changed": false
+      }
+    },
+    {
+      "tool": "explain_decision",
+      "unbounded_result_bytes": 418482,
+      "bounded_text_token_upper_bound": 778,
+      "summary": {
+        "bounded_tool_summary": true,
+        "tool": "explain_decision",
+        "graph_revision": 10,
+        "full_records": "get_evidence_record(record_type, record_id); full query rows remain in the Decision audit",
+        "record_type": "Decision",
+        "record": {
+          "id": "deci-20261016121309-c0c93f",
+          "selected": "physics-20261016150004-25da9c",
+          "proposed_origin": "physics-20261016150004-25da9c",
+          "model": "openai/gpt-4.1-mini",
+          "mode": "llm",
+          "explanation": "Chose origin physics-20261016150004-25da9c due to highest rank and full validation pass with 4 canonical suites, mixed 2D and MuJoCo training domain for robustness. Nearest passing ancestor is search-20261015185749-4a6581 with 1 hop and 0.95 success, 0.05 collision, path [robust-20261016140226-352fd7, search-20261015185749-4a6581]. Budget 60000 steps PPO run with seed29."
+        }
+      }
+    }
+  ],
+  "test_result": "148 tests passed, including full current graph response fixture, amplified graph rows, history eviction with valid tool pairs, record-ID lookup, citation veto and one-attempt enforcement."
+}

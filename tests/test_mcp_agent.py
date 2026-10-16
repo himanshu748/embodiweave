@@ -127,7 +127,7 @@ def test_real_sdk_stdio_discovery_and_algorithm(world):
             async with ClientSession(*streams) as client:
                 await client.initialize()
                 tools = await client.list_tools()
-                assert len(tools.tools) == 9
+                assert len(tools.tools) == 10
                 r = C.unpack(await client.call_tool("nearest_passing_ancestor", {"policy_id": "target"}))
                 assert r["nearest"]["hops"] == 2
     asyncio.run(run())
@@ -137,7 +137,7 @@ def test_real_sdk_http_reads_and_unauthorized_action(world):
     async def run():
         async with api.lifespan(api.app):
             async with C.connect(url="http://testserver/mcp/", transport=httpx2.ASGITransport(api.app)) as (client, tools, initialized):
-                assert len(tools) == 9 and initialized["serverInfo"]["name"] == "EmbodiWeave"
+                assert len(tools) == 10 and initialized["serverInfo"]["name"] == "EmbodiWeave"
                 assert C.unpack(await client.call_tool("lineage", {"policy_id": "target"}))["ancestors"]
                 assert C.unpack(await client.call_tool("diagnose_policy", {"policy_id": "target"}))["validation_and_failures"]
                 result = C.unpack(await client.call_tool("start_training", {"origin_id": "root", "reason": "Unauthorized action must stop"}))
@@ -266,3 +266,82 @@ def test_saved_outcome_tool_results_fit_bounded_model_context():
     payload=sum(len(judge_mcp.model_result(c['result']).encode()) for c in receipt['calls'])
     schemas=len(json.dumps(receipt['mcp_tools']).encode())
     assert payload+schemas < 26000  # Leaves 6000 bytes for prompt, question, call wrappers.
+
+
+def test_current_full_graph_tool_text_and_history_are_bounded():
+    from pathlib import Path
+    from ew import agent_context as AC
+    from ew.mcp_server import create_server
+    receipt=json.loads((Path(__file__).parents[1]/'evidence/mcp-agent-v3-retry/context-inputs.json').read_text())
+    actual_tools=asyncio.run(create_server().list_tools())
+    tools=[{'type':'function','function':{'name':t.name,'description':t.description,'parameters':t.input_schema}} for t in actual_tools]
+    messages=[{'role':'system','content':'x'*4500},{'role':'user','content':'x'*800}]
+    prior='outcome-deci-20261016121309-c0c93f'
+    for i,c in enumerate(receipt['calls']):
+        summary=AC.summarize(c['tool'],c['result'])
+        text=AC.encode(summary)
+        assert len(text.encode()) <= AC.TOOL_TEXT_BUDGET
+        if c['tool']=='get_decision_outcomes':
+            assert prior in text and summary['outcomes'][0]['suites'][0]['collision_delta']==1
+        if c['tool']=='find_training_origins':
+            assert summary['total_candidates']==len(c['result']['candidates'])
+            assert summary['omitted_candidates']>0 and summary['candidates']
+        messages += [{'role':'assistant','tool_calls':[{'id':str(i),'type':'function',
+            'function':{'name':c['tool'],'arguments':json.dumps(c['args'])}}]},
+            {'role':'tool','tool_call_id':str(i),'content':text}]
+    # Repeated investigation history cannot accumulate without a cap.
+    for i in range(30):
+        messages += [{'role':'assistant','content':'Follow-up '+str(i),'tool_calls':[{'id':'extra'+str(i),
+            'type':'function','function':{'name':'check_gate','arguments':'{}'}}]},
+            {'role':'tool','tool_call_id':'extra'+str(i),'content':'x'*AC.TOOL_TEXT_BUDGET}]
+    bounded,receipt=AC.bound_history(messages,tools)
+    assert receipt['dropped_exchange_groups']>0
+    assert receipt['tool_text_token_upper_bound']<=12000
+    assert receipt['serialized_messages_and_tools_bytes']<28000
+    assert prior in json.dumps(bounded)
+    call_ids={c['id'] for m in bounded for c in m.get('tool_calls',[])}
+    assert {m['tool_call_id'] for m in bounded if m['role']=='tool'}==call_ids
+
+
+def test_large_graph_rows_and_strings_never_defeat_tool_bound():
+    from ew import agent_context as AC
+    source=json.loads((__import__('pathlib').Path(__file__).parents[1]/'evidence/mcp-agent-v3-retry/context-inputs.json').read_text())
+    for c in source['calls']:
+        result=c['result']
+        for key in ('candidates','outcomes','ranking','ancestors','validation_and_failures'):
+            if key in result:result[key]=result[key]*100
+        assert len(AC.encode(AC.summarize(c['tool'],result)).encode())<=2000
+    assert len(AC.encode(AC.summarize('get_evidence_record',{'record':{'id':'x','explanation':'🧪'*10000}})).encode())<=2000
+
+
+def test_record_id_lookup_is_read_only_and_excludes_protected_evaluations(world):
+    assert D.get_evidence_record('Policy','root')['record']['artifact_hash']=='fixture-root'
+    assert D.get_evidence_record('Evaluation','root-val-target-v1')['record']['episodes']==60
+    for kind,record in [('Secret','x'),('Evaluation','test-target-v1')]:
+        with pytest.raises(ValueError):D.get_evidence_record(kind,record)
+    flow=D.Workflow('bounded-read','owner',target='target')
+    result=D.dispatch('diagnose_policy',{'policy_id':'target'},flow)
+    assert result['bounded_tool_summary'] and 'queries' not in result
+    assert flow.calls[-1]['result']['queries']  # Complete evidence remains in the Decision source.
+
+
+def test_retry_guard_requires_explicit_prior_outcome_citation(world,monkeypatch):
+    monkeypatch.setattr(D.public_training,'start',lambda *a,**k:pytest.fail('must veto'))
+    flow=D.Workflow('retry-veto','owner',True,True,target='target',study_id='v3-retry')
+    reads(flow)
+    D.dispatch('get_decision_outcomes',{'target_policy':'target'},flow)
+    D.dispatch('rank_regression_origins',{'target_policy':'target'},flow)
+    result=D.dispatch('start_training',{'origin_id':'root','budget':60000,
+                'reason':'root is the passing ancestor, but this fixture has no cited prior outcome'},flow)
+    assert result['guardrail']['verdict']=='vetoed'
+    assert any('outcome ID' in s for s in result['guardrail']['reasons'])
+
+
+def test_retry_cannot_start_a_second_attempt(world,monkeypatch):
+    monkeypatch.setenv('EW_AGENT_STUDY','v3-retry')
+    monkeypatch.setattr(J,'configuration',lambda:{'enabled':True,'provider':'fixture','model':'fixture'})
+    monkeypatch.setattr(J.threading,'Thread',lambda **kw:SimpleNamespace(start=lambda:None))
+    first=J.start('Choose once with recorded outcome',True,'one',True,True)
+    stored=json.loads(J._path(first['id']).read_text());stored['state']='failed';J._path(first['id']).write_text(json.dumps(stored))
+    with pytest.raises(J.Limited,match='already been used'):
+        J.start('Choose once with recorded outcome',True,'two',True,True)

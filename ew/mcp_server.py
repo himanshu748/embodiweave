@@ -42,6 +42,11 @@ def create_server():
         return D.dispatch("explain_decision", {"decision_id": decision_id}, _workflow(ctx))
 
     @server.tool(annotations=READ)
+    def get_evidence_record(record_type: str, record_id: str, ctx: Context) -> dict:
+        """Read one complete graph record by ID: Policy, Decision, DecisionOutcome or canonical Evaluation. Agent context is summarized; read-only clients receive full properties."""
+        return D.dispatch('get_evidence_record', {'record_type':record_type, 'record_id':record_id}, _workflow(ctx))
+
+    @server.tool(annotations=READ)
     def lineage(policy_id: str, ctx: Context, max_hops: Hops = 8) -> dict:
         """Read multi-hop DERIVED_FROM paths, bounded to one through eight hops."""
         return D.dispatch("lineage", {"policy_id": policy_id, "max_hops": max_hops}, _workflow(ctx))

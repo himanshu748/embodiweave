@@ -20,6 +20,7 @@ COPY evidence/mcp-agent-v1 evidence/mcp-agent-v1
 COPY evidence/mcp-agent evidence/mcp-agent
 COPY evidence/mcp-agent-v2 evidence/mcp-agent-v2
 COPY evidence/mcp-agent-v3 evidence/mcp-agent-v3
+COPY evidence/mcp-agent-v3-retry evidence/mcp-agent-v3-retry
 COPY sim sim
 COPY scripts/hosted.sh scripts/hosted.sh
 ENV EW_STATIC=1 PYTHONPATH=/app PORT=8000 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MALLOC_ARENA_MAX=2
