@@ -6,6 +6,8 @@ An agent uses connected robot failures and checkpoint history in FalkorDB to cho
 
 [![Tests](https://github.com/himanshu748/embodiweave/actions/workflows/tests.yml/badge.svg)](https://github.com/himanshu748/embodiweave/actions/workflows/tests.yml)
 
+GraphHacks Track 01: **Agents That Act on Connected Data**.
+
 ## Current result: confirmed in 2D
 
 **The new graph-selected checkpoint passed all four unchanged validation suites and one fresh, preregistered confirmation batch.** Target confirmation recorded **92 goals, 8 collisions, 0 timeouts across 100 episodes**, under the original 10% collision limit. It is the current **2D demo** policy; MuJoCo target transfer still fails its reference collision limit.
@@ -20,7 +22,7 @@ An agent uses connected robot failures and checkpoint history in FalkorDB to cho
 | Requirements met | Pass | Pass | Pass | Pass |
 | MuJoCo transfer collisions, fresh study | 6/40 | 0/40 | 1/40 | 4/40 |
 
-FalkorDB selected the rehearsal parent, whose crossing validation had no collision margin. The new trial kept cyclic rehearsal and doubled the **training-only** terminal collision penalty to -20. It requested 600,000 steps and consumed **600,064**, seed **19**, with no seed sweep. The candidate passed 4/4 canonical suites with the preregistered collision clearance, so selection stopped. Its artifact hash was frozen before the single fresh confirmation batch. No training followed those outcomes.
+FalkorDB selected the rehearsal parent, whose crossing validation had no collision margin. The new trial kept cyclic rehearsal and doubled the **training-only** terminal collision penalty to -20. It requested 600,000 steps and consumed **600,064**, seed **19**, with no seed sweep. The candidate passed 4/4 canonical suites with the preregistered collision clearance, so selection stopped. Its artifact hash was frozen before the single fresh confirmation batch. Robustness-v2 ended there; the separate mixed-domain physics study below used new development suites.
 
 Current checkpoint: `robust-20261016140226-352fd7`, hash `b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4`.
 [Measured study and checksums](evidence/robustness-v2/) · [Protocol and diagnosis](docs/robustness-v2.md) · [Download checkpoint + evidence](https://embodiweave.52.202.25.181.sslip.io/api/download/robust-20261016140226-352fd7-b027851f2ffe-repro-v3.zip).
@@ -39,7 +41,7 @@ MuJoCo uses fresh paired seeds and unchanged 2D-trained weights. Its **6/40 targ
 | **Collision limit (maximum)** | Four suites | **10%** | **5%** | **10%** | **15%** | Extra clearance required |
 | ppo-mixed-mujoco-v1 | 4/4 | 6/40 (Fail) | 0/40 (Pass) | 1/40 (Pass) | 5/40 (Pass) | 7/8; 3 episodes short of clearance |
 | ppo-mixed-mujoco-collision40-v1 | 4/4 | 4/40 (Pass) | 0/40 (Pass) | 2/40 (Pass) | 6/40 (Pass) | 8/8; 2 episodes short of clearance |
-| ppo-mixed-mujoco-lr-v1 | 4/4 | 2/40 (Pass) | 0/40 (Pass) | 1/40 (Pass) | 6/40 (Pass) | 8/8; 1 episodes short of clearance |
+| ppo-mixed-mujoco-lr-v1 | 4/4 | 2/40 (Pass) | 0/40 (Pass) | 1/40 (Pass) | 6/40 (Pass) | 8/8; 1 episode short of clearance |
 | ppo-mixed-mujoco-lr-v1 (600k follow-up) | 4/4 | 7/40 (Fail) | 0/40 (Pass) | 1/40 (Pass) | 6/40 (Pass) | 7/8; 5 episodes short of clearance |
 
 Physics cells show collision counts on 40 development episodes per family. Pass also requires the original success floors: target 80%, open 90%, static 75%, crossing 75%. The original three trials request 300,000 steps each; a separately preregistered longer follow-up requests 600,000. All use fixed seed 23. Actual rollout-rounded steps and exact artifact hashes are in the evidence index. The authored graph rule requires all eight validation suites plus one episode of physics collision clearance before selection stops. Promo-1 code and thresholds are unchanged.
@@ -121,17 +123,17 @@ The backend also verifies the model and normalization hashes and reconciles the 
 ## MuJoCo sim-to-sim transfer
 
 **The same saved 2D-trained checkpoints, unchanged, running in contact physics.**
-No policy was trained or tuned in MuJoCo. Each checkpoint ran the same 40 fresh
+In this earlier, frozen transfer study, no policy was trained or tuned in MuJoCo. Each checkpoint ran the same 40 fresh
 seeds in each of four suites, **160 episodes per checkpoint, 480 total**.
 
 | Checkpoint | Open | Static | Crossing | Target (static + crossing) |
 |---|---|---|---|---|
-| Deployed `P-static-b` | 40 / 0 / 0 | 16 / 12 / 12 | 30 / 10 / 0 | 7 / 24 / 9 |
+| Historical baseline `P-static-b` | 40 / 0 / 0 | 16 / 12 / 12 | 30 / 10 / 0 | 7 / 24 / 9 |
 | Original scratch | 35 / 0 / 5 | 37 / 1 / 2 | 30 / 9 / 1 | 34 / 4 / 2 |
 | Graph-selected rehearsal | 40 / 0 / 0 | 37 / 3 / 0 | 32 / 8 / 0 | 37 / 3 / 0 |
 
 Cells are **goals / collisions / timeouts out of 40**, not percentages. Rehearsal
-has fewer target collisions (3/40, 7.5%) than the deployed policy (24/40, 60%),
+has fewer target collisions (3/40, 7.5%) than the historical baseline (24/40, 60%),
 but still collides in **8/40 crossing episodes (20%)**. This small transfer
 study is not a safety certificate or another promo-1 gate. The existing
 validation and held-out results above remain unchanged.
@@ -194,7 +196,7 @@ flowchart LR
   Saved --> View[Live 2D / 3D simulator view]
 ```
 
-Training uses a 2D unicycle robot with range rays and moving obstacles. The separate MuJoCo study above adds physical contact dynamics for transfer evaluation. The 3D view renders the same simulator states; it adds no physics. On AWS Lightsail, FalkorDB and the API share one persistent CPU server. A single bounded PPO subprocess runs at a time. Model credentials stay server-side and are excluded from the training subprocess environment.
+Browser training uses a 2D unicycle robot with range rays and moving obstacles. The separate MuJoCo studies add physical contact dynamics: first unchanged-weight transfer, then explicitly labelled mixed-domain training. The live 3D view renders the same 2D simulator states; it adds no physics. On AWS Lightsail, FalkorDB and the API share one persistent CPU server. A single bounded PPO subprocess runs at a time. Model credentials stay server-side and are excluded from the training subprocess environment.
 
 ## Judge walkthrough
 
@@ -241,7 +243,7 @@ Bundles include saved model weights, normalization, contract, validation records
 ## Honest limitations
 
 - Search-v1 failed its held-out target test. Robustness-v2 passed fresh 2D confirmation, but its MuJoCo target still had 6/40 collisions (15%), above the 10% reference limit. This is not evidence of physical robot safety.
-- Three adaptive attempts across two studies do not establish a reliable improvement or selection-efficiency advantage. Each study fixed one training seed. The new candidate also used more training than earlier checkpoints.
+- The two 2D studies added three adaptive attempts; the physics study and its separate follow-up added four. These small studies do not establish a reliable improvement or selection-efficiency advantage. Each study fixed one training seed, and later candidates also used more training.
 - The planner uses authored, versioned rules. The live LLM chooses bounded tools and explains evidence; the frozen search experiments used the deterministic graph planner.
 - Historical benchmark protocols and results remain frozen. Robustness-v2 registered new confirmation seeds before training and froze its candidate before opening them once. All earlier final suites remain spent; no existing suite was changed or reused.
 - The public trainer is shared and quota-limited; the free model provider can refuse or delay requests. Recorded evidence remains available when either is busy.

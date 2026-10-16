@@ -1,5 +1,7 @@
 # EmbodiWeave
 
+Track 01: Agents That Act on Connected Data.
+
 I built EmbodiWeave to answer two recurring robotics questions: which checkpoint
 should I retrain, and has the saved result earned deployment?
 

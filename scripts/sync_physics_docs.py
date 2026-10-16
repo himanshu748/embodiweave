@@ -19,7 +19,8 @@ def sync():
    cells.append(f"{r['summary']['collision']}/{r['summary']['episodes']} ({'Pass' if r['pass'] else 'Fail'})")
   passed=sum(c['pass'] for c in a['canonical_checks'])
   label=a['recipe']+(' (600k follow-up)' if a.get('study')=='physics-followup-v1' else '')
-  lines.append('| '+label+' | '+str(passed)+'/4 | '+' | '.join(cells)+f" | {a['validation_suites_passed']}/8; {a['physics_clearance_deficit']} episodes short of clearance |")
+  count=a['physics_clearance_deficit']
+  lines.append('| '+label+' | '+str(passed)+'/4 | '+' | '.join(cells)+f" | {a['validation_suites_passed']}/8; {count} {'episode' if count==1 else 'episodes'} short of clearance |")
  lines += ['', 'Physics cells show collision counts on 40 development episodes per family. Pass also requires the original success floors: target 80%, open 90%, static 75%, crossing 75%. The original three trials request 300,000 steps each; a separately preregistered longer follow-up requests 600,000. All use fixed seed 23. Actual rollout-rounded steps and exact artifact hashes are in the evidence index. The authored graph rule requires all eight validation suites plus one episode of physics collision clearance before selection stops. Promo-1 code and thresholds are unchanged.','']
  if s['physics_confirmation']:
   lines += ['### One fresh physics confirmation','',
