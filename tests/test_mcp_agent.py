@@ -168,7 +168,7 @@ def test_live_agent_uses_discovered_mcp_tools_and_labels_fallback(world, monkeyp
         elif counter == 2:
             requests = [("start_training", {"origin_id": "target", "budget": 60000, "reason": "root is two hops away and passes; I choose the complete target fixture to continue training"})]
         else:
-            return {"model": J.FREE_NVIDIA_MODELS[0], "choices": [{"message": {"content": "One pending run launched; follow the training panel."}}]}
+            return {"model": J.FREE_NVIDIA_MODELS[0], "choices": [{"message": {"content": "Invented statement: the new child passed with zero collisions."}}]}
         return {"model": J.FREE_NVIDIA_MODELS[0], "choices": [{"message": {"tool_calls": [
             {"id": str(counter)+str(i), "type": "function", "function": {"name": name, "arguments": json.dumps(args)}}
             for i, (name, args) in enumerate(requests)]}}]}
@@ -193,5 +193,8 @@ def test_live_agent_uses_discovered_mcp_tools_and_labels_fallback(world, monkeyp
     assert decision["mode"] == ("deterministic_fallback" if provider_down else "llm")
     assert decision["selected"] == ("root" if provider_down else "target")
     assert decision["model"] == (None if provider_down else J.FREE_NVIDIA_MODELS[0])
+    if not provider_down:
+        assert "Invented statement" not in saved["answer"] and "zero collisions" not in saved["answer"]
+        assert "pending run" in saved["answer"]
     assert any(call["tool"] == "nearest_passing_ancestor" for call in decision["mcp_tool_calls"])
     assert "test-only-provider" not in json.dumps(decision)
