@@ -98,6 +98,7 @@ def lineage(policy_id, max_hops=8):
 def find_training_origins(target_policy):
     result = inspect_training_origins(target_policy, 60000)
     candidates = [{"policy_id": c["policy_id"], "rank": c["rank"], "passed": c["passed"],
+                   "recipe": c["recipe"], "training_domain": c["training_domain"],
                    "validation": [{"suite": suite, "success": e["success_rate"], "collisions": e["collision_rate"],
                                    "evaluation_id": e["evaluation_id"]} for suite, e in c["validation"].items()]}
                   for c in result["ranking"]]

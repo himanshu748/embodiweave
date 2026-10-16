@@ -98,6 +98,10 @@ def inspect_training_origins(target_policy: str, budget: int, graph=None) -> dic
         else:
             accepted.extend(latest.values())
     ranking = rank_candidates(accepted)
+    for candidate in ranking:
+        manifest = artifacts.load_manifest(candidate["policy_id"])
+        candidate["recipe"] = manifest["recipe"]
+        candidate["training_domain"] = "mixed_2d_mujoco" if manifest["recipe"].startswith("ppo-mixed-mujoco") else "2d"
     return {"target_policy": target_policy, "budget": budget, "contract": target["contract_id"],
             "ranking": ranking, "rejected": rejected, "queries": log,
             "graph_revision": log[-1]["graph_revision"], "rule_version": "agent-guardrail-v1"}

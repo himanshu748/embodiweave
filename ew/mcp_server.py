@@ -58,7 +58,7 @@ def create_server():
 
     @server.tool(annotations=WRITE)
     def start_training(origin_id: str, reason: str, ctx: Context, budget: Annotated[int, Field(strict=True)] = 60000) -> dict:
-        """Propose an origin, citing the algorithm and evidence in reason. Guardrail writes an allowed/vetoed Decision BEFORE one real 60000-step PPO run (seed29), 180 validation episodes and the gate. Consent required; returns a pending session."""
+        """Propose an origin, citing the algorithm and evidence in reason. Guardrail records a Decision BEFORE one real 60000-step PPO run in the original 2D simulator (seed29, ppo-r1), 180 validation episodes and the gate. No MuJoCo or deployment. Consent required; returns a pending session."""
         return D.dispatch("start_training", {"origin_id": origin_id, "budget": budget, "reason": reason}, _workflow(ctx))
 
     @server.tool(annotations=READ)

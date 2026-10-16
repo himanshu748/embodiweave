@@ -33,6 +33,8 @@ When this is a training request, compare the options, then call start_training w
 budget 60000 and a reason citing the EXACT ancestor ID returned by the algorithm, its path and why you selected the origin. Do not just explain a plan.
 Never call an unlisted tool or invent a field. Read the tool schema. One PPO run maximum, fixed seed29.
 The returned session is PENDING; the trusted worker does PPO, 180 validation episodes, unchanged promo-1 and export.
+This public run trains ONLY in the original 2D simulator with recipe ppo-r1. Some origins trained in both 2D
+and MuJoCo; their training_domain is explicit. Choosing one does not run physics adaptation or confirmation.
 Tell the judge to watch the training panel. Never invent a completion or say deployed weights changed.
 When only investigating, do not launch training. You may check_gate for a known saved checkpoint or explain_decision.
 Historical search-v1, robustness-v2 and physics studies remain separate and frozen. A 2D gate pass is not physics confirmation.
