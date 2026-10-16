@@ -62,7 +62,13 @@ def make_vec(family: Family, contract: PolicyContract, n_envs: int, seed: int, o
              recipe_params=None) -> DummyVecEnv:
     def mk(i):
         def _f():
-            e = Monitor(TrainingEnv(family, contract, recipe_params or {}, on_frame=on_frame if i == 0 else None))
+            params = recipe_params or {}
+            if params.get("physics") == "mixed-mujoco" and i % 2 == 0:
+                from .physics_train import PhysicsTrainingEnv
+                base = PhysicsTrainingEnv(family, contract, params)
+            else:
+                base = TrainingEnv(family, contract, params, on_frame=on_frame if i == 0 else None)
+            e = Monitor(base)
             e.reset(seed=seed * 1000 + i)
             return e
         return _f

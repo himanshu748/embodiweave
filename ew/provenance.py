@@ -9,13 +9,13 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def source_snapshot():
-    files = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
-             for p in sorted((ROOT / "ew").rglob("*.py"))}
+    sources = [*sorted((ROOT / "ew").rglob("*.py")), *sorted((ROOT / "sim").rglob("*.py"))]
+    files = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}
     commit = os.environ.get("EW_GIT_COMMIT") or os.environ.get("RENDER_GIT_COMMIT")
     dirty = None
     try:
         commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, stderr=subprocess.DEVNULL, text=True).strip()
-        dirty = bool(subprocess.check_output(["git", "status", "--porcelain", "--", "ew", "requirements.lock"],
+        dirty = bool(subprocess.check_output(["git", "status", "--porcelain", "--", "ew", "sim", "requirements.lock"],
                                             cwd=ROOT, stderr=subprocess.DEVNULL, text=True).strip())
     except (OSError, subprocess.CalledProcessError):
         pass

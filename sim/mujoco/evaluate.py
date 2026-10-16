@@ -113,7 +113,7 @@ def run(protocol_data=None, output=None):
                        "collisions_by_object": {k: sum(e["hit"] == k for e in episodes) for k in ("wall", "static", "mover")}}
             result = {"id": f"{p.get('record_prefix', 'mj1')}-{label}-{suite['family']}-{artifact_hash[:12]}", "policy_id": policy,
                       "label": label, "artifact_hash": artifact_hash, "contract_id": contract.contract_id,
-                      "suite_id": suite["id"], "family": suite["family"], "role": "sim2sim", "physics": "mujoco",
+                      "suite_id": suite["id"], "family": suite["family"], "role": p["role"], "physics": "mujoco",
                       "protocol_hash": ph, "suite_fingerprint": digest({"protocol": ph, "suite": suite}),
                       "summary": summary, "episodes": episodes, "wall_s": round(time.monotonic()-started, 3),
                       "runtime": {"mujoco": mujoco.__version__, "python": platform.python_version(), "machine": platform.machine()}}

@@ -260,11 +260,13 @@ def export_bundle(policy_id: str) -> dict:
                     if hashlib.sha256(training.read(name)).hexdigest() != digest:
                         raise ValueError("training source archive checksum mismatch")
             z.write(archive, "training-source.zip")
-        for file in sorted((root / "ew").rglob("*.py")):
+        for file in [*sorted((root / "ew").rglob("*.py")), *sorted((root / "sim").rglob("*.py"))]:
             z.write(file, "source/" + str(file.relative_to(root)))
         lock = root / "requirements.lock"
         if lock.exists():
             z.write(lock, "requirements.lock")
+        if (root / "requirements-mujoco.txt").exists():
+            z.write(root / "requirements-mujoco.txt", "requirements-mujoco.txt")
         z.writestr("REPRODUCE.md", (
             f"# Reproduce {policy_id}\n\nartifact_hash (sha256 over model.zip + vecnormalize.pkl digests): {m['artifact_hash']}\n\n"
             "On Linux, after creating `.venv` and before installing `requirements.lock`, install the CPU wheel: `.venv/bin/pip install torch==2.14.1+cpu --index-url https://download.pytorch.org/whl/cpu`.\n\n"

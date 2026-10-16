@@ -20,6 +20,11 @@ RECIPES["ppo-rehearsal-collision20-v2"] = {**RECIPES["ppo-rehearsal-v1"], "colli
 RECIPES["ppo-rehearsal-collision20-lr-v2"] = {**RECIPES["ppo-rehearsal-collision20-v2"], "learning_rate": 1e-4}
 RECIPES["ppo-rehearsal-collision20-entropy-v2"] = {**RECIPES["ppo-rehearsal-collision20-v2"], "ent_coef": 0.005}
 
+# Explicit physics adaptation, distinct from the unchanged-checkpoint transfer studies.
+RECIPES["ppo-mixed-mujoco-v1"] = {**RECIPES["ppo-rehearsal-collision20-v2"], "physics": "mixed-mujoco"}
+RECIPES["ppo-mixed-mujoco-collision40-v1"] = {**RECIPES["ppo-mixed-mujoco-v1"], "collision_penalty": -40.0}
+RECIPES["ppo-mixed-mujoco-lr-v1"] = {**RECIPES["ppo-mixed-mujoco-v1"], "learning_rate": 1e-4}
+
 
 def reserved_steps(budget: int, recipe: str = "ppo-r1") -> int:
     if not isinstance(budget, int) or isinstance(budget, bool) or budget <= 0:
