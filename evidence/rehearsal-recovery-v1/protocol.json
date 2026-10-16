@@ -1,0 +1,26 @@
+{
+  "study": "rehearsal-recovery-v1",
+  "registered_date": "2026-10-16",
+  "reason": "The recorded MCP child passed the fixed gate but regressed against its parent. Its public continuation used target-only ppo-r1, although the selected parent used cyclic rehearsal. Test whether retaining family rehearsal helps, without attributing the old regression to a proven cause.",
+  "domain": "original 2D simulator only",
+  "source_graph": "ew_physics_adapt_v1",
+  "study_graph": "ew_rehearsal_recovery_v1",
+  "parent_selection": "GRAPH.RO_QUERY search_validation over the existing four canonical validation suites. Use the existing search rank: failed suite count, worst deficit, total deficit, success minus collision, policy ID. Only locally verifiable exact-artifact complete candidates are ranked. No new measurement changes this origin choice.",
+  "training_seed": 31,
+  "requested_steps_per_arm": 60000,
+  "max_training_runs": 2,
+  "arms": [
+    {"id": "target_only", "recipe": "ppo-r1"},
+    {"id": "rehearsal", "recipe": "ppo-rehearsal-v1"}
+  ],
+  "intervention": "The two arms differ only in cycling open, static, crossing and static_crossing training families. Both start independently from the same graph-selected parent and use identical optimizer parameters, seed and budget. Collision cost stays -10. No MuJoCo training, dynamics changes or observation changes.",
+  "development": [
+    {"id": "dev-rehearsal-recovery-v1-target", "family": "static_crossing", "seed_base": 8600000, "episodes": 60},
+    {"id": "dev-rehearsal-recovery-v1-open", "family": "open", "seed_base": 8601000, "episodes": 40},
+    {"id": "dev-rehearsal-recovery-v1-static", "family": "static", "seed_base": 8602000, "episodes": 40},
+    {"id": "dev-rehearsal-recovery-v1-crossing", "family": "crossing", "seed_base": 8603000, "episodes": 40}
+  ],
+  "measurement": "Evaluate the saved parent and both saved children once each on all 180 fresh development episodes. Retain every outcome and recorded simulator trace. These are development measurements, not promo-1 or held-out confirmation.",
+  "acceptance": "All four original success floors and collision maxima must be met on these development suites. The rehearsal child must have no more collisions and no fewer successes in any family than either its parent or the target-only control, with fewer total collisions than each. Otherwise do not adopt the recipe or claim recovery.",
+  "stopping": "Stop after exactly these two arms. No seed sweep, retries, additional training, confirmation access or automatic release. A crash spends an arm. Previously frozen studies and the v4 recorded regression remain unchanged. This study cannot establish best-in-class performance or physical robot safety."
+}
