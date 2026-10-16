@@ -37,6 +37,7 @@ jobs:
         run: |
           docker compose up --build --wait --wait-timeout 180
           python -c "import json,urllib.request; s=json.load(urllib.request.urlopen('http://127.0.0.1:8000/api/status')); expected=json.load(open('evidence/robustness-v2/selected.json'))['policy_id']; assert s['graph']['up'] and s['deployed_policy']==expected; q=json.load(urllib.request.urlopen('http://127.0.0.1:8000/api/robustness/lineage')); assert len(q['rows'])==4"
+          python -c "import json,urllib.request; s=json.load(open('web/media/physics-evidence.json')); q=json.load(urllib.request.urlopen('http://127.0.0.1:8000/api/physics/lineage')); assert len(q['rows'])==8*len(s['attempts'])"
       - name: Logs on failure
         if: failure()
         run: docker compose logs --tail=100

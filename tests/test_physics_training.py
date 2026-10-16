@@ -58,6 +58,14 @@ def test_training_cost_changes_no_contact_dynamics():
     assert b[1]<a[1]-9.9
 
 
+def test_followup_cannot_repeat_after_recovery_without_private_marker(tmp_path,monkeypatch):
+    from ew import artifacts, records
+    from ew.physics_followup import run
+    monkeypatch.setattr(artifacts,"ROOT",tmp_path)
+    monkeypatch.setattr(records,"all_of",lambda kind:[{"search_rule":"physics-followup-v1"}] if kind=="trial" else [])
+    with pytest.raises(PermissionError,match="already spent"):run()
+
+
 @pytest.mark.parametrize("field,value,message",[("role","final_test","protected"),("artifact_hash","0"*64,"protected"),("success_rate",.123,"rates")])
 def test_physics_ingester_rejects_protected_or_inconsistent_evidence(tmp_path,monkeypatch,field,value,message):
     import shutil
@@ -92,7 +100,7 @@ def test_recovery_restores_physics_decision_evidence_without_confirmation(monkey
     graph="ew_test_physics_recovery"
     try:
         ingest.rebuild(graph)
-        rows=queries.run("search_lineage",{"rule":"physics-adapt-v1"},graph).dicts()
+        rows=queries.run("physics_lineage",{},graph).dicts()
         assert rows
         for decision in {r["decision"] for r in rows}:
             selected=[r for r in rows if r["decision"]==decision]

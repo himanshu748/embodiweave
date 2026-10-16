@@ -79,6 +79,9 @@ def publish():
             "bundle_url":"api/download/"+bundle.name,"bundle_sha256":artifacts.sha256_file(bundle)})
     selected = json.loads((OUT/"selected.json").read_text()) if (OUT/"selected.json").exists() else None
     confirmation = measured(OUT/"confirmation") if (OUT/"confirmation/summary.json").exists() else None
+    followup_marker=artifacts.ROOT/"physics-followup-v1-started.json"
+    if followup_marker.exists():
+        target=destination/followup_marker.name;copy_once(followup_marker,target);paths.append(target)
     if selected:
         for name in ("physics-adapt-v1-selected.json","physics-adapt-v1-confirmation-started.json"):
             if (artifacts.ROOT/name).exists():
@@ -111,6 +114,8 @@ def publish():
         target.write_text(json.dumps(summary,indent=2)+"\n");paths.append(target)
     paths += [f for f in OUT.rglob("*") if f.is_file() and f != OUT/"checksums.json"]
     paths += [f for f in (ROOT/"evidence/physics-followup-v1").glob("*.json")]
+    paths += [ROOT/"ew/criteria.py",ROOT/"ew/scenarios.py"]
+    paths += [f for f in (ROOT/"web/media/physics-development.mp4",ROOT/"web/media/physics-development-poster.webp",ROOT/"scripts/film/physics_development.py") if f.exists()]
     (OUT/"checksums.json").write_text(json.dumps({str(p.relative_to(ROOT)):artifacts.sha256_file(p) for p in sorted(set(paths))},indent=2)+"\n")
     print(json.dumps({"attempts":len(attempts),"selected":summary["selected_policy"],"physics_confirmation_pass":summary["physics_confirmation_pass"]}))
 

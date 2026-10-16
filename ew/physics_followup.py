@@ -12,6 +12,8 @@ PROTOCOL=ROOT/"evidence/physics-followup-v1/protocol.json"
 
 def run(on_progress=None):
     if (artifacts.ROOT/"physics-adapt-v1-selected.json").exists():raise PermissionError("Selection is frozen")
+    if any(t.get("search_rule")==RULE for t in records.all_of("trial")) or any(r.get("run_kind")==RULE for r in records.all_of("run")):
+        raise PermissionError("The single follow-up budget is already spent")
     original=[t for t in records.all_of("trial") if t.get("search_rule")==ORIGINAL]
     if len(original)!=3:raise PermissionError("Original three-trial study must be complete")
     p=json.loads(PROTOCOL.read_text())
