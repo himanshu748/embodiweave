@@ -1,0 +1,16 @@
+{
+  "README.md": "ed7444f6db477e72740f871acd9a285fc0ffdea7c2786d8d67cdc7b786f36ada",
+  "agent-receipt.json": "c54190dd43b46cb2ae90998d2e1bde4623219cc4f28061c9183331d571da2d5d",
+  "attempt-started.json": "de792d2bc389f5019fcaf473a3d10bc4a06fc78a01901db0f7ad0c0170ed264b",
+  "context-diagnosis.json": "39450ad8ff4fde035b43648277f7717eb5f528a9602414675a4841ea2fe7f094",
+  "decision.json": "5be07c2bd5d175f85374ef347f23f8a9f0d3f8eff3c7ad9033fc2ca51cf7dd2e",
+  "get_decision_outcomes.json": "73368c2a51ba7d8dd5f534b6ec57353ceae936921e1f06c8e202139bfc900cf8",
+  "mcp_decision_outcomes.cypher": "5634ba4dd52b74b3886ef56260db802d67cc42372ceb25e4f7c064253155f203",
+  "mcp_regression_degree.cypher": "f684077b626761a65b5ab6593e71069b713f9b570f232ac9f358567d98a392ca",
+  "post-attempt-audit.json": "54eb83258509e444fcd13028c3e1fb502152cfc3b5e62725ec42300a4adb1440",
+  "preflight-mcp.json": "23fb7e9cde8f73e3c7494bbaf55c524e7f20834d10f2d3545e6a342c88f7b97a",
+  "protocol.json": "be276b10b0151c5134a8b602bad21ea87ccabf3a477758965c0475eb14ee8eb2",
+  "rank_regression_origins.json": "20003bd30481930c777487760439eebdc58ce873614344844416cddb2ad790ad",
+  "summary.json": "93ac438995c7f18836555829029a4d014cefec2ed22be233d9524c012beb5a25",
+  "v2-outcome-backfill.json": "300b673148639d0e1af177746c2a214d1d3e875d458cb22220a55fb25bcd71fc"
+}

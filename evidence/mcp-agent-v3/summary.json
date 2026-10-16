@@ -1,0 +1,29 @@
+{
+  "study": "agent-mcp-v3",
+  "state": "failed",
+  "model": "openai/gpt-4.1-mini",
+  "agent_session_id": "judge-1dddc0bbcdf934d81dcc1c0db9654e65",
+  "mcp_calls": [
+    "diagnose_policy",
+    "find_training_origins",
+    "nearest_passing_ancestor",
+    "get_decision_outcomes",
+    "rank_regression_origins"
+  ],
+  "prior_outcomes_read": true,
+  "weighted_degree_read": true,
+  "origin_selected": null,
+  "origin_choice_change": "not observed: stopped before model selected an origin",
+  "requested_training_budget": 60000,
+  "consumed_training_steps": 0,
+  "validation_episodes": 0,
+  "training_started": false,
+  "gate": null,
+  "failure": "Bounded 32000-byte model request context exceeded after five reads; no second model response or PPO run.",
+  "retries": 0,
+  "deployment_changed": false,
+  "audit_decision_id": "deci-20261016162210-0a366e",
+  "audit_recorded_after_attempt": true,
+  "interpretation": "The LLM selected both new graph tools. No evidence that their output changed an origin choice; no completed second training run.",
+  "provider_reported_cost_usd": 0.0007084
+}

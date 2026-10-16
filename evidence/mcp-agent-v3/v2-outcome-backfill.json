@@ -1,0 +1,1108 @@
+{
+  "source": "Existing v2 measurements; no training or reevaluation",
+  "outcome": {
+    "child_hash": "c6c910a7a9b826b3a23370e4c9762c95537cb7dfb9e1512d7c32ab37532ecd13",
+    "child_id": "judge-a524ef1f3d677cd255354736e0cba609",
+    "comparison": "same canonical validation seeds, one training seed; not causal advantage",
+    "contract_id": "ew-contract-1:2f013b6f4849",
+    "decision_id": "deci-20261016121309-c0c93f",
+    "deployment_changed": false,
+    "gate_id": "prom-20261016121354-88baaf",
+    "gate_verdict": "promoted",
+    "id": "outcome-deci-20261016121309-c0c93f",
+    "kind": "decision_outcome",
+    "parent_hash": "ae6770107c6b7c4d6358f91cef8f084c440c753ab4dd6775615dfa25c2182150",
+    "parent_id": "physics-20261016150004-25da9c",
+    "recorded_at": "2026-10-16T16:17:40+0000",
+    "regressed": true,
+    "release_verdict": "not_released_regression",
+    "run_id": "run-20261016121310-0bfccc",
+    "suites": [
+      {
+        "child_collisions": 3,
+        "child_evaluation_id": "eval-20261016121346-e7a772",
+        "child_goals": 57,
+        "collision_delta": 1,
+        "collision_rate_delta": 0.016666666666666666,
+        "episodes": 60,
+        "goal_delta": -1,
+        "parent_collisions": 2,
+        "parent_evaluation_id": "eval-20261016152511-7d0b1d",
+        "parent_goals": 58,
+        "suite_fingerprint": "9447338d94ad2972c1b0ceefaed4e642ff95ed73607743aa63fdeda2321193e7",
+        "suite_id": "val-target-v1"
+      },
+      {
+        "child_collisions": 0,
+        "child_evaluation_id": "eval-20261016121348-9c60c2",
+        "child_goals": 40,
+        "collision_delta": 0,
+        "collision_rate_delta": 0.0,
+        "episodes": 40,
+        "goal_delta": 0,
+        "parent_collisions": 0,
+        "parent_evaluation_id": "eval-20261016152511-290328",
+        "parent_goals": 40,
+        "suite_fingerprint": "c0b2aa125313816e681ee6894301dd982f0dc6f808231faaa714a00b1230a042",
+        "suite_id": "val-open-v1"
+      },
+      {
+        "child_collisions": 1,
+        "child_evaluation_id": "eval-20261016121351-db5fe4",
+        "child_goals": 39,
+        "collision_delta": 0,
+        "collision_rate_delta": 0.0,
+        "episodes": 40,
+        "goal_delta": 0,
+        "parent_collisions": 1,
+        "parent_evaluation_id": "eval-20261016152512-d3ad78",
+        "parent_goals": 39,
+        "suite_fingerprint": "9d78e34ff588089102fcfd03b56e187132d1adff50812d9d40ae262fb07f5bbf",
+        "suite_id": "val-static-v1"
+      },
+      {
+        "child_collisions": 1,
+        "child_evaluation_id": "eval-20261016121354-2695c2",
+        "child_goals": 39,
+        "collision_delta": 1,
+        "collision_rate_delta": 0.025,
+        "episodes": 40,
+        "goal_delta": -1,
+        "parent_collisions": 0,
+        "parent_evaluation_id": "eval-20261016152513-619214",
+        "parent_goals": 40,
+        "suite_fingerprint": "6954fd519f6977849243cacb87327af09ac024002725a747ffaddc2289b663e2",
+        "suite_id": "val-crossing-v1"
+      }
+    ],
+    "weighted_regression": 0.04166666666666667
+  },
+  "read": {
+    "outcomes": [
+      {
+        "decision_id": "deci-20261016121309-c0c93f",
+        "origin_id": "physics-20261016150004-25da9c",
+        "run_id": "run-20261016121310-0bfccc",
+        "child_id": "judge-a524ef1f3d677cd255354736e0cba609",
+        "outcome": {
+          "id": "outcome-deci-20261016121309-c0c93f",
+          "measured": true,
+          "regressed": true,
+          "gate_verdict": "promoted",
+          "release_verdict": "not_released_regression",
+          "suites": [
+            {
+              "child_collisions": 3,
+              "child_evaluation_id": "eval-20261016121346-e7a772",
+              "child_goals": 57,
+              "collision_delta": 1,
+              "collision_rate_delta": 0.016666666666666666,
+              "episodes": 60,
+              "goal_delta": -1,
+              "parent_collisions": 2,
+              "parent_evaluation_id": "eval-20261016152511-7d0b1d",
+              "parent_goals": 58,
+              "suite_fingerprint": "9447338d94ad2972c1b0ceefaed4e642ff95ed73607743aa63fdeda2321193e7",
+              "suite_id": "val-target-v1"
+            },
+            {
+              "child_collisions": 0,
+              "child_evaluation_id": "eval-20261016121348-9c60c2",
+              "child_goals": 40,
+              "collision_delta": 0,
+              "collision_rate_delta": 0.0,
+              "episodes": 40,
+              "goal_delta": 0,
+              "parent_collisions": 0,
+              "parent_evaluation_id": "eval-20261016152511-290328",
+              "parent_goals": 40,
+              "suite_fingerprint": "c0b2aa125313816e681ee6894301dd982f0dc6f808231faaa714a00b1230a042",
+              "suite_id": "val-open-v1"
+            },
+            {
+              "child_collisions": 1,
+              "child_evaluation_id": "eval-20261016121351-db5fe4",
+              "child_goals": 39,
+              "collision_delta": 0,
+              "collision_rate_delta": 0.0,
+              "episodes": 40,
+              "goal_delta": 0,
+              "parent_collisions": 1,
+              "parent_evaluation_id": "eval-20261016152512-d3ad78",
+              "parent_goals": 39,
+              "suite_fingerprint": "9d78e34ff588089102fcfd03b56e187132d1adff50812d9d40ae262fb07f5bbf",
+              "suite_id": "val-static-v1"
+            },
+            {
+              "child_collisions": 1,
+              "child_evaluation_id": "eval-20261016121354-2695c2",
+              "child_goals": 39,
+              "collision_delta": 1,
+              "collision_rate_delta": 0.025,
+              "episodes": 40,
+              "goal_delta": -1,
+              "parent_collisions": 0,
+              "parent_evaluation_id": "eval-20261016152513-619214",
+              "parent_goals": 40,
+              "suite_fingerprint": "6954fd519f6977849243cacb87327af09ac024002725a747ffaddc2289b663e2",
+              "suite_id": "val-crossing-v1"
+            }
+          ],
+          "deployment_changed": false
+        },
+        "evaluation_ids": [
+          "eval-20261016121346-e7a772",
+          "eval-20261016121348-9c60c2",
+          "eval-20261016121351-db5fe4",
+          "eval-20261016121354-2695c2",
+          "eval-20261016152511-290328",
+          "eval-20261016152511-7d0b1d",
+          "eval-20261016152512-d3ad78",
+          "eval-20261016152513-619214"
+        ]
+      }
+    ],
+    "queries": [
+      {
+        "template": "mcp_policy",
+        "cypher": "MATCH (p:Policy {id:$policy})-[:USES_CONTRACT]->(c:Contract)-[:FOR_ROBOT]->(r:Robot)\nRETURN p.id AS policy_id, p.artifact_hash AS artifact_hash, p.status AS status,\n       c.id AS contract_id, r.id AS robot_id LIMIT 1",
+        "params": {
+          "policy": "robust-20261016140226-352fd7"
+        },
+        "header": [
+          "policy_id",
+          "artifact_hash",
+          "status",
+          "contract_id",
+          "robot_id"
+        ],
+        "rows": [
+          {
+            "policy_id": "robust-20261016140226-352fd7",
+            "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+            "status": "completed",
+            "contract_id": "ew-contract-1:2f013b6f4849",
+            "robot_id": "ew-unicycle-r20"
+          }
+        ],
+        "graph": "ew",
+        "graph_revision": 12,
+        "ms": 0.58,
+        "record_ids": [
+          "robust-20261016140226-352fd7"
+        ],
+        "row_count": 1,
+        "returned_ids": [
+          "robust-20261016140226-352fd7"
+        ]
+      },
+      {
+        "template": "mcp_decision_outcomes",
+        "cypher": "MATCH (target:Policy {id:$policy})-[:USES_CONTRACT]->(contract:Contract)<-[:USES_CONTRACT]-(origin:Policy)\nMATCH (d:Decision)-[:SELECTED]->(origin), (d)-[:LAUNCHED]->(run:Run)-[:PRODUCED]->(child:Policy)\nMATCH (d)-[:HAS_OUTCOME]->(o:DecisionOutcome)-[:ASSESSED]->(child)\nMATCH (child)-[comparison:COMPARED_AGAINST {outcome_id:o.id}]->(origin)\nMATCH (o)-[:BASED_ON]->(ev:Evaluation)-[:ON_SUITE]->(suite:Suite)\nWHERE comparison.parent_hash=origin.artifact_hash AND comparison.child_hash=child.artifact_hash\n  AND suite.role='validation' AND suite.id IN $suites\n  AND ev.complete_suite=true AND ev.suite_fingerprint=suite.fingerprint\nRETURN d.id AS decision_id, origin.id AS origin_id, run.id AS run_id, child.id AS child_id,\n       properties(o) AS outcome, collect(DISTINCT ev.id) AS evaluation_ids\nORDER BY decision_id DESC LIMIT 40",
+        "params": {
+          "policy": "robust-20261016140226-352fd7",
+          "suites": [
+            "val-target-v1",
+            "val-open-v1",
+            "val-static-v1",
+            "val-crossing-v1"
+          ]
+        },
+        "header": [
+          "decision_id",
+          "origin_id",
+          "run_id",
+          "child_id",
+          "outcome",
+          "evaluation_ids"
+        ],
+        "rows": [
+          {
+            "decision_id": "deci-20261016121309-c0c93f",
+            "origin_id": "physics-20261016150004-25da9c",
+            "run_id": "run-20261016121310-0bfccc",
+            "child_id": "judge-a524ef1f3d677cd255354736e0cba609",
+            "outcome": {
+              "id": "outcome-deci-20261016121309-c0c93f",
+              "measured": true,
+              "regressed": true,
+              "gate_verdict": "promoted",
+              "release_verdict": "not_released_regression",
+              "suites": [
+                {
+                  "child_collisions": 3,
+                  "child_evaluation_id": "eval-20261016121346-e7a772",
+                  "child_goals": 57,
+                  "collision_delta": 1,
+                  "collision_rate_delta": 0.016666666666666666,
+                  "episodes": 60,
+                  "goal_delta": -1,
+                  "parent_collisions": 2,
+                  "parent_evaluation_id": "eval-20261016152511-7d0b1d",
+                  "parent_goals": 58,
+                  "suite_fingerprint": "9447338d94ad2972c1b0ceefaed4e642ff95ed73607743aa63fdeda2321193e7",
+                  "suite_id": "val-target-v1"
+                },
+                {
+                  "child_collisions": 0,
+                  "child_evaluation_id": "eval-20261016121348-9c60c2",
+                  "child_goals": 40,
+                  "collision_delta": 0,
+                  "collision_rate_delta": 0.0,
+                  "episodes": 40,
+                  "goal_delta": 0,
+                  "parent_collisions": 0,
+                  "parent_evaluation_id": "eval-20261016152511-290328",
+                  "parent_goals": 40,
+                  "suite_fingerprint": "c0b2aa125313816e681ee6894301dd982f0dc6f808231faaa714a00b1230a042",
+                  "suite_id": "val-open-v1"
+                },
+                {
+                  "child_collisions": 1,
+                  "child_evaluation_id": "eval-20261016121351-db5fe4",
+                  "child_goals": 39,
+                  "collision_delta": 0,
+                  "collision_rate_delta": 0.0,
+                  "episodes": 40,
+                  "goal_delta": 0,
+                  "parent_collisions": 1,
+                  "parent_evaluation_id": "eval-20261016152512-d3ad78",
+                  "parent_goals": 39,
+                  "suite_fingerprint": "9d78e34ff588089102fcfd03b56e187132d1adff50812d9d40ae262fb07f5bbf",
+                  "suite_id": "val-static-v1"
+                },
+                {
+                  "child_collisions": 1,
+                  "child_evaluation_id": "eval-20261016121354-2695c2",
+                  "child_goals": 39,
+                  "collision_delta": 1,
+                  "collision_rate_delta": 0.025,
+                  "episodes": 40,
+                  "goal_delta": -1,
+                  "parent_collisions": 0,
+                  "parent_evaluation_id": "eval-20261016152513-619214",
+                  "parent_goals": 40,
+                  "suite_fingerprint": "6954fd519f6977849243cacb87327af09ac024002725a747ffaddc2289b663e2",
+                  "suite_id": "val-crossing-v1"
+                }
+              ],
+              "deployment_changed": false
+            },
+            "evaluation_ids": [
+              "eval-20261016121346-e7a772",
+              "eval-20261016121348-9c60c2",
+              "eval-20261016121351-db5fe4",
+              "eval-20261016121354-2695c2",
+              "eval-20261016152511-290328",
+              "eval-20261016152511-7d0b1d",
+              "eval-20261016152512-d3ad78",
+              "eval-20261016152513-619214"
+            ]
+          }
+        ],
+        "graph": "ew",
+        "graph_revision": 12,
+        "ms": 1.23,
+        "record_ids": [
+          "deci-20261016121309-c0c93f",
+          "judge-a524ef1f3d677cd255354736e0cba609",
+          "run-20261016121310-0bfccc"
+        ],
+        "row_count": 1,
+        "returned_ids": [
+          "deci-20261016121309-c0c93f",
+          "judge-a524ef1f3d677cd255354736e0cba609",
+          "run-20261016121310-0bfccc"
+        ]
+      }
+    ],
+    "notice": "Completed parent comparisons; no new evaluation. No outcomes means unknown, not safe."
+  },
+  "weighted_degree": {
+    "algorithm": "FalkorDB Cypher weighted incoming degree over measured COMPARED_AGAINST edges",
+    "ranking": [
+      {
+        "origin_id": "P-cross-a",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-cross-a~hist-s501",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-cross-a~hist-s502",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-cross-a~x2-s701",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-cross-a~x2-s702",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-cross-a~x2-s703",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-open-a",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-open-a~hist-s501",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-open-a~hist-s502",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-open-a~x3-s801",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-open-a~x3-s802",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-open-a~x3-s803",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-a",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-a~cmp-s601",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-a~cmp-s602",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-a~cmp-s603",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-a~cross-t1",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-a~hist-s501",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-a~hist-s502",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-b",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-b~6fcae1-s7",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-b~cmp-s601",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-b~cmp-s602",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-b~cmp-s603",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-b~hist-s501",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-b~hist-s502",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-b~tgt-s301",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-b~x2-s701",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-b~x2-s702",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-b~x2-s703",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-b~x3-s801",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-b~x3-s802",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "P-static-b~x3-s803",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "judge-0511c5c5d376343e496f2ca54b5b8887",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "judge-27ff7301f84d6a015f3db57323320203",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "judge-434d266258a58e3a552b53d0a343af80",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "judge-6b4896fe6ae4d2b0e7988bd313f8530b",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "judge-71515a570c0970792c2669d07df10e1f",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "judge-7bc67868efd431dcf0a3ff4c980b3fc8",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "judge-a524ef1f3d677cd255354736e0cba609",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "judge-dd1e98af5bbbbd2dcb402a82537f79f4",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "physics-20261016145125-a57963",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "physics-20261016152618-fa1d89",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "physics-20261016153658-3c4c36",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "robust-20261016140226-352fd7",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "scratch~10715f-s7",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "scratch~424514-s7",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "scratch~a7ee2c-s7",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "scratch~cmp-s601",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "scratch~cmp-s602",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "scratch~cmp-s603",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "scratch~x2-s701",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "scratch~x2-s702",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "scratch~x2-s703",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "scratch~x3-s801",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "scratch~x3-s802",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "scratch~x3-s803",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "search-20261015185536-6720c9",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "search-20261015185749-4a6581",
+        "observed_children": 0,
+        "weighted_regression_degree": null,
+        "children": []
+      },
+      {
+        "origin_id": "physics-20261016150004-25da9c",
+        "observed_children": 1,
+        "weighted_regression_degree": 0.0416666666666667,
+        "children": [
+          "judge-a524ef1f3d677cd255354736e0cba609"
+        ]
+      }
+    ],
+    "queries": [
+      {
+        "template": "mcp_policy",
+        "cypher": "MATCH (p:Policy {id:$policy})-[:USES_CONTRACT]->(c:Contract)-[:FOR_ROBOT]->(r:Robot)\nRETURN p.id AS policy_id, p.artifact_hash AS artifact_hash, p.status AS status,\n       c.id AS contract_id, r.id AS robot_id LIMIT 1",
+        "params": {
+          "policy": "robust-20261016140226-352fd7"
+        },
+        "header": [
+          "policy_id",
+          "artifact_hash",
+          "status",
+          "contract_id",
+          "robot_id"
+        ],
+        "rows": [
+          {
+            "policy_id": "robust-20261016140226-352fd7",
+            "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+            "status": "completed",
+            "contract_id": "ew-contract-1:2f013b6f4849",
+            "robot_id": "ew-unicycle-r20"
+          }
+        ],
+        "graph": "ew",
+        "graph_revision": 12,
+        "ms": 0.43,
+        "record_ids": [
+          "robust-20261016140226-352fd7"
+        ],
+        "row_count": 1,
+        "returned_ids": [
+          "robust-20261016140226-352fd7"
+        ]
+      },
+      {
+        "template": "mcp_regression_degree",
+        "cypher": "MATCH (target:Policy {id:$policy})-[:USES_CONTRACT]->(contract:Contract)<-[:USES_CONTRACT]-(origin:Policy)\nOPTIONAL MATCH (child:Policy)-[edge:COMPARED_AGAINST]->(origin)\nWHERE edge.parent_hash=origin.artifact_hash AND edge.child_hash=child.artifact_hash\nRETURN origin.id AS origin_id, count(edge) AS observed_children,\n       CASE WHEN count(edge)=0 THEN null ELSE sum(edge.weight) END AS weighted_regression_degree,\n       collect(child.id) AS children\nORDER BY weighted_regression_degree DESC, origin_id LIMIT 100",
+        "params": {
+          "policy": "robust-20261016140226-352fd7"
+        },
+        "header": [
+          "origin_id",
+          "observed_children",
+          "weighted_regression_degree",
+          "children"
+        ],
+        "rows": [
+          {
+            "origin_id": "P-cross-a",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-cross-a~hist-s501",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-cross-a~hist-s502",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-cross-a~x2-s701",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-cross-a~x2-s702",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-cross-a~x2-s703",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-open-a",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-open-a~hist-s501",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-open-a~hist-s502",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-open-a~x3-s801",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-open-a~x3-s802",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-open-a~x3-s803",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-a",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-a~cmp-s601",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-a~cmp-s602",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-a~cmp-s603",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-a~cross-t1",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-a~hist-s501",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-a~hist-s502",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-b",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-b~6fcae1-s7",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-b~cmp-s601",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-b~cmp-s602",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-b~cmp-s603",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-b~hist-s501",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-b~hist-s502",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-b~tgt-s301",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-b~x2-s701",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-b~x2-s702",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-b~x2-s703",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-b~x3-s801",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-b~x3-s802",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "P-static-b~x3-s803",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "judge-0511c5c5d376343e496f2ca54b5b8887",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "judge-27ff7301f84d6a015f3db57323320203",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "judge-434d266258a58e3a552b53d0a343af80",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "judge-6b4896fe6ae4d2b0e7988bd313f8530b",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "judge-71515a570c0970792c2669d07df10e1f",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "judge-7bc67868efd431dcf0a3ff4c980b3fc8",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "judge-a524ef1f3d677cd255354736e0cba609",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "judge-dd1e98af5bbbbd2dcb402a82537f79f4",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "physics-20261016145125-a57963",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "physics-20261016152618-fa1d89",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "physics-20261016153658-3c4c36",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "robust-20261016140226-352fd7",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "scratch~10715f-s7",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "scratch~424514-s7",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "scratch~a7ee2c-s7",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "scratch~cmp-s601",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "scratch~cmp-s602",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "scratch~cmp-s603",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "scratch~x2-s701",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "scratch~x2-s702",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "scratch~x2-s703",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "scratch~x3-s801",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "scratch~x3-s802",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "scratch~x3-s803",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "search-20261015185536-6720c9",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "search-20261015185749-4a6581",
+            "observed_children": 0,
+            "weighted_regression_degree": null,
+            "children": []
+          },
+          {
+            "origin_id": "physics-20261016150004-25da9c",
+            "observed_children": 1,
+            "weighted_regression_degree": 0.0416666666666667,
+            "children": [
+              "judge-a524ef1f3d677cd255354736e0cba609"
+            ]
+          }
+        ],
+        "graph": "ew",
+        "graph_revision": 12,
+        "ms": 2.43,
+        "record_ids": [],
+        "row_count": 60,
+        "returned_ids": []
+      }
+    ],
+    "weight": "For each child: sum of positive (child collisions - parent collisions) / suite episodes over four canonical suites. Sum these edge weights per origin.",
+    "notice": "Descending observed regression burden, not expected safety. More attempts can increase degree. Zero with support differs from null without observations; no statistical or planner advantage claim."
+  }
+}

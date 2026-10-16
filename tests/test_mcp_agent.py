@@ -252,3 +252,17 @@ def test_v3_requires_outcome_reads_before_launch(world, monkeypatch):
     veto = D.dispatch('start_training', {'origin_id':'root','budget':60000,
                         'reason':'root is the ancestor but no prior outcomes were read'}, flow)
     assert 'Read prior outcomes' in ';'.join(veto['guardrail']['reasons'])
+
+
+def test_saved_outcome_tool_results_fit_bounded_model_context():
+    # Offline serialization regression test; never calls a provider or trainer.
+    from pathlib import Path
+    receipt = json.loads((Path(__file__).parents[1]/'evidence/mcp-agent-v3/agent-receipt.json').read_text())
+    ids = {c['policy_id'] for call in receipt['calls'] if call['tool']=='find_training_origins'
+           for c in call['result']['candidates']}
+    for call in receipt['calls']:
+        if call['tool']=='rank_regression_origins':
+            call['result']['ranking']=[r for r in call['result']['ranking'] if r['origin_id'] in ids]
+    payload=sum(len(judge_mcp.model_result(c['result']).encode()) for c in receipt['calls'])
+    schemas=len(json.dumps(receipt['mcp_tools']).encode())
+    assert payload+schemas < 26000  # Leaves 6000 bytes for prompt, question, call wrappers.

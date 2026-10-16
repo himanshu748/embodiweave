@@ -1,0 +1,15 @@
+{
+  "source": "Saved tool results, offline serialization only; no provider retry",
+  "model_request_limit_bytes": 32000,
+  "tool_result_bytes": {
+    "diagnose_policy": 2668,
+    "find_training_origins": 18468,
+    "nearest_passing_ancestor": 1716,
+    "get_decision_outcomes": 2861,
+    "rank_regression_origins": 7802
+  },
+  "total_tool_result_bytes": 33515,
+  "cause": "Tool results alone exceed the 32000-byte request cap before system prompt and schemas. The MCP SDK exception group hid the bounded failure message.",
+  "training_started": false,
+  "origin_selected": false
+}

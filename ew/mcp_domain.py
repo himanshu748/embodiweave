@@ -133,9 +133,11 @@ def get_decision_outcomes(target_policy):
 
 def rank_regression_origins(target_policy):
     p = policy(target_policy)
-    q = query("mcp_regression_degree", {"policy": target_policy})
+    eligible = inspect_training_origins(target_policy, 60000)
+    q = query("mcp_regression_degree", {"policy": target_policy,
+              "origins": [c["policy_id"] for c in eligible["ranking"]]})
     return {"algorithm": "FalkorDB Cypher weighted incoming degree over measured COMPARED_AGAINST edges",
-            "ranking": q['rows'], "queries": [p, q],
+            "ranking": q['rows'], "queries": [p, *eligible["queries"], q],
             "weight": "For each child: sum of positive (child collisions - parent collisions) / suite episodes over four canonical suites. Sum these edge weights per origin.",
             "notice": "Descending observed regression burden, not expected safety. More attempts can increase degree. Zero with support differs from null without observations; no statistical or planner advantage claim."}
 
