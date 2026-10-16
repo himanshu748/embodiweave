@@ -55,7 +55,7 @@ function gateValues(result) {
   const comparison = result.comparison_to_deployed;
   if (comparison?.available) {
     const p = document.createElement("p"); p.className = "tool-result";
-    p.textContent = `Measured target comparison with P-static-b: success ${percent(comparison.baseline.success_rate)} → ${percent(comparison.candidate.success_rate)}; collision ${percent(comparison.baseline.collision_rate)} → ${percent(comparison.candidate.collision_rate)}. Gate requirements remain unchanged.`;
+    p.textContent = `Measured target comparison with ${comparison.baseline.policy_id}: success ${percent(comparison.baseline.success_rate)} → ${percent(comparison.candidate.success_rate)}; collision ${percent(comparison.baseline.collision_rate)} → ${percent(comparison.candidate.collision_rate)}. Gate requirements remain unchanged.`;
     region.append(p);
   }
   return region;
@@ -153,7 +153,7 @@ function ppoPaint(s) {
     const passed = s.gate.checks.filter(c => c.pass).length;
     const verdict = document.createElement("h3"), explanation = document.createElement("p");
     verdict.textContent = s.gate.verdict === "promoted" ? "Passed deployment checks" : s.gate.verdict === "rejected" ? "Checkpoint not approved for deployment" : "More test results needed";
-    explanation.textContent = `${passed} of ${s.gate.checks.length+s.gate.missing.length} test suites passed. ` + (s.gate.verdict === "promoted" ? "This checkpoint is ready for review. " : "The checkpoint is saved with its measured results. ") + "The deployed policy remains P-static-b.";
+    explanation.textContent = `${passed} of ${s.gate.checks.length+s.gate.missing.length} test suites passed. ` + (s.gate.verdict === "promoted" ? "This checkpoint is ready for review. " : "The checkpoint is saved with its measured results. ") + "This run does not automatically replace the current demo policy.";
     $("#ppoGate").append(verdict, explanation, gateValues(s.gate));
   }
   $("#arenaReplay").disabled = s.state !== "completed";
