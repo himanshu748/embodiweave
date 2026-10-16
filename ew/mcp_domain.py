@@ -7,10 +7,12 @@ public training needs the existing page consent and quota mechanism.
 from __future__ import annotations
 
 import json
+import hashlib
 import secrets
 import threading
 import time
 from dataclasses import dataclass, field
+from pathlib import Path
 
 from . import agent_tools, artifacts, public_training, records, service
 from .graph import db, ingest, queries as Q
@@ -137,7 +139,8 @@ def _record(workflow, guard, origin_id, budget, reason, *, action="train_from_pa
         "guardrail": {"rule": "agent-guardrail-v1", "verdict": guard["verdict"], "reasons": guard["reasons"]},
         "request": service.target_request(budget), "ranking": guard["ranking"], "rejected": guard["rejected"],
         "queries": queries, "mcp_tool_calls": calls + ([proposal] if action == "train_from_parent" else []), "evidence_eval_ids": evaluation_ids,
-        "evidence_trial_ids": [], "explanation": reason})
+        "evidence_trial_ids": [], "explanation": reason,
+        "protocol_sha256": hashlib.sha256((Path(__file__).resolve().parents[1] / "evidence/mcp-agent-v1/protocol.json").read_bytes()).hexdigest()})
     ingest.decision(d)
     db.bump_revision("MCP agent decision " + did)
     workflow.decisions.append(did)

@@ -3,7 +3,7 @@
 <title>Train and test · EmbodiWeave</title><meta name="description" content="Train a robot policy, watch the simulator in 2D or 3D, and inspect the test results.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
-<link rel="stylesheet" href="landing.css?v=live1"><link rel="stylesheet" href="live.css?v=search2"><script src="live.js?v=agent7" defer></script></head>
+<link rel="stylesheet" href="landing.css?v=live1"><link rel="stylesheet" href="live.css?v=search2"><script src="live.js?v=mcp1" defer></script></head>
 <body><a class="skip" href="#training">Skip to training</a>
 <header class="nav"><a class="brand" href="./">EmbodiWeave</a><nav aria-label="Main"><a href="guide.html">Judge guide</a><a href="./#live">Graph console</a><a href="studio.html">Studio</a><a href="https://github.com/himanshu748/embodiweave">Source</a></nav></header>
 <main>
@@ -23,7 +23,7 @@
 <label for="ppoSeed">Training seed</label><input type="number" id="ppoSeed" min="0" max="99999" step="1" value="7" required>
 <button class="btn" id="ppoStart" disabled>Start training</button><button class="btn ghost" id="ppoCancel" type="button" hidden>Stop training</button>
 <p class="fine" id="ppoLimits">One run at a time. Runs stop after eight minutes.</p><p class="error" id="ppoError" role="alert"></p><p class="fine"><a href="evidence.html">Trainer busy or short on time? Follow the recorded judge walkthrough →</a></p>
-<details class="run-explainer"><summary>What counts as a pass?</summary><p>The target test requires at least 80% success and at most 10% collisions. Three tests for earlier tasks must also pass. Finishing training saves a checkpoint even when it fails these checks.</p><p>The deployed policy remains <code>P-static-b</code>. The saved results show each threshold and measurement.</p></details>
+<details class="run-explainer"><summary>What counts as a pass?</summary><p>The target test requires at least 80% success and at most 10% collisions. Three tests for earlier tasks must also pass. Finishing training saves a checkpoint even when it fails these checks.</p><p>A validation pass does not automatically replace the current demo policy. The saved results show each threshold and measurement.</p></details>
 </form></div>
 <div class="ppo-result"><p id="ppoStatus" role="status">Choose a budget and start training.</p><progress id="ppoProgress" max="61440" value="0" aria-label="PPO training steps"></progress><p class="fine" id="ppoMeta"></p>
 <div id="ppoGate"></div><p id="ppoLinks" hidden><a class="btn small" id="ppoDownload">Download checkpoint and results</a> <a class="btn ghost small" id="ppoReplay">Compare in Studio →</a></p>
@@ -32,30 +32,31 @@
 <div class="question-sheet">
   <p class="eyebrow">Ask the agent</p><h2>Ask about the results</h2>
   <div class="prompt-list" aria-label="Example questions">
-    <button type="button" class="prompt" data-question="Inspect the mission, query robustness_lineage, and check robust-20261016140226-352fd7. Explain why the graph selected the rehearsal parent for a stronger collision penalty and whether this exact checkpoint passed validation. Keep the original Sonnet run separate.">Explain the confirmed checkpoint <span aria-hidden="true">↗</span></button>
-    <button type="button" class="prompt" data-question="Inspect the mission, then call run_ppo_flow to launch one 60000-step PPO run, 180 validation episodes, the gate and checkpoint export. Report its pending session ID and direct me to the PPO panel for measured completion.">Ask the agent to train <span aria-hidden="true">↗</span></button>
-    <button type="button" class="prompt" data-question="Why does the graph recommend training from scratch instead of reusing a compatible parent at a 150000-step budget? Cite the applicable trials and rule estimates.">Why start from scratch? <span aria-hidden="true">↗</span></button>
-    <button type="button" class="prompt" data-question="Check scratch~a7ee2c-s7 against the exact-artifact promotion gate. Why is the recorded result rejected even though target success improved? Cite the validation evidence.">Explain the rejected checkpoint <span aria-hidden="true">↗</span></button>
+    <button type="button" class="prompt" data-question="Use the MCP tools to explain the confirmed checkpoint robust-20261016140226-352fd7. Trace its lineage, inspect the nearest passing ancestor and check its exact-artifact validation gate. Keep the frozen studies separate.">Explain the confirmed checkpoint <span aria-hidden="true">↗</span></button>
+    <button type="button" class="prompt" data-task="train" data-question="Use MCP to diagnose the current policy, find eligible origins and run the nearest-passing-ancestor algorithm. Choose an origin using that evidence, explain why, and launch one 60000-step PPO run. Report the actual Decision and pending session; the worker will run all 180 validation episodes and the fixed gate.">Ask the agent to train <span aria-hidden="true">↗</span></button>
+    <button type="button" class="prompt" data-question="Use lineage and nearest_passing_ancestor for robust-20261016140226-352fd7. Which ancestor passes val-target-v1, how many hops away is it, and what does this say and not say about training?">Find a passing ancestor <span aria-hidden="true">↗</span></button>
+    <button type="button" class="prompt" data-question="Use diagnose_policy and check_gate on scratch~a7ee2c-s7. Explain the failed validation checks without claiming every suite failed.">Explain the rejected checkpoint <span aria-hidden="true">↗</span></button>
   </div>
   <form id="investigationForm">
+    <label for="agentTask">Agent task</label><select id="agentTask"><option value="investigate">Explain the graph evidence</option><option value="train">Choose an origin and start training</option></select>
     <label for="question">Your question</label>
-    <textarea id="question" rows="5" minlength="8" maxlength="800" required>Inspect the mission, query robustness_lineage, and check robust-20261016140226-352fd7. Explain why the graph selected the rehearsal parent for a stronger collision penalty and whether this exact checkpoint passed validation. Keep the original Sonnet run separate.</textarea>
+    <textarea id="question" rows="5" minlength="8" maxlength="800" required>Use the MCP tools to explain the confirmed checkpoint robust-20261016140226-352fd7. Trace its lineage, inspect the nearest passing ancestor and check its exact-artifact validation gate. Keep the frozen studies separate.</textarea>
     <p class="fine">Keep private information out. Your question and public graph evidence are sent to <span id="providerName">the configured model provider</span>. The server keeps the API key private.</p>
     <label class="live-consent"><input id="consent" type="checkbox"> <span>I agree to send this question and public graph evidence to the model provider.</span></label>
-    <label class="live-consent"><input id="agentTrainingConsent" type="checkbox"><span>Also let the agent launch one 60,000-step training run (seed 7) when I ask it to train.</span></label>
+    <label class="live-consent"><input id="agentTrainingConsent" type="checkbox"><span>I authorize one agent-chosen 60,000-step training run (seed 29), followed by validation and the fixed gate.</span></label>
     <button class="btn" id="start" disabled>Ask agent <span aria-hidden="true">→</span></button>
     <button class="btn ghost" type="button" id="retryConnection" hidden>Reconnect</button>
     <p id="startError" class="error" role="alert"></p><p class="fine"><a href="evidence.html">Model busy? Inspect the measured attempts and live graph directly →</a></p>
   </form>
-  <div class="run-boundaries"><b>What runs here</b><p>The agent reads FalkorDB and explains the evidence. With your training consent, it can start a 60,000-step run. Watch that run in the simulator above.</p><p id="limits">Up to 6 model turns, 10 tool calls and 2 minutes. One investigation runs at a time.</p><p><a href="#training">Back to simulator</a> · <a href="./#agent">Recorded Sonnet training run</a> · <a href="guide.html#reproduce">Run full training locally</a></p></div>
+  <div class="run-boundaries"><b>What runs here</b><p>The agent discovers tools through MCP, reads FalkorDB, and proposes its own origin. The guardrail can veto it. If the free model is down, a labelled deterministic MCP fallback can act on an explicitly requested training task. Watch the run above.</p><p id="limits">Up to 6 model turns, 10 tool calls and 2 minutes. One investigation runs at a time.</p><p><a href="#training">Back to simulator</a> · <a href="./#agent">Recorded Sonnet training run</a> · <a href="guide.html#reproduce">Run full training locally</a></p></div>
 </div>
 <div class="evidence-sheet" aria-labelledby="evidenceTitle">
   <div class="sheet-head"><div><p class="eyebrow">Tool calls</p><h2 id="evidenceTitle">Agent activity</h2></div><span class="tag" id="runState">Ready when you are</span></div>
   <p id="runStatus" role="status">Choose a question and agree to send it to the model provider.</p>
-  <p class="fine mono" id="runMeta"></p>
+  <p class="fine mono" id="runMeta"></p><p id="agentDecisions" class="fine"></p>
   <ol id="toolTrace" class="tool-trace" aria-label="Completed live tool calls"></ol>
   <div class="trace-empty" id="traceEmpty"><span class="mono">Your question and the agent’s tool calls will appear here.</span><p>You can inspect the Cypher queries, source records and test results for each call.</p><a href="./#live">Prefer a direct query? Open the live graph console →</a></div>
-  <section class="agent-answer" id="answerPanel" hidden><h3>Agent report</h3><p class="fine">Lineage reports are compiled from completed graph tools. Other model explanations can contain mistakes; check the source records above.</p><div id="answer"></div></section>
+  <section class="agent-answer" id="answerPanel" hidden><h3>Agent report</h3><p class="fine">Model explanations can contain mistakes. Check the MCP tool results, recorded Decision and measured training gate above.</p><div id="answer"></div></section>
   <p><button class="btn ghost small" id="resume" type="button" hidden>Resume session status</button><a id="downloadReceipt" class="btn ghost small" hidden download="embodiweave-live-investigation.json">Download agent log</a></p>
 </div>
 </section>

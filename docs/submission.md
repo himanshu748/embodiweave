@@ -1,29 +1,15 @@
 # EmbodiWeave
 
-Track 01: Agents That Act on Connected Data.
+An agent that reads a robot's training history in FalkorDB, decides which checkpoint to retrain, launches training, and proves whether the new policy got safer.
 
-I built EmbodiWeave to answer two recurring robotics questions: which checkpoint
-should I retrain, and has the saved result earned deployment?
+Track: Agents That Act on Connected Data
 
-FalkorDB connects checkpoints to semantic sensor/action contracts, training
-origins, adaptation trials, complete evaluations, object-level failures and gate
-verdicts. Parameterized Cypher rules out incompatible artifacts and returns the
-evidence for ranking origins and choosing interventions. Each Decision records
-its queries, returned records and graph revision before training. Planning stops
-when FalkorDB is unavailable. Final-test outcomes stay outside the decision graph.
+I built EmbodiWeave to make checkpoint selection and deployment checks inspectable.
 
-Judges can launch real CPU PPO from the live webpage, watch simulator states in
-2D or 3D, inspect 180 validation episodes and download a checksummed checkpoint.
-A recorded walkthrough covers busy trainers and overloaded model providers.
+FalkorDB connects exact artifacts, semantic sensor/action contracts, training origins, trials, evaluations, failures and Decisions. The live agent discovers domain tools through MCP. It diagnoses a checkpoint, compares eligible origins and calls FalkorDB's shortest-path algorithm to find a passing ancestor. It proposes its own origin and launches CPU PPO. An authored guardrail can veto missing evidence, incompatible semantics, stale hashes or unsupported budgets. Each Decision saves the model, actual tool calls, Cypher, parameters, candidates and verdict before training.
 
-The earlier rehearsal lineage passed validation but failed its held-out target
-limit: 13 collisions in 100 episodes. I retained that result. In a separately
-preregistered study, the graph selected that parent for 600,064 additional PPO
-steps with a stronger training-only collision penalty. The saved candidate
-passed all four unchanged validation suites. Its hash was frozen before one
-fresh, four-family confirmation: target collisions were 8/100 against a 10% limit,
-and all four families passed. It is now the 2D demo policy.
+The trusted worker reloads the new artifact, runs 180 validation episodes and applies the unchanged promotion gate. Provider failure uses an explicitly labelled deterministic MCP fallback; graph failure stops planning. Judges can watch the 2D simulator or its 3D rendering and download evidence.
 
-Unchanged 2D weights still had 6/40 target collisions in MuJoCo. Separate mixed-domain adaptation produced two children passing all eight development checks. The strongest had 2/40 target collisions, but crossing remained at its 15% limit. It missed the preregistered extra clearance, so physics confirmation stays unopened. A separately registered longer run regressed; its rejection remains visible.
+Frozen results remain visible: the earlier rehearsal checkpoint failed held-out target collisions at 13/100. A separate study passed all four fresh confirmation families, with 8/100 target collisions against a 10% limit. Its unchanged-weight MuJoCo transfer still had 6/40 target collisions. Physics confirmation remains unopened. These are simulation results, not hardware-safety proof.
 
-Next are independent training seeds and stronger crossing behaviour. This is a simulated research prototype, not a hardware-safety or training-efficiency claim.
+The new MCP demonstration has its own [protocol and evidence](../evidence/mcp-agent-v1/). [Why Track 01 and actual queries](../README.md#why-track-01). Next: independent training seeds and stronger crossing behaviour. Claude and Codex assisted with implementation and experiments; measured results come from saved checkpoints.

@@ -9,13 +9,14 @@ COPY requirements-hosted.txt requirements.lock .
 RUN --mount=type=secret,id=ca,required=false python3 -m venv .venv \
     && if [ -f /run/secrets/ca ]; then export PIP_CERT=/run/secrets/ca; fi \
     && .venv/bin/pip install --no-cache-dir torch==2.14.1+cpu --index-url https://download.pytorch.org/whl/cpu \
-    && .venv/bin/pip install --no-cache-dir -r requirements-hosted.txt
+    && .venv/bin/pip install --no-cache-dir -r requirements-hosted.txt -c requirements.lock
 COPY ew ew
 COPY web web
 COPY artifacts artifacts
 COPY evidence/mujoco-v1 evidence/mujoco-v1
 COPY evidence/mujoco-v2 evidence/mujoco-v2
 COPY evidence/physics-adapt-v1 evidence/physics-adapt-v1
+COPY evidence/mcp-agent-v1 evidence/mcp-agent-v1
 COPY sim sim
 COPY scripts/hosted.sh scripts/hosted.sh
 ENV EW_STATIC=1 PYTHONPATH=/app PORT=8000 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MALLOC_ARENA_MAX=2

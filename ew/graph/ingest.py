@@ -1,7 +1,7 @@
 """Trusted graph writes. Idempotent MERGE on stable record ids; every call bumps the graph revision.
 
-Only this module (called by trusted backend services) writes to the decision graph. The agent and
-MCP tools have no write path here. Final-test evaluations are never ingested into the decision
+Only this module (called by trusted backend services) writes to the decision graph. MCP tools
+can request bounded trusted actions; they cannot issue raw writes. Final-test evaluations never enter the decision
 graph, so no planner query can see them.
 """
 from __future__ import annotations
@@ -177,7 +177,7 @@ def decision(d: dict, g: str | None = None) -> None:
         db.rw("MATCH (d:Decision {id:$id}) SET d.model=$model, d.transport=$transport, "
               "d.proposed_origin=$origin, d.guardrail_verdict=$verdict, d.guardrail=$guardrail, "
               "d.mcp_tool_calls=$calls, d.query_receipts=$queries, d.candidates=$candidates",
-              {"id": d["id"], "model": d.get("model") or "external client model unknown",
+              {"id": d["id"], "model": d.get("model") or ("none (deterministic fallback)" if d["mode"] == "deterministic_fallback" else "unknown (external MCP client)"),
                "transport": d["transport"], "origin": d.get("proposed_origin") or "",
                "verdict": d["guardrail"]["verdict"], "guardrail": json.dumps(d["guardrail"]),
                "calls": json.dumps(d["mcp_tool_calls"]), "queries": json.dumps(d["queries"]),

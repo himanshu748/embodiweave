@@ -9,6 +9,7 @@
 label { display: block; font-weight: 500; margin-bottom: 8px; }
 textarea { display: block; resize: vertical; width: 100%; min-height: 150px; padding: 12px; background: var(--paper); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; font: 400 15px/1.5 var(--text); }
 .fine { font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+#agentTask { width:100%; min-height:44px; margin-bottom:18px; padding:10px; border:1px solid var(--line); border-radius:8px; background:var(--paper); color:var(--ink); font:14px var(--text); }
 .live-consent { display: flex; align-items: flex-start; gap: 8px; font: 400 14px/1.5 var(--text); margin: 18px 0; cursor: pointer; }
 .live-consent input { accent-color: var(--accent); min-width: 40px; min-height: 40px; margin: -8px 0 0 -8px; }
 .error { color: var(--bad); font-size: 14px; }

@@ -1,12 +1,34 @@
 # EmbodiWeave
 
-An agent uses connected robot failures and checkpoint history in FalkorDB to choose what to train next, then checks the saved policy against a fixed deployment gate.
+An agent that reads a robot's training history in FalkorDB, decides which checkpoint to retrain, launches training, and proves whether the new policy got safer.
 
 **[Live demo](https://embodiweave.52.202.25.181.sslip.io) · [Judge walkthrough](https://embodiweave.52.202.25.181.sslip.io/robustness.html) · [2-minute film](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v3.mp4) · [Train in your browser](https://embodiweave.52.202.25.181.sslip.io/live.html#training)**
 
 [![Tests](https://github.com/himanshu748/embodiweave/actions/workflows/tests.yml/badge.svg)](https://github.com/himanshu748/embodiweave/actions/workflows/tests.yml)
 
 GraphHacks Track 01: **Agents That Act on Connected Data**.
+
+## Why Track 01
+
+| Focus | Concrete implementation |
+|---|---|
+| Multi-hop reasoning | [`DERIVED_FROM*1..8` lineage and exact-artifact diagnosis](ew/graph/queries.py) |
+| Graph queries and algorithms as tools | [`nearest_passing_ancestor`: native FalkorDB `shortestPath`](ew/mcp_domain.py), bounded and unweighted |
+| Tool selection through MCP | [SDK discovery and calls](ew/mcp_client.py), [stdio + HTTP domain server](ew/mcp_server.py) |
+| Actions based on graph evidence | [Model origin proposal and guardrail before real PPO](ew/judge_mcp.py); [prospective demonstration protocol](evidence/mcp-agent-v1/protocol.json) |
+| Explainable results | [Decision records model, actual MCP calls, Cypher, parameters, candidates and veto/allow verdict before training](ew/mcp_domain.py) |
+
+**[Let the live agent choose and train](https://embodiweave.52.202.25.181.sslip.io/live.html#investigate)**. It discovers domain tools over MCP and proposes its own origin; the guardrail can veto but does not replace that choice with rank one. A separately labelled deterministic MCP fallback handles inference failure on an explicitly consented training task. FalkorDB failure still stops planning. [Protocol, tool contract and client setup](docs/MCP.md).
+
+### Connect MCP from Claude Desktop or Cursor
+
+Run the local app first, then configure a stdio server using your Python and checkout paths:
+
+```json
+{"mcpServers":{"embodiweave":{"command":"/absolute/path/embodiweave/.venv/bin/python","args":["-m","ew.mcp_server"],"env":{"PYTHONPATH":"/absolute/path/embodiweave","EW_ARTIFACTS":"/absolute/path/embodiweave/artifacts","EW_FALKOR_PORT":"6379"}}}}
+```
+
+Claude Desktop uses `claude_desktop_config.json`; Cursor uses `.cursor/mcp.json`. Cursor's HTTP form is `{"mcpServers":{"embodiweave":{"url":"https://embodiweave.52.202.25.181.sslip.io/mcp/"}}}`. Public HTTP connections can read; training needs the webpage's separate consent. [Local training opt-in, standalone HTTP and optional official FalkorDB MCP](docs/MCP.md).
 
 ## Current result: confirmed in 2D
 
@@ -182,7 +204,10 @@ evidence; live browser PPO continues to train in the original 2D simulator.
 flowchart LR
   Judge[Judge webpage] --> API[Bounded FastAPI tools]
   API --> Agent[Optional live model agent]
-  Agent --> Reads[Read-only Cypher templates]
+  Agent --> MCP[MCP tool discovery and calls]
+  MCP --> Guard[Origin and budget guardrail]
+  MCP --> Reads[Read-only Cypher and shortestPath]
+  Guard --> Trainer
   API --> Planner[Graph-driven planner]
   Planner --> Reads
   Reads --> Graph[(FalkorDB)]
@@ -247,7 +272,8 @@ Bundles include saved model weights, normalization, contract, validation records
 
 - Search-v1 failed its held-out target test. Robustness-v2 passed fresh 2D confirmation, but its MuJoCo target still had 6/40 collisions (15%), above the 10% reference limit. This is not evidence of physical robot safety.
 - The two 2D studies added three adaptive attempts; the physics study and its separate follow-up added four. These small studies do not establish a reliable improvement or selection-efficiency advantage. Each study fixed one training seed, and later candidates also used more training.
-- The planner uses authored, versioned rules. The live LLM chooses bounded tools and explains evidence; the frozen search experiments used the deterministic graph planner.
+- The frozen search experiments used authored deterministic planners. The separate live MCP agent chooses an origin and can launch training after a guardrail; provider-down fallback is explicitly deterministic. None of this establishes an advantage over another planner or baseline.
+- MCP discovery and calls are tested with the pinned Python SDK over stdio and Streamable HTTP. Claude Desktop and Cursor configuration is documented; those client UIs have not been manually tested. The optional official FalkorDB server was not deployed. The graph algorithm measures unweighted lineage distance, not predicted safety.
 - Historical benchmark protocols and results remain frozen. Robustness-v2 registered new confirmation seeds before training and froze its candidate before opening them once. All earlier final suites remain spent; no existing suite was changed or reused.
 - The public trainer is shared and quota-limited; the free model provider can refuse or delay requests. Recorded evidence remains available when either is busy.
 - A validation promotion record does not automatically replace production weights. The current 2D demo policy was explicitly released after its separate fresh confirmation; physics transfer remains a research result.
@@ -257,6 +283,8 @@ Bundles include saved model weights, normalization, contract, validation records
 The v3 film is **116.67 seconds, 1920×1080 at 30 fps, 8.14 MB**, with **108.52 seconds** of Deepgram Thalia narration. Scenes 1-8 preserve the earlier recorded history; scenes 9-11 report the new confirmed checkpoint and MuJoCo-v2 results. Robot motion comes from recorded MuJoCo states produced by the saved PPO checkpoints. Graph layouts, titles, camera moves, sensor overlays and learning-curve plots are editorial graphics backed by the evidence. No robot footage was keyframed or AI-generated.
 
 [Watch v3](https://embodiweave.52.202.25.181.sslip.io/guide.html#film) · [v2 fallback](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v2.mp4) · [v1 fallback](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo.mp4) · [Timed script](docs/demo/v3/SCRIPT.md) · [SRT](docs/demo/v3/embodiweave-demo-v3.srt) · [YouTube upload notes](docs/demo/v3/YOUTUBE.md) · [Voice receipts](evidence/film-v3/voice-receipts.json).
+
+[Next-cut script: MCP choice and launch in the first 20 seconds](docs/demo/v4/SCRIPT.md). This is a script update; the v3 MP4 remains the current film and predates the new live MCP demonstration.
 
 Narration: Deepgram Aura-2. Captions: Deepgram Nova-3. Music: “Cipher” by Kevin MacLeod (incompetech.com), [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/), edited and mixed under narration. [Full credits and reproduction steps](docs/demo/CREDITS.md).
 

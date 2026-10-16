@@ -12,7 +12,7 @@ async function request(path, options = {}) {
     return result;
   } finally { clearTimeout(timer); }
 }
-function ready() { $("#start").disabled = active || !config?.enabled || !$("#consent").checked; }
+function ready() { const train=$("#agentTask").value==="train"; $("#start").disabled = active || !config?.enabled || !$("#consent").checked || (train&&!$("#agentTrainingConsent").checked); $("#start").textContent=train?"Let agent choose and train":"Ask agent"; }
 async function connect() {
   $("#retryConnection").hidden = true;
   try {
@@ -32,6 +32,9 @@ async function connect() {
 function summarize(call) {
   const r = call.result;
   if (r.error) return r.error;
+  if (r.guardrail?.verdict === "vetoed") return `Guardrail vetoed this origin: ${r.guardrail.reasons.join(". ")}. Decision ${r.decision_id}. No training started.`;
+  if (r.nearest) return `FalkorDB shortestPath: ${r.nearest.ancestor_id}, ${r.nearest.hops} lineage hop(s). ${r.nearest.path.join(" → ")}.`;
+  if (r.candidates) return `${r.candidates.length} verified origins with complete canonical validation. The model can propose any eligible origin.`;
   if (r.preview) return `Gate preview for ${r.policy_id}: ${r.verdict}. ${r.checks.filter((c) => c.pass).length}/${r.checks.length + r.missing.length} required validation suites passed${r.missing.length ? `; ${r.missing.length} missing` : ""}. Deployment unchanged.`;
   if (r.action) return `Fresh plan: ${r.selected || r.action.replaceAll("_", " ")} at revision ${r.graph_revision}. ${r.action === "train_from_scratch" ? "Fresh random weights, no parent. " : ""}No training started.`;
   if (r.training_session_id) return `Real PPO workflow ${r.state}. Follow the separate training panel for measured results.`;
@@ -66,6 +69,9 @@ function paint(s) {
   $("#runState").textContent = s.state;
   $("#runStatus").textContent = s.detail;
   $("#runMeta").textContent = `${s.id} · ${s.turns}/${config?.max_turns || 6} model turns · ${s.calls.length} tool calls` + (s.models.length ? `\n${s.models.join(", ")}` : "");
+  if(s.transport) $("#runMeta").textContent+=`\n${s.transport} · ${s.decision_source || "recorded path"}`;
+  $("#agentDecisions").replaceChildren();
+  for(const id of s.decision_ids||[]){const link=document.createElement('a');link.href=`/api/decisions/${encodeURIComponent(id)}`;link.textContent=`Inspect Decision ${id}`;$("#agentDecisions").append(link,document.createElement('br'));}
   $(".evidence-sheet").classList.toggle("running", s.state === "running");
   $("#traceEmpty").hidden = !!s.calls.length;
   const list = $("#toolTrace");
@@ -82,7 +88,7 @@ function paint(s) {
     li.append(details); list.append(li);
   }
   $("#answerPanel").hidden = !s.answer;
-  $("#answerPanel h3").textContent = s.answer_source === "compiled_live_graph_evidence" ? "Measured lineage report" : "Model explanation";
+  $("#answerPanel h3").textContent = s.answer_source === "compiled_live_graph_evidence" ? "Measured lineage report" : s.answer_source === "deterministic_fallback" ? "Deterministic fallback" : "Agent report via MCP";
   renderAnswer(s.answer || "");
   if (receiptUrl) URL.revokeObjectURL(receiptUrl);
   receiptUrl = URL.createObjectURL(new Blob([JSON.stringify(s, null, 2)], { type: "application/json" }));
@@ -120,14 +126,16 @@ async function poll(id, version) {
     active = false; ready();
   }
 }
-document.querySelectorAll("[data-question]").forEach((b) => b.addEventListener("click", () => { $("#question").value = b.dataset.question; $("#question").focus(); }));
+document.querySelectorAll("[data-question]").forEach((b) => b.addEventListener("click", () => { $("#question").value = b.dataset.question; $("#agentTask").value=b.dataset.task||"investigate";ready();$("#question").focus(); }));
 $("#consent").addEventListener("change", ready);
+$("#agentTask").addEventListener("change", ready);
+$("#agentTrainingConsent").addEventListener("change", ready);
 $("#retryConnection").addEventListener("click", connect);
 $("#resume").addEventListener("click", () => { if (currentId) poll(currentId, ++pollVersion); });
 $("#investigationForm").addEventListener("submit", async (e) => {
   e.preventDefault(); active = true; ready(); $("#startError").textContent = "";
   try {
-    const s = await request("/api/judge/start", { method: "POST", body: JSON.stringify({ question: $("#question").value, consent: $("#consent").checked, training_consent: $("#agentTrainingConsent").checked }) });
+    const s = await request("/api/judge/start", { method: "POST", body: JSON.stringify({ question: $("#question").value, consent: $("#consent").checked, training_consent: $("#agentTrainingConsent").checked, training_requested: $("#agentTask").value === "train" }) });
     $("#toolTrace").replaceChildren(); $("#answerPanel").hidden = true;
     sessionStorage.setItem("ew_judge_session", s.id); paint(s);
     poll(s.id, ++pollVersion);

@@ -1,0 +1,29 @@
+{
+  "study": "agent-mcp-v1",
+  "registered_at_utc": "2026-10-16T11:44:37.840106+00:00",
+  "implementation_base": "bc76c1e780dfa0971f5dc13399e09e70539f211e",
+  "purpose": "One new public MCP agent action demonstration; not a revision of any frozen study",
+  "target_policy": "robust-20261016140226-352fd7",
+  "training_domain": "original 2D simulator",
+  "requested_steps": 60000,
+  "training_seed": 29,
+  "max_completed_training_runs": 1,
+  "origin_selection": "LLM chooses from verified compatible origins with all four complete canonical validation suites; authored guardrail may veto but cannot substitute another origin",
+  "algorithm": "FalkorDB shortestPath over DERIVED_FROM, minimum unweighted hops to passing exact-artifact same-contract ancestor",
+  "max_hops": 8,
+  "validation_suites": [
+    "val-target-v1",
+    "val-open-v1",
+    "val-static-v1",
+    "val-crossing-v1"
+  ],
+  "validation_episodes": 180,
+  "promotion_rule": "promo-1 unchanged",
+  "final_evaluations": 0,
+  "fallback": "If inference fails, label deterministic MCP fallback. It is not proof of an LLM-chosen origin. Preserve every operational attempt; no retry for a better gate verdict.",
+  "deployment_change": false,
+  "protected_source_hashes": {
+    "ew/criteria.py": "bd2c8ed348181520160181272b641f91500b37820e7762956d9b03f80f5b34ed",
+    "ew/scenarios.py": "18396d0c9ac7e9221e72b7d0ad3bb4563647850793e3baf3ab47ae779d1a0168"
+  }
+}
