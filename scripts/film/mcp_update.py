@@ -46,6 +46,7 @@ def prepare():
     # Spoken counts are a fixed edit of this exact source. Refuse a different run.
     assert [e['summary']['collision_rate'] for e in summary['evaluations']] == [.05, 0, .025, .025]
     assert summary['origin_count'] == 17 and summary['algorithm']['hops'] == 1
+    assert sha(SOURCE/'repro-v3.zip') == summary['bundle']['sha256']
     snapshot = {str(p.relative_to(ROOT)): sha(p) for base in
                 (ROOT/'docs/demo/v3', ROOT/'evidence/film-v3', ROOT/'web/media')
                 for p in base.rglob('*') if p.is_file() and (base.name != 'media' or 'v3' in p.name)}
@@ -72,7 +73,11 @@ def prepare():
     with zipfile.ZipFile(SOURCE/'repro-v3.zip') as z:
         names = [n for n in z.namelist() if n.startswith('replays/')]
         assert len(names) == 1
-        (E/'policy-replay.json').write_bytes(z.read(names[0]))
+        replay = z.read(names[0])
+        recorded = json.loads(replay)
+        assert recorded['policy_id'] == summary['policy_id']
+        assert recorded['artifact_hash'] == summary['artifact_hash']
+        (E/'policy-replay.json').write_bytes(replay)
     write(E/'source-records.json', {'study': 'agent-mcp-v2', 'summary': summary,
         'decision_path': 'evidence/mcp-agent-v2/decision.json',
         'source_checksums': {str(p.relative_to(ROOT)): sha(p) for p in SOURCE.iterdir() if p.is_file()},

@@ -1,0 +1,66 @@
+{
+  "shots": {
+    "launch": "evidence/film-v4/browser/03-launch.png",
+    "allowed": "evidence/film-v4/browser/04-guardrail.png"
+  },
+  "scene_starts": [
+    [
+      0,
+      "launch"
+    ],
+    [
+      3.6,
+      "allowed"
+    ]
+  ],
+  "cursor_keys": [
+    [
+      0,
+      860,
+      450
+    ],
+    [
+      2.3,
+      860,
+      585
+    ],
+    [
+      4.2,
+      850,
+      515
+    ],
+    [
+      6.8,
+      850,
+      580
+    ]
+  ],
+  "click_times": [],
+  "duration": 7.6,
+  "fps": 30,
+  "output_size": [
+    1280,
+    720
+  ],
+  "source_size": [
+    1280,
+    720
+  ],
+  "camera_keys": [
+    [
+      0,
+      640,
+      360,
+      1
+    ]
+  ],
+  "cursor_scale": 1.2,
+  "cursor_asset": "evidence/film-v4/browser/pointer.png",
+  "cursor_hotspot": [
+    11,
+    2
+  ],
+  "crf": 20,
+  "preset": "fast",
+  "output": "../../outputs/film-v4/browser-02.mp4"
+}

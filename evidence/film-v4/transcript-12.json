@@ -1,0 +1,275 @@
+{
+  "metadata": {
+    "transaction_key": "deprecated",
+    "request_id": "01a1406a-65a8-7b01-a6e4-69bbba952a9f",
+    "sha256": "92227b567a996aefd047b18c0943491df0d742d98c0fea72507f796b32fafb58",
+    "created": "2026-10-15T16:34:37.911Z",
+    "duration": 6.16,
+    "channels": 1,
+    "models": [
+      "2187e11a-3532-4498-b076-81fa530bdd49"
+    ],
+    "model_info": {
+      "2187e11a-3532-4498-b076-81fa530bdd49": {
+        "name": "general-nova-3",
+        "version": "2025-07-31.0",
+        "arch": "nova-3"
+      }
+    }
+  },
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "The graph and checksummed evidence make these results inspectable. EmbodiWeave. Built on FalkorDB.",
+            "confidence": 0.9867188,
+            "words": [
+              {
+                "word": "the",
+                "start": 0.16,
+                "end": 0.39999998,
+                "confidence": 0.9428711,
+                "punctuated_word": "The"
+              },
+              {
+                "word": "graph",
+                "start": 0.39999998,
+                "end": 0.71999997,
+                "confidence": 0.984375,
+                "punctuated_word": "graph"
+              },
+              {
+                "word": "and",
+                "start": 0.71999997,
+                "end": 0.88,
+                "confidence": 0.97314453,
+                "punctuated_word": "and"
+              },
+              {
+                "word": "checksummed",
+                "start": 0.88,
+                "end": 1.36,
+                "confidence": 0.69970703,
+                "punctuated_word": "checksummed"
+              },
+              {
+                "word": "evidence",
+                "start": 1.36,
+                "end": 1.68,
+                "confidence": 1.0,
+                "punctuated_word": "evidence"
+              },
+              {
+                "word": "make",
+                "start": 1.68,
+                "end": 2.0,
+                "confidence": 0.9921875,
+                "punctuated_word": "make"
+              },
+              {
+                "word": "these",
+                "start": 2.0,
+                "end": 2.24,
+                "confidence": 1.0,
+                "punctuated_word": "these"
+              },
+              {
+                "word": "results",
+                "start": 2.24,
+                "end": 2.56,
+                "confidence": 1.0,
+                "punctuated_word": "results"
+              },
+              {
+                "word": "inspectable",
+                "start": 2.56,
+                "end": 3.6,
+                "confidence": 0.8771159,
+                "punctuated_word": "inspectable."
+              },
+              {
+                "word": "embodiweave",
+                "start": 3.6799998,
+                "end": 4.88,
+                "confidence": 0.93038505,
+                "punctuated_word": "EmbodiWeave."
+              },
+              {
+                "word": "built",
+                "start": 4.88,
+                "end": 5.12,
+                "confidence": 0.99902344,
+                "punctuated_word": "Built"
+              },
+              {
+                "word": "on",
+                "start": 5.12,
+                "end": 5.2799997,
+                "confidence": 1.0,
+                "punctuated_word": "on"
+              },
+              {
+                "word": "falkordb",
+                "start": 5.2799997,
+                "end": 6.0,
+                "confidence": 0.9867188,
+                "punctuated_word": "FalkorDB."
+              }
+            ],
+            "paragraphs": {
+              "transcript": "\nThe graph and checksummed evidence make these results inspectable. EmbodiWeave. Built on FalkorDB.",
+              "paragraphs": [
+                {
+                  "sentences": [
+                    {
+                      "text": "The graph and checksummed evidence make these results inspectable.",
+                      "start": 0.16,
+                      "end": 3.6
+                    },
+                    {
+                      "text": "EmbodiWeave.",
+                      "start": 3.6799998,
+                      "end": 4.88
+                    },
+                    {
+                      "text": "Built on FalkorDB.",
+                      "start": 4.88,
+                      "end": 6.0
+                    }
+                  ],
+                  "num_words": 13,
+                  "start": 0.16,
+                  "end": 6.0
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "utterances": [
+      {
+        "start": 0.16,
+        "end": 3.6,
+        "confidence": 0.94104457,
+        "channel": 0,
+        "transcript": "The graph and checksummed evidence make these results inspectable.",
+        "words": [
+          {
+            "word": "the",
+            "start": 0.16,
+            "end": 0.39999998,
+            "confidence": 0.9428711,
+            "punctuated_word": "The"
+          },
+          {
+            "word": "graph",
+            "start": 0.39999998,
+            "end": 0.71999997,
+            "confidence": 0.984375,
+            "punctuated_word": "graph"
+          },
+          {
+            "word": "and",
+            "start": 0.71999997,
+            "end": 0.88,
+            "confidence": 0.97314453,
+            "punctuated_word": "and"
+          },
+          {
+            "word": "checksummed",
+            "start": 0.88,
+            "end": 1.36,
+            "confidence": 0.69970703,
+            "punctuated_word": "checksummed"
+          },
+          {
+            "word": "evidence",
+            "start": 1.36,
+            "end": 1.68,
+            "confidence": 1.0,
+            "punctuated_word": "evidence"
+          },
+          {
+            "word": "make",
+            "start": 1.68,
+            "end": 2.0,
+            "confidence": 0.9921875,
+            "punctuated_word": "make"
+          },
+          {
+            "word": "these",
+            "start": 2.0,
+            "end": 2.24,
+            "confidence": 1.0,
+            "punctuated_word": "these"
+          },
+          {
+            "word": "results",
+            "start": 2.24,
+            "end": 2.56,
+            "confidence": 1.0,
+            "punctuated_word": "results"
+          },
+          {
+            "word": "inspectable",
+            "start": 2.56,
+            "end": 3.6,
+            "confidence": 0.8771159,
+            "punctuated_word": "inspectable."
+          }
+        ],
+        "id": "391937ce-d576-4753-b8f2-c087e9dd8607"
+      },
+      {
+        "start": 3.6799998,
+        "end": 4.88,
+        "confidence": 0.93038505,
+        "channel": 0,
+        "transcript": "EmbodiWeave.",
+        "words": [
+          {
+            "word": "embodiweave",
+            "start": 3.6799998,
+            "end": 4.88,
+            "confidence": 0.93038505,
+            "punctuated_word": "EmbodiWeave."
+          }
+        ],
+        "id": "6441a3ec-0c30-414b-bb22-6056af0db6e2"
+      },
+      {
+        "start": 4.88,
+        "end": 6.0,
+        "confidence": 0.99524736,
+        "channel": 0,
+        "transcript": "Built on FalkorDB.",
+        "words": [
+          {
+            "word": "built",
+            "start": 4.88,
+            "end": 5.12,
+            "confidence": 0.99902344,
+            "punctuated_word": "Built"
+          },
+          {
+            "word": "on",
+            "start": 5.12,
+            "end": 5.2799997,
+            "confidence": 1.0,
+            "punctuated_word": "on"
+          },
+          {
+            "word": "falkordb",
+            "start": 5.2799997,
+            "end": 6.0,
+            "confidence": 0.9867188,
+            "punctuated_word": "FalkorDB."
+          }
+        ],
+        "id": "b9a16f0d-90af-493e-a52a-79c77c603aae"
+      }
+    ]
+  }
+}

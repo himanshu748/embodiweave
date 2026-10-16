@@ -20,6 +20,7 @@ from PIL import Image, ImageDraw
 from scripts.film.mcp_update import ROOT, E, DOC, OUT, SOURCE, sha, write, prepare
 from scripts.film.render import background, chrome, text, font, W, H, PAPER, INK, ORANGE, MUTED, LINE
 from scripts.film import voice
+from ew.contract import get_contract
 
 FPS = 30
 
@@ -49,7 +50,7 @@ def card(d, box, title, value, detail='', accent=False):
 class Clip:
     def __init__(self, path):
         self.process = subprocess.Popen(['ffmpeg', '-hide_banner', '-loglevel', 'error', '-i', str(path),
-            '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'], stdout=subprocess.PIPE)
+            '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
 
     def read(self, size):
         raw = self.process.stdout.read(size[0]*size[1]*3)
@@ -177,7 +178,8 @@ class Film:
         if len(points)>1:
             d.line(points, fill=ORANGE, width=4)
         rx, ry = xy(frame['robot']); theta = frame['robot'][2]
-        d.ellipse((rx-22, ry-22, rx+22, ry+22), fill=INK, outline=PAPER, width=3)
+        radius = get_contract(self.contract_id).robot.radius_m*scale
+        d.ellipse((rx-radius, ry-radius, rx+radius, ry+radius), fill=INK, outline=PAPER, width=3)
         d.line((rx, ry, rx+31*math.cos(theta), ry-31*math.sin(theta)), fill=ORANGE, width=6)
         text(d, (880, 215), 'SAVED POLICY / REAL 2D SIMULATOR', 25, ORANGE, True)
         text(d, (880, 275), '61,440 PPO steps', 55)
@@ -300,8 +302,11 @@ class Film:
             # V3 is genuine MuJoCo joint-state playback, kept byte-for-byte as backup.
             # Cover its original title/caption bands with this edit's own framing.
             image=source; d=ImageDraw.Draw(image)
+            d.rectangle((0, 158, W, 222), fill=PAPER)
+            text(d, (34, 180), 'HISTORICAL / P-static-b', 24, INK, True)
+            text(d, (994, 180), 'ROBUSTNESS-V2 / confirmed in 2D', 24, INK, True)
             d.rectangle((0, 877, W, 970), fill=PAPER)
-            text(d, (80, 882), 'SEPARATE MUJOCO-V2 TRANSFER / confirmed 2D checkpoint / no retraining', 25, ORANGE, True)
+            text(d, (80, 882), 'MUJOCO-V2 / same seed 5203012 / selected illustration / no retraining', 25, ORANGE, True)
             text(d, (80, 924), 'Target: 6/40 (15%) > 10% limit. Crossing: 4/40. This is not the MCP child.', 28)
         elif i == 12:
             text(d, (80, 200), 'EMBODIWEAVE', 94)
@@ -352,7 +357,10 @@ def assemble():
     data=load(E/'timeline.json');seconds=data['seconds']
     parts=[OUT/f"scene-{s['id']:02}.mp4" for s in data['scenes']]
     (OUT/'picture-list.txt').write_text(''.join(f"file '{p}'\n" for p in parts))
-    run('-f','concat','-safe','0','-i',OUT/'picture-list.txt','-c','copy',OUT/'picture.mp4')
+    # Normalize scene-boundary timestamps: stream-copy concat leaves fractional
+    # frame durations in MP4, even though every source was rendered at 30 Hz.
+    run('-f','concat','-safe','0','-i',OUT/'picture-list.txt','-r','30','-fps_mode','cfr',
+        '-c:v','libx264','-preset','fast','-crf','20','-pix_fmt','yuv420p',OUT/'picture.mp4')
     voices=[]
     for s in data['scenes']:
         p=OUT/f"voice-{s['id']:02}.wav"

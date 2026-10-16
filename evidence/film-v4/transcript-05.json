@@ -1,0 +1,402 @@
+{
+  "metadata": {
+    "transaction_key": "deprecated",
+    "request_id": "01a144c8-0aa2-75e1-a009-e1d8b9fd714b",
+    "sha256": "fac8d83bd4250bf1ceb1ac3fb7ea724ec62f5ee808250c31d6556647e4687b22",
+    "created": "2026-10-16T12:55:23.868Z",
+    "duration": 10.68,
+    "channels": 1,
+    "models": [
+      "2187e11a-3532-4498-b076-81fa530bdd49"
+    ],
+    "model_info": {
+      "2187e11a-3532-4498-b076-81fa530bdd49": {
+        "name": "general-nova-3",
+        "version": "2025-07-31.0",
+        "arch": "nova-3"
+      }
+    }
+  },
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "Contracts tie a checkpoint to sensor and action meanings. The guardrail vetoes incompatible origins, stale hashes, incomplete validation, or unsupported budgets.",
+            "confidence": 0.99902344,
+            "words": [
+              {
+                "word": "contracts",
+                "start": 0.08,
+                "end": 0.71999997,
+                "confidence": 0.9970703,
+                "punctuated_word": "Contracts"
+              },
+              {
+                "word": "tie",
+                "start": 0.71999997,
+                "end": 0.96,
+                "confidence": 0.99902344,
+                "punctuated_word": "tie"
+              },
+              {
+                "word": "a",
+                "start": 0.96,
+                "end": 1.12,
+                "confidence": 1.0,
+                "punctuated_word": "a"
+              },
+              {
+                "word": "checkpoint",
+                "start": 1.12,
+                "end": 1.52,
+                "confidence": 0.9863281,
+                "punctuated_word": "checkpoint"
+              },
+              {
+                "word": "to",
+                "start": 1.52,
+                "end": 1.68,
+                "confidence": 1.0,
+                "punctuated_word": "to"
+              },
+              {
+                "word": "sensor",
+                "start": 1.68,
+                "end": 2.0,
+                "confidence": 0.62402344,
+                "punctuated_word": "sensor"
+              },
+              {
+                "word": "and",
+                "start": 2.0,
+                "end": 2.24,
+                "confidence": 0.82666016,
+                "punctuated_word": "and"
+              },
+              {
+                "word": "action",
+                "start": 2.24,
+                "end": 2.48,
+                "confidence": 1.0,
+                "punctuated_word": "action"
+              },
+              {
+                "word": "meanings",
+                "start": 2.48,
+                "end": 3.28,
+                "confidence": 0.9511719,
+                "punctuated_word": "meanings."
+              },
+              {
+                "word": "the",
+                "start": 3.52,
+                "end": 3.6,
+                "confidence": 0.99902344,
+                "punctuated_word": "The"
+              },
+              {
+                "word": "guardrail",
+                "start": 3.6,
+                "end": 4.16,
+                "confidence": 0.99609375,
+                "punctuated_word": "guardrail"
+              },
+              {
+                "word": "vetoes",
+                "start": 4.16,
+                "end": 4.64,
+                "confidence": 0.9871419,
+                "punctuated_word": "vetoes"
+              },
+              {
+                "word": "incompatible",
+                "start": 4.64,
+                "end": 5.3599997,
+                "confidence": 0.9996745,
+                "punctuated_word": "incompatible"
+              },
+              {
+                "word": "origins",
+                "start": 5.3599997,
+                "end": 6.3199997,
+                "confidence": 0.99902344,
+                "punctuated_word": "origins,"
+              },
+              {
+                "word": "stale",
+                "start": 6.3199997,
+                "end": 6.7999997,
+                "confidence": 1.0,
+                "punctuated_word": "stale"
+              },
+              {
+                "word": "hashes",
+                "start": 6.7999997,
+                "end": 7.6,
+                "confidence": 0.9980469,
+                "punctuated_word": "hashes,"
+              },
+              {
+                "word": "incomplete",
+                "start": 7.6,
+                "end": 8.16,
+                "confidence": 1.0,
+                "punctuated_word": "incomplete"
+              },
+              {
+                "word": "validation",
+                "start": 8.16,
+                "end": 9.04,
+                "confidence": 0.984375,
+                "punctuated_word": "validation,"
+              },
+              {
+                "word": "or",
+                "start": 9.2,
+                "end": 9.36,
+                "confidence": 1.0,
+                "punctuated_word": "or"
+              },
+              {
+                "word": "unsupported",
+                "start": 9.36,
+                "end": 10.08,
+                "confidence": 1.0,
+                "punctuated_word": "unsupported"
+              },
+              {
+                "word": "budgets",
+                "start": 10.08,
+                "end": 10.559999,
+                "confidence": 0.9980469,
+                "punctuated_word": "budgets."
+              }
+            ],
+            "paragraphs": {
+              "transcript": "\nContracts tie a checkpoint to sensor and action meanings. The guardrail vetoes incompatible origins, stale hashes, incomplete validation, or unsupported budgets.",
+              "paragraphs": [
+                {
+                  "sentences": [
+                    {
+                      "text": "Contracts tie a checkpoint to sensor and action meanings.",
+                      "start": 0.08,
+                      "end": 3.28
+                    },
+                    {
+                      "text": "The guardrail vetoes incompatible origins, stale hashes, incomplete validation, or unsupported budgets.",
+                      "start": 3.52,
+                      "end": 10.559999
+                    }
+                  ],
+                  "num_words": 21,
+                  "start": 0.08,
+                  "end": 10.559999
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "utterances": [
+      {
+        "start": 0.08,
+        "end": 3.28,
+        "confidence": 0.9315864,
+        "channel": 0,
+        "transcript": "Contracts tie a checkpoint to sensor and action meanings.",
+        "words": [
+          {
+            "word": "contracts",
+            "start": 0.08,
+            "end": 0.71999997,
+            "confidence": 0.9970703,
+            "punctuated_word": "Contracts"
+          },
+          {
+            "word": "tie",
+            "start": 0.71999997,
+            "end": 0.96,
+            "confidence": 0.99902344,
+            "punctuated_word": "tie"
+          },
+          {
+            "word": "a",
+            "start": 0.96,
+            "end": 1.12,
+            "confidence": 1.0,
+            "punctuated_word": "a"
+          },
+          {
+            "word": "checkpoint",
+            "start": 1.12,
+            "end": 1.52,
+            "confidence": 0.9863281,
+            "punctuated_word": "checkpoint"
+          },
+          {
+            "word": "to",
+            "start": 1.52,
+            "end": 1.68,
+            "confidence": 1.0,
+            "punctuated_word": "to"
+          },
+          {
+            "word": "sensor",
+            "start": 1.68,
+            "end": 2.0,
+            "confidence": 0.62402344,
+            "punctuated_word": "sensor"
+          },
+          {
+            "word": "and",
+            "start": 2.0,
+            "end": 2.24,
+            "confidence": 0.82666016,
+            "punctuated_word": "and"
+          },
+          {
+            "word": "action",
+            "start": 2.24,
+            "end": 2.48,
+            "confidence": 1.0,
+            "punctuated_word": "action"
+          },
+          {
+            "word": "meanings",
+            "start": 2.48,
+            "end": 3.28,
+            "confidence": 0.9511719,
+            "punctuated_word": "meanings."
+          }
+        ],
+        "id": "92610b4c-c970-4bb1-8d80-465f2f174f83"
+      },
+      {
+        "start": 3.52,
+        "end": 6.3199997,
+        "confidence": 0.9961914,
+        "channel": 0,
+        "transcript": "The guardrail vetoes incompatible origins,",
+        "words": [
+          {
+            "word": "the",
+            "start": 3.52,
+            "end": 3.6,
+            "confidence": 0.99902344,
+            "punctuated_word": "The"
+          },
+          {
+            "word": "guardrail",
+            "start": 3.6,
+            "end": 4.16,
+            "confidence": 0.99609375,
+            "punctuated_word": "guardrail"
+          },
+          {
+            "word": "vetoes",
+            "start": 4.16,
+            "end": 4.64,
+            "confidence": 0.9871419,
+            "punctuated_word": "vetoes"
+          },
+          {
+            "word": "incompatible",
+            "start": 4.64,
+            "end": 5.3599997,
+            "confidence": 0.9996745,
+            "punctuated_word": "incompatible"
+          },
+          {
+            "word": "origins",
+            "start": 5.3599997,
+            "end": 6.3199997,
+            "confidence": 0.99902344,
+            "punctuated_word": "origins,"
+          }
+        ],
+        "id": "e1bbf1d3-c442-447e-935b-89c4ef7ed5d4"
+      },
+      {
+        "start": 6.3199997,
+        "end": 7.6,
+        "confidence": 0.99902344,
+        "channel": 0,
+        "transcript": "stale hashes,",
+        "words": [
+          {
+            "word": "stale",
+            "start": 6.3199997,
+            "end": 6.7999997,
+            "confidence": 1.0,
+            "punctuated_word": "stale"
+          },
+          {
+            "word": "hashes",
+            "start": 6.7999997,
+            "end": 7.6,
+            "confidence": 0.9980469,
+            "punctuated_word": "hashes,"
+          }
+        ],
+        "id": "250e8dad-9183-4750-964d-4ddc4a087918"
+      },
+      {
+        "start": 7.6,
+        "end": 9.04,
+        "confidence": 0.9921875,
+        "channel": 0,
+        "transcript": "incomplete validation,",
+        "words": [
+          {
+            "word": "incomplete",
+            "start": 7.6,
+            "end": 8.16,
+            "confidence": 1.0,
+            "punctuated_word": "incomplete"
+          },
+          {
+            "word": "validation",
+            "start": 8.16,
+            "end": 9.04,
+            "confidence": 0.984375,
+            "punctuated_word": "validation,"
+          }
+        ],
+        "id": "7b48af05-f5ba-4c76-822b-58856d5050d4"
+      },
+      {
+        "start": 9.2,
+        "end": 10.559999,
+        "confidence": 0.99934894,
+        "channel": 0,
+        "transcript": "or unsupported budgets.",
+        "words": [
+          {
+            "word": "or",
+            "start": 9.2,
+            "end": 9.36,
+            "confidence": 1.0,
+            "punctuated_word": "or"
+          },
+          {
+            "word": "unsupported",
+            "start": 9.36,
+            "end": 10.08,
+            "confidence": 1.0,
+            "punctuated_word": "unsupported"
+          },
+          {
+            "word": "budgets",
+            "start": 10.08,
+            "end": 10.559999,
+            "confidence": 0.9980469,
+            "punctuated_word": "budgets."
+          }
+        ],
+        "id": "abd905a1-2817-4049-b48d-c6a8c0e2ee8b"
+      }
+    ]
+  }
+}

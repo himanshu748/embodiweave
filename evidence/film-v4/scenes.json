@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "title": "The agent chooses its tools",
+    "narration": "My agent reads Falkor-D-B through M-C-P. It chooses tools to diagnose a checkpoint, compare origins, and trace a passing ancestor.",
+    "visual": "mcp-read"
+  },
+  {
+    "id": 2,
+    "title": "The agent launches training",
+    "narration": "It chooses a starting checkpoint and calls start training. The guardrail approves the evidence and budget before the worker starts.",
+    "visual": "mcp-launch"
+  },
+  {
+    "id": 3,
+    "title": "FalkorDB connects the evidence",
+    "narration": "Falkor-D-B connects policies, training runs, trials, evaluations, failures and decisions. The links preserve what produced what.",
+    "visual": "graph"
+  },
+  {
+    "id": 4,
+    "title": "A shortest path through real lineage",
+    "narration": "The shortest-path tool runs inside Falkor-D-B. It returned the nearest passing ancestor, one hop away. The agent considered it alongside seventeen eligible origins.",
+    "visual": "algorithm"
+  },
+  {
+    "id": 5,
+    "title": "The guardrail can veto the agent",
+    "narration": "Contracts tie a checkpoint to sensor and action meanings. The guardrail vetoes incompatible origins, stale hashes, incomplete validation, or unsupported budgets.",
+    "visual": "contracts"
+  },
+  {
+    "id": 6,
+    "title": "The Decision precedes the action",
+    "narration": "Before training, the Decision saves the model, tool calls, Cypher, parameters and returned records. If Falkor-D-B is unavailable, planning stops.",
+    "visual": "decision"
+  },
+  {
+    "id": 7,
+    "title": "Real PPO, then saved-policy evaluation",
+    "narration": "The worker trained sixty-one thousand, four hundred forty P-P-O steps, then reloaded the checkpoint for one hundred eighty validation episodes.",
+    "visual": "training"
+  },
+  {
+    "id": 8,
+    "title": "Four suites. The same fixed gate.",
+    "narration": "All four suites passed the unchanged gate. Target collisions were three in sixty. Open had zero; static and crossing had one each in forty.",
+    "visual": "gate"
+  },
+  {
+    "id": 9,
+    "title": "Target and crossing regressed",
+    "narration": "But the parent had two target collisions and no crossing collisions. Both measures got worse. Passing the gate does not establish an improvement, so I kept the demo policy unchanged.",
+    "visual": "regression"
+  },
+  {
+    "id": 10,
+    "title": "Earlier results remain frozen",
+    "narration": "The earlier failure stays visible: thirteen target collisions in one hundred held-out episodes. The separate confirmed checkpoint still has eight in one hundred.",
+    "visual": "history"
+  },
+  {
+    "id": 11,
+    "title": "Separate MuJoCo transfer evidence",
+    "narration": "That confirmed two-dimensional checkpoint also collided six times in forty MuJoCo target episodes, without retraining. This is a separate transfer study.",
+    "visual": "physics"
+  },
+  {
+    "id": 12,
+    "title": "Every result has its evidence",
+    "narration": "The graph and checksummed evidence make these results inspectable. EmbodiWeave. Built on Falkor-D-B.",
+    "visual": "close"
+  }
+]

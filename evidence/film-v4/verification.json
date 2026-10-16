@@ -1,0 +1,52 @@
+{
+  "media_probe": [
+    {
+      "file": "embodiweave-demo-v4.mp4",
+      "seconds": "117.600000",
+      "bytes": 7089116,
+      "width": 1920,
+      "height": 1080,
+      "fps": "30/1",
+      "video_codec": "h264",
+      "audio_codec": "aac"
+    },
+    {
+      "file": "embodiweave-demo-v4-720p.mp4",
+      "seconds": "117.610000",
+      "bytes": 3759754,
+      "width": 1280,
+      "height": 720,
+      "fps": "30/1",
+      "video_codec": "h264",
+      "audio_codec": "aac"
+    },
+    {
+      "file": "embodiweave-demo-v4-narration-free.mp4",
+      "seconds": "117.600000",
+      "bytes": 6944173,
+      "width": 1920,
+      "height": 1080,
+      "fps": "30/1",
+      "video_codec": "h264",
+      "audio_codec": "aac"
+    }
+  ],
+  "v3_unchanged_files": 23,
+  "source_unchanged_files": 13,
+  "tests": {
+    "command": "EW_FALKOR_PORT=16379 python -m pytest -q",
+    "passed": 135,
+    "seconds": 217.92
+  },
+  "narration": "12 Aura-2 Thalia clips, 10 new and 2 exact reused; Nova-3 transcripts validated with strict number checks. One documented caption correction, timing unchanged.",
+  "study": "Recorded agent-mcp-v2; no new agent/training/evaluation for filming. Local test fixtures are isolated under ew_test.",
+  "protected_source_hashes": {
+    "ew/criteria.py": "bd2c8ed348181520160181272b641f91500b37820e7762956d9b03f80f5b34ed",
+    "ew/scenarios.py": "18396d0c9ac7e9221e72b7d0ad3bb4563647850793e3baf3ab47ae779d1a0168"
+  },
+  "render_source_checksums": {
+    "scripts/film/mcp_update.py": "d50545bee2c3e3a8f5592e582b8848d0b181b7409ab33055c3632ee3782d4d55",
+    "scripts/film/mcp_render.py": "90b3c48d7d7d721ac7d7761ae0ff4f2d9730c2633e4db8308a920a3f806379ae",
+    "scripts/film/narrate-v4.sh": "f8f4575ed9c66406165a88c23fc78f1a6339a343cf1bdc848acf3745f9f61b4e"
+  }
+}

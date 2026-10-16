@@ -1,0 +1,225 @@
+{
+  "study": "agent-mcp-v2",
+  "summary": {
+    "study": "agent-mcp-v2",
+    "deployment_commit": "06ec5d437ec1b73870aed1836d78e7f7a3fb9eec",
+    "agent_session_id": "judge-ce0e904e4e79d0ca94d7e69240da52e6",
+    "decision_source": "llm_mcp",
+    "model": "openai/gpt-4.1-mini",
+    "provider": "Azure via OpenRouter",
+    "model_turns": 3,
+    "mcp_calls": [
+      "diagnose_policy",
+      "find_training_origins",
+      "nearest_passing_ancestor",
+      "start_training"
+    ],
+    "origin_count": 17,
+    "chosen_origin": {
+      "policy_id": "physics-20261016150004-25da9c",
+      "rank": 1,
+      "passed": 4,
+      "recipe": "ppo-mixed-mujoco-collision40-v1",
+      "training_domain": "mixed_2d_mujoco",
+      "validation": [
+        {
+          "suite": "val-crossing-v1",
+          "success": 1,
+          "collisions": 0,
+          "evaluation_id": "eval-20261016152513-619214"
+        },
+        {
+          "suite": "val-open-v1",
+          "success": 1,
+          "collisions": 0,
+          "evaluation_id": "eval-20261016152511-290328"
+        },
+        {
+          "suite": "val-static-v1",
+          "success": 0.975,
+          "collisions": 0.025,
+          "evaluation_id": "eval-20261016152512-d3ad78"
+        },
+        {
+          "suite": "val-target-v1",
+          "success": 0.9667,
+          "collisions": 0.0333,
+          "evaluation_id": "eval-20261016152511-7d0b1d"
+        }
+      ]
+    },
+    "algorithm": {
+      "ancestor_id": "search-20261015185749-4a6581",
+      "artifact_hash": "b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565",
+      "hops": 1,
+      "path": [
+        "robust-20261016140226-352fd7",
+        "search-20261015185749-4a6581"
+      ],
+      "evaluation_id": "eval-20261015185833-82fb12",
+      "success_rate": 0.95,
+      "collision_rate": 0.05
+    },
+    "decision_id": "deci-20261016121309-c0c93f",
+    "decision_graph_revision": 10,
+    "run_id": "run-20261016121310-0bfccc",
+    "trial_id": "tria-20261016121354-c7eeaa",
+    "policy_id": "judge-a524ef1f3d677cd255354736e0cba609",
+    "artifact_hash": "c6c910a7a9b826b3a23370e4c9762c95537cb7dfb9e1512d7c32ab37532ecd13",
+    "requested_steps": 60000,
+    "consumed_steps": 61440,
+    "seed": 29,
+    "end_to_end_seconds": 71.25,
+    "provider_reported_cost_usd": 0.0062364,
+    "evaluations": [
+      {
+        "id": "eval-20261016121346-e7a772",
+        "suite_id": "val-target-v1",
+        "artifact_hash": "c6c910a7a9b826b3a23370e4c9762c95537cb7dfb9e1512d7c32ab37532ecd13",
+        "summary": {
+          "episodes": 60,
+          "success_rate": 0.95,
+          "collision_rate": 0.05,
+          "timeout_rate": 0,
+          "mean_success_steps": 97.7,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 1,
+            "mover": 2
+          }
+        }
+      },
+      {
+        "id": "eval-20261016121348-9c60c2",
+        "suite_id": "val-open-v1",
+        "artifact_hash": "c6c910a7a9b826b3a23370e4c9762c95537cb7dfb9e1512d7c32ab37532ecd13",
+        "summary": {
+          "episodes": 40,
+          "success_rate": 1,
+          "collision_rate": 0,
+          "timeout_rate": 0,
+          "mean_success_steps": 83.4,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 0,
+            "mover": 0
+          }
+        }
+      },
+      {
+        "id": "eval-20261016121351-db5fe4",
+        "suite_id": "val-static-v1",
+        "artifact_hash": "c6c910a7a9b826b3a23370e4c9762c95537cb7dfb9e1512d7c32ab37532ecd13",
+        "summary": {
+          "episodes": 40,
+          "success_rate": 0.975,
+          "collision_rate": 0.025,
+          "timeout_rate": 0,
+          "mean_success_steps": 96.5,
+          "collisions_by_object": {
+            "wall": 1,
+            "static": 0,
+            "mover": 0
+          }
+        }
+      },
+      {
+        "id": "eval-20261016121354-2695c2",
+        "suite_id": "val-crossing-v1",
+        "artifact_hash": "c6c910a7a9b826b3a23370e4c9762c95537cb7dfb9e1512d7c32ab37532ecd13",
+        "summary": {
+          "episodes": 40,
+          "success_rate": 0.975,
+          "collision_rate": 0.025,
+          "timeout_rate": 0,
+          "mean_success_steps": 95.4,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 0,
+            "mover": 1
+          }
+        }
+      }
+    ],
+    "gate": {
+      "id": "prom-20261016121354-88baaf",
+      "rule": "promo-1",
+      "verdict": "promoted",
+      "checks": [
+        {
+          "suite_id": "val-target-v1",
+          "evaluation_id": "eval-20261016121346-e7a772",
+          "success_rate": 0.95,
+          "collision_rate": 0.05,
+          "min_success": 0.8,
+          "max_collision": 0.1,
+          "pass": true,
+          "role": "target"
+        },
+        {
+          "suite_id": "val-open-v1",
+          "evaluation_id": "eval-20261016121348-9c60c2",
+          "success_rate": 1,
+          "collision_rate": 0,
+          "min_success": 0.9,
+          "max_collision": 0.05,
+          "pass": true,
+          "role": "retained"
+        },
+        {
+          "suite_id": "val-static-v1",
+          "evaluation_id": "eval-20261016121351-db5fe4",
+          "success_rate": 0.975,
+          "collision_rate": 0.025,
+          "min_success": 0.75,
+          "max_collision": 0.1,
+          "pass": true,
+          "role": "retained"
+        },
+        {
+          "suite_id": "val-crossing-v1",
+          "evaluation_id": "eval-20261016121354-2695c2",
+          "success_rate": 0.975,
+          "collision_rate": 0.025,
+          "min_success": 0.75,
+          "max_collision": 0.15,
+          "pass": true,
+          "role": "retained"
+        }
+      ],
+      "evaluation_ids": [
+        "eval-20261016121346-e7a772",
+        "eval-20261016121348-9c60c2",
+        "eval-20261016121351-db5fe4",
+        "eval-20261016121354-2695c2"
+      ]
+    },
+    "bundle": {
+      "filename": "judge-a524ef1f3d677cd255354736e0cba609-c6c910a7a9b8-repro-v3.zip",
+      "sha256": "5019c21b27b984d78e479883ef6b3c854385a7ce4c3eea8d64472860bc5d623c",
+      "bytes": 493331
+    },
+    "deployment_changed": false,
+    "confirmation_performed": false,
+    "interpretation": "Action path demonstrated. Gate passed but target and crossing collision counts regressed relative to the chosen parent; no safety improvement established."
+  },
+  "decision_path": "evidence/mcp-agent-v2/decision.json",
+  "source_checksums": {
+    "evidence/mcp-agent-v2/summary.json": "ae90492e79db48d4eace156c8690a96b9c03ad109fc27cbe1582ea041fd936a7",
+    "evidence/mcp-agent-v2/nearest-passing-ancestor.cypher": "7332c14c3941a0d5c5fef43b39f0b125bd5ac369c3d319c4bacd28706f642222",
+    "evidence/mcp-agent-v2/provider-probe.json": "41e2adfcff2fb958c42fe3ecb66d966f83ceabf9911df4132463aad87cc9dab8",
+    "evidence/mcp-agent-v2/public-client-verification.json": "9fa758f2aa5ee1cc0337c37c5c8dab3cad0a59ea03be6d4343a3b183636d8a03",
+    "evidence/mcp-agent-v2/README.md": "58e1afea11cbf43a887baf2ff18c8903b49dc303e047f7a72e1179f54dc96d2d",
+    "evidence/mcp-agent-v2/bundle-verification.json": "e6971ccb65c772021d0d5d818a33391fcd00e1cf214b4e1ba7c6a7178720e3a1",
+    "evidence/mcp-agent-v2/training-receipt.json": "d24c5aeb547116e1d03594acc85702c420f243b6f5a44e2a4349a36f13beeecb",
+    "evidence/mcp-agent-v2/repro-v3.zip": "5019c21b27b984d78e479883ef6b3c854385a7ce4c3eea8d64472860bc5d623c",
+    "evidence/mcp-agent-v2/protocol.json": "1f50fdcd0601494d78d29f8cf14658ad3f022d757e31faea514e568bda22972e",
+    "evidence/mcp-agent-v2/decision.json": "14c891619255328f1ebc1d87da66a6ffc5bac2be144e941b36f432f1b0fd568e",
+    "evidence/mcp-agent-v2/agent-receipt.json": "4981c7525b52e1e221392f012a7b697efac2610f2fe800884b37c482d8963d7d",
+    "evidence/mcp-agent-v2/checksums.json": "d50228ea5e9dfed392fe6d2413887bc4a505fface547d64c1e641a1b0016ab93",
+    "evidence/mcp-agent-v2/algorithm.json": "ac295bdcddb5c4864f53f06f1d3cd5720042e8bf02dabfbf5c3087c734d164e3"
+  },
+  "edit": "Recorded evidence replay. No new model decision, training, validation or held-out evaluation.",
+  "robot_motion": "New child: saved 2D validation poses. Physics: unchanged v3 MuJoCo footage, separate checkpoint/study.",
+  "training_progress": "Only a final progress sample is retained. Do not fabricate a learning curve or intermediate progress values."
+}

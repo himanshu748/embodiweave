@@ -1,0 +1,72 @@
+{
+  "shots": {
+    "overview": "evidence/film-v4/browser/01-tools.png",
+    "tools": "evidence/film-v4/browser/02-tools.png"
+  },
+  "scene_starts": [
+    [
+      0,
+      "overview"
+    ],
+    [
+      2.5,
+      "tools",
+      "scroll"
+    ]
+  ],
+  "cursor_keys": [
+    [
+      0,
+      700,
+      450
+    ],
+    [
+      2,
+      825,
+      550
+    ],
+    [
+      3.1,
+      800,
+      170
+    ],
+    [
+      5,
+      825,
+      330
+    ],
+    [
+      8,
+      830,
+      520
+    ]
+  ],
+  "click_times": [],
+  "duration": 10.1,
+  "fps": 30,
+  "output_size": [
+    1280,
+    720
+  ],
+  "source_size": [
+    1280,
+    720
+  ],
+  "camera_keys": [
+    [
+      0,
+      640,
+      360,
+      1
+    ]
+  ],
+  "cursor_scale": 1.2,
+  "cursor_asset": "evidence/film-v4/browser/pointer.png",
+  "cursor_hotspot": [
+    11,
+    2
+  ],
+  "crf": 20,
+  "preset": "fast",
+  "output": "../../outputs/film-v4/browser-01.mp4"
+}

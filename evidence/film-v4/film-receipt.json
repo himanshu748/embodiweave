@@ -1,0 +1,48 @@
+{
+  "seconds": 117.6,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "narration_model": "aura-2-thalia-en",
+  "narration_seconds": 112.47975000000001,
+  "training_launch_scene_start": 10.1,
+  "launch_narration_ends": 17.339979166666666,
+  "assets": {
+    "embodiweave-demo-v4.mp4": {
+      "bytes": 7089116,
+      "sha256": "a3e21f9330e2de9320f7fd8c6c7d781c1811cd081fce7101217f1483344dfac7"
+    },
+    "embodiweave-demo-v4-720p.mp4": {
+      "bytes": 3759754,
+      "sha256": "5ae356a4d84d89f67fb9cf88e30ad0c5e6a2ea2d1e7086a2c4f6b2473488aaa3"
+    },
+    "embodiweave-demo-v4-narration-free.mp4": {
+      "bytes": 6944173,
+      "sha256": "6b8909125eb0aed60a58dbaf0df29258bc690ce8bc14be74117028608b028567"
+    },
+    "embodiweave-demo-v4.gif": {
+      "bytes": 395929,
+      "sha256": "df1858d833ca2d62f2b6656b7b57135641d078a085fe0c343f5ad6aca502a916"
+    }
+  },
+  "music": {
+    "title": "Cipher",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 3.0",
+    "sha256": "d3d0614535a61d748e2fd8d5117fc4d781022a7624794802a2462d8af3fdd522",
+    "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Cipher2.mp3",
+    "gain_below_normalized_voice_db": 18
+  },
+  "physics_source": {
+    "path": "outputs/film-v3/scene-11.mp4",
+    "sha256": "d0e6a76daa9d71f172917f88c50df7feb0012602db3d20ad726fea7dca8b5b3b"
+  },
+  "new_robot_motion": {
+    "source": "evidence/film-v4/policy-replay.json",
+    "seed": 1300030,
+    "domain": "original 2D simulator",
+    "selection": "First target collision in the recorded suite; all aggregates shown. No interpolated poses."
+  },
+  "editorial": "Browser captures replay completed evidence; waiting time removed. Graph layout, titles and highlights are editorial. No learning curve is invented.",
+  "outcome": "Gate 4/4; target 2\u21923/60 and crossing 0\u21921/40 collisions relative to chosen parent. No default deployment change."
+}

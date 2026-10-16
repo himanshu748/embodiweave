@@ -1,0 +1,401 @@
+{
+  "metadata": {
+    "transaction_key": "deprecated",
+    "request_id": "01a144c8-a7b7-7e12-8efa-b2909a0a8240",
+    "sha256": "8b171854bcb940c878bd2b13ad674d4f138f627bd574e465e5528c554cf551c9",
+    "created": "2026-10-16T12:56:04.141Z",
+    "duration": 9.72,
+    "channels": 1,
+    "models": [
+      "2187e11a-3532-4498-b076-81fa530bdd49"
+    ],
+    "model_info": {
+      "2187e11a-3532-4498-b076-81fa530bdd49": {
+        "name": "general-nova-3",
+        "version": "2025-07-31.0",
+        "arch": "nova-3"
+      }
+    }
+  },
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "The earlier failure stays visible. 13 target collisions in 100 held out episodes. The separate confirmed checkpoint still has eight in 100.",
+            "confidence": 0.99902344,
+            "words": [
+              {
+                "word": "the",
+                "start": 0.0,
+                "end": 0.24,
+                "confidence": 0.9790039,
+                "punctuated_word": "The"
+              },
+              {
+                "word": "earlier",
+                "start": 0.24,
+                "end": 0.64,
+                "confidence": 1.0,
+                "punctuated_word": "earlier"
+              },
+              {
+                "word": "failure",
+                "start": 0.64,
+                "end": 1.04,
+                "confidence": 0.99902344,
+                "punctuated_word": "failure"
+              },
+              {
+                "word": "stays",
+                "start": 1.04,
+                "end": 1.4399999,
+                "confidence": 0.99902344,
+                "punctuated_word": "stays"
+              },
+              {
+                "word": "visible",
+                "start": 1.4399999,
+                "end": 2.1599998,
+                "confidence": 0.7939453,
+                "punctuated_word": "visible."
+              },
+              {
+                "word": "13",
+                "start": 2.48,
+                "end": 2.8799999,
+                "confidence": 0.9526367,
+                "punctuated_word": "13"
+              },
+              {
+                "word": "target",
+                "start": 2.8799999,
+                "end": 3.36,
+                "confidence": 0.9980469,
+                "punctuated_word": "target"
+              },
+              {
+                "word": "collisions",
+                "start": 3.36,
+                "end": 3.84,
+                "confidence": 1.0,
+                "punctuated_word": "collisions"
+              },
+              {
+                "word": "in",
+                "start": 3.84,
+                "end": 4.08,
+                "confidence": 1.0,
+                "punctuated_word": "in"
+              },
+              {
+                "word": "100",
+                "start": 4.08,
+                "end": 4.64,
+                "confidence": 0.9995117,
+                "punctuated_word": "100"
+              },
+              {
+                "word": "held",
+                "start": 4.64,
+                "end": 4.96,
+                "confidence": 0.9951172,
+                "punctuated_word": "held"
+              },
+              {
+                "word": "out",
+                "start": 4.96,
+                "end": 5.2,
+                "confidence": 0.9760742,
+                "punctuated_word": "out"
+              },
+              {
+                "word": "episodes",
+                "start": 5.2,
+                "end": 6.0,
+                "confidence": 0.9946289,
+                "punctuated_word": "episodes."
+              },
+              {
+                "word": "the",
+                "start": 6.24,
+                "end": 6.48,
+                "confidence": 1.0,
+                "punctuated_word": "The"
+              },
+              {
+                "word": "separate",
+                "start": 6.48,
+                "end": 6.7999997,
+                "confidence": 0.99609375,
+                "punctuated_word": "separate"
+              },
+              {
+                "word": "confirmed",
+                "start": 6.7999997,
+                "end": 7.2799997,
+                "confidence": 1.0,
+                "punctuated_word": "confirmed"
+              },
+              {
+                "word": "checkpoint",
+                "start": 7.2799997,
+                "end": 7.8399997,
+                "confidence": 0.99609375,
+                "punctuated_word": "checkpoint"
+              },
+              {
+                "word": "still",
+                "start": 7.8399997,
+                "end": 8.24,
+                "confidence": 0.9873047,
+                "punctuated_word": "still"
+              },
+              {
+                "word": "has",
+                "start": 8.24,
+                "end": 8.48,
+                "confidence": 1.0,
+                "punctuated_word": "has"
+              },
+              {
+                "word": "eight",
+                "start": 8.48,
+                "end": 8.8,
+                "confidence": 1.0,
+                "punctuated_word": "eight"
+              },
+              {
+                "word": "in",
+                "start": 8.8,
+                "end": 8.96,
+                "confidence": 0.99902344,
+                "punctuated_word": "in"
+              },
+              {
+                "word": "100",
+                "start": 8.96,
+                "end": 9.5199995,
+                "confidence": 0.99572754,
+                "punctuated_word": "100."
+              }
+            ],
+            "paragraphs": {
+              "transcript": "\nThe earlier failure stays visible. 13 target collisions in 100 held out episodes. The separate confirmed checkpoint still has eight in 100.",
+              "paragraphs": [
+                {
+                  "sentences": [
+                    {
+                      "text": "The earlier failure stays visible.",
+                      "start": 0.0,
+                      "end": 2.1599998
+                    },
+                    {
+                      "text": "13 target collisions in 100 held out episodes.",
+                      "start": 2.48,
+                      "end": 6.0
+                    },
+                    {
+                      "text": "The separate confirmed checkpoint still has eight in 100.",
+                      "start": 6.24,
+                      "end": 9.5199995
+                    }
+                  ],
+                  "num_words": 22,
+                  "start": 0.0,
+                  "end": 9.5199995
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "utterances": [
+      {
+        "start": 0.0,
+        "end": 2.1599998,
+        "confidence": 0.9541992,
+        "channel": 0,
+        "transcript": "The earlier failure stays visible.",
+        "words": [
+          {
+            "word": "the",
+            "start": 0.0,
+            "end": 0.24,
+            "confidence": 0.9790039,
+            "punctuated_word": "The"
+          },
+          {
+            "word": "earlier",
+            "start": 0.24,
+            "end": 0.64,
+            "confidence": 1.0,
+            "punctuated_word": "earlier"
+          },
+          {
+            "word": "failure",
+            "start": 0.64,
+            "end": 1.04,
+            "confidence": 0.99902344,
+            "punctuated_word": "failure"
+          },
+          {
+            "word": "stays",
+            "start": 1.04,
+            "end": 1.4399999,
+            "confidence": 0.99902344,
+            "punctuated_word": "stays"
+          },
+          {
+            "word": "visible",
+            "start": 1.4399999,
+            "end": 2.1599998,
+            "confidence": 0.7939453,
+            "punctuated_word": "visible."
+          }
+        ],
+        "id": "e8533e29-ea27-4bea-a4f1-9420b28b6f34"
+      },
+      {
+        "start": 2.48,
+        "end": 6.0,
+        "confidence": 0.98950195,
+        "channel": 0,
+        "transcript": "13 target collisions in 100 held out episodes.",
+        "words": [
+          {
+            "word": "13",
+            "start": 2.48,
+            "end": 2.8799999,
+            "confidence": 0.9526367,
+            "punctuated_word": "13"
+          },
+          {
+            "word": "target",
+            "start": 2.8799999,
+            "end": 3.36,
+            "confidence": 0.9980469,
+            "punctuated_word": "target"
+          },
+          {
+            "word": "collisions",
+            "start": 3.36,
+            "end": 3.84,
+            "confidence": 1.0,
+            "punctuated_word": "collisions"
+          },
+          {
+            "word": "in",
+            "start": 3.84,
+            "end": 4.08,
+            "confidence": 1.0,
+            "punctuated_word": "in"
+          },
+          {
+            "word": "100",
+            "start": 4.08,
+            "end": 4.64,
+            "confidence": 0.9995117,
+            "punctuated_word": "100"
+          },
+          {
+            "word": "held",
+            "start": 4.64,
+            "end": 4.96,
+            "confidence": 0.9951172,
+            "punctuated_word": "held"
+          },
+          {
+            "word": "out",
+            "start": 4.96,
+            "end": 5.2,
+            "confidence": 0.9760742,
+            "punctuated_word": "out"
+          },
+          {
+            "word": "episodes",
+            "start": 5.2,
+            "end": 6.0,
+            "confidence": 0.9946289,
+            "punctuated_word": "episodes."
+          }
+        ],
+        "id": "a44b2473-e805-470a-bcab-a3374c527a40"
+      },
+      {
+        "start": 6.24,
+        "end": 9.5199995,
+        "confidence": 0.99713814,
+        "channel": 0,
+        "transcript": "The separate confirmed checkpoint still has eight in 100.",
+        "words": [
+          {
+            "word": "the",
+            "start": 6.24,
+            "end": 6.48,
+            "confidence": 1.0,
+            "punctuated_word": "The"
+          },
+          {
+            "word": "separate",
+            "start": 6.48,
+            "end": 6.7999997,
+            "confidence": 0.99609375,
+            "punctuated_word": "separate"
+          },
+          {
+            "word": "confirmed",
+            "start": 6.7999997,
+            "end": 7.2799997,
+            "confidence": 1.0,
+            "punctuated_word": "confirmed"
+          },
+          {
+            "word": "checkpoint",
+            "start": 7.2799997,
+            "end": 7.8399997,
+            "confidence": 0.99609375,
+            "punctuated_word": "checkpoint"
+          },
+          {
+            "word": "still",
+            "start": 7.8399997,
+            "end": 8.24,
+            "confidence": 0.9873047,
+            "punctuated_word": "still"
+          },
+          {
+            "word": "has",
+            "start": 8.24,
+            "end": 8.48,
+            "confidence": 1.0,
+            "punctuated_word": "has"
+          },
+          {
+            "word": "eight",
+            "start": 8.48,
+            "end": 8.8,
+            "confidence": 1.0,
+            "punctuated_word": "eight"
+          },
+          {
+            "word": "in",
+            "start": 8.8,
+            "end": 8.96,
+            "confidence": 0.99902344,
+            "punctuated_word": "in"
+          },
+          {
+            "word": "100",
+            "start": 8.96,
+            "end": 9.5199995,
+            "confidence": 0.99572754,
+            "punctuated_word": "100."
+          }
+        ],
+        "id": "34f91177-71ab-4f7b-8851-2c4ad7ddc248"
+      }
+    ]
+  }
+}
