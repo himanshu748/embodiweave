@@ -1,3 +1,6 @@
+"""Session/authorization tests and historical direct-dispatch compatibility.
+Live MCP execution is tested in test_mcp_agent.py.
+"""
 import json
 from types import SimpleNamespace
 from urllib.error import HTTPError
@@ -116,7 +119,7 @@ def test_provider_failure_keeps_only_actual_completed_graph_evidence(public_agen
     monkeypatch.setattr(J, "_completion", completion)
     monkeypatch.setattr(J, "execute", lambda *args: {"queries": [{"template": "search_lineage", "graph_revision": 10,
         "rows": [{"decision": "actual-d", "origin": "actual-parent", "candidate": "actual-child", "intervention": "collision", "verdict": "promoted"}]}]})
-    J._run(json.loads(J._path(s["id"]).read_text()))
+    J._legacy_run(json.loads(J._path(s["id"]).read_text()))
     result = J.status(s["id"], owner)
     assert result["state"] == "failed" and result["answer_source"] == "compiled_live_graph_evidence"
     assert "actual-child" in result["answer"] and "Free provider busy" in result["detail"]
@@ -129,7 +132,7 @@ def test_invalid_model_arguments_return_schema_without_executing_tool(public_age
     responses = iter([{"choices": [{"message": {"tool_calls": [{"id": "bad", "function": {"name": "inspect_mission", "arguments": '{"topic":"{}"}'}}]}}]},
                       {"choices": [{"message": {"content": "Could not read evidence"}, "finish_reason": "stop"}]}])
     monkeypatch.setattr(J, "_completion", lambda *args: next(responses))
-    J._run(json.loads(J._path(s["id"]).read_text()))
+    J._legacy_run(json.loads(J._path(s["id"]).read_text()))
     result = J.status(s["id"], owner)["calls"][0]["result"]
     assert result["argument_schema"] == {"type": "object", "properties": {"topic": {"type": "string", "enum": ["mission"]}}, "required": ["topic"], "additionalProperties": False}
     assert "no action was performed" in result["error"]
@@ -152,7 +155,7 @@ def test_live_loop_selects_tools_then_reports_actual_model(public_agent, monkeyp
                 "usage": {"prompt_tokens": 20, "completion_tokens": 10}}
     monkeypatch.setattr(J, "_completion", completion)
     monkeypatch.setattr(J, "execute", lambda name, args: {"queries": [{"template": "mission_requirements", "rows": [], "graph_revision": 4}]})
-    J._run(private)
+    J._legacy_run(private)
     result = J.status(s["id"], owner)
     assert result["state"] == ("completed" if finish == "stop" else "limited")
     assert result["models"] == ["provider/actual-free-model"]
@@ -170,7 +173,7 @@ def test_provider_or_graph_failure_never_substitutes_recorded_answer(public_agen
     def fail(*a):
         raise failure
     monkeypatch.setattr(J, "_completion", fail)
-    J._run(json.loads(J._path(s["id"]).read_text()))
+    J._legacy_run(json.loads(J._path(s["id"]).read_text()))
     result = J.status(s["id"], owner)
     assert result["state"] == "failed" and detail in result["detail"] and result["answer"] is None
 
@@ -181,7 +184,7 @@ def test_model_loop_stops_at_turn_limit(public_agent, monkeypatch):
     monkeypatch.setattr(J, "_completion", lambda *a: {"choices": [{"message": {"tool_calls": [
         {"id": "c", "function": {"name": "inspect_mission", "arguments": '{"topic":"mission"}'}}]}}]})
     monkeypatch.setattr(J, "execute", lambda *a: {"queries": []})
-    J._run(json.loads(J._path(s["id"]).read_text()))
+    J._legacy_run(json.loads(J._path(s["id"]).read_text()))
     result = J.status(s["id"], owner)
     assert result["state"] == "limited" and result["turns"] == J.MAX_TURNS
     assert len(result["calls"]) == J.MAX_TURNS

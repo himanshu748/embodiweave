@@ -101,7 +101,7 @@ def _worker_env():
             "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MALLOC_ARENA_MAX": "2"}
 
 
-def start(token, seed=7, consent=False, *, owner_hash=None, budget=BUDGET):
+def start(token, seed=7, consent=False, *, owner_hash=None, budget=BUDGET, agent_decision_id=None, origin_id=None):
     if consent is not True:
         raise PermissionError("Confirm that you want to start training.")
     if type(seed) is not int or not 0 <= seed < 100000:
@@ -116,6 +116,8 @@ def start(token, seed=7, consent=False, *, owner_hash=None, budget=BUDGET):
         for s in sessions:
             if s["state"] in ACTIVE:
                 if s["owner"] == identity:
+                    if agent_decision_id and s.get("agent_decision_id") != agent_decision_id:
+                        raise Limited("This browser already has a training run. Follow it before proposing another.")
                     return _public(s)
                 raise Limited("Another judge's PPO trial is running. Try again after it finishes (at most eight minutes).")
         day = time.strftime("%Y-%m-%d", time.gmtime(now))
@@ -127,6 +129,10 @@ def start(token, seed=7, consent=False, *, owner_hash=None, budget=BUDGET):
         s = {"id": sid, "owner": identity, "day": day, "started_at": now, "state": "queued", "phase": "select",
              "seed": seed, "budget": budget, "reserved_steps": reserved_steps(budget), "consumed_steps": 0, "evaluations": [], "gate": None,
              "detail": "Choosing a starting policy from FalkorDB.", "cancel_requested": False}
+        if agent_decision_id:
+            from .agent_tools import DEPLOYED_POLICY
+            s.update(agent_decision_id=agent_decision_id, proposed_origin=origin_id,
+                     decision_source="agent_mcp", target_policy=DEPLOYED_POLICY)
         _save(_path(sid), s)
         try:
             with open(_root() / (sid + ".log"), "w") as log:
@@ -205,19 +211,30 @@ def _worker(sid):
         if stop():
             raise InterruptedError()
         req = {**service.target_request(budget=budget), "candidate_run_kinds": ["library"]}
-        d = service.record_decision(req)
+        if s.get("agent_decision_id"):
+            from .select import validate_proposed_origin
+            d = records.read("decision", s["agent_decision_id"])
+            if (d.get("guardrail", {}).get("verdict") != "allowed" or d["selected"] != s["proposed_origin"]
+                    or d["request"]["budget"] != budget):
+                raise ValueError("Agent decision does not authorize this run")
+            verified = validate_proposed_origin(s["target_policy"], d["selected"], budget)
+            if verified["verdict"] != "allowed":
+                raise ValueError("Guardrail changed before worker launch")
+        else:
+            d = service.record_decision(req)
         if d["action"] not in ("train_from_parent", "train_from_scratch"):
             raise ValueError("The selection rule did not authorize training.")
-        fresh = decide(req)
-        if (fresh["action"], fresh["selected"]) != (d["action"], d["selected"]):
-            raise ValueError("Graph evidence changed during selection. Start a new trial.")
+        if not s.get("agent_decision_id"):
+            fresh = decide(req)
+            if (fresh["action"], fresh["selected"]) != (d["action"], d["selected"]):
+                raise ValueError("Graph evidence changed during selection. Start a new trial.")
         parent = d["selected"]
         parent_hash = artifacts.verify_policy(parent) if parent else None
         child = "judge-" + sid[4:]
         _update(sid, state="running", phase="train", decision_id=d["id"], selection=d,
                 parent_id=parent, policy_id=child, detail=f"Training the policy for {budget:,} steps. The view shows one of eight simulator environments.")
         out = service.train_run(child, family="static_crossing", budget_steps=budget, seed=s["seed"],
-                                parent_id=parent, run_kind="judge_demo", decision_id=d["id"],
+                                parent_id=parent, run_kind="agent_mcp_v1" if s.get("agent_decision_id") else "judge_demo", decision_id=d["id"],
                                 purpose="bounded public judge trial; not a benchmark", should_cancel=stop,
                                 on_progress=lambda p: _update(sid, consumed_steps=p["steps"], train_progress=p),
                                 on_frame=writer.observer("train"))

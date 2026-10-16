@@ -103,7 +103,7 @@ def test_model_cannot_launch_ppo_without_training_consent(isolated, monkeypatch)
         return {"choices": [{"message": {"content": "Training was not authorized."}}]}
     monkeypatch.setattr(J, "_completion", completion)
     s = J.start("Please run training", True, J.visitor(None))
-    J._run(json.loads(J._path(s["id"]).read_text()))
+    J._legacy_run(json.loads(J._path(s["id"]).read_text()))
     result = json.loads(J._path(s["id"]).read_text())
     assert result["training_started"] is False and result["training_session_id"] is None
     assert "error" in result["calls"][0]["result"]

@@ -50,6 +50,70 @@ RULE_VERSION = "ew-select-3"
 RULES = ("ew-select-1", "ew-select-2", "ew-select-3")
 
 
+def inspect_training_origins(target_policy: str, budget: int, graph=None) -> dict:
+    """New agent guardrail, separate from the frozen ew-select experiment rules.
+
+    The model can choose any verified eligible origin, not just the first rank.
+    Ranks provide the deterministic fallback order, using the existing canonical
+    validation ranking. No protected suite is queried or evaluated.
+    """
+    from . import records
+    from .search import SUITES, rank_candidates
+    from .validation import complete_evaluation
+    log = []
+    def query(name, params):
+        result = Q.run(name, params, graph)
+        log.append(result.to_log())
+        return result.dicts()
+    target = query("mcp_policy", {"policy": target_policy})
+    if not target:
+        raise ValueError("Unknown target policy")
+    target = target[0]
+    compatible = query("candidate_eligibility", {"contract": target["contract_id"], "robot": target["robot_id"]})
+    rows = query("search_validation", {"contract": target["contract_id"], "suites": SUITES})
+    accepted, rejected = [], []
+    for policy in compatible:
+        reasons = []
+        if not policy["contract_match"] or not policy["robot_match"]:
+            reasons.append("Semantic sensor/action contract or robot mismatch")
+        if policy["status"] != "completed":
+            reasons.append("Checkpoint is not completed")
+        evidence = [row for row in rows if row["policy_id"] == policy["policy_id"]]
+        latest = {row["suite_id"]: row for row in evidence}
+        if set(latest) != set(SUITES):
+            reasons.append("Missing complete evidence on all four canonical validation suites")
+        if not reasons:
+            try:
+                artifacts.verify_policy(policy["policy_id"], policy["artifact_hash"])
+                for row in latest.values():
+                    record = records.read("evaluation", row["evaluation_id"])
+                    if (record["policy_id"] != policy["policy_id"] or record["artifact_hash"] != policy["artifact_hash"]
+                            or not complete_evaluation(record, target["contract_id"])
+                            or any(record["summary"][key] != row[key] for key in ("success_rate", "collision_rate", "timeout_rate"))):
+                        raise ValueError("Evidence does not reconcile")
+            except (OSError, ValueError, KeyError):
+                reasons.append("Artifact hash or immutable episode evidence failed verification")
+        if reasons:
+            rejected.append({"policy_id": policy["policy_id"], "reasons": reasons})
+        else:
+            accepted.extend(latest.values())
+    ranking = rank_candidates(accepted)
+    return {"target_policy": target_policy, "budget": budget, "contract": target["contract_id"],
+            "ranking": ranking, "rejected": rejected, "queries": log,
+            "graph_revision": log[-1]["graph_revision"], "rule_version": "agent-guardrail-v1"}
+
+
+def validate_proposed_origin(target_policy: str, origin_id: str, budget: int, graph=None) -> dict:
+    result = inspect_training_origins(target_policy, budget, graph)
+    reasons = []
+    if type(budget) is not int or budget not in (4096, 60000, 150000):
+        reasons.append("Unsupported training budget")
+    if origin_id not in {candidate["policy_id"] for candidate in result["ranking"]}:
+        reasons.extend(next((x["reasons"] for x in result["rejected"] if x["policy_id"] == origin_id),
+                            ["Origin is not an eligible checkpoint"]))
+    return {**result, "proposed_origin": origin_id, "verdict": "vetoed" if reasons else "allowed", "reasons": reasons}
+
+
 def decide(request: dict, graph_name: str | None = None, use_history: bool = True,
            extra_exclude: set | None = None, rule: str = RULE_VERSION) -> dict:
     """request keys: mission, robot, contract, target_family_id, threshold_id, recipe, budget."""

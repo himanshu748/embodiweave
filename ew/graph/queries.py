@@ -12,6 +12,37 @@ from dataclasses import asdict, dataclass, field
 from . import db
 
 TEMPLATES = {
+    "mcp_policy": """
+MATCH (p:Policy {id:$policy})-[:USES_CONTRACT]->(c:Contract)-[:FOR_ROBOT]->(r:Robot)
+RETURN p.id AS policy_id, p.artifact_hash AS artifact_hash, p.status AS status,
+       c.id AS contract_id, r.id AS robot_id LIMIT 1""",
+    "mcp_diagnosis": """
+MATCH (p:Policy {id:$policy})<-[:ASSESSED]-(e:Evaluation)-[:ON_SUITE]->(s:Suite)
+WHERE s.role = 'validation' AND s.id IN $suites AND e.complete_suite = true
+  AND e.artifact_hash = p.artifact_hash AND e.suite_fingerprint = s.fingerprint
+OPTIONAL MATCH (f:Failure)-[:OBSERVED_IN]->(e)
+RETURN p.id AS policy_id, e.id AS evaluation_id, s.id AS suite_id, e.episodes AS episodes,
+       e.success_rate AS success_rate, e.collision_rate AS collision_rate,
+       f.id AS failure_id, f.hit AS hit, f.count AS count ORDER BY suite_id, evaluation_id LIMIT 200""",
+    "mcp_lineage": """
+MATCH path=(p:Policy {id:$policy})-[:DERIVED_FROM*1..8]->(a:Policy)
+WHERE length(path) <= $max_hops
+RETURN a.id AS ancestor_id, a.artifact_hash AS artifact_hash, length(path) AS hops,
+       [n IN nodes(path) | n.id] AS path ORDER BY hops, ancestor_id LIMIT 100""",
+    "mcp_nearest_passing_ancestor": """
+MATCH (p:Policy {id:$policy})-[:USES_CONTRACT]->(c:Contract)<-[:USES_CONTRACT]-(a:Policy)
+WITH p,a,shortestPath((p)-[:DERIVED_FROM*1..8]->(a)) AS path
+WHERE path IS NOT NULL AND length(path) <= $max_hops AND a.status = 'completed'
+MATCH (a)<-[:ASSESSED]-(e:Evaluation)-[:ON_SUITE]->(s:Suite {id:$suite})
+WHERE s.role = 'validation' AND e.complete_suite = true AND e.artifact_hash = a.artifact_hash
+  AND e.suite_fingerprint = s.fingerprint AND e.success_rate >= $min_success
+  AND e.collision_rate <= $max_collision
+RETURN a.id AS ancestor_id, a.artifact_hash AS artifact_hash, length(path) AS hops,
+       [n IN nodes(path) | n.id] AS path, e.id AS evaluation_id,
+       e.success_rate AS success_rate, e.collision_rate AS collision_rate
+ORDER BY hops, collision_rate, ancestor_id LIMIT 20""",
+    "mcp_decision": """
+MATCH (d:Decision {id:$decision}) RETURN properties(d) AS decision LIMIT 1""",
     "mujoco_transfer": """
 MATCH (p:Policy)<-[:ASSESSED]-(e:Evaluation)-[:ON_SUITE]->(s:Suite)
 WHERE s.role = 'sim2sim' AND s.physics = 'mujoco'

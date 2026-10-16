@@ -7,6 +7,7 @@ from __future__ import annotations
 import json
 import os
 import time
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 import numpy as np
@@ -24,13 +25,29 @@ from .scenarios import FAMILIES, PROTECTED_ROLES, SUITES, with_controls
 
 rl = _LazyModule("ew.rl")
 
-app = FastAPI(title="EmbodiWeave Studio")
+@asynccontextmanager
+async def lifespan(app):
+    from .mcp_server import create_server, http_app
+    server = create_server()
+    app.state.mcp_transport = http_app(server)
+    async with server.session_manager.run():
+        yield
+
+
+app = FastAPI(title="EmbodiWeave Studio", lifespan=lifespan)
+
+
+async def mcp_endpoint(scope, receive, send):
+    await app.state.mcp_transport(scope, receive, send)
+
+
+app.mount("/mcp", mcp_endpoint)
 WEB = Path(__file__).resolve().parent.parent / "web"
 STATIC_MODE = os.environ.get("EW_STATIC", "0") == "1"
 
 
 # Hosted mode permits only the separately bounded public PPO workflow; generic worker actions stay private.
-READONLY_ALLOWED_POSTS = {"/api/decide", "/api/whatif", "/api/judge/start", "/api/public-training/start", "/api/public-training/cancel"}
+READONLY_ALLOWED_POSTS = {"/api/decide", "/api/whatif", "/api/judge/start", "/api/public-training/start", "/api/public-training/cancel", "/mcp", "/mcp/"}
 
 
 @app.middleware("http")
@@ -355,6 +372,7 @@ class JudgeStartReq(BaseModel):
     question: str
     consent: bool = False
     training_consent: bool = False
+    training_requested: bool = False
 
 
 @app.post("/api/judge/start")
@@ -369,7 +387,7 @@ def judge_start(r: JudgeStartReq, request: Request, response: Response):
         raise HTTPException(403, "Open the live agent page before starting an investigation.")
     response.headers["Cache-Control"] = "no-store"
     try:
-        return J.start(r.question, r.consent, token, training_consent=r.training_consent)
+        return J.start(r.question, r.consent, token, training_consent=r.training_consent, training_requested=r.training_requested)
     except J.Limited as exc:
         raise HTTPException(429, str(exc))
     except PermissionError as exc:

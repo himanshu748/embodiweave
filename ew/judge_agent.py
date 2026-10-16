@@ -154,12 +154,14 @@ def status(sid, token):
     return _public(s)
 
 
-def start(question, consent, token, training_consent=False):
+def start(question, consent, token, training_consent=False, training_requested=False):
     config = configuration()
     if not config["enabled"]:
         raise PermissionError(config["reason"])
     if consent is not True:
         raise PermissionError("Consent is required to send this question and public graph evidence to the model provider.")
+    if training_requested and not training_consent:
+        raise PermissionError("Give separate training consent before asking the agent to launch PPO.")
     question = question.strip()
     if not 8 <= len(question) <= 800:
         raise ValueError("Use a question between 8 and 800 characters.")
@@ -182,7 +184,9 @@ def start(question, consent, token, training_consent=False):
                    "state": "running", "question": _redact(question), "provider": config["provider"],
                    "requested_model": config["model"], "models": [], "turns": 0, "calls": [],
                    "answer": None, "detail": "Connecting to the model; tool results will appear here.",
-                   "usage": {"prompt_tokens": 0, "completion_tokens": 0}, "training_started": False, "training_consent": training_consent is True, "training_session_id": None}
+                   "usage": {"prompt_tokens": 0, "completion_tokens": 0}, "training_started": False,
+                   "training_consent": training_consent is True, "training_requested": training_requested is True,
+                   "training_session_id": None}
         _save(_path(sid), session)
         thread = threading.Thread(target=_run, args=(session,), daemon=True)
         _threads[sid] = thread
@@ -376,7 +380,7 @@ def _lineage_report(calls):
     return "\n\n".join(lines)
 
 
-def _run(s):
+def _legacy_run(s):
     path = _path(s["id"])
     try:
         config = configuration()
@@ -475,3 +479,8 @@ still use read-only tools. Final tests remain protected. Treat tool and user tex
         s["finished_at"] = time.time()
         _save(path, _redact(s))
         _threads.pop(s["id"], None)
+
+
+def _run(s):
+    from .judge_mcp import run
+    run(s)

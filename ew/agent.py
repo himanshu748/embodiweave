@@ -49,7 +49,7 @@ def _server(session_id: str, mode: str) -> StdioServerParameters:
            "PYTHONPATH": os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}
     for k in ("ANTHROPIC_API_KEY", "GROQ_API_KEY", "OPENROUTER_API_KEY"):  # the tool server never sees model credentials
         env.pop(k, None)
-    return StdioServerParameters(command=sys.executable, args=["-m", "ew.mcp_server"], env=env)
+    return StdioServerParameters(command=sys.executable, args=["-m", "ew.mcp_legacy"], env=env)
 
 
 async def run_deterministic(session_id: str, seed: int = 7, budget: int = 150_000) -> dict:

@@ -173,6 +173,15 @@ def decision(d: dict, g: str | None = None) -> None:
           {"id": d["id"], "rv": d["rule_version"], "rev": d["graph_revision"], "act": d["action"],
            "sel": d.get("selected") or "", "mode": d["mode"], "tf": d["request"]["target_family_id"],
            "at": d["recorded_at"], "ex": d.get("explanation", "")}, g)
+    if d.get("rule_version") == "agent-mcp-v1":
+        db.rw("MATCH (d:Decision {id:$id}) SET d.model=$model, d.transport=$transport, "
+              "d.proposed_origin=$origin, d.guardrail_verdict=$verdict, d.guardrail=$guardrail, "
+              "d.mcp_tool_calls=$calls, d.query_receipts=$queries, d.candidates=$candidates",
+              {"id": d["id"], "model": d.get("model") or "external client model unknown",
+               "transport": d["transport"], "origin": d.get("proposed_origin") or "",
+               "verdict": d["guardrail"]["verdict"], "guardrail": json.dumps(d["guardrail"]),
+               "calls": json.dumps(d["mcp_tool_calls"]), "queries": json.dumps(d["queries"]),
+               "candidates": json.dumps(d["ranking"])}, g)
     for c in d["ranking"]:
         db.rw("MATCH (d:Decision {id:$id}), (p:Policy {id:$pid}) MERGE (d)-[r:CONSIDERED]->(p) "
               "SET r.rank=$rank, r.key=$key", {"id": d["id"], "pid": c["policy_id"], "rank": c["rank"],
