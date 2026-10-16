@@ -76,12 +76,15 @@ def test_physics_ingester_rejects_protected_or_inconsistent_evidence(tmp_path,mo
 
 
 def test_recovery_restores_physics_decision_evidence_without_confirmation(monkeypatch):
+    import sys
     from ew import artifacts, records
     from ew.graph import db, ingest, queries
     root=physics_study.ROOT/"artifacts"
     monkeypatch.setattr(artifacts,"ROOT",root)
     monkeypatch.setattr(artifacts,"POLICIES",root/"policies")
     monkeypatch.setattr(records,"RECORDS",root/"records")
+    # Hosted recovery must work without the optional MuJoCo training dependency.
+    monkeypatch.setitem(sys.modules,"mujoco",None)
     graph="ew_test_physics_recovery"
     try:
         ingest.rebuild(graph)

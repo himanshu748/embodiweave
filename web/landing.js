@@ -131,7 +131,7 @@ async function decisionChain() {
       <span class="mono">${pct(c.collision_rate)} hit <small>limit ${pct(c.max_collision)}</small></span></li>`).join("");
     const passed = p.checks.filter((c) => c.pass).length;
     $("#gateBox").className = "gatebox " + (p.verdict === "promoted" ? "ok" : "bad");
-    $("#gateBox").innerHTML = `<b>${p.verdict === "promoted" ? "Promoted" : "Rejected"}</b> ${passed} of ${p.checks.length} suites passed, so <span class="mono">${esc(p.policy_id)}</span> does not ship and the deployed policy stays. The verdict is written back to the graph as a Promotion node.`;
+    $("#gateBox").innerHTML = `<b>${p.verdict === "promoted" ? "Promoted" : "Rejected"}</b> In this original recorded run, ${passed} of ${p.checks.length} suites passed for <span class="mono">${esc(p.policy_id)}</span>. Its recorded verdict remains unchanged. See the confirmed 2D release above for the current demo policy.`;
   } catch {
     $("#bars").innerHTML = `<li class="state err">The recorded decision could not be loaded. Refresh to retry.</li>`;
     $("#checks").innerHTML = "";

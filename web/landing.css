@@ -384,3 +384,36 @@ a.live:hover { border-color: var(--ok); }
 section[id] { scroll-margin-top: 84px; }
 
 .tag3d { background: var(--ink, #1b2026); color: #fbfaf7; border-left: 3px solid var(--c); }
+
+/* Reference study: Aceternity's framed hierarchy and tactile controls, adapted to the lab. */
+.lab-home { background-size: 48px 48px; }
+.lab-home > .nav { top: 12px; max-width: 1120px; width: calc(100% - 32px); margin: 16px auto 0; padding: 10px 14px 10px 20px; border: 1px solid var(--line); border-radius: 16px; background: color-mix(in srgb,var(--surface) 94%,transparent); box-shadow: 0 2px 2px #1b202605,0 8px 24px #1b202606; }
+.lab-home main { border-inline: 1px dashed var(--line); }
+.lab-home .hero { padding-block: 48px 40px; }
+.lab-home .hero-copy { padding-top: 30px; }
+.lab-home .lede { max-width: 49ch; margin-bottom: 24px; }
+.lab-home .replay { box-shadow: 0 1px 2px #1b202608,0 14px 40px #1b202605; }
+.lab-home .btn { box-shadow: inset 0 1px 0 #ffffff25,0 1px 2px #1b202610; }
+.lab-home .btn.ghost { box-shadow: inset 0 1px 0 #fff,0 1px 2px #1b202608; }
+.release-proof { border-left: 2px solid var(--accent); padding: 2px 0 2px 18px; margin-bottom: 24px; }
+.proof-label { font: 500 11px/1.4 var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.proof-value { display: flex; align-items: center; gap: 18px; margin-block: 7px; }
+.proof-value > strong { font: 600 42px/1 var(--display); letter-spacing: -.06em; font-variant-numeric: tabular-nums; }
+.proof-value > strong span { font-size: 21px; color: var(--muted); letter-spacing: -.04em; }
+.proof-value p { margin: 0; font-size: 13px; line-height: 1.5; color: var(--muted); }
+.proof-value b { font-weight: 500; color: var(--ink); }
+.proof-note { font-size: 12px; line-height: 1.6; color: var(--muted); margin: 8px 0 0; max-width: 46ch; }
+.proof-note a { display: inline-block; padding-block: 6px; }
+.archive-label { margin: 8px 0 12px; font: 500 11px/1.5 var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.lab-home .judge-route { grid-template-columns: 1fr; gap: 28px; padding-block: 48px; }
+.lab-home .judge-route > div { display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px; }
+.lab-home .judge-route > div .eyebrow { grid-column: 1/-1; }
+.lab-home .judge-route .note { margin: 0; max-width: 40ch; align-self: center; }
+.lab-home .judge-route ol { gap: 12px; }
+.lab-home .judge-route a { position: relative; border: 1px solid var(--line); border-radius: 12px; padding: 24px; gap: 12px; background: var(--surface); box-shadow: 0 1px 2px #1b202605; transition: border-color var(--t-std) var(--ease),background var(--t-std) var(--ease); }
+.lab-home .judge-route a::after { content: '↗'; position: absolute; right: 22px; top: 19px; color: var(--muted); font-size: 20px; }
+.lab-home .judge-route a:hover,.lab-home .judge-route a:focus-visible { border-color: var(--accent); background: #fffdf8; }
+.lab-home .judge-route a b { font: 600 20px/1.3 var(--display); max-width: 18ch; }
+@media(max-width:900px) { .lab-home .hero-copy { padding-top: 0; } .lab-home > .nav { top: 8px; margin-top: 8px; } }
+@media(max-width:640px) { .lab-home > .nav { width: calc(100% - 24px); padding-inline: 12px; } .lab-home main { border: 0; } .lab-home .hero { padding-block: 32px; } .lab-home .judge-route > div { grid-template-columns: 1fr; gap: 12px; } .proof-value > strong { font-size: 38px; } .lab-home .judge-route a { padding: 22px; } }
+@media(max-width:900px) { .lab-home .hero .lede { order:3; } .lab-home .hero .release-proof { order:4; } .lab-home .hero .ctas { order:5; } .lab-home .hero .replay { order:6; } .lab-home .hero .heroq { order:7; } .lab-home .hero .live { order:8; } .lab-home .hero h1,.lab-home .hero .lede,.lab-home .hero .release-proof,.lab-home .hero .ctas { margin-bottom:0; } }

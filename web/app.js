@@ -261,14 +261,14 @@ function renderDecision() {
       t.child_policy_id ? [" · child ", el("span", { class: "chip", onclick: () => inspect(t.child_policy_id) }, t.child_policy_id)] : ""));
   }
   const tbl = $("#rankTbl"); tbl.innerHTML = "";
-  const search = ["search-v1", "robustness-v2"].includes(d.rule_version);
-  tbl.append(el("tr", {}, ...(search ? ["#", "Checkpoint", "Suites passed", d.rule_version === "robustness-v2" ? "Collision clearance deficit" : "Worst deficit", "Validation evidence", "Selection key"] :
+  const search = ["search-v1", "robustness-v2", "physics-adapt-v1"].includes(d.rule_version);
+  tbl.append(el("tr", {}, ...(search ? ["#", "Checkpoint", "Suites passed", ["robustness-v2", "physics-adapt-v1"].includes(d.rule_version) ? "Collision clearance deficit" : "Worst deficit", "Validation evidence", "Selection key"] :
     ["#", "Checkpoint", "Transfer estimate", "Matched validation", "Applicable trials", "Lineage"]).map((h) => el("th", {}, h))));
   for (const c of d.ranking || []) {
     if (search) {
       tbl.append(el("tr", {class:c.policy_id === d.selected ? "sel" : ""}, el("td", {}, c.rank),
         el("td", {}, el("span", {class:"chip", onclick:()=>inspect(c.policy_id)}, c.policy_id)),
-        el("td", {}, `${c.passed}/4`), el("td", {}, c.clearance_deficit === undefined ? pct(c.sort_key[1]) : `${c.clearance_deficit} episodes`),
+        el("td", {}, `${c.passed}/${d.rule_version === "physics-adapt-v1" ? 8 : 4}`), el("td", {}, c.clearance_deficit === undefined ? pct(c.sort_key[1]) : `${c.clearance_deficit} episodes`),
         el("td", {}, ...Object.values(c.validation).map(v=>el("span", {class:"chip", onclick:()=>inspect(v.evaluation_id)}, v.suite_id))),
         el("td", {class:"hint"}, JSON.stringify(c.sort_key.slice(0,4)))));
       continue;
