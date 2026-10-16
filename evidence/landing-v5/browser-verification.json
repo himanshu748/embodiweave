@@ -1,0 +1,28 @@
+{
+  "url": "https://embodiweave.52.202.25.181.sslip.io/",
+  "graphReadyMs": 1547,
+  "desktop": {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "waiting": false,
+    "historyClosed": true
+  },
+  "mobile": {
+    "width": 375,
+    "scrollWidth": 375,
+    "waiting": false
+  },
+  "historyOpened": true,
+  "video": {
+    "source": "https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v5-720p.mp4",
+    "duration": 118.101,
+    "width": 1280,
+    "height": 720,
+    "playing": true
+  },
+  "errors": [],
+  "warnings": [],
+  "profile": "fresh nonpersistent external Chromium",
+  "deployed_commit": "52171214780858b836d0aa9dd7da90a68468d045",
+  "checked_at": "2026-10-16T16:47:05.891421+00:00"
+}

@@ -1,0 +1,12 @@
+{
+  "evidence/landing-v5/browser-verification.json": "d4ec2a80a58719453a68425df1fb4703eb6e09aeefd93e1b7796c6c5c831b1c1",
+  "evidence/landing-v5/deployed-media.json": "9feaa1fc5b3cddee0eee51b640e6b5ef7523cdafde4e4debe1b2f0e3afede53c",
+  "evidence/landing-v5/local-desktop-1440.png": "2b63e272f8cd5dce140d23f12812b6705793fe5726b98cc9f6697bd45748165e",
+  "evidence/landing-v5/local-mobile-375.png": "a9f143de3d64f9f46b4e2d8dcbe95399d2c46a126c4bdc213ab54e5103225d55",
+  "evidence/landing-v5/public-desktop-1440.png": "3c2e812375862c5e08cd61d0d2d256f6b6e2bf0721367afe96d73e5d10c465e9",
+  "evidence/landing-v5/public-mcp-verification.json": "56a8a97dc377618ec76404647dcc6c4c40936c34a12db9cdd7390a9f411c5b0a",
+  "evidence/landing-v5/public-mobile-375.png": "2490f1d1116741a2b597eeb2e4085190e154bd4d021216b5e9fac82d473a8550",
+  "evidence/landing-v5/readme-links.json": "b88c92109f3392c2406ddab7af4fbc3003baaa795bf13665c14bff531f5f6ca1",
+  "evidence/landing-v5/section-order.json": "0d54ab04e7ee2c7cb982c66677acbad1c22640c52d20a5916a2b6eab958dfa18",
+  "evidence/landing-v5/verification.json": "3ccdd1dcc2066d803690c89fd848fda7d61f49a8614fe3be914f106f3ed6764c"
+}

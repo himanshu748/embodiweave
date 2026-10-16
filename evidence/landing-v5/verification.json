@@ -1,0 +1,20 @@
+{
+  "deployed_commit": "52171214780858b836d0aa9dd7da90a68468d045",
+  "local_tests": {
+    "passed": 143,
+    "seconds": 33.34,
+    "command": "EW_FALKOR_PORT=16379 ../prd-audit-venv/bin/python -m pytest -q",
+    "graph": "EmbodiWeave FalkorDB via existing SSH tunnel; test graph namespaces only"
+  },
+  "deployment": {
+    "replaced_container": "ew-api",
+    "agent_study": "public-agent-mcp",
+    "proxy_changed": false,
+    "decisiondebt_changed": false
+  },
+  "old_evidence_modified": false,
+  "frozen_gate_or_suite_code_modified": false,
+  "v4_backup_hashes_verified": true,
+  "public_llm_or_training_retried": false,
+  "note": "Read-only post-deploy MCP checks verify the context-repair deployment. They do not establish a completed second LLM training run."
+}

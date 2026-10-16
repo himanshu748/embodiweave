@@ -1,0 +1,30 @@
+[
+  {
+    "url": "https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v5.mp4",
+    "status": 200,
+    "bytes": 5168663,
+    "sha256": "2dfe700299b8b30ad6143b4279268b191ed057d4d34385ec10503faa8b7d9e2e",
+    "matches_checked_in_asset": true
+  },
+  {
+    "url": "https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v5-720p.mp4",
+    "status": 200,
+    "bytes": 3275834,
+    "sha256": "0c7e68f8097b73d83f2569ceb89e859505aac5ce98fc74dac40560ce0b1401f0",
+    "matches_checked_in_asset": true
+  },
+  {
+    "url": "https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v5-narration-free.mp4",
+    "status": 200,
+    "bytes": 5021254,
+    "sha256": "79cfffefd008be663a25f1451b0c0db820ffdb2434d526065ba81e208a3c5491",
+    "matches_checked_in_asset": true
+  },
+  {
+    "url": "https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v4.mp4",
+    "status": 200,
+    "bytes": 6817400,
+    "sha256": "ab163cc2bb41563b02cfcf264e6ce4aad5507f9a97841b91c3a0cbadd03818f9",
+    "matches_checked_in_asset": true
+  }
+]
