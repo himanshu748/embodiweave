@@ -9,16 +9,16 @@ def sync():
  order=['static_crossing','open','static','crossing']
  lines=['<!-- physics-adapt-v1:start -->','## Separate MuJoCo adaptation','',
  '**These new checkpoints train in both 2D and MuJoCo.** The unchanged-weight transfer measurements above remain frozen. This preregistered study uses fresh physics development suites and keeps the confirmed 2D parent as the default 2D demo policy.','',
- '| Completed trial | Original 2D gate | Physics target | Physics open | Physics static | Physics crossing |',
- '|---|---:|---:|---:|---:|---:|',
- '| **Collision limit (maximum)** | Four suites | **10%** | **5%** | **10%** | **15%** |']
+ '| Completed trial | Original 2D gate | Physics target | Physics open | Physics static | Physics crossing | Selection |',
+ '|---|---:|---:|---:|---:|---:|---|',
+ '| **Collision limit (maximum)** | Four suites | **10%** | **5%** | **10%** | **15%** | Extra clearance required |']
  for a in s['attempts']:
   cells=[]
   for f in order:
    r=next(r for r in a['physics_development'] if r['family']==f)
    cells.append(f"{r['summary']['collision']}/{r['summary']['episodes']} ({'Pass' if r['pass'] else 'Fail'})")
   passed=sum(c['pass'] for c in a['canonical_checks'])
-  lines.append('| '+a['recipe']+' | '+str(passed)+'/4 | '+' | '.join(cells)+' |')
+  lines.append('| '+a['recipe']+' | '+str(passed)+'/4 | '+' | '.join(cells)+f" | {a['validation_suites_passed']}/8; {a['physics_clearance_deficit']} episodes short of clearance |")
  lines += ['', 'Physics cells show collision counts on 40 development episodes per family. Pass also requires the original success floors: target 80%, open 90%, static 75%, crossing 75%. Every trial requests 300,000 steps with fixed seed 23; actual rollout-rounded steps and exact artifact hashes are in the evidence index. The authored graph rule requires all eight validation suites plus one episode of physics collision clearance before selection stops. Promo-1 code and thresholds are unchanged.','']
  if s['physics_confirmation']:
   lines += ['### One fresh physics confirmation','',

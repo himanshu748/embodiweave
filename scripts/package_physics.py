@@ -6,16 +6,18 @@ import zipfile
 from pathlib import Path
 
 from ew import artifacts, records, service
-from ew.physics_study import OUT, ROOT, RULE, protocol, study_hash
+from ew.physics_study import OUT, ROOT, RULE, protocol, study_hash, reads, ranking
 from ew.search import CRITERIA
 from scripts.package_search import copy_once
 
 
 def publish():
     destination = ROOT / "artifacts"
-    trials = [t for t in records.all_of("trial") if t.get("search_rule") == RULE]
+    trials = [t for t in records.all_of("trial") if t.get("search_rule") in (RULE,"physics-followup-v1")]
     pids = {t["child_policy_id"] for t in trials}
     dids = {t["decision_id"] for t in trials}
+    selection_reads=reads()
+    ranked={r["policy_id"]:r for r in ranking(selection_reads)}
     paths, attempts = [], []
     for kind in ("trial", "run", "evaluation", "decision", "promotion"):
         for rec in records.all_of(kind):
@@ -67,10 +69,12 @@ def publish():
             assert all(hashlib.sha256(z.read(n)).hexdigest()==h for n,h in json.loads(z.read("checksums.json")).items())
         paths.append(bundle)
         gate = next(g for g in records.all_of("promotion") if g["policy_id"] == pid)
-        attempts.append({"policy_id":pid,"artifact_hash":manifest["artifact_hash"],"parent_id":trial["parent_id"],
+        attempts.append({"policy_id":pid,"study":trial["search_rule"],"artifact_hash":manifest["artifact_hash"],"parent_id":trial["parent_id"],
             "trial_id":trial["id"],"decision_id":trial["decision_id"],"recipe":trial["recipe"],
             "requested_steps":trial["budget_steps"],"actual_steps":trial["consumed_steps"],"seed":trial["seed"],
             "canonical_checks":gate["checks"],"canonical_verdict":gate["verdict"],
+            "validation_suites_passed":ranked[pid]["passed"],"physics_clearance_deficit":ranked[pid]["clearance_deficit"],
+            "selection_eligible":ranked[pid]["passed"]==8 and ranked[pid]["clearance_deficit"]==0,
             "physics_development":measured(OUT/"development"/pid),
             "bundle_url":"api/download/"+bundle.name,"bundle_sha256":artifacts.sha256_file(bundle)})
     selected = json.loads((OUT/"selected.json").read_text()) if (OUT/"selected.json").exists() else None
@@ -98,6 +102,7 @@ def publish():
         paths.append(target)
         confirmation_bundle={"url":"api/download/"+target.name,"sha256":artifacts.sha256_file(target)}
     summary={"study":RULE,"protocol_sha256":study_hash(),"training_domains":["2D","MuJoCo"],
+        "validation_query_receipts":[q.to_log() for q in selection_reads],
         "attempts":attempts,"selected_policy":selected["policy_id"] if selected else None,
         "physics_confirmation":confirmation,"physics_confirmation_pass":all(r["pass"] for r in confirmation) if confirmation else None,
         "confirmation_bundle":confirmation_bundle,
@@ -105,6 +110,7 @@ def publish():
     for target in (OUT/"summary.json",ROOT/"web/media/physics-evidence.json"):
         target.write_text(json.dumps(summary,indent=2)+"\n");paths.append(target)
     paths += [f for f in OUT.rglob("*") if f.is_file() and f != OUT/"checksums.json"]
+    paths += [f for f in (ROOT/"evidence/physics-followup-v1").glob("*.json")]
     (OUT/"checksums.json").write_text(json.dumps({str(p.relative_to(ROOT)):artifacts.sha256_file(p) for p in sorted(set(paths))},indent=2)+"\n")
     print(json.dumps({"attempts":len(attempts),"selected":summary["selected_policy"],"physics_confirmation_pass":summary["physics_confirmation_pass"]}))
 

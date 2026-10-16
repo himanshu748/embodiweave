@@ -33,12 +33,16 @@ def test_physics_confirmation_is_disjoint_and_never_a_planning_suite():
     assert set(physics_study.physical_ids())=={s["id"] for s in p["development"]}
 
 
-def test_physics_selection_cannot_resume_after_freeze(tmp_path,monkeypatch):
+@pytest.mark.parametrize("followup",[False,True])
+def test_physics_selection_cannot_resume_after_freeze(tmp_path,monkeypatch,followup):
     from ew import artifacts
     monkeypatch.setattr(artifacts,"ROOT",tmp_path)
     (tmp_path/"physics-adapt-v1-selected.json").write_text('{}')
     with pytest.raises(PermissionError,match="frozen"):
-        physics_study.run_next()
+        if followup:
+            from ew.physics_followup import run
+            run()
+        else:physics_study.run_next()
 
 
 def test_training_cost_changes_no_contact_dynamics():

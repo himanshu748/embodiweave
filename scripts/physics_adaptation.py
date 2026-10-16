@@ -8,7 +8,7 @@ from ew.physics_study import OUT, RULE, protocol, study_hash, initialize, run_ne
 
 
 def freeze():
-    trials=[t for t in records.all_of("trial") if t.get("search_rule")==RULE]
+    trials=[t for t in records.all_of("trial") if t.get("search_rule") in (RULE,"physics-followup-v1")]
     queries=reads()
     ranked={r["policy_id"]:r for r in ranking(queries)}
     selected=next((ranked[t["child_policy_id"]] for t in trials if t["child_policy_id"] in ranked and
@@ -20,6 +20,11 @@ def freeze():
     rec={"policy_id":pid,"artifact_hash":artifacts.verify_policy(pid),"selection_stopped":True,
          "training_domains":["2D","MuJoCo"],"protocol_sha256":study_hash(),"validation_gate":gate,"ranking":selected,
          "selection_queries":[q.to_log() for q in queries]}
+    trial=next(t for t in trials if t["child_policy_id"]==pid)
+    training_protocol=OUT/"protocol.json" if trial["search_rule"]==RULE else OUT.parent/"physics-followup-v1/protocol.json"
+    if artifacts.sha256_file(training_protocol)!=trial["protocol_sha256"]:raise PermissionError("Training protocol does not verify")
+    rec["training_study"]=trial["search_rule"]
+    rec["training_protocol_sha256"]=trial["protocol_sha256"]
     with (artifacts.ROOT/"physics-adapt-v1-selected.json").open("x") as f:json.dump(rec,f,indent=2)
     with (OUT/"selected.json").open("x") as f:json.dump(rec,f,indent=2)
     return rec

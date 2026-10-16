@@ -1,0 +1,15 @@
+{
+  "rule": "physics-followup-v1",
+  "registered_at": "2026-10-16T10:05:37.971402+00:00",
+  "reason": "The original three attempts are complete. Two pass all eight validation suites, but neither meets the preregistered extra physics collision clearance. No physics confirmation has been opened.",
+  "parent_selection": "Live FalkorDB eight-suite ranking from physics-adapt-v1; failed count, clearance deficit, deficits, score, ID. Select the highest-ranked checkpoint.",
+  "budget_steps": 600000,
+  "max_trials": 1,
+  "seed": 23,
+  "recipe": "ppo-mixed-mujoco-lr-v1",
+  "intervention": "Longer training only, retaining the selected third trial recipe. No seed sweep.",
+  "validation_protocol_sha256": "4dcda55650141fb25640358842e850536a1675136b6a7d5aee0ff0505e2e6b64",
+  "validation": "Reuse the unchanged canonical and physics-adapt-v1 DEVELOPMENT suites only. Full 180 canonical plus 160 physics episodes after training. No confirmation or spent final outcomes are read.",
+  "selection": "Freeze only if all eight validation suites pass and the existing one-episode-per-physics-suite collision clearance is met. Otherwise stop after this one follow-up.",
+  "confirmation": "The already authorized, still unopened single physics confirmation batch, only after freezing. No new confirmation authorization or new 2D final evaluation is claimed."
+}
