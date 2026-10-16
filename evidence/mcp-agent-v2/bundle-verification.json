@@ -1,0 +1,9 @@
+{
+  "bundle_sha256": "5019c21b27b984d78e479883ef6b3c854385a7ce4c3eea8d64472860bc5d623c",
+  "verified_members": 52,
+  "policy_artifact_hash": "c6c910a7a9b826b3a23370e4c9762c95537cb7dfb9e1512d7c32ab37532ecd13",
+  "complete_validation_episodes": 180,
+  "known_credential_patterns_in_text_members": 0,
+  "scope_limit": "Known credential patterns in text members; serialized policy files checked by content hash, not a credential-format scan",
+  "decision_written_before_run": true
+}
