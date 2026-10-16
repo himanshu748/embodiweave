@@ -338,6 +338,8 @@ def test_retry_guard_requires_explicit_prior_outcome_citation(world,monkeypatch)
 
 
 def test_retry_cannot_start_a_second_attempt(world,monkeypatch):
+    # This fixture tests attempt reuse, independently of the real study deadline.
+    monkeypatch.setattr(J.time, 'time', lambda: 1792173000.0)
     monkeypatch.setenv('EW_AGENT_STUDY','v3-retry')
     monkeypatch.setattr(J,'configuration',lambda:{'enabled':True,'provider':'fixture','model':'fixture'})
     monkeypatch.setattr(J.threading,'Thread',lambda **kw:SimpleNamespace(start=lambda:None))
