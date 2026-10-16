@@ -15,6 +15,11 @@ RECIPES["ppo-collision20-v1"] = {**RECIPES["ppo-r1"], "collision_penalty": -20.0
 RECIPES["ppo-entropy-v1"] = {**RECIPES["ppo-r1"], "ent_coef": 0.005}
 RECIPES["ppo-lr-v1"] = {**RECIPES["ppo-r1"], "learning_rate": 1e-4}
 
+# Separate preregistered robustness study. Historical recipes remain immutable.
+RECIPES["ppo-rehearsal-collision20-v2"] = {**RECIPES["ppo-rehearsal-v1"], "collision_penalty": -20.0}
+RECIPES["ppo-rehearsal-collision20-lr-v2"] = {**RECIPES["ppo-rehearsal-collision20-v2"], "learning_rate": 1e-4}
+RECIPES["ppo-rehearsal-collision20-entropy-v2"] = {**RECIPES["ppo-rehearsal-collision20-v2"], "ent_coef": 0.005}
+
 
 def reserved_steps(budget: int, recipe: str = "ppo-r1") -> int:
     if not isinstance(budget, int) or isinstance(budget, bool) or budget <= 0:
