@@ -89,8 +89,9 @@ Cells are **goals / collisions / timeouts out of 40**, not percentages. Rehearsa
 has fewer target collisions (3/40, 7.5%) than the deployed policy (24/40, 60%),
 but still collides in **8/40 crossing episodes (20%)**. This small transfer
 study is not a safety certificate or another promo-1 gate. The existing
-validation and held-out results above remain unchanged; production still uses
-`P-static-b`.
+validation and held-out results above remain unchanged.
+
+`P-static-b` remains the unchanged demo baseline because the proposed replacement failed its held-out collision limit; its 24/40 MuJoCo collisions are a documented failure, and the demo makes no hardware-safety claim.
 
 FalkorDB stores these as separate `Suite` nodes with `role='sim2sim'` and
 `physics='mujoco'`, exact-artifact `Evaluation` nodes and collision `Failure`
@@ -203,7 +204,7 @@ Bundles include saved model weights, normalization, contract, validation records
 
 ## Film and credits
 
-The v2 film is **119.23 seconds, 1920×1080 at 30 fps, 8.73 MB**. Robot motion comes from recorded MuJoCo states produced by the saved PPO checkpoints. Graph layouts, titles, camera moves, sensor overlays and learning-curve plots are editorial graphics backed by the evidence. No robot footage was keyframed or AI-generated.
+The v2 film is **119.23 seconds, 1920×1080 at 30 fps, 8.75 MB**. Robot motion comes from recorded MuJoCo states produced by the saved PPO checkpoints. Graph layouts, titles, camera moves, sensor overlays and learning-curve plots are editorial graphics backed by the evidence. No robot footage was keyframed or AI-generated.
 
 [Watch v2](https://embodiweave.52.202.25.181.sslip.io/guide.html#film) · [v1 fallback](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo.mp4) · [Timed script](docs/demo/SCRIPT.md) · [SRT](docs/demo/embodiweave-demo-v2.srt) · [YouTube upload notes](docs/demo/YOUTUBE.md) · [Voice receipts](evidence/film/voice-receipts.json).
 

@@ -39,3 +39,14 @@ def test_recorded_transfer_motion_reproduces_from_actions():
         for action in trace["actions"][:5]:env.step(action)
         actual=np.array([f["qpos"] for f in env.physics_trace])
         np.testing.assert_allclose(actual,trace["qpos"][:len(actual)],atol=1e-6,rtol=1e-6)
+
+
+def test_film_table_uses_recorded_checks_and_actual_gate_floors():
+    pytest.importorskip("mujoco")
+    pytest.importorskip("PIL")
+    from scripts.film.render import gate_table_rows
+    rows,criteria=gate_table_rows()
+    assert [c['min_success'] for c in criteria]==[.8,.9,.75,.75]
+    assert rows[1][1:5]==('≤10%','≤5%','≤10%','≤15%')
+    assert [r[-1] for r in rows[2:]]==['1 / 4','3 / 4','4 / 4']
+    assert rows[-1][1]=='95 / 5'

@@ -209,7 +209,7 @@ RETURN pid AS policy_id, t.id AS trial_id,
         <li><b>Transfer history is conditional.</b> A past trial only counts if its target family, recipe, budget, threshold and contract all match, a relationship traversal through the evidence graph.</li>
         <li><b>Contracts gate reuse.</b> A checkpoint with a different ray order is rejected before ranking, with the differing fields named.</li>
         <li><b>Every decision is provenance.</b> The decision records the graph revision and the exact queries it read, so it can be replayed.</li>
-        <li><b>All 12 graph query templates are read-only</b> and run through GRAPH.RO_QUERY, so the agent cannot write the graph.</li>
+        <li><b>The graph query templates are read-only</b> and run through GRAPH.RO_QUERY, so the agent cannot write the graph.</li>
       </ul>
     </div>
   </div>

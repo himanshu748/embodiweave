@@ -27,12 +27,20 @@ def burn_captions(record, subtitles):
         lines=block.splitlines();a,b=lines[1].split(' --> ')
         captions.append((clock(a),clock(b),' '.join(lines[2:])))
     args=['ffmpeg','-hide_banner','-loglevel','error','-i',str(OUT/'picture-v2.mp4')]
-    if (OUT/'scene-06.mp4').exists():
-        scene=next(s for s in record['scenes'] if s['id']==6)
-        args+=['-i',str(OUT/'scene-06.mp4'),'-filter_complex',
-            f"[0:v]split[a][b];[a]trim=end={scene['start']},setpts=PTS-STARTPTS[pre];"
-            f"[1:v]setpts=PTS-STARTPTS[mid];[b]trim=start={scene['start']+scene['duration']},setpts=PTS-STARTPTS[post];"
-            '[pre][mid][post]concat=n=3:v=1:a=0[v]','-map','[v]']
+    patches=[s for s in record['scenes'] if (OUT/f"scene-{s['id']:02}.mp4").exists()]
+    if patches:
+        for scene in patches:args+=['-i',str(OUT/f"scene-{scene['id']:02}.mp4")]
+        filters=[f"[0:v]split={len(patches)+1}"+''.join(f'[base{i}]' for i in range(len(patches)+1))]
+        cursor=0.;segments=[]
+        for i,scene in enumerate(patches):
+            filters.append(f"[base{i}]trim=start={cursor}:end={scene['start']},setpts=PTS-STARTPTS[pre{i}]")
+            filters.append(f"[{i+1}:v]setpts=PTS-STARTPTS[mid{i}]")
+            segments += [f'[pre{i}]',f'[mid{i}]']
+            cursor=scene['start']+scene['duration']
+        filters.append(f"[base{len(patches)}]trim=start={cursor},setpts=PTS-STARTPTS[post]")
+        segments.append('[post]')
+        filters.append(''.join(segments)+f'concat=n={len(segments)}:v=1:a=0[v]')
+        args+=['-filter_complex',';'.join(filters),'-map','[v]']
     args+=['-an','-pix_fmt','rgb24','-f','rawvideo','pipe:1']
     decoder=subprocess.Popen(args,stdout=subprocess.PIPE)
     encoder=subprocess.Popen(['ffmpeg','-y','-hide_banner','-loglevel','error','-f','rawvideo','-pix_fmt','rgb24',

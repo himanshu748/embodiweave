@@ -19,6 +19,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 from scripts.film.physics import Replay
+from ew.criteria import PROMOTION
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT.parents[1] / "outputs/film-v2"
@@ -48,6 +49,23 @@ def background():
     for x in range(0,W,36): d.line((x,0,x,H), fill="#e5e5dc")
     for y in range(0,H,36): d.line((0,y,W,y), fill="#e5e5dc")
     return image
+
+
+def gate_table_rows():
+    """Bind film labels to recorded validation checks and the frozen criteria."""
+    rule=PROMOTION['promo-1'];criteria=[rule['target'],*rule['retained']]
+    percent=lambda value:f'{100*value:.2f}'.rstrip('0').rstrip('.')
+    rows=[('CANDIDATE','TARGET','OPEN','STATIC','CROSSING','GATE'),
+          ('Collision limit',*[f"≤{percent(c['max_collision'])}%" for c in criteria],'All four')]
+    promotions=[json.loads(p.read_text()) for p in (ROOT/'artifacts/records/promotion').glob('*.json')]
+    for label,policy in [('Original scratch','scratch~a7ee2c-s7'),('Longer training','search-20261015185536-6720c9'),
+                         ('Rehearsal lineage','search-20261015185749-4a6581')]:
+        candidates=[r for r in promotions if r.get('policy_id')==policy and r.get('rule')=='promo-1']
+        record=sorted(candidates,key=lambda r:r['id'])[-1]
+        checks={c['suite_id']:c for c in record['checks']}
+        values=[f"{percent(checks[c['suite_id']]['success_rate'])} / {percent(checks[c['suite_id']]['collision_rate'])}" for c in criteria]
+        rows.append((label,*values,f"{sum(c['pass'] for c in checks.values())} / 4"))
+    return rows,criteria
 
 
 def chrome(image, scene, elapsed, duration, index, total=12):
@@ -184,17 +202,14 @@ class Film:
         d=ImageDraw.Draw(image)
         text(d,(95,196),"180 validation episodes per candidate. Success / collision rate.",28,MUTED)
         cols=[95,640,900,1140,1380,1630]
-        rows=[("CANDIDATE","TARGET","OPEN","STATIC","CROSSING","GATE"),
-              ("Collision limit","≤10%","≤5%","≤10%","≤15%","All four"),
-              ("Original scratch","86.67 / 13.33","72.5 / 0","95 / 2.5","72.5 / 17.5","1 / 4"),
-              ("Longer training","91.67 / 8.33","82.5 / 0","92.5 / 5","85 / 10","3 / 4"),
-              ("Rehearsal lineage","95 / 5","100 / 0","97.5 / 2.5","85 / 15","4 / 4")]
+        rows,criteria=gate_table_rows()
         for i,row in enumerate(rows):
             y=300+i*98
             if i==4:d.rectangle((72,y-12,1848,y+78),fill="#e3e8dc")
             for x,value in zip(cols,row):text(d,(x,y),value,25 if i!=1 else 28,ORANGE if i==1 else INK,i<2)
             d.line((72,y+82,1848,y+82),fill=LINE,width=1)
-        text(d,(95,850),"Success floors: target 80%, open 90%, static 80%, crossing 70%.",26,MUTED)
+        floors=', '.join(f"{c['suite_id'].removeprefix('val-').removesuffix('-v1')} {c['min_success']:.0%}" for c in criteria)
+        text(d,(95,850),f"Success floors: {floors}.",26,MUTED)
         text(d,(95,896),"Crossing collisions meet the 15% limit exactly. Gates were not relaxed.",26,ORANGE)
 
     def transfer_view(self,image,elapsed,duration):

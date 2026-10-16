@@ -15,16 +15,16 @@
   },
   "assets": {
     "embodiweave-demo-v2.mp4": {
-      "bytes": 8729883,
-      "sha256": "12a3d226746677ea6e791d8ab11511a4c6f8a436d73a3c7e36df5e19f4421c74"
+      "bytes": 8748362,
+      "sha256": "cd99adbc657a24d242caa615023ff36812a452ae8f36ab998623b46d787ee8c7"
     },
     "embodiweave-demo-v2-narration-free.mp4": {
-      "bytes": 8598383,
-      "sha256": "33fc56910b32a90318aceff33176f1caaa4e379e7c49693649bb6b8e5f5dd7b7"
+      "bytes": 8616862,
+      "sha256": "0fcc1999e2f458210c4cc008496b99e8e8aede41b9870ac64d8efe7d947841f7"
     },
     "embodiweave-demo-v2-720p.mp4": {
-      "bytes": 4403512,
-      "sha256": "8bcdc363c3881eab7dc200d55a3e5c7ef3bd5a9f494739b52e8227d8c42bd46c"
+      "bytes": 4409975,
+      "sha256": "4ab701e1f917cf023a9384bf8b21c704c435d7a31e8a499969c6c609e0239333"
     },
     "embodiweave-demo-v2.gif": {
       "bytes": 2712946,
