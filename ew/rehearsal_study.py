@@ -69,6 +69,7 @@ def save(name, value):
 
 def measure(pid, suites, graph):
     from . import rl
+    study = protocol()["study"]
     rows = {}
     for suite in suites:
         result = rl.evaluate_policy(pid, suite.family, suite.seeds, record=True,
@@ -78,7 +79,7 @@ def measure(pid, suites, graph):
             "suite_version": suite.version, "family_id": suite.family.fid(), "custom_family": False,
             "seeds": list(suite.seeds), "summary": result["summary"], "wall_s": result["wall_s"],
             "episodes": [{k: v for k, v in ep.items() if k not in ("trace", "layout")}
-                         for ep in result["episodes"]], "purpose": "rehearsal-recovery-v1 development only"})
+                         for ep in result["episodes"]], "purpose": study + " development only"})
         ingest.evaluation(rec, graph)
         db.bump_revision("development evaluation " + rec["id"], graph)
         episodes = rec["episodes"]
