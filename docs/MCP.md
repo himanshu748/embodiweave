@@ -8,6 +8,7 @@ The live agent discovers schemas with `tools/list` and executes `tools/call` thr
 |---|---|
 | `diagnose_policy(policy_id)` | Exact-artifact canonical validation and collision failures |
 | `explain_decision(decision_id)` | Decision node, model, actual tool calls, candidates, query receipts and guardrail |
+| `get_evidence_record(record_type, record_id)` | Full Policy, Decision, DecisionOutcome or canonical-validation Evaluation properties by exact ID; bounded model-facing view |
 | `lineage(policy_id, max_hops=8)` | Bounded `DERIVED_FROM` paths |
 | `find_training_origins(target_policy)` | Verified, compatible origins with all four complete validation suites |
 | `nearest_passing_ancestor(policy_id, suite_id, max_hops=8)` | FalkorDB shortest-path algorithm, minimum unweighted lineage distance to a passing ancestor |
@@ -73,7 +74,7 @@ The test suite exercises discovery and calls with the pinned Python SDK over std
 
 ### Model routing and credits
 
-Free NVIDIA endpoints remain the default. The owner can explicitly set `EW_AGENT_MODEL=openai/gpt-4.1-mini` for paid OpenRouter inference through **Azure only**, with no provider fallback. This option limits each serialized request to 32,000 bytes, each response to 1,200 tokens and each investigation to six model turns. OpenRouter's `max_price` caps input at $0.40 and output at $1.60 per million tokens, with no per-request surcharge. The existing daily and per-browser quotas still apply; actual provider usage is saved in the agent receipt. No model or billing option is accepted from a public request.
+Free NVIDIA endpoints remain the default. The owner can explicitly set `EW_AGENT_MODEL=openai/gpt-4.1-mini` for paid OpenRouter inference through **Azure only**, with no provider fallback. The MCP agent limits each serialized request to 28,000 bytes (within the paid route's existing 32,000-byte ceiling), each response to 1,200 tokens and each investigation to six model turns. OpenRouter's `max_price` caps input at $0.40 and output at $1.60 per million tokens, with no per-request surcharge. The existing daily and per-browser quotas still apply; actual provider usage is saved in the agent receipt. No model or billing option is accepted from a public request.
 
 The first public [v1 attempt](../evidence/mcp-agent-v1/agent-receipt.json) exhausted the account's daily free-model quota and used the labelled deterministic fallback. The owner then authorized paid credits for a separately registered [v2 demonstration](../evidence/mcp-agent-v2/protocol.json). Ongoing judge runs use the [public protocol](../evidence/mcp-agent/protocol.json), rather than being counted as additional attempts in either one-run study.
 
@@ -86,4 +87,10 @@ The completed [v2 record](../evidence/mcp-agent-v2/) contains the actual model c
 
 `rank_regression_origins(target_policy)` computes weighted incoming degree in FalkorDB using Cypher over measured COMPARED_AGAINST edges. Each edge weighs the sum of positive per-suite collision-rate deltas. The output includes observed-child support; no observations means null. It is descriptive and can grow with more trials, not a probability of safety. Current output is restricted to eligible origins to keep the bounded model context small.
 
-[The one preregistered v3 attempt](../evidence/mcp-agent-v3/) called both tools but exceeded the model-context cap before choosing an origin. Its original receipt is retained. The context repair is tested offline, not claimed as a successful second run. The v3 attempt is not retried and cannot silently launch deterministic fallback training.
+[The one preregistered v3 attempt](../evidence/mcp-agent-v3/) called both tools but exceeded the model-context cap before choosing an origin. Its original receipt is retained. A separately authorized [v3-retry](../evidence/mcp-agent-v3-retry/) was preregistered and completed once: six MCP calls, prior-outcome citation, the same origin, 61,440 steps and 180 validation episodes. All four gates passed, but target and crossing regressed against the parent; the child was not released. Both one-attempt studies disable deterministic fallback. No further retry was made.
+
+## Bounded model context
+
+The [current graph snapshot and budget tests](../evidence/mcp-agent-v3-retry/context-fix.json) retain full query records in the Decision audit while sending top-k rows, exact IDs and per-suite deltas to the model. Each tool reply is at most 2,000 UTF-8 bytes, retained tool text at most 12,000 bytes, history at most six whole exchanges and a provider request at most 28,000 bytes. UTF-8 byte counts conservatively upper-bound byte-BPE text tokens, rather than estimating tokenizer usage. Required first reads and the latest exchange stay together with their call/response IDs. Oversized required evidence fails closed before sending another request.
+
+`get_evidence_record` gives read-only clients full properties by ID; the live model receives a bounded view. Only canonical validation Evaluation records are exposed. Summaries mark omitted candidates; this limited model view is not the full candidate set. The retry's largest actual serialized request was 17,926 bytes, and the original receipt was preserved.

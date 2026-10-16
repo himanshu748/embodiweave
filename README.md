@@ -2,7 +2,7 @@
 
 An agent that reads a robot's training history in FalkorDB, decides which checkpoint to retrain, launches training, and proves whether the new policy got safer.
 
-**[Live demo](https://embodiweave.52.202.25.181.sslip.io) · [Judge walkthrough](https://embodiweave.52.202.25.181.sslip.io/robustness.html) · [2-minute film](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v5.mp4) · [Train in your browser](https://embodiweave.52.202.25.181.sslip.io/live.html#training)**
+**[YouTube demo](https://youtu.be/IfFo4cicShk) · [Live demo](https://embodiweave.52.202.25.181.sslip.io) · [Judge walkthrough](https://embodiweave.52.202.25.181.sslip.io/robustness.html) · [MP4 fallback](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v5.mp4) · [Train in your browser](https://embodiweave.52.202.25.181.sslip.io/live.html#training)**
 
 [![Tests](https://github.com/himanshu748/embodiweave/actions/workflows/tests.yml/badge.svg)](https://github.com/himanshu748/embodiweave/actions/workflows/tests.yml)
 
@@ -37,9 +37,9 @@ MuJoCo uses fresh paired seeds and unchanged 2D-trained weights. Its 6/40 target
 |---|---|
 | Multi-hop reasoning | [`DERIVED_FROM*1..8` query](ew/graph/queries.py), [actual returned ancestor paths](evidence/mcp-agent-v2/algorithm.json) |
 | Graph queries and algorithms as tools | [Exact native `shortestPath` Cypher](evidence/mcp-agent-v2/nearest-passing-ancestor.cypher), bounded and unweighted; [weighted regression degree](evidence/mcp-agent-v3/mcp_regression_degree.cypher) with [actual tool output](evidence/mcp-agent-v3/rank_regression_origins.json) |
-| Tool selection through MCP | [Actual model and four MCP calls](evidence/mcp-agent-v2/agent-receipt.json), [stdio + HTTP server](ew/mcp_server.py) |
-| Actions based on graph evidence | [New public PPO run, 180 validation episodes and gate](evidence/mcp-agent-v2/training-receipt.json), [checkpoint bundle](evidence/mcp-agent-v2/repro-v3.zip) |
-| Explainable results | [Decision `deci-20261016121309-c0c93f`](evidence/mcp-agent-v2/decision.json): model, calls, Cypher, parameters, candidates, guardrail and revision, saved before training |
+| Tool selection through MCP | [V2 model and four MCP calls](evidence/mcp-agent-v2/agent-receipt.json), [v3-retry six MCP calls with outcome citation](evidence/mcp-agent-v3-retry/agent-receipt.json), [stdio + HTTP server](ew/mcp_server.py) |
+| Actions based on graph evidence | [New public PPO run, 180 validation episodes and gate](evidence/mcp-agent-v2/training-receipt.json), [checkpoint bundle](evidence/mcp-agent-v2/repro-v3.zip); [one completed v3-retry and measured regression](evidence/mcp-agent-v3-retry/summary.json) |
+| Explainable results | [Decision `deci-20261016121309-c0c93f`](evidence/mcp-agent-v2/decision.json): model, calls, Cypher, parameters, candidates, guardrail and revision, saved before training; [v3-retry Decision citing the prior outcome](evidence/mcp-agent-v3-retry/decision.json) |
 
 ## The agent acting on the graph, and the guardrail
 
@@ -49,7 +49,15 @@ Target and crossing collisions were worse than the chosen parent's 2/60 and 0/40
 
 The outcome now closes the graph loop: the child links to its parent through `COMPARED_AGAINST` and `REGRESSED_AGAINST`, and the original Decision links to an append-only `DecisionOutcome` with exact per-suite deltas and evaluation IDs. [`get_decision_outcomes`](evidence/mcp-agent-v3/get_decision_outcomes.json) follows Decision → selected origin → launched Run → produced child → measured results. The weighted incoming-degree tool sums positive collision-rate deltas on those comparison edges: this one child contributes 1/60 + 1/40 = **0.04167**. Unknown support is null, not zero risk.
 
-The single preregistered [v3 attempt](evidence/mcp-agent-v3/) called both new graph tools, then stopped at the bounded model-context limit before selecting an origin or training. It consumed **0 PPO steps** and ran **0 validation episodes**; there is no new gate result or evidence of changed origin choice. No retry was made. The original receipt is preserved, alongside a clearly labelled post-attempt audit Decision and the offline-tested context repair.
+The single preregistered [v3 attempt](evidence/mcp-agent-v3/) called both new graph tools, then stopped at the bounded model-context limit before selecting an origin or training. It consumed **0 PPO steps** and ran **0 validation episodes**; there is no new gate result or evidence of changed origin choice. That original receipt remains byte-for-byte unchanged, alongside a clearly labelled post-attempt audit Decision. A separately authorized, preregistered `v3-retry` followed the context repair below.
+
+### V3-retry: outcome read, same origin, regression retained
+
+The [single preregistered retry](evidence/mcp-agent-v3-retry/protocol.json) completed with GPT-4.1 Mini. It called six MCP tools, read both outcome tools and explicitly cited `outcome-deci-20261016121309-c0c93f` in its [pre-training Decision](evidence/mcp-agent-v3-retry/decision.json). Citation was required by the protocol and prompt. It chose the **same** v2 origin, `physics-20261016150004-25da9c`, and consumed **61,440 PPO steps**, then **180 validation episodes**. All **4/4 gates passed**: target **3/60**, open **0/40**, static **1/40**, crossing **1/40** collisions, against unchanged limits **10%, 5%, 10%, 15%**.
+
+Target and crossing again regressed against the parent's **2/60** and **0/40**. The [connected outcome](evidence/mcp-agent-v3-retry/outcome.json) records `not_released_regression`; the demo policy stayed unchanged. The registered process completed, but neither changed origin choice, learning, planner advantage nor improvement is established. No further retry was made. [Full receipts and checkpoint bundle](evidence/mcp-agent-v3-retry/).
+
+The original overflow came from **33,515 bytes** of tool results exceeding the application's **32,000-byte** request guard before prompt overhead. Summaries now cap each tool at **2,000 UTF-8 bytes**, retained tool text at **12,000 bytes**, history at **six exchange groups** and the whole request at **28,000 bytes**. Full records remain fetchable by ID. The real retry peaked at **17,926 request bytes**. These byte counts bound byte-BPE text tokens; they are not exact tokenizer counts. [Context diagnosis and full-graph tests](evidence/mcp-agent-v3-retry/context-fix.json).
 
 **[Let the live agent choose and train](https://embodiweave.52.202.25.181.sslip.io/live.html#investigate)**. It discovers domain tools over MCP and proposes its own origin; the guardrail can veto but does not replace that choice with rank one. A separately labelled deterministic MCP fallback handles inference failure on an explicitly consented training task. FalkorDB failure still stops planning. [Protocol, tool contract and client setup](docs/MCP.md).
 
@@ -281,6 +289,8 @@ it and the main requirements. The hosted service reads recorded transfer
 evidence; live browser PPO continues to train in the original 2D simulator.
 
 ## Honest limitations
+
+- The model sees labelled top-k summaries; omitted candidates remain in the full Decision audit and records are fetchable by ID. The outcome citation was explicitly prompted. The one v3-retry chose the same origin and does not establish learning or planner advantage. [Receipts](evidence/mcp-agent-v3-retry/).
 
 - Separate local development studies tested [family rehearsal](evidence/rehearsal-recovery-v1/) and [a stronger collision cost](evidence/collision-recovery-v1/). The first recorded 7/180 collisions for parent and both children. On a different paired batch, the stronger-cost child had 12/180 versus the control's 14/180, matching the parent's 12/180. Neither study established an improvement over its parent or justified a release. The recorded MCP regression and confirmed demo policy remain separate.
 - Search-v1 failed its held-out target test. Robustness-v2 passed fresh 2D confirmation, but its MuJoCo target still had 6/40 collisions (15%), above the 10% reference limit. This is not evidence of physical robot safety.

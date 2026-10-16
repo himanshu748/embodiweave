@@ -38,7 +38,8 @@
     <p class="hero-context e3">FalkorDB connects each checkpoint to its sensor contract, lineage and test results. The agent follows those connections before it can start training.</p>
     <div class="ctas e3">
       <a class="btn" href="live.html#investigate">Try the live agent <span aria-hidden="true" class="arrow">→</span></a>
-      <a class="btn ghost" href="guide.html#film">Watch the 2-minute demo</a>
+      <a class="btn ghost" href="https://youtu.be/IfFo4cicShk">Watch the 2-minute demo</a>
+      <a class="btn ghost" href="media/embodiweave-demo-v5.mp4">MP4 fallback</a>
     </div>
     <a class="live e4" href="#live" aria-live="polite"><span class="dot" id="liveDot"></span><span id="liveText">Connecting to FalkorDB</span></a>
   </div>
@@ -90,12 +91,16 @@ ORDER BY hops, collision_rate, ancestor_id LIMIT 20</pre></details>
   <p class="note"><a href="https://github.com/himanshu748/embodiweave/tree/main/evidence/mcp-agent-v2">Actual tool trace, query, checkpoint and checksums →</a> · <a href="/api/decisions/deci-20261016121309-c0c93f">Inspect the Decision node →</a> · <a href="live.html#investigate">Try the agent yourself →</a></p>
   <div class="two">
     <div><h3>V2: the outcome returned to the graph</h3><p>The child now connects to its parent through measured comparison and regression edges. Its Decision links to the outcome, the run and the exact evaluations. The original evidence is unchanged.</p></div>
-    <div><h3>V3: the agent read that outcome</h3><p>GPT-4.1 Mini called both new MCP tools. The next model request exceeded the context cap, so no origin was chosen and no training started. I preserved the attempt and did not retry it. No decision change is established.</p></div>
+    <div><h3>V3: the agent read that outcome</h3><p>GPT-4.1 Mini called both new MCP tools. The next model request exceeded the context cap, so no origin was chosen and no training started. The original receipt is unchanged. A separately registered retry is recorded below; this first attempt still has zero PPO steps.</p></div>
   </div>
   <details class="query-details"><summary>Inspect the outcome and weighted graph ranking</summary><p class="note">For the chosen v2 origin, one child contributes 1/60 + 1/40 = 0.04167 weighted regression degree. Origins without observations return null. This counts observed regressions; it does not predict safety.</p><pre class="code" tabindex="0">MATCH (d:Decision)-[:SELECTED]-&gt;(origin:Policy)
 MATCH (d)-[:LAUNCHED]-&gt;(run:Run)-[:PRODUCED]-&gt;(child:Policy)
 MATCH (d)-[:HAS_OUTCOME]-&gt;(outcome:DecisionOutcome)-[:ASSESSED]-&gt;(child)
 RETURN d.id, origin.id, child.id, outcome.suites</pre><p><a href="https://github.com/himanshu748/embodiweave/tree/main/evidence/mcp-agent-v3">Read the real v3 trace, failure and weighted-degree Cypher →</a></p></details>
+  <h3>V3-retry: the full loop completed, the regression stayed visible</h3>
+  <p>The one registered retry read the earlier outcome and cited it in its Decision. GPT-4.1 Mini chose the same origin as v2, trained 61,440 steps and passed all four gates over 180 validation episodes: target 3/60, open 0/40, static 1/40 and crossing 1/40 collisions.</p>
+  <p class="note">Target and crossing again exceeded the parent's 2/60 and 0/40. The child was not released. Citation was explicitly prompted; this run does not establish learning, a better choice or an improvement. No further retry was made.</p>
+  <p class="note"><a href="https://github.com/himanshu748/embodiweave/tree/main/evidence/mcp-agent-v3-retry">Preregistration, six MCP calls and complete results →</a> · <a href="/api/decisions/deci-20261016175734-1b2724">Inspect the retry Decision →</a></p>
 </section>
 
 <section class="judge-route reveal" aria-label="A short route through the demo">

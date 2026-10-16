@@ -1,6 +1,6 @@
 # YouTube upload notes — v5
 
-YOUTUBE_URL: YOUTUBE_URL
+YOUTUBE_URL: https://youtu.be/IfFo4cicShk
 
 ## Title
 
@@ -12,7 +12,7 @@ I built an agent that reads a robot's training history in FalkorDB, chooses a ch
 
 The completed public MCP run used GPT-4.1 Mini, trained 61,440 steps and passed all four gates over 180 validation episodes. But target collisions rose from 2/60 to 3/60 and crossing collisions from 0/40 to 1/40 against its parent. The child did not ship. This run does not establish a safety improvement.
 
-I connected that comparison back to the graph. The one preregistered follow-up attempt read both prior outcomes and a weighted graph ranking, then exceeded the bounded model context before choosing an origin or training. I did not retry. No change in origin choice or planning advantage was established.
+I connected that comparison back to the graph. The one preregistered follow-up attempt read both prior outcomes and a weighted graph ranking, then exceeded the bounded model context before choosing an origin or training. At the time of this recording, I did not retry. No change in origin choice or planning advantage was established.
 
 The separate shipped checkpoint passed four unchanged validation suites and fresh confirmation: target 8/100 collisions against a 10% limit. The success replay is a recorded validation episode from that checkpoint; it is not the 100-episode confirmation batch. Earlier held-out and MuJoCo limitations remain in the README.
 
@@ -57,6 +57,6 @@ Robot motion comes from saved policy-driven simulator traces. Titles, graph layo
 
 FalkorDB, Graph Hacks, WeMakeDevs, MCP, robotics, PPO, reinforcement learning, graph database, AI agents, Cypher, EmbodiWeave
 
-## Manual upload
+## Upload verified
 
-The existing notes provide no automated upload flow. Upload `web/media/embodiweave-demo-v5.mp4` unlisted, use this folder's `thumbnail.png`, attach `embodiweave-demo-v5.srt`, then replace YOUTUBE_URL. The film is 118.10 seconds at 1920×1080. Keep v4 available as the backup. No submission was made.
+Uploaded unlisted on October 16, 2026 with this title, description, thumbnail and the original English SRT. Playback was verified at 1920×1080 with English captions. [Upload receipt](../../../evidence/film-v5/upload/receipt.json). The film remains 118.10 seconds; YouTube reports a 118.121-second playback container. V4 and all earlier media are unchanged. No submission was made.
