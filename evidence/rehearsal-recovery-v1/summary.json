@@ -1,0 +1,286 @@
+{
+  "study": "rehearsal-recovery-v1",
+  "protocol_sha256": "9897082f74695c3157ce8bcc634cbf3e4a47b19965e09657e1165130b914248d",
+  "origin": "physics-20261016150004-25da9c",
+  "arms": [
+    {
+      "arm": "target_only",
+      "policy_id": "recovery-v1-target_only",
+      "artifact_hash": "c34b3c4e7edbed57f5771e54e2dc616651acc5bde9c243ac9a0a87d0bb06d977",
+      "consumed_steps": 61440,
+      "trial_id": "tria-20261016200554-9cbcd5"
+    },
+    {
+      "arm": "rehearsal",
+      "policy_id": "recovery-v1-rehearsal",
+      "artifact_hash": "ae435fd1cb74b0a96c3a5328682fc6f98a7eefdf343c7f4879d1064157a68a05",
+      "consumed_steps": 61440,
+      "trial_id": "tria-20261016200607-220911"
+    }
+  ],
+  "measurements": {
+    "parent": {
+      "static_crossing": {
+        "evaluation_id": "eval-20261016200537-db9720",
+        "episodes": 60,
+        "success": 57,
+        "collision": 3,
+        "timeout": 0,
+        "summary": {
+          "episodes": 60,
+          "success_rate": 0.95,
+          "collision_rate": 0.05,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 98.5,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 2,
+            "mover": 1
+          }
+        }
+      },
+      "open": {
+        "evaluation_id": "eval-20261016200538-a6aa9d",
+        "episodes": 40,
+        "success": 40,
+        "collision": 0,
+        "timeout": 0,
+        "summary": {
+          "episodes": 40,
+          "success_rate": 1.0,
+          "collision_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 86.8,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 0,
+            "mover": 0
+          }
+        }
+      },
+      "static": {
+        "evaluation_id": "eval-20261016200539-cb2262",
+        "episodes": 40,
+        "success": 40,
+        "collision": 0,
+        "timeout": 0,
+        "summary": {
+          "episodes": 40,
+          "success_rate": 1.0,
+          "collision_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 94.8,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 0,
+            "mover": 0
+          }
+        }
+      },
+      "crossing": {
+        "evaluation_id": "eval-20261016200540-006f1a",
+        "episodes": 40,
+        "success": 36,
+        "collision": 4,
+        "timeout": 0,
+        "summary": {
+          "episodes": 40,
+          "success_rate": 0.9,
+          "collision_rate": 0.1,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 97.7,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 0,
+            "mover": 4
+          }
+        }
+      }
+    },
+    "target_only": {
+      "static_crossing": {
+        "evaluation_id": "eval-20261016200552-86e675",
+        "episodes": 60,
+        "success": 56,
+        "collision": 4,
+        "timeout": 0,
+        "summary": {
+          "episodes": 60,
+          "success_rate": 0.9333,
+          "collision_rate": 0.0667,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 98.5,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 2,
+            "mover": 2
+          }
+        }
+      },
+      "open": {
+        "evaluation_id": "eval-20261016200552-166a27",
+        "episodes": 40,
+        "success": 40,
+        "collision": 0,
+        "timeout": 0,
+        "summary": {
+          "episodes": 40,
+          "success_rate": 1.0,
+          "collision_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 87.0,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 0,
+            "mover": 0
+          }
+        }
+      },
+      "static": {
+        "evaluation_id": "eval-20261016200553-64fd6c",
+        "episodes": 40,
+        "success": 40,
+        "collision": 0,
+        "timeout": 0,
+        "summary": {
+          "episodes": 40,
+          "success_rate": 1.0,
+          "collision_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 94.5,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 0,
+            "mover": 0
+          }
+        }
+      },
+      "crossing": {
+        "evaluation_id": "eval-20261016200554-478d2c",
+        "episodes": 40,
+        "success": 37,
+        "collision": 3,
+        "timeout": 0,
+        "summary": {
+          "episodes": 40,
+          "success_rate": 0.925,
+          "collision_rate": 0.075,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 98.1,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 0,
+            "mover": 3
+          }
+        }
+      }
+    },
+    "rehearsal": {
+      "static_crossing": {
+        "evaluation_id": "eval-20261016200605-f595ce",
+        "episodes": 60,
+        "success": 57,
+        "collision": 3,
+        "timeout": 0,
+        "summary": {
+          "episodes": 60,
+          "success_rate": 0.95,
+          "collision_rate": 0.05,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 98.5,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 2,
+            "mover": 1
+          }
+        }
+      },
+      "open": {
+        "evaluation_id": "eval-20261016200605-d23304",
+        "episodes": 40,
+        "success": 40,
+        "collision": 0,
+        "timeout": 0,
+        "summary": {
+          "episodes": 40,
+          "success_rate": 1.0,
+          "collision_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 85.9,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 0,
+            "mover": 0
+          }
+        }
+      },
+      "static": {
+        "evaluation_id": "eval-20261016200606-613f56",
+        "episodes": 40,
+        "success": 39,
+        "collision": 1,
+        "timeout": 0,
+        "summary": {
+          "episodes": 40,
+          "success_rate": 0.975,
+          "collision_rate": 0.025,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 94.9,
+          "collisions_by_object": {
+            "wall": 1,
+            "static": 0,
+            "mover": 0
+          }
+        }
+      },
+      "crossing": {
+        "evaluation_id": "eval-20261016200607-ab6d35",
+        "episodes": 40,
+        "success": 37,
+        "collision": 3,
+        "timeout": 0,
+        "summary": {
+          "episodes": 40,
+          "success_rate": 0.925,
+          "collision_rate": 0.075,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 96.9,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 0,
+            "mover": 3
+          }
+        }
+      }
+    }
+  },
+  "verdict": {
+    "accepted_for_further_study": false,
+    "checks": [
+      {
+        "family": "static_crossing",
+        "reference_requirements_met": true,
+        "no_regression": true
+      },
+      {
+        "family": "open",
+        "reference_requirements_met": true,
+        "no_regression": true
+      },
+      {
+        "family": "static",
+        "reference_requirements_met": true,
+        "no_regression": false
+      },
+      {
+        "family": "crossing",
+        "reference_requirements_met": true,
+        "no_regression": true
+      }
+    ],
+    "fewer_total_collisions_than_parent_and_control": false,
+    "promo_1": "not evaluated",
+    "confirmation": "not opened",
+    "deployment_changed": false
+  }
+}

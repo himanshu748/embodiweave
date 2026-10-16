@@ -278,6 +278,8 @@ Bundles include saved model weights, normalization, contract, validation records
 
 ## Honest limitations
 
+A separate [paired rehearsal development study](evidence/rehearsal-recovery-v1/) did not recover the recorded regression: the parent and both new children each had 7 collisions in 180 fresh episodes. The recipe was not adopted; the recorded MCP result and confirmed demo policy remain separate.
+
 - Search-v1 failed its held-out target test. Robustness-v2 passed fresh 2D confirmation, but its MuJoCo target still had 6/40 collisions (15%), above the 10% reference limit. This is not evidence of physical robot safety.
 - The two 2D studies added three adaptive attempts; the physics study and its separate follow-up added four. These small studies do not establish a reliable improvement or selection-efficiency advantage. Each study fixed one training seed, and later candidates also used more training.
 - The frozen search experiments used authored deterministic planners. The separate live MCP agent chooses an origin and can launch training after a guardrail; provider-down fallback is explicitly deterministic. None of this establishes an advantage over another planner or baseline.

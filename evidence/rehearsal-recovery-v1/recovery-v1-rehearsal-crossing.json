@@ -1,0 +1,351 @@
+{
+  "policy_id": "recovery-v1-rehearsal",
+  "artifact_hash": "ae435fd1cb74b0a96c3a5328682fc6f98a7eefdf343c7f4879d1064157a68a05",
+  "contract_id": "ew-contract-1:2f013b6f4849",
+  "suite_id": "dev-rehearsal-recovery-v1-crossing",
+  "suite_role": "validation",
+  "suite_version": "1",
+  "family_id": "crossing@74a53a4b",
+  "custom_family": false,
+  "seeds": [
+    8603000,
+    8603001,
+    8603002,
+    8603003,
+    8603004,
+    8603005,
+    8603006,
+    8603007,
+    8603008,
+    8603009,
+    8603010,
+    8603011,
+    8603012,
+    8603013,
+    8603014,
+    8603015,
+    8603016,
+    8603017,
+    8603018,
+    8603019,
+    8603020,
+    8603021,
+    8603022,
+    8603023,
+    8603024,
+    8603025,
+    8603026,
+    8603027,
+    8603028,
+    8603029,
+    8603030,
+    8603031,
+    8603032,
+    8603033,
+    8603034,
+    8603035,
+    8603036,
+    8603037,
+    8603038,
+    8603039
+  ],
+  "summary": {
+    "episodes": 40,
+    "success_rate": 0.925,
+    "collision_rate": 0.075,
+    "timeout_rate": 0.0,
+    "mean_success_steps": 96.9,
+    "collisions_by_object": {
+      "wall": 0,
+      "static": 0,
+      "mover": 3
+    }
+  },
+  "wall_s": 0.86,
+  "episodes": [
+    {
+      "outcome": "success",
+      "steps": 106,
+      "return": 17.414,
+      "final_goal_dist": 0.201,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 157,
+      "return": 18.664,
+      "final_goal_dist": 0.297,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 82,
+      "return": 16.555,
+      "final_goal_dist": 0.272,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 91,
+      "return": 17.535,
+      "final_goal_dist": 0.239,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 90,
+      "return": 16.882,
+      "final_goal_dist": 0.257,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 89,
+      "return": 17.509,
+      "final_goal_dist": 0.25,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 109,
+      "return": 16.249,
+      "final_goal_dist": 0.251,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 132,
+      "return": 17.721,
+      "final_goal_dist": 0.267,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 95,
+      "return": 18.235,
+      "final_goal_dist": 0.27,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 99,
+      "return": 17.85,
+      "final_goal_dist": 0.244,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 102,
+      "return": 17.141,
+      "final_goal_dist": 0.296,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 71,
+      "return": 16.419,
+      "final_goal_dist": 0.232,
+      "hit": null
+    },
+    {
+      "outcome": "collision",
+      "steps": 40,
+      "return": -7.4,
+      "final_goal_dist": 4.449,
+      "hit": "mover"
+    },
+    {
+      "outcome": "success",
+      "steps": 106,
+      "return": 17.683,
+      "final_goal_dist": 0.256,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 89,
+      "return": 17.663,
+      "final_goal_dist": 0.217,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 77,
+      "return": 15.98,
+      "final_goal_dist": 0.271,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 94,
+      "return": 18.202,
+      "final_goal_dist": 0.236,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 92,
+      "return": 17.58,
+      "final_goal_dist": 0.226,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 108,
+      "return": 17.329,
+      "final_goal_dist": 0.221,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 108,
+      "return": 17.362,
+      "final_goal_dist": 0.24,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 81,
+      "return": 16.109,
+      "final_goal_dist": 0.239,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 93,
+      "return": 18.173,
+      "final_goal_dist": 0.23,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 102,
+      "return": 18.701,
+      "final_goal_dist": 0.243,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 72,
+      "return": 16.348,
+      "final_goal_dist": 0.276,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 99,
+      "return": 17.327,
+      "final_goal_dist": 0.225,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 96,
+      "return": 16.579,
+      "final_goal_dist": 0.277,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 93,
+      "return": 16.983,
+      "final_goal_dist": 0.287,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 70,
+      "return": 16.201,
+      "final_goal_dist": 0.244,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 121,
+      "return": 18.752,
+      "final_goal_dist": 0.298,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 100,
+      "return": 17.516,
+      "final_goal_dist": 0.223,
+      "hit": null
+    },
+    {
+      "outcome": "collision",
+      "steps": 41,
+      "return": -7.219,
+      "final_goal_dist": 5.456,
+      "hit": "mover"
+    },
+    {
+      "outcome": "success",
+      "steps": 80,
+      "return": 16.445,
+      "final_goal_dist": 0.259,
+      "hit": null
+    },
+    {
+      "outcome": "collision",
+      "steps": 40,
+      "return": -6.697,
+      "final_goal_dist": 3.923,
+      "hit": "mover"
+    },
+    {
+      "outcome": "success",
+      "steps": 133,
+      "return": 17.654,
+      "final_goal_dist": 0.262,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 83,
+      "return": 17.331,
+      "final_goal_dist": 0.28,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 94,
+      "return": 17.138,
+      "final_goal_dist": 0.25,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 102,
+      "return": 17.76,
+      "final_goal_dist": 0.243,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 92,
+      "return": 18.143,
+      "final_goal_dist": 0.247,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 93,
+      "return": 18.169,
+      "final_goal_dist": 0.274,
+      "hit": null
+    },
+    {
+      "outcome": "success",
+      "steps": 84,
+      "return": 16.562,
+      "final_goal_dist": 0.274,
+      "hit": null
+    }
+  ],
+  "purpose": "rehearsal-recovery-v1 development only",
+  "id": "eval-20261016200607-ab6d35",
+  "recorded_at": "2026-10-16T20:06:07+0530",
+  "kind": "evaluation"
+}
