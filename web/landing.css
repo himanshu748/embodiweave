@@ -369,7 +369,7 @@ a.live:hover { border-color: var(--ok); }
 .graph-flow .flow-core { background: var(--ink)!important; color: var(--paper); border-top: 4px solid var(--robot)!important; }
 .graph-flow small { display: block; font: 12px/1.6 var(--mono); margin-top: 8px; }
 .flow-bottom { grid-column: 1/-1; text-align: center; font: 13px/1.6 var(--mono); padding: 16px; border-bottom: 1px solid var(--line); }
-.demo-film { display: block; width: 100%; aspect-ratio: 4/3; background: var(--ink); border: 1px solid var(--line); border-radius: 12px; }
+.demo-film { display: block; width: 100%; aspect-ratio: 16/9; background: var(--ink); border: 1px solid var(--line); border-radius: 12px; }
 .guide-intro ~ section code, .walkthrough code { overflow-wrap: anywhere; }
 .viewtabs button { min-height: 40px; }
 #schema .node.hub rect { fill: var(--accent); stroke: var(--accent); }
