@@ -150,7 +150,7 @@ function draw3d(side) {
 }
 async function setArenaView(v) {
   if (v === "3d" && !R3) {
-    try { R3 = await import("./robot3d.js"); if (!R3.webglOK()) throw new Error("no webgl"); }
+    try { R3 = await import("./robot3d.js?v=labels2"); if (!R3.webglOK()) throw new Error("no webgl"); }
     catch { R3 = null; v = "top"; document.querySelector('.viewtabs [data-view="3d"]').disabled = true; }
   }
   S.view3d = v === "3d";

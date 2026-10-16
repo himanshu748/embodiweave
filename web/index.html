@@ -70,7 +70,8 @@
       <span>Same layout, same seed <b id="seed" class="mono">1300032</b>. Recorded simulator states replayed, step <b id="step" class="mono">0</b>.</span>
       <button id="replayBtn" type="button" class="btn ghost small">Replay</button>
     </figcaption>
-    <p class="legend">3D render of the stored simulator states with nothing added. Lidar rays are recomputed from each recorded pose using the simulator geometry.</p>
+    <p class="legend" id="viewStatus" role="status">Loading the recorded simulation view.</p>
+    <p class="legend">Recorded simulator states. Lidar rays are recomputed from each recorded pose using the simulator geometry.</p>
   </figure>
   <a class="heroq e4" href="#live" aria-labelledby="hqTitle">
     <span class="hq-top"><span class="tag live-tag"><i></i>Live</span><span id="hqTitle">FalkorDB, queried as this page loaded</span><span id="hqMs" class="mono"></span></span>
@@ -225,6 +226,6 @@ RETURN pid AS policy_id, t.id AS trial_id,
   <span>EmbodiWeave · MIT licensed · FalkorDB is the primary database · everything shown is a software simulation</span>
   <span>GraphHacks 2026 · <a href="guide.html">Judge guide, video and local setup</a> · <a href="?motion=reduce">Use still replay</a> · AI assistance disclosed in the README</span>
 </footer>
-<script type="module" src="landing.js?v=prd2"></script>
+<script type="module" src="landing.js?v=labels2"></script>
 </body>
 </html>

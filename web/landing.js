@@ -1,6 +1,6 @@
 // Landing page. Every number comes from the studio API (records and live FalkorDB) or from
 // hero-replay.json, a trimmed copy of two stored simulator replays (scripts/make_hero_replay.py).
-import { Arena3D, webglOK } from "./robot3d.js";
+import { Arena3D, webglOK } from "./robot3d.js?v=labels2";
 
 const $ = (s) => document.querySelector(s);
 const pct = (x) => (x == null ? "n/a" : `${Math.round(x * 100)}%`);
@@ -215,10 +215,15 @@ function play(A, B) {
 function setView(v, d) {
   if (v === "3d" && !view3d) {
     try {
-      view3d = new Arena3D($("#stage3d"), [{ ep: d.before, body: "#6b7480", tag: "Deployed" }, { ep: d.after, body: "#ea580c", tag: "New" }]);
+      view3d = new Arena3D($("#stage3d"), [{ ep: d.before, body: "#6b7480", tag: "Baseline" }, { ep: d.after, body: "#ea580c", tag: "Adaptation" }]);
       view3d.setStep(+$("#step").textContent || 0);
-    } catch { v = "top"; document.querySelector('.viewtabs [data-view="3d"]').disabled = true; }
+    } catch {
+      v = "top";
+      $("#viewStatus").textContent = "3D could not load. Top view uses the same recorded poses. Select 3D to try again.";
+    }
   }
+  if (v === "3d") $("#viewStatus").textContent = "3D view of the recorded simulation. Drag to orbit.";
+  else if (!$("#viewStatus").textContent.includes("could not load")) $("#viewStatus").textContent = "Top view of the same recorded simulation.";
   $("#stage3d").hidden = $("#who3d").hidden = v !== "3d"; $("#arenas2d").hidden = v === "3d";
   document.querySelectorAll(".viewtabs button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.view === v)));
   if (v === "3d") view3d?.resize();

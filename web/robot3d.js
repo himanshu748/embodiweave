@@ -11,7 +11,12 @@ const css = (n, fb) => getComputedStyle(document.documentElement).getPropertyVal
 const P = (x, y, h = 0) => new THREE.Vector3(x - WORLD / 2, h, -(y - WORLD / 2));
 
 export function webglOK() {
-  try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch { return false; }
+  try {
+    const c = document.createElement("canvas"), gl = c.getContext("webgl2");
+    const available = !!gl;
+    gl?.getExtension("WEBGL_lose_context")?.loseContext();
+    return available;
+  } catch { return false; }
 }
 
 export function rays(pose, circles) {
@@ -83,11 +88,13 @@ export class Arena3D {
     r.domElement.setAttribute("aria-hidden", "true");
     container.appendChild(r.domElement);
     const s = this.scene = new THREE.Scene();
-    this.setEpisodes(eps);
-    this.drag();
-    this.ro = new ResizeObserver(() => this.resize()); this.ro.observe(container);
-    this.resize();
-    this.setStep(0);
+    try {
+      this.setEpisodes(eps);
+      this.drag();
+      this.ro = new ResizeObserver(() => this.resize()); this.ro.observe(container);
+      this.resize();
+      this.setStep(0);
+    } catch (error) { this.dispose(); throw error; }
   }
 
   setEpisodes(eps) {
@@ -109,7 +116,7 @@ export class Arena3D {
     eps.forEach(({ tag, body }, i) => {
       if (!tag) return;
       const t = document.createElement("span"); t.className = "tag3d"; t.textContent = tag; t.style.setProperty("--c", body);
-      container.appendChild(t); this.bots[i].tag = t;
+      this.container.appendChild(t); this.bots[i].tag = t;
     });
     const longest = eps.reduce((a, b) => (b.ep.movers.length > a.ep.movers.length ? b : a)).ep;
     this.moverTrack = longest.movers;
@@ -259,5 +266,5 @@ export class Arena3D {
     }
   }
 
-  dispose() { this.ro.disconnect(); this.scene.traverse(o => { o.geometry?.dispose(); (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => m?.dispose()); }); this.renderer.dispose(); this.renderer.domElement.remove(); }
+  dispose() { this.ro?.disconnect(); this.bots?.forEach(b => b.tag?.remove()); this.scene.traverse(o => { o.geometry?.dispose(); (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => m?.dispose()); }); this.renderer.dispose(); this.renderer.forceContextLoss(); this.renderer.domElement.remove(); }
 }

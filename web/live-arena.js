@@ -19,7 +19,7 @@ export class RunArena {
   reset() { this.latest=null; this.trace=[]; this.key=null; this.replay=null; this.finished=false; this.playing=false; this.view?.dispose(); this.view=null; q('#arenaSeek').disabled=true; q('#arenaReplay').disabled=true; q('#arenaEpisode').hidden=true; q('#arenaSource').textContent='Waiting for simulator'; q('#arenaCaption').textContent='The robot will appear here when training starts.'; this.controls(); this.draw2d(); }
   async setMode(mode) {
     if(mode==='3d' && !this.R3) {
-      try { this.R3=await import('./robot3d.js'); if(!this.R3.webglOK()) throw new Error(); }
+      try { this.R3=await import('./robot3d.js?v=labels2'); if(!this.R3.webglOK()) throw new Error(); }
       catch { q('[data-run-view="3d"]').disabled=true; q('#arenaCaption').textContent='3D is unavailable in this browser. You can use 2D.'; return; }
     }
     this.mode=mode; q('#arena2d').hidden=mode!=='2d'; q('#arena3d').hidden=mode!=='3d';
