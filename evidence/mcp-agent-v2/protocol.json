@@ -1,0 +1,49 @@
+{
+  "study": "agent-mcp-v2",
+  "registered_at_utc": "2026-10-16T12:07:56.776058+00:00",
+  "implementation_base": "f3be046084bc04cc710f8f05f5eb030f16a89001",
+  "purpose": "One LLM-selected public MCP action demonstration after v1 encountered exhausted OpenRouter free-model quota. Operational recovery, not a retry for a better gate verdict.",
+  "target_policy": "robust-20261016140226-352fd7",
+  "training_domain": "original 2D simulator",
+  "requested_steps": 60000,
+  "training_seed": 29,
+  "max_completed_training_runs": 1,
+  "origin_selection": "LLM chooses from all currently verified compatible origins with complete canonical validation, including separately labelled public runs. No origin or intervention is preselected from the v1 outcome; guardrail cannot substitute an origin.",
+  "algorithm": "FalkorDB shortestPath over DERIVED_FROM, minimum unweighted hops to passing exact-artifact same-contract ancestor",
+  "max_hops": 8,
+  "validation_suites": [
+    "val-target-v1",
+    "val-open-v1",
+    "val-static-v1",
+    "val-crossing-v1"
+  ],
+  "validation_episodes": 180,
+  "promotion_rule": "promo-1 unchanged",
+  "final_evaluations": 0,
+  "fallback": "Provider failure is labelled and preserved; at most one completed training run in this study. No repeat for a better gate verdict.",
+  "deployment_change": false,
+  "protected_source_hashes": {
+    "ew/criteria.py": "bd2c8ed348181520160181272b641f91500b37820e7762956d9b03f80f5b34ed",
+    "ew/scenarios.py": "18396d0c9ac7e9221e72b7d0ad3bb4563647850793e3baf3ab47ae779d1a0168"
+  },
+  "model": "openai/gpt-4.1-mini",
+  "provider_route": "OpenRouter -> Azure only",
+  "paid_inference_authorization": "Owner authorized another model using existing OpenRouter credits",
+  "previous_attempt": {
+    "study": "agent-mcp-v1",
+    "agent_session": "judge-ac370e535ba2636a28f2ba7c114c97b1",
+    "decision": "deci-20261016115640-8e0dbc",
+    "source": "deterministic_fallback",
+    "reason": "OpenRouter free-models-per-day exhausted"
+  },
+  "provider_bounds": {
+    "max_model_turns": 6,
+    "max_request_bytes": 32000,
+    "max_output_tokens_per_turn": 1200,
+    "max_price_per_million_tokens": {
+      "input_usd": 0.4,
+      "output_usd": 1.6
+    },
+    "provider_fallbacks": false
+  }
+}

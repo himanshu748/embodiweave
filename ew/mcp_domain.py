@@ -30,6 +30,7 @@ class Workflow:
     mode: str = "llm"
     model: str | None = None
     transport: str = "streamable-http"
+    study_id: str = "public-agent-mcp"
     calls: list = field(default_factory=list)
     decisions: list = field(default_factory=list)
     training_session_id: str | None = None
@@ -127,6 +128,10 @@ def check_gate(policy_id):
 
 
 def _record(workflow, guard, origin_id, budget, reason, *, action="train_from_parent"):
+    protocols = {"public-agent-mcp": "mcp-agent", "agent-mcp-v2": "mcp-agent-v2"}
+    if workflow.study_id not in protocols:
+        raise ValueError("Unknown agent evidence protocol")
+    protocol_path = Path(__file__).resolve().parents[1] / "evidence" / protocols[workflow.study_id] / "protocol.json"
     calls = list(workflow.calls)
     queries = [q for call in calls for q in call["result"].get("queries", [])] + guard["queries"]
     evaluation_ids = sorted({e["evaluation_id"] for r in guard["ranking"] for e in r["validation"].values()})
@@ -141,7 +146,7 @@ def _record(workflow, guard, origin_id, budget, reason, *, action="train_from_pa
         "request": service.target_request(budget), "ranking": guard["ranking"], "rejected": guard["rejected"],
         "queries": queries, "mcp_tool_calls": calls + ([proposal] if action == "train_from_parent" else []), "evidence_eval_ids": evaluation_ids,
         "evidence_trial_ids": [], "explanation": reason,
-        "protocol_sha256": hashlib.sha256((Path(__file__).resolve().parents[1] / "evidence/mcp-agent-v1/protocol.json").read_bytes()).hexdigest()})
+        "study_id": workflow.study_id, "protocol_sha256": hashlib.sha256(protocol_path.read_bytes()).hexdigest()})
     ingest.decision(d)
     db.bump_revision("MCP agent decision " + did)
     workflow.decisions.append(did)

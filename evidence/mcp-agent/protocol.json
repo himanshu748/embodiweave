@@ -1,0 +1,14 @@
+{
+  "study": "public-agent-mcp",
+  "purpose": "Ongoing consented public agent runs; each is new evidence, not a frozen study rerun",
+  "requested_steps": 60000,
+  "training_seed": 29,
+  "validation_episodes": 180,
+  "promotion_rule": "promo-1 unchanged",
+  "final_evaluations": 0,
+  "deployment_change": false,
+  "agent_investigations_per_utc_day": 20,
+  "training_runs_per_utc_day": 16,
+  "per_browser_per_hour": 4,
+  "max_concurrent_training_runs": 1
+}

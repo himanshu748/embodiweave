@@ -22,10 +22,10 @@ GraphHacks Track 01: **Agents That Act on Connected Data**.
 
 ### Connect MCP from Claude Desktop or Cursor
 
-Run the local app first, then configure a stdio server using your Python and checkout paths:
+Run `docker compose up --build` first, then configure a stdio server using your checkout's absolute Compose path:
 
 ```json
-{"mcpServers":{"embodiweave":{"command":"/absolute/path/embodiweave/.venv/bin/python","args":["-m","ew.mcp_server"],"env":{"PYTHONPATH":"/absolute/path/embodiweave","EW_ARTIFACTS":"/absolute/path/embodiweave/artifacts","EW_FALKOR_PORT":"6379"}}}}
+{"mcpServers":{"embodiweave":{"command":"docker","args":["compose","-f","/absolute/path/embodiweave/compose.yaml","exec","-T","embodiweave","/app/.venv/bin/python","-m","ew.mcp_server"]}}}
 ```
 
 Claude Desktop uses `claude_desktop_config.json`; Cursor uses `.cursor/mcp.json`. Cursor's HTTP form is `{"mcpServers":{"embodiweave":{"url":"https://embodiweave.52.202.25.181.sslip.io/mcp/"}}}`. Public HTTP connections can read; training needs the webpage's separate consent. [Local training opt-in, standalone HTTP and optional official FalkorDB MCP](docs/MCP.md).

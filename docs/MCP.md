@@ -24,26 +24,20 @@ This is an **unweighted shortest-path query**, not PageRank or a learned safety 
 
 ## Claude Desktop and Cursor
 
-Start the local app with the README command first. In Claude Desktop's `claude_desktop_config.json`, or Cursor's project `.cursor/mcp.json`, add the following. Replace the two absolute paths with your checkout and Python environment:
+Start the local app with the README's `docker compose up --build` command first. In Claude Desktop's `claude_desktop_config.json`, or Cursor's project `.cursor/mcp.json`, add the following. Replace the absolute Compose path with your checkout. This runs inside the existing app container, where the graph and evidence volume are available; it does not assume the container's private database port is exposed on your host.
 
 ```json
 {
   "mcpServers": {
     "embodiweave": {
-      "command": "/absolute/path/embodiweave/.venv/bin/python",
-      "args": ["-m", "ew.mcp_server"],
-      "env": {
-        "PYTHONPATH": "/absolute/path/embodiweave",
-        "EW_ARTIFACTS": "/absolute/path/embodiweave/artifacts",
-        "EW_FALKOR_HOST": "127.0.0.1",
-        "EW_FALKOR_PORT": "6379"
-      }
+      "command": "docker",
+      "args": ["compose", "-f", "/absolute/path/embodiweave/compose.yaml", "exec", "-T", "embodiweave", "/app/.venv/bin/python", "-m", "ew.mcp_server"]
     }
   }
 }
 ```
 
-The stdio connection defaults to read-only. To authorize its bounded local training tool, add `EW_MCP_ALLOW_TRAINING=1` to that server's environment. It still requires the diagnosis, origin and algorithm reads, exactly 60,000 requested steps, seed 29, the origin guardrail and the shared worker quotas. External clients do not attest their model, so those Decisions say `external_mcp_client`, with model unknown.
+The stdio connection defaults to read-only. To authorize its bounded local training tool, insert `"-e", "EW_MCP_ALLOW_TRAINING=1"` after `"-T"` in the Compose arguments. It still requires the diagnosis, origin and algorithm reads, exactly 60,000 requested steps, seed 29, the origin guardrail and the shared worker quotas. External clients do not attest their model, so those Decisions say `external_mcp_client`, with model unknown. A direct Python launch is also supported when you separately configure a local FalkorDB connection and the evidence directory.
 
 Cursor can also use the public read-only HTTP endpoint:
 
@@ -74,3 +68,9 @@ It is optional and was not deployed or used for the recorded domain decision. Em
 ## Verification boundary
 
 The test suite exercises discovery and calls with the pinned Python SDK over stdio and HTTP, real FalkorDB traversal, vetoes, anonymous-action denial, model-chosen non-first origins and provider-down fallback. Synthetic unit fixtures are labelled in the test file and are not run evidence. Claude Desktop and Cursor configuration is provided, but those two client UIs have not been manually tested. The public demonstration has its own [prospective protocol](../evidence/mcp-agent-v1/protocol.json); results and receipts are recorded separately from frozen studies.
+
+### Model routing and credits
+
+Free NVIDIA endpoints remain the default. The owner can explicitly set `EW_AGENT_MODEL=openai/gpt-4.1-mini` for paid OpenRouter inference through **Azure only**, with no provider fallback. This option limits each serialized request to 32,000 bytes, each response to 1,200 tokens and each investigation to six model turns. OpenRouter's `max_price` caps input at $0.40 and output at $1.60 per million tokens, with no per-request surcharge. The existing daily and per-browser quotas still apply; actual provider usage is saved in the agent receipt. No model or billing option is accepted from a public request.
+
+The first public [v1 attempt](../evidence/mcp-agent-v1/agent-receipt.json) exhausted the account's daily free-model quota and used the labelled deterministic fallback. The owner then authorized paid credits for a separately registered [v2 demonstration](../evidence/mcp-agent-v2/protocol.json). Ongoing judge runs use the [public protocol](../evidence/mcp-agent/protocol.json), rather than being counted as additional attempts in either one-run study.

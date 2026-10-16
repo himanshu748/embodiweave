@@ -176,12 +176,14 @@ def decision(d: dict, g: str | None = None) -> None:
     if d.get("rule_version") == "agent-mcp-v1":
         db.rw("MATCH (d:Decision {id:$id}) SET d.model=$model, d.transport=$transport, "
               "d.proposed_origin=$origin, d.guardrail_verdict=$verdict, d.guardrail=$guardrail, "
-              "d.mcp_tool_calls=$calls, d.query_receipts=$queries, d.candidates=$candidates",
+              "d.mcp_tool_calls=$calls, d.query_receipts=$queries, d.candidates=$candidates, "
+              "d.study_id=$study, d.protocol_sha256=$protocol",
               {"id": d["id"], "model": d.get("model") or ("none (deterministic fallback)" if d["mode"] == "deterministic_fallback" else "unknown (external MCP client)"),
                "transport": d["transport"], "origin": d.get("proposed_origin") or "",
                "verdict": d["guardrail"]["verdict"], "guardrail": json.dumps(d["guardrail"]),
                "calls": json.dumps(d["mcp_tool_calls"]), "queries": json.dumps(d["queries"]),
-               "candidates": json.dumps(d["ranking"])}, g)
+               "candidates": json.dumps(d["ranking"]), "study": d.get("study_id", "agent-mcp-v1"),
+               "protocol": d.get("protocol_sha256", "")}, g)
     for c in d["ranking"]:
         db.rw("MATCH (d:Decision {id:$id}), (p:Policy {id:$pid}) MERGE (d)-[r:CONSIDERED]->(p) "
               "SET r.rank=$rank, r.key=$key", {"id": d["id"], "pid": c["policy_id"], "rank": c["rank"],

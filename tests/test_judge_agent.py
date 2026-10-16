@@ -203,6 +203,31 @@ def test_provider_request_is_free_only_and_http_errors_are_sanitized(public_agen
     assert sent[0]["provider"] == {"only": ["nvidia"], "allow_fallbacks": False}
 
 
+def test_paid_model_needs_operator_opt_in_and_cannot_switch_provider(public_agent, monkeypatch):
+    sent = []
+    def unavailable(req, **kw):
+        sent.append(json.loads(req.data))
+        raise HTTPError(req.full_url, 429, "private provider message", {}, None)
+    monkeypatch.setattr(J.urllib.request, "urlopen", unavailable)
+    # A supplied config cannot enable paid inference without the private operator setting.
+    with pytest.raises(J.ProviderFailure):
+        J._completion([{}, {}], {**J.configuration(), "model": J.PAID_AZURE_MODEL}, 60)
+    assert sent[-1]["model"].endswith(":free")
+    monkeypatch.setenv("EW_AGENT_MODEL", J.PAID_AZURE_MODEL)
+    config = J.configuration()
+    assert config["billing_mode"] == "bounded_paid" and config["fallback_models"] == []
+    with pytest.raises(J.ProviderFailure):
+        J._completion([{}, {}], config, 60)
+    assert sent[-1]["model"] == J.PAID_AZURE_MODEL
+    assert sent[-1]["provider"] == {"only": ["azure"], "allow_fallbacks": False,
+                                     "max_price": {"prompt": 0.4, "completion": 1.6, "request": 0}}
+    assert sent[-1]["max_tokens"] == 1200
+    before = len(sent)
+    with pytest.raises(J.ProviderFailure, match="context is full"):
+        J._completion([{"role": "user", "content": "x"*32000}], config, 60)
+    assert len(sent) == before
+
+
 def test_public_opt_in_and_question_bounds(public_agent, monkeypatch):
     owner = J.visitor(None)
     with pytest.raises(ValueError):
