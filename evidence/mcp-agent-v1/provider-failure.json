@@ -1,0 +1,7 @@
+{
+  "source": "Read-only availability probe against the configured OpenRouter free endpoint",
+  "http_status": 429,
+  "retry_after": null,
+  "message": "Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day",
+  "code": 429
+}

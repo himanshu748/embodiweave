@@ -1,0 +1,182 @@
+{
+  "study": "agent-mcp-v1",
+  "agent_session_id": "judge-ac370e535ba2636a28f2ba7c114c97b1",
+  "decision_source": "deterministic_fallback",
+  "model": null,
+  "fallback_reason": "The free model provider is rate limited. Please try later; live graph queries still work.",
+  "mcp_protocol": {
+    "_meta": null,
+    "protocolVersion": "2025-11-25",
+    "capabilities": {
+      "experimental": null,
+      "logging": null,
+      "prompts": {
+        "listChanged": false
+      },
+      "resources": {
+        "subscribe": false,
+        "listChanged": false
+      },
+      "tools": {
+        "listChanged": false
+      },
+      "completions": null,
+      "extensions": null,
+      "tasks": null
+    },
+    "serverInfo": {
+      "name": "EmbodiWeave",
+      "title": null,
+      "version": "agent-mcp-v1",
+      "description": null,
+      "websiteUrl": null,
+      "icons": null
+    },
+    "instructions": "Bounded robotics domain tools. All graph reads use GRAPH.RO_QUERY. No arbitrary Cypher, paths or final tests. Training needs separate consent, diagnosis, origin evidence and the graph algorithm. The guardrail can veto your origin. A validation pass does not deploy weights."
+  },
+  "tool_calls": [
+    "diagnose_policy",
+    "find_training_origins",
+    "nearest_passing_ancestor",
+    "start_training"
+  ],
+  "decision_id": "deci-20261016115640-8e0dbc",
+  "run_id": "run-20261016115640-f7a9fa",
+  "trial_id": "tria-20261016115726-ba669e",
+  "policy_id": "judge-6b4896fe6ae4d2b0e7988bd313f8530b",
+  "parent_id": "physics-20261016150004-25da9c",
+  "artifact_hash": "896606505cb3d0017207be1d968de8d6defe86245509a9b3d11f307e2057656f",
+  "requested_steps": 60000,
+  "consumed_steps": 61440,
+  "seed": 29,
+  "evaluations": [
+    {
+      "id": "eval-20261016115718-229c5f",
+      "suite_id": "val-target-v1",
+      "artifact_hash": "896606505cb3d0017207be1d968de8d6defe86245509a9b3d11f307e2057656f",
+      "summary": {
+        "episodes": 60,
+        "success_rate": 0.95,
+        "collision_rate": 0.05,
+        "timeout_rate": 0,
+        "mean_success_steps": 97.7,
+        "collisions_by_object": {
+          "wall": 0,
+          "static": 1,
+          "mover": 2
+        }
+      }
+    },
+    {
+      "id": "eval-20261016115721-115504",
+      "suite_id": "val-open-v1",
+      "artifact_hash": "896606505cb3d0017207be1d968de8d6defe86245509a9b3d11f307e2057656f",
+      "summary": {
+        "episodes": 40,
+        "success_rate": 1,
+        "collision_rate": 0,
+        "timeout_rate": 0,
+        "mean_success_steps": 83.4,
+        "collisions_by_object": {
+          "wall": 0,
+          "static": 0,
+          "mover": 0
+        }
+      }
+    },
+    {
+      "id": "eval-20261016115724-259e20",
+      "suite_id": "val-static-v1",
+      "artifact_hash": "896606505cb3d0017207be1d968de8d6defe86245509a9b3d11f307e2057656f",
+      "summary": {
+        "episodes": 40,
+        "success_rate": 0.975,
+        "collision_rate": 0.025,
+        "timeout_rate": 0,
+        "mean_success_steps": 96.5,
+        "collisions_by_object": {
+          "wall": 1,
+          "static": 0,
+          "mover": 0
+        }
+      }
+    },
+    {
+      "id": "eval-20261016115726-087572",
+      "suite_id": "val-crossing-v1",
+      "artifact_hash": "896606505cb3d0017207be1d968de8d6defe86245509a9b3d11f307e2057656f",
+      "summary": {
+        "episodes": 40,
+        "success_rate": 0.975,
+        "collision_rate": 0.025,
+        "timeout_rate": 0,
+        "mean_success_steps": 95.4,
+        "collisions_by_object": {
+          "wall": 0,
+          "static": 0,
+          "mover": 1
+        }
+      }
+    }
+  ],
+  "gate": {
+    "id": "prom-20261016115726-48d6f5",
+    "rule": "promo-1",
+    "verdict": "promoted",
+    "checks": [
+      {
+        "suite_id": "val-target-v1",
+        "evaluation_id": "eval-20261016115718-229c5f",
+        "success_rate": 0.95,
+        "collision_rate": 0.05,
+        "min_success": 0.8,
+        "max_collision": 0.1,
+        "pass": true,
+        "role": "target"
+      },
+      {
+        "suite_id": "val-open-v1",
+        "evaluation_id": "eval-20261016115721-115504",
+        "success_rate": 1,
+        "collision_rate": 0,
+        "min_success": 0.9,
+        "max_collision": 0.05,
+        "pass": true,
+        "role": "retained"
+      },
+      {
+        "suite_id": "val-static-v1",
+        "evaluation_id": "eval-20261016115724-259e20",
+        "success_rate": 0.975,
+        "collision_rate": 0.025,
+        "min_success": 0.75,
+        "max_collision": 0.1,
+        "pass": true,
+        "role": "retained"
+      },
+      {
+        "suite_id": "val-crossing-v1",
+        "evaluation_id": "eval-20261016115726-087572",
+        "success_rate": 0.975,
+        "collision_rate": 0.025,
+        "min_success": 0.75,
+        "max_collision": 0.15,
+        "pass": true,
+        "role": "retained"
+      }
+    ],
+    "evaluation_ids": [
+      "eval-20261016115718-229c5f",
+      "eval-20261016115721-115504",
+      "eval-20261016115724-259e20",
+      "eval-20261016115726-087572"
+    ]
+  },
+  "bundle": {
+    "filename": "judge-6b4896fe6ae4d2b0e7988bd313f8530b-896606505cb3-repro-v3.zip",
+    "sha256": "c3238c455c433dda54a8ae316518435dff1859b7756ad97f37122c17ea2c75a9",
+    "bytes": 491633
+  },
+  "deployment_changed": false,
+  "confirmation_performed": false
+}

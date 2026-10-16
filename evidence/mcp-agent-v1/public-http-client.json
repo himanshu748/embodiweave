@@ -1,0 +1,346 @@
+{
+  "client": "Python MCP SDK 2.3.0",
+  "transport": "Streamable HTTP over public HTTPS",
+  "initialization": {
+    "_meta": null,
+    "protocolVersion": "2025-11-25",
+    "capabilities": {
+      "experimental": null,
+      "logging": null,
+      "prompts": {
+        "listChanged": false
+      },
+      "resources": {
+        "subscribe": false,
+        "listChanged": false
+      },
+      "tools": {
+        "listChanged": false
+      },
+      "completions": null,
+      "extensions": null,
+      "tasks": null
+    },
+    "serverInfo": {
+      "name": "EmbodiWeave",
+      "title": null,
+      "version": "agent-mcp-v1",
+      "description": null,
+      "websiteUrl": null,
+      "icons": null
+    },
+    "instructions": "Bounded robotics domain tools. All graph reads use GRAPH.RO_QUERY. No arbitrary Cypher, paths or final tests. Training needs separate consent, diagnosis, origin evidence and the graph algorithm. The guardrail can veto your origin. A validation pass does not deploy weights."
+  },
+  "discovered_tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "diagnose_policy",
+        "description": "Read an exact checkpoint's canonical validation and collision failures.",
+        "parameters": {
+          "properties": {
+            "policy_id": {
+              "title": "Policy Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "policy_id"
+          ],
+          "type": "object",
+          "title": "diagnose_policyArguments"
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "explain_decision",
+        "description": "Read the Decision node: model, tool calls, Cypher, candidates and guardrail.",
+        "parameters": {
+          "properties": {
+            "decision_id": {
+              "title": "Decision Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "decision_id"
+          ],
+          "type": "object",
+          "title": "explain_decisionArguments"
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "lineage",
+        "description": "Read multi-hop DERIVED_FROM paths, bounded to one through eight hops.",
+        "parameters": {
+          "properties": {
+            "policy_id": {
+              "title": "Policy Id",
+              "type": "string"
+            },
+            "max_hops": {
+              "default": 8,
+              "maximum": 8,
+              "minimum": 1,
+              "title": "Max Hops",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "policy_id"
+          ],
+          "type": "object",
+          "title": "lineageArguments"
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "find_training_origins",
+        "description": "Find origins with compatible semantics, verified artifacts and four complete validation suites. You may choose any eligible origin.",
+        "parameters": {
+          "properties": {
+            "target_policy": {
+              "title": "Target Policy",
+              "type": "string"
+            }
+          },
+          "required": [
+            "target_policy"
+          ],
+          "type": "object",
+          "title": "find_training_originsArguments"
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "nearest_passing_ancestor",
+        "description": "Run FalkorDB shortestPath to the nearest same-contract ancestor passing a canonical suite. Minimum unweighted hops, not a safety prediction.",
+        "parameters": {
+          "properties": {
+            "policy_id": {
+              "title": "Policy Id",
+              "type": "string"
+            },
+            "suite_id": {
+              "default": "val-target-v1",
+              "title": "Suite Id",
+              "type": "string"
+            },
+            "max_hops": {
+              "default": 8,
+              "maximum": 8,
+              "minimum": 1,
+              "title": "Max Hops",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "policy_id"
+          ],
+          "type": "object",
+          "title": "nearest_passing_ancestorArguments"
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "start_training",
+        "description": "Propose an origin, citing the algorithm and evidence in reason. Guardrail records a Decision BEFORE one real 60000-step PPO run in the original 2D simulator (seed29, ppo-r1), 180 validation episodes and the gate. No MuJoCo or deployment. Consent required; returns a pending session.",
+        "parameters": {
+          "properties": {
+            "origin_id": {
+              "title": "Origin Id",
+              "type": "string"
+            },
+            "reason": {
+              "title": "Reason",
+              "type": "string"
+            },
+            "budget": {
+              "default": 60000,
+              "title": "Budget",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "origin_id",
+            "reason"
+          ],
+          "type": "object",
+          "title": "start_trainingArguments"
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "check_gate",
+        "description": "Preview unchanged promo-1 for the saved artifact. No evaluation or deployment.",
+        "parameters": {
+          "properties": {
+            "policy_id": {
+              "title": "Policy Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "policy_id"
+          ],
+          "type": "object",
+          "title": "check_gateArguments"
+        }
+      }
+    }
+  ],
+  "algorithm_result": {
+    "algorithm": "FalkorDB shortestPath, minimum unweighted DERIVED_FROM hops",
+    "nearest": {
+      "ancestor_id": "search-20261015185749-4a6581",
+      "artifact_hash": "b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565",
+      "hops": 1,
+      "path": [
+        "robust-20261016140226-352fd7",
+        "search-20261015185749-4a6581"
+      ],
+      "evaluation_id": "eval-20261015185833-82fb12",
+      "success_rate": 0.95,
+      "collision_rate": 0.05
+    },
+    "passing_ancestors": [
+      {
+        "ancestor_id": "search-20261015185749-4a6581",
+        "artifact_hash": "b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565",
+        "hops": 1,
+        "path": [
+          "robust-20261016140226-352fd7",
+          "search-20261015185749-4a6581"
+        ],
+        "evaluation_id": "eval-20261015185833-82fb12",
+        "success_rate": 0.95,
+        "collision_rate": 0.05
+      },
+      {
+        "ancestor_id": "search-20261015185536-6720c9",
+        "artifact_hash": "a08219d163fdb404bf481f544ceb158c63e33e49baf75685e5e7aae07b87941b",
+        "hops": 2,
+        "path": [
+          "robust-20261016140226-352fd7",
+          "search-20261015185749-4a6581",
+          "search-20261015185536-6720c9"
+        ],
+        "evaluation_id": "eval-20261015185707-432e07",
+        "success_rate": 0.9167,
+        "collision_rate": 0.0833
+      }
+    ],
+    "queries": [
+      {
+        "template": "mcp_policy",
+        "cypher": "MATCH (p:Policy {id:$policy})-[:USES_CONTRACT]->(c:Contract)-[:FOR_ROBOT]->(r:Robot)\nRETURN p.id AS policy_id, p.artifact_hash AS artifact_hash, p.status AS status,\n       c.id AS contract_id, r.id AS robot_id LIMIT 1",
+        "params": {
+          "policy": "robust-20261016140226-352fd7"
+        },
+        "header": [
+          "policy_id",
+          "artifact_hash",
+          "status",
+          "contract_id",
+          "robot_id"
+        ],
+        "rows": [
+          {
+            "policy_id": "robust-20261016140226-352fd7",
+            "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+            "status": "completed",
+            "contract_id": "ew-contract-1:2f013b6f4849",
+            "robot_id": "ew-unicycle-r20"
+          }
+        ],
+        "graph": "ew",
+        "graph_revision": 10,
+        "ms": 1.22,
+        "record_ids": [
+          "robust-20261016140226-352fd7"
+        ],
+        "row_count": 1,
+        "returned_ids": [
+          "robust-20261016140226-352fd7"
+        ]
+      },
+      {
+        "template": "mcp_nearest_passing_ancestor",
+        "cypher": "MATCH (p:Policy {id:$policy})-[:USES_CONTRACT]->(c:Contract)<-[:USES_CONTRACT]-(a:Policy)\nWITH p,a,shortestPath((p)-[:DERIVED_FROM*1..8]->(a)) AS path\nWHERE path IS NOT NULL AND length(path) <= $max_hops AND a.status = 'completed'\nMATCH (a)<-[:ASSESSED]-(e:Evaluation)-[:ON_SUITE]->(s:Suite {id:$suite})\nWHERE s.role = 'validation' AND e.complete_suite = true AND e.artifact_hash = a.artifact_hash\n  AND e.suite_fingerprint = s.fingerprint AND e.success_rate >= $min_success\n  AND e.collision_rate <= $max_collision\nRETURN a.id AS ancestor_id, a.artifact_hash AS artifact_hash, length(path) AS hops,\n       [n IN nodes(path) | n.id] AS path, e.id AS evaluation_id,\n       e.success_rate AS success_rate, e.collision_rate AS collision_rate\nORDER BY hops, collision_rate, ancestor_id LIMIT 20",
+        "params": {
+          "policy": "robust-20261016140226-352fd7",
+          "suite": "val-target-v1",
+          "max_hops": 8,
+          "min_success": 0.8,
+          "max_collision": 0.1
+        },
+        "header": [
+          "ancestor_id",
+          "artifact_hash",
+          "hops",
+          "path",
+          "evaluation_id",
+          "success_rate",
+          "collision_rate"
+        ],
+        "rows": [
+          {
+            "ancestor_id": "search-20261015185749-4a6581",
+            "artifact_hash": "b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565",
+            "hops": 1,
+            "path": [
+              "robust-20261016140226-352fd7",
+              "search-20261015185749-4a6581"
+            ],
+            "evaluation_id": "eval-20261015185833-82fb12",
+            "success_rate": 0.95,
+            "collision_rate": 0.05
+          },
+          {
+            "ancestor_id": "search-20261015185536-6720c9",
+            "artifact_hash": "a08219d163fdb404bf481f544ceb158c63e33e49baf75685e5e7aae07b87941b",
+            "hops": 2,
+            "path": [
+              "robust-20261016140226-352fd7",
+              "search-20261015185749-4a6581",
+              "search-20261015185536-6720c9"
+            ],
+            "evaluation_id": "eval-20261015185707-432e07",
+            "success_rate": 0.9167,
+            "collision_rate": 0.0833
+          }
+        ],
+        "graph": "ew",
+        "graph_revision": 10,
+        "ms": 1.79,
+        "record_ids": [
+          "eval-20261015185707-432e07",
+          "eval-20261015185833-82fb12",
+          "search-20261015185536-6720c9",
+          "search-20261015185749-4a6581"
+        ],
+        "row_count": 2,
+        "returned_ids": [
+          "eval-20261015185707-432e07",
+          "eval-20261015185833-82fb12",
+          "search-20261015185536-6720c9",
+          "search-20261015185749-4a6581"
+        ]
+      }
+    ],
+    "notice": "A passing ancestor is a recovery option. Graph distance is not evidence that extra PPO improves safety."
+  }
+}

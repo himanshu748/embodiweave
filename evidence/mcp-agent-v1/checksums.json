@@ -1,0 +1,11 @@
+{
+  "README.md": "76f893691098282e879a3db4e42f14e9af0517f87b93dfb2adb2a9fa128bafef",
+  "agent-receipt.json": "591205e88474cec747a3006cc9f17b91175b9d4c19d4f526abffd4631375b325",
+  "bundle-verification.json": "519cd37171d7458638ac6da7c6f1ed24c68cf640a0a13952ba480f41db216563",
+  "fallback-repro-v3.zip": "c3238c455c433dda54a8ae316518435dff1859b7756ad97f37122c17ea2c75a9",
+  "protocol.json": "58a934e9c3c901a4e8615051c903537aa1f5610f870cbf88a404b0dbbdb58413",
+  "provider-failure.json": "15bc7c375fcbbea4ce03049750ab00cb408c719d9be2b51c03532a4f6d7d89b7",
+  "public-http-client.json": "6426d6408a54b6aea2455d083fd979980d0ba134cf4a55dcc3daba7405c99cb1",
+  "summary.json": "4ecda1694429a7e05ce862c62a70e138842653522d4225739446e62170eab6c3",
+  "training-receipt.json": "5cc2263fddb7b30b531a400367f5465aa5c72e1e790cb928907b71dd8d9342f5"
+}
