@@ -1,0 +1,141 @@
+{
+  "algorithm": "FalkorDB shortestPath, minimum unweighted DERIVED_FROM hops",
+  "nearest": {
+    "ancestor_id": "search-20261015185749-4a6581",
+    "artifact_hash": "b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565",
+    "collision_rate": 0.05,
+    "evaluation_id": "eval-20261015185833-82fb12",
+    "hops": 1,
+    "path": [
+      "robust-20261016140226-352fd7",
+      "search-20261015185749-4a6581"
+    ],
+    "success_rate": 0.95
+  },
+  "notice": "A passing ancestor is a recovery option. Graph distance is not evidence that extra PPO improves safety.",
+  "passing_ancestors": [
+    {
+      "ancestor_id": "search-20261015185749-4a6581",
+      "artifact_hash": "b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565",
+      "collision_rate": 0.05,
+      "evaluation_id": "eval-20261015185833-82fb12",
+      "hops": 1,
+      "path": [
+        "robust-20261016140226-352fd7",
+        "search-20261015185749-4a6581"
+      ],
+      "success_rate": 0.95
+    },
+    {
+      "ancestor_id": "search-20261015185536-6720c9",
+      "artifact_hash": "a08219d163fdb404bf481f544ceb158c63e33e49baf75685e5e7aae07b87941b",
+      "collision_rate": 0.0833,
+      "evaluation_id": "eval-20261015185707-432e07",
+      "hops": 2,
+      "path": [
+        "robust-20261016140226-352fd7",
+        "search-20261015185749-4a6581",
+        "search-20261015185536-6720c9"
+      ],
+      "success_rate": 0.9167
+    }
+  ],
+  "queries": [
+    {
+      "cypher": "MATCH (p:Policy {id:$policy})-[:USES_CONTRACT]->(c:Contract)-[:FOR_ROBOT]->(r:Robot)\nRETURN p.id AS policy_id, p.artifact_hash AS artifact_hash, p.status AS status,\n       c.id AS contract_id, r.id AS robot_id LIMIT 1",
+      "graph": "ew",
+      "graph_revision": 10,
+      "header": [
+        "policy_id",
+        "artifact_hash",
+        "status",
+        "contract_id",
+        "robot_id"
+      ],
+      "ms": 0.68,
+      "params": {
+        "policy": "robust-20261016140226-352fd7"
+      },
+      "record_ids": [
+        "robust-20261016140226-352fd7"
+      ],
+      "returned_ids": [
+        "robust-20261016140226-352fd7"
+      ],
+      "row_count": 1,
+      "rows": [
+        {
+          "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+          "contract_id": "ew-contract-1:2f013b6f4849",
+          "policy_id": "robust-20261016140226-352fd7",
+          "robot_id": "ew-unicycle-r20",
+          "status": "completed"
+        }
+      ],
+      "template": "mcp_policy"
+    },
+    {
+      "cypher": "MATCH (p:Policy {id:$policy})-[:USES_CONTRACT]->(c:Contract)<-[:USES_CONTRACT]-(a:Policy)\nWITH p,a,shortestPath((p)-[:DERIVED_FROM*1..8]->(a)) AS path\nWHERE path IS NOT NULL AND length(path) <= $max_hops AND a.status = 'completed'\nMATCH (a)<-[:ASSESSED]-(e:Evaluation)-[:ON_SUITE]->(s:Suite {id:$suite})\nWHERE s.role = 'validation' AND e.complete_suite = true AND e.artifact_hash = a.artifact_hash\n  AND e.suite_fingerprint = s.fingerprint AND e.success_rate >= $min_success\n  AND e.collision_rate <= $max_collision\nRETURN a.id AS ancestor_id, a.artifact_hash AS artifact_hash, length(path) AS hops,\n       [n IN nodes(path) | n.id] AS path, e.id AS evaluation_id,\n       e.success_rate AS success_rate, e.collision_rate AS collision_rate\nORDER BY hops, collision_rate, ancestor_id LIMIT 20",
+      "graph": "ew",
+      "graph_revision": 10,
+      "header": [
+        "ancestor_id",
+        "artifact_hash",
+        "hops",
+        "path",
+        "evaluation_id",
+        "success_rate",
+        "collision_rate"
+      ],
+      "ms": 0.96,
+      "params": {
+        "max_collision": 0.1,
+        "max_hops": 8,
+        "min_success": 0.8,
+        "policy": "robust-20261016140226-352fd7",
+        "suite": "val-target-v1"
+      },
+      "record_ids": [
+        "eval-20261015185707-432e07",
+        "eval-20261015185833-82fb12",
+        "search-20261015185536-6720c9",
+        "search-20261015185749-4a6581"
+      ],
+      "returned_ids": [
+        "eval-20261015185707-432e07",
+        "eval-20261015185833-82fb12",
+        "search-20261015185536-6720c9",
+        "search-20261015185749-4a6581"
+      ],
+      "row_count": 2,
+      "rows": [
+        {
+          "ancestor_id": "search-20261015185749-4a6581",
+          "artifact_hash": "b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565",
+          "collision_rate": 0.05,
+          "evaluation_id": "eval-20261015185833-82fb12",
+          "hops": 1,
+          "path": [
+            "robust-20261016140226-352fd7",
+            "search-20261015185749-4a6581"
+          ],
+          "success_rate": 0.95
+        },
+        {
+          "ancestor_id": "search-20261015185536-6720c9",
+          "artifact_hash": "a08219d163fdb404bf481f544ceb158c63e33e49baf75685e5e7aae07b87941b",
+          "collision_rate": 0.0833,
+          "evaluation_id": "eval-20261015185707-432e07",
+          "hops": 2,
+          "path": [
+            "robust-20261016140226-352fd7",
+            "search-20261015185749-4a6581",
+            "search-20261015185536-6720c9"
+          ],
+          "success_rate": 0.9167
+        }
+      ],
+      "template": "mcp_nearest_passing_ancestor"
+    }
+  ]
+}

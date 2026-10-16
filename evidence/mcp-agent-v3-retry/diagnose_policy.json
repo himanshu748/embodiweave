@@ -1,0 +1,239 @@
+{
+  "notice": "Canonical validation evidence only. No new evaluation was run.",
+  "policy": {
+    "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+    "contract_id": "ew-contract-1:2f013b6f4849",
+    "policy_id": "robust-20261016140226-352fd7",
+    "robot_id": "ew-unicycle-r20",
+    "status": "completed"
+  },
+  "queries": [
+    {
+      "cypher": "MATCH (p:Policy {id:$policy})-[:USES_CONTRACT]->(c:Contract)-[:FOR_ROBOT]->(r:Robot)\nRETURN p.id AS policy_id, p.artifact_hash AS artifact_hash, p.status AS status,\n       c.id AS contract_id, r.id AS robot_id LIMIT 1",
+      "graph": "ew",
+      "graph_revision": 10,
+      "header": [
+        "policy_id",
+        "artifact_hash",
+        "status",
+        "contract_id",
+        "robot_id"
+      ],
+      "ms": 0.77,
+      "params": {
+        "policy": "robust-20261016140226-352fd7"
+      },
+      "record_ids": [
+        "robust-20261016140226-352fd7"
+      ],
+      "returned_ids": [
+        "robust-20261016140226-352fd7"
+      ],
+      "row_count": 1,
+      "rows": [
+        {
+          "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+          "contract_id": "ew-contract-1:2f013b6f4849",
+          "policy_id": "robust-20261016140226-352fd7",
+          "robot_id": "ew-unicycle-r20",
+          "status": "completed"
+        }
+      ],
+      "template": "mcp_policy"
+    },
+    {
+      "cypher": "MATCH (p:Policy {id:$policy})<-[:ASSESSED]-(e:Evaluation)-[:ON_SUITE]->(s:Suite)\nWHERE s.role = 'validation' AND s.id IN $suites AND e.complete_suite = true\n  AND e.artifact_hash = p.artifact_hash AND e.suite_fingerprint = s.fingerprint\nOPTIONAL MATCH (f:Failure)-[:OBSERVED_IN]->(e)\nRETURN p.id AS policy_id, e.id AS evaluation_id, s.id AS suite_id, e.episodes AS episodes,\n       e.success_rate AS success_rate, e.collision_rate AS collision_rate,\n       f.id AS failure_id, f.hit AS hit, f.count AS count ORDER BY suite_id, evaluation_id LIMIT 200",
+      "graph": "ew",
+      "graph_revision": 10,
+      "header": [
+        "policy_id",
+        "evaluation_id",
+        "suite_id",
+        "episodes",
+        "success_rate",
+        "collision_rate",
+        "failure_id",
+        "hit",
+        "count"
+      ],
+      "ms": 1.01,
+      "params": {
+        "policy": "robust-20261016140226-352fd7",
+        "suites": [
+          "val-target-v1",
+          "val-open-v1",
+          "val-static-v1",
+          "val-crossing-v1"
+        ]
+      },
+      "record_ids": [
+        "eval-20261016140420-2a0258",
+        "eval-20261016140420-2a0258:collision:mover",
+        "eval-20261016140420-2a0258:collision:static",
+        "eval-20261016140420-2a0258:timeout",
+        "eval-20261016140420-e4a5fa",
+        "eval-20261016140421-14d22c",
+        "eval-20261016140421-14d22c:collision:wall",
+        "eval-20261016140422-a2e964",
+        "robust-20261016140226-352fd7",
+        "val-crossing-v1",
+        "val-open-v1",
+        "val-static-v1",
+        "val-target-v1"
+      ],
+      "returned_ids": [
+        "eval-20261016140420-2a0258",
+        "eval-20261016140420-2a0258:collision:mover",
+        "eval-20261016140420-2a0258:collision:static",
+        "eval-20261016140420-2a0258:timeout",
+        "eval-20261016140420-e4a5fa",
+        "eval-20261016140421-14d22c",
+        "eval-20261016140421-14d22c:collision:wall",
+        "eval-20261016140422-a2e964",
+        "robust-20261016140226-352fd7",
+        "val-crossing-v1",
+        "val-open-v1",
+        "val-static-v1",
+        "val-target-v1"
+      ],
+      "row_count": 6,
+      "rows": [
+        {
+          "collision_rate": 0.0,
+          "count": null,
+          "episodes": 40,
+          "evaluation_id": "eval-20261016140422-a2e964",
+          "failure_id": null,
+          "hit": null,
+          "policy_id": "robust-20261016140226-352fd7",
+          "success_rate": 1.0,
+          "suite_id": "val-crossing-v1"
+        },
+        {
+          "collision_rate": 0.0,
+          "count": null,
+          "episodes": 40,
+          "evaluation_id": "eval-20261016140420-e4a5fa",
+          "failure_id": null,
+          "hit": null,
+          "policy_id": "robust-20261016140226-352fd7",
+          "success_rate": 1.0,
+          "suite_id": "val-open-v1"
+        },
+        {
+          "collision_rate": 0.025,
+          "count": 1,
+          "episodes": 40,
+          "evaluation_id": "eval-20261016140421-14d22c",
+          "failure_id": "eval-20261016140421-14d22c:collision:wall",
+          "hit": "wall",
+          "policy_id": "robust-20261016140226-352fd7",
+          "success_rate": 0.975,
+          "suite_id": "val-static-v1"
+        },
+        {
+          "collision_rate": 0.0333,
+          "count": 1,
+          "episodes": 60,
+          "evaluation_id": "eval-20261016140420-2a0258",
+          "failure_id": "eval-20261016140420-2a0258:collision:mover",
+          "hit": "mover",
+          "policy_id": "robust-20261016140226-352fd7",
+          "success_rate": 0.95,
+          "suite_id": "val-target-v1"
+        },
+        {
+          "collision_rate": 0.0333,
+          "count": 1,
+          "episodes": 60,
+          "evaluation_id": "eval-20261016140420-2a0258",
+          "failure_id": "eval-20261016140420-2a0258:collision:static",
+          "hit": "static",
+          "policy_id": "robust-20261016140226-352fd7",
+          "success_rate": 0.95,
+          "suite_id": "val-target-v1"
+        },
+        {
+          "collision_rate": 0.0333,
+          "count": 1,
+          "episodes": 60,
+          "evaluation_id": "eval-20261016140420-2a0258",
+          "failure_id": "eval-20261016140420-2a0258:timeout",
+          "hit": null,
+          "policy_id": "robust-20261016140226-352fd7",
+          "success_rate": 0.95,
+          "suite_id": "val-target-v1"
+        }
+      ],
+      "template": "mcp_diagnosis"
+    }
+  ],
+  "validation_and_failures": [
+    {
+      "collision_rate": 0.0,
+      "count": null,
+      "episodes": 40,
+      "evaluation_id": "eval-20261016140422-a2e964",
+      "failure_id": null,
+      "hit": null,
+      "policy_id": "robust-20261016140226-352fd7",
+      "success_rate": 1.0,
+      "suite_id": "val-crossing-v1"
+    },
+    {
+      "collision_rate": 0.0,
+      "count": null,
+      "episodes": 40,
+      "evaluation_id": "eval-20261016140420-e4a5fa",
+      "failure_id": null,
+      "hit": null,
+      "policy_id": "robust-20261016140226-352fd7",
+      "success_rate": 1.0,
+      "suite_id": "val-open-v1"
+    },
+    {
+      "collision_rate": 0.025,
+      "count": 1,
+      "episodes": 40,
+      "evaluation_id": "eval-20261016140421-14d22c",
+      "failure_id": "eval-20261016140421-14d22c:collision:wall",
+      "hit": "wall",
+      "policy_id": "robust-20261016140226-352fd7",
+      "success_rate": 0.975,
+      "suite_id": "val-static-v1"
+    },
+    {
+      "collision_rate": 0.0333,
+      "count": 1,
+      "episodes": 60,
+      "evaluation_id": "eval-20261016140420-2a0258",
+      "failure_id": "eval-20261016140420-2a0258:collision:mover",
+      "hit": "mover",
+      "policy_id": "robust-20261016140226-352fd7",
+      "success_rate": 0.95,
+      "suite_id": "val-target-v1"
+    },
+    {
+      "collision_rate": 0.0333,
+      "count": 1,
+      "episodes": 60,
+      "evaluation_id": "eval-20261016140420-2a0258",
+      "failure_id": "eval-20261016140420-2a0258:collision:static",
+      "hit": "static",
+      "policy_id": "robust-20261016140226-352fd7",
+      "success_rate": 0.95,
+      "suite_id": "val-target-v1"
+    },
+    {
+      "collision_rate": 0.0333,
+      "count": 1,
+      "episodes": 60,
+      "evaluation_id": "eval-20261016140420-2a0258",
+      "failure_id": "eval-20261016140420-2a0258:timeout",
+      "hit": null,
+      "policy_id": "robust-20261016140226-352fd7",
+      "success_rate": 0.95,
+      "suite_id": "val-target-v1"
+    }
+  ]
+}

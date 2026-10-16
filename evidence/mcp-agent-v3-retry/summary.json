@@ -1,0 +1,100 @@
+{
+  "study": "v3-retry",
+  "attempts": 1,
+  "completed": true,
+  "preregistration_commit": "1a950bafae1f7f04a01254445e27f2d453753a92",
+  "deployment_commit": "e2f8ee7ee682bf9fafd683bf987822fcc3cae647",
+  "model": [
+    "openai/gpt-4.1-mini"
+  ],
+  "tools": [
+    "diagnose_policy",
+    "find_training_origins",
+    "nearest_passing_ancestor",
+    "get_decision_outcomes",
+    "rank_regression_origins",
+    "start_training"
+  ],
+  "cited_outcome_ids": [
+    "outcome-deci-20261016121309-c0c93f"
+  ],
+  "citation_required_by_protocol": true,
+  "decision_id": "deci-20261016175734-1b2724",
+  "graph_revision_before_training": 10,
+  "origin": "physics-20261016150004-25da9c",
+  "v2_origin": "physics-20261016150004-25da9c",
+  "origin_changed": false,
+  "requested_steps": 60000,
+  "consumed_steps": 61440,
+  "validation_episodes": 180,
+  "gate": "promoted",
+  "passed_suites": 4,
+  "suites": [
+    {
+      "suite_id": "val-target-v1",
+      "suite_fingerprint": "9447338d94ad2972c1b0ceefaed4e642ff95ed73607743aa63fdeda2321193e7",
+      "parent_evaluation_id": "eval-20261016152511-7d0b1d",
+      "child_evaluation_id": "eval-20261016175812-e0b762",
+      "episodes": 60,
+      "parent_collisions": 2,
+      "child_collisions": 3,
+      "collision_delta": 1,
+      "collision_rate_delta": 0.016666666666666666,
+      "parent_goals": 58,
+      "child_goals": 57,
+      "goal_delta": -1
+    },
+    {
+      "suite_id": "val-open-v1",
+      "suite_fingerprint": "c0b2aa125313816e681ee6894301dd982f0dc6f808231faaa714a00b1230a042",
+      "parent_evaluation_id": "eval-20261016152511-290328",
+      "child_evaluation_id": "eval-20261016175815-360546",
+      "episodes": 40,
+      "parent_collisions": 0,
+      "child_collisions": 0,
+      "collision_delta": 0,
+      "collision_rate_delta": 0.0,
+      "parent_goals": 40,
+      "child_goals": 40,
+      "goal_delta": 0
+    },
+    {
+      "suite_id": "val-static-v1",
+      "suite_fingerprint": "9d78e34ff588089102fcfd03b56e187132d1adff50812d9d40ae262fb07f5bbf",
+      "parent_evaluation_id": "eval-20261016152512-d3ad78",
+      "child_evaluation_id": "eval-20261016175818-6d7cce",
+      "episodes": 40,
+      "parent_collisions": 1,
+      "child_collisions": 1,
+      "collision_delta": 0,
+      "collision_rate_delta": 0.0,
+      "parent_goals": 39,
+      "child_goals": 39,
+      "goal_delta": 0
+    },
+    {
+      "suite_id": "val-crossing-v1",
+      "suite_fingerprint": "6954fd519f6977849243cacb87327af09ac024002725a747ffaddc2289b663e2",
+      "parent_evaluation_id": "eval-20261016152513-619214",
+      "child_evaluation_id": "eval-20261016175820-c272b8",
+      "episodes": 40,
+      "parent_collisions": 0,
+      "child_collisions": 1,
+      "collision_delta": 1,
+      "collision_rate_delta": 0.025,
+      "parent_goals": 40,
+      "child_goals": 39,
+      "goal_delta": -1
+    }
+  ],
+  "regressed": true,
+  "release_verdict": "not_released_regression",
+  "deployment_changed": false,
+  "process_pass": true,
+  "interpretation": "The prompted outcome-aware MCP workflow completed, but chose the same origin and reproduced the parent regression. No evidence of learning, planner advantage or safety improvement. No further retry.",
+  "context_max_request_bytes": 17926,
+  "context_request_limit_bytes": 28000,
+  "prior_receipt_unchanged": true,
+  "bundle_checksums_verified": true,
+  "finished_at_utc": "2026-10-16T17:58:21.243807+00:00"
+}

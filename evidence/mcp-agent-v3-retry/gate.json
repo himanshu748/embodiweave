@@ -1,0 +1,138 @@
+{
+  "policy_id": "judge-c2a3eb9f19f9c4223a36788c304e0e0b",
+  "artifact_hash": "e59c7cebc07fed3665275cd2b79644586472bd62443da234f4311479a542d01a",
+  "rule": "promo-1",
+  "verdict": "promoted",
+  "reasons": [],
+  "checks": [
+    {
+      "suite_id": "val-target-v1",
+      "evaluation_id": "eval-20261016175812-e0b762",
+      "success_rate": 0.95,
+      "collision_rate": 0.05,
+      "min_success": 0.8,
+      "max_collision": 0.1,
+      "pass": true,
+      "role": "target"
+    },
+    {
+      "suite_id": "val-open-v1",
+      "evaluation_id": "eval-20261016175815-360546",
+      "success_rate": 1.0,
+      "collision_rate": 0.0,
+      "min_success": 0.9,
+      "max_collision": 0.05,
+      "pass": true,
+      "role": "retained"
+    },
+    {
+      "suite_id": "val-static-v1",
+      "evaluation_id": "eval-20261016175818-6d7cce",
+      "success_rate": 0.975,
+      "collision_rate": 0.025,
+      "min_success": 0.75,
+      "max_collision": 0.1,
+      "pass": true,
+      "role": "retained"
+    },
+    {
+      "suite_id": "val-crossing-v1",
+      "evaluation_id": "eval-20261016175820-c272b8",
+      "success_rate": 0.975,
+      "collision_rate": 0.025,
+      "min_success": 0.75,
+      "max_collision": 0.15,
+      "pass": true,
+      "role": "retained"
+    }
+  ],
+  "missing": [],
+  "evaluation_ids": [
+    "eval-20261016175812-e0b762",
+    "eval-20261016175815-360546",
+    "eval-20261016175818-6d7cce",
+    "eval-20261016175820-c272b8"
+  ],
+  "query": {
+    "template": "promotion_evidence",
+    "cypher": "MATCH (p:Policy {id:$policy})\nUNWIND $suites AS sid\nMATCH (s:Suite {id:sid}) WHERE s.role = 'validation'\nOPTIONAL MATCH (e:Evaluation)-[:ASSESSED]->(p)\nWHERE (e)-[:ON_SUITE]->(s) AND e.artifact_hash = $hash AND e.complete_suite = true AND e.suite_fingerprint = s.fingerprint\nRETURN sid AS suite_id, p.artifact_hash AS policy_hash, e.id AS evaluation_id, e.artifact_hash AS evaluated_hash,\n       e.success_rate AS success_rate, e.collision_rate AS collision_rate, e.episodes AS episodes, e.at AS at\nORDER BY suite_id, at",
+    "params": {
+      "policy": "judge-c2a3eb9f19f9c4223a36788c304e0e0b",
+      "suites": [
+        "val-target-v1",
+        "val-open-v1",
+        "val-static-v1",
+        "val-crossing-v1"
+      ],
+      "hash": "e59c7cebc07fed3665275cd2b79644586472bd62443da234f4311479a542d01a"
+    },
+    "header": [
+      "suite_id",
+      "policy_hash",
+      "evaluation_id",
+      "evaluated_hash",
+      "success_rate",
+      "collision_rate",
+      "episodes",
+      "at"
+    ],
+    "rows": [
+      [
+        "val-crossing-v1",
+        "e59c7cebc07fed3665275cd2b79644586472bd62443da234f4311479a542d01a",
+        "eval-20261016175820-c272b8",
+        "e59c7cebc07fed3665275cd2b79644586472bd62443da234f4311479a542d01a",
+        0.975,
+        0.025,
+        40,
+        "2026-10-16T17:58:20+0000"
+      ],
+      [
+        "val-open-v1",
+        "e59c7cebc07fed3665275cd2b79644586472bd62443da234f4311479a542d01a",
+        "eval-20261016175815-360546",
+        "e59c7cebc07fed3665275cd2b79644586472bd62443da234f4311479a542d01a",
+        1.0,
+        0.0,
+        40,
+        "2026-10-16T17:58:15+0000"
+      ],
+      [
+        "val-static-v1",
+        "e59c7cebc07fed3665275cd2b79644586472bd62443da234f4311479a542d01a",
+        "eval-20261016175818-6d7cce",
+        "e59c7cebc07fed3665275cd2b79644586472bd62443da234f4311479a542d01a",
+        0.975,
+        0.025,
+        40,
+        "2026-10-16T17:58:18+0000"
+      ],
+      [
+        "val-target-v1",
+        "e59c7cebc07fed3665275cd2b79644586472bd62443da234f4311479a542d01a",
+        "eval-20261016175812-e0b762",
+        "e59c7cebc07fed3665275cd2b79644586472bd62443da234f4311479a542d01a",
+        0.95,
+        0.05,
+        60,
+        "2026-10-16T17:58:12+0000"
+      ]
+    ],
+    "graph": "ew",
+    "graph_revision": 17,
+    "ms": 1.37,
+    "record_ids": [
+      "eval-20261016175812-e0b762",
+      "eval-20261016175815-360546",
+      "eval-20261016175818-6d7cce",
+      "eval-20261016175820-c272b8",
+      "val-crossing-v1",
+      "val-open-v1",
+      "val-static-v1",
+      "val-target-v1"
+    ]
+  },
+  "id": "prom-20261016175820-474d6f",
+  "recorded_at": "2026-10-16T17:58:20+0000",
+  "kind": "promotion"
+}
