@@ -202,6 +202,27 @@ No new child has completed the registered physics selection rule. The one-time p
 Successful simulation does not establish hardware safety. The base uses velocity servos and scripted pedestrians; the documented dynamics and sensor mismatches remain.
 <!-- physics-adapt-v1:end -->
 
+## Earlier study: search-v1
+
+**The graph-selected rehearsal lineage passed all four validation suites. Its single held-out target evaluation still failed the collision limit.** Selection stopped before that held-out evaluation. This study remained frozen; the separately preregistered robustness-v2 study above started later with new confirmation seeds.
+
+| Measured candidate | Target success / collision | Open | Static | Crossing | Fixed promo-1 gate |
+|---|---|---|---|---|---|
+| **Collision limit (maximum)** | **≤10%** | **≤5%** | **≤10%** | **≤15%** | All four required |
+| Original scratch checkpoint | 86.67% / 13.33% | 72.5% / 0% | 95% / 2.5% | 72.5% / 17.5% | Rejected, 1/4 |
+| Longer training | 91.67% / 8.33% | 82.5% / 0% | 92.5% / 5% | 85% / 10% | Rejected, 3/4 |
+| Rehearsal across training families | 95% / 5% | 100% / 0% | 97.5% / 2.5% | 85% / 15% | Passed, 4/4 |
+
+Each candidate uses the same complete validation suites: target 60 episodes, open 40, static 40, crossing 40, **180 total per candidate**. Candidate cells show success / collision; the limits row shows each suite's maximum collision rate from the fixed [promo-1 criteria](ew/criteria.py). Each new attempt requested 300,000 additional steps and consumed 301,056 after rollout rounding, with seed 7 fixed before training. The passing lineage consumed 753,664 steps including its root.
+
+**Held-out target confirmation: 86 goals, 13 collisions, 1 timeout in 100 episodes.** The target permits at most 10% collisions. Held-out retained tasks were not evaluated. Passing validation is not a claim of general safety; `P-static-b` was retained at the end of search-v1 and remains visible as the historical baseline.
+
+Exact IDs, artifact hashes, gate checks and bundle SHA-256 values: [evidence index](evidence/search-v1/summary.json). The passing artifact is `b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565`.
+
+- [Passing validation candidate + held-out evidence bundle](https://embodiweave.52.202.25.181.sslip.io/api/download/search-20261015185749-4a6581-b7e2fcc95869-repro-v3.zip)
+- [Rejected longer-training bundle](https://embodiweave.52.202.25.181.sslip.io/api/download/search-20261015185536-6720c9-a08219d163fd-repro-v3.zip)
+- [Diagnosis and search protocol](docs/diagnosis.md) · [Held-out protocol](docs/final-protocol.md) · [Evidence checksums](evidence/search-v1/checksums.json)
+
 ## MuJoCo sim-to-sim transfer
 
 **The same saved 2D-trained checkpoints, unchanged, running in contact physics.**
@@ -254,27 +275,6 @@ the original ideal 2D unicycle. The optional CPU stack is pinned in
 `requirements-mujoco.txt`; run `python -m sim.mujoco.evaluate` after installing
 it and the main requirements. The hosted service reads recorded transfer
 evidence; live browser PPO continues to train in the original 2D simulator.
-
-## Earlier study: search-v1
-
-**The graph-selected rehearsal lineage passed all four validation suites. Its single held-out target evaluation still failed the collision limit.** Selection stopped before that held-out evaluation. This study remained frozen; the separately preregistered robustness-v2 study above started later with new confirmation seeds.
-
-| Measured candidate | Target success / collision | Open | Static | Crossing | Fixed promo-1 gate |
-|---|---|---|---|---|---|
-| **Collision limit (maximum)** | **≤10%** | **≤5%** | **≤10%** | **≤15%** | All four required |
-| Original scratch checkpoint | 86.67% / 13.33% | 72.5% / 0% | 95% / 2.5% | 72.5% / 17.5% | Rejected, 1/4 |
-| Longer training | 91.67% / 8.33% | 82.5% / 0% | 92.5% / 5% | 85% / 10% | Rejected, 3/4 |
-| Rehearsal across training families | 95% / 5% | 100% / 0% | 97.5% / 2.5% | 85% / 15% | Passed, 4/4 |
-
-Each candidate uses the same complete validation suites: target 60 episodes, open 40, static 40, crossing 40, **180 total per candidate**. Candidate cells show success / collision; the limits row shows each suite's maximum collision rate from the fixed [promo-1 criteria](ew/criteria.py). Each new attempt requested 300,000 additional steps and consumed 301,056 after rollout rounding, with seed 7 fixed before training. The passing lineage consumed 753,664 steps including its root.
-
-**Held-out target confirmation: 86 goals, 13 collisions, 1 timeout in 100 episodes.** The target permits at most 10% collisions. Held-out retained tasks were not evaluated. Passing validation is not a claim of general safety; `P-static-b` was retained at the end of search-v1 and remains visible as the historical baseline.
-
-Exact IDs, artifact hashes, gate checks and bundle SHA-256 values: [evidence index](evidence/search-v1/summary.json). The passing artifact is `b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565`.
-
-- [Passing validation candidate + held-out evidence bundle](https://embodiweave.52.202.25.181.sslip.io/api/download/search-20261015185749-4a6581-b7e2fcc95869-repro-v3.zip)
-- [Rejected longer-training bundle](https://embodiweave.52.202.25.181.sslip.io/api/download/search-20261015185536-6720c9-a08219d163fd-repro-v3.zip)
-- [Diagnosis and search protocol](docs/diagnosis.md) · [Held-out protocol](docs/final-protocol.md) · [Evidence checksums](evidence/search-v1/checksums.json)
 
 ## Honest limitations
 
