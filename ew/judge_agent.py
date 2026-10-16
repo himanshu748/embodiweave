@@ -17,7 +17,7 @@ import time
 import urllib.error
 import urllib.request
 
-from . import artifacts, jobs, service
+from . import agent_tools as T, artifacts, jobs, service
 from .agent_sessions import _save
 from .contract import CONTRACT_V1
 from .graph import db, queries as Q
@@ -28,16 +28,18 @@ COOKIE = "ew_judge_visitor"
 _threads: dict[str, threading.Thread] = {}
 FREE_NVIDIA_MODELS = ("nvidia/nemotron-3-ultra-550b-a55b:free", "nvidia/nemotron-3-super-120b-a12b:free")
 FEATURED_CHILD = "scratch~a7ee2c-s7"
-VALIDATION_CHILD = "search-20261015185749-4a6581"
-SYSTEM = """You are EmbodiWeave's public robotics evidence agent. Investigate the user's question by choosing tools.
+VALIDATION_CHILD = os.environ.get("EW_LATEST_VALIDATION_POLICY", "search-20261015185749-4a6581")
+SYSTEM = f"""You are EmbodiWeave's public robotics evidence agent. Investigate the user's question by choosing tools.
 Use live FalkorDB evidence before answering. Tools execute named GRAPH.RO_QUERY templates; you cannot issue Cypher.
 The frozen ew-select-3 rule, not your intuition, ranks compatible parents and scratch from matched trial evidence.
 You may propose a new adaptation plan and preview the exact-artifact promotion gate. Neither trains nor deploys.
-The deployed policy is P-static-b; the original Sonnet child is scratch~a7ee2c-s7.
-The newer validation-search child is search-20261015185749-4a6581. It is a separate deterministic search,
+The current 2D demo policy is {T.DEPLOYED_POLICY}; P-static-b is the historical baseline.
+The original Sonnet child is scratch~a7ee2c-s7. The latest validation child is {VALIDATION_CHILD}. It is a separate deterministic search,
 not an LLM discovery. Call inspect_mission, query_evidence on search_lineage, and check_checkpoint on the newer
 child for questions about the latest result. For original scratch-versus-parent questions, propose_adaptation
 uses the historical ew-select-3 protocol. Do not conflate that protocol with search-v1 or claim training superiority.
+The separate robustness-v2 study ranks complete canonical validation and collision clearance. Its decision
+was written before training. Query both lineage rules; do not treat the old rehearsal child as the newest artifact.
 For specific questions choose only relevant tools. You have at most 6 model turns and 10 calls. Gather in parallel
 when useful and finish in under 150 words, using short paragraphs or bullets, never Markdown tables.
 Cite exact policy/evaluation/trial IDs and graph revision from results.
@@ -197,7 +199,7 @@ def execute(name, args):
         raise ValueError("Invalid tool arguments")
     req = {**service.target_request(budget=150000), "candidate_run_kinds": ["library"]}
     if name == "inspect_mission":
-        return {"deployed_policy": "P-static-b", "recorded_child": FEATURED_CHILD, "latest_validation_child": VALIDATION_CHILD,
+        return {"deployed_policy": T.DEPLOYED_POLICY, "recorded_child": FEATURED_CHILD, "latest_validation_child": VALIDATION_CHILD,
                 "contract": CONTRACT_V1.contract_id, "request": req,
                 "queries": [_query("mission_requirements", {"mission": req["mission"]}),
                             _query("failure_inspection", {"evaluation": _deployed_evaluation()})]}
@@ -214,6 +216,8 @@ def execute(name, args):
                   "search_lineage": ("search_lineage", {"rule": "search-v1"})}
         if not isinstance(topic, str) or topic not in topics:
             raise ValueError("Unknown evidence topic")
+        if topic == "search_lineage":
+            return {"queries": [_query("search_lineage", {"rule": rule}) for rule in ("search-v1", "robustness-v2")]}
         return {"queries": [_query(*topics[topic])]}
     if name == "propose_adaptation":
         if type(args["budget"]) is not int or args["budget"] not in (60000, 150000):
@@ -233,9 +237,9 @@ def execute(name, args):
     if not isinstance(policy, str) or policy not in known:
         raise ValueError("Choose a known checkpoint ID from the graph")
     gate = service.promotion_preview(policy)
-    matched = _query("matched_validation", {"suite": "val-target-v1", "ids": list(dict.fromkeys([policy, "P-static-b"]))})
+    matched = _query("matched_validation", {"suite": "val-target-v1", "ids": list(dict.fromkeys([policy, T.DEPLOYED_POLICY]))})
     latest = {r["policy_id"]: r for r in matched["rows"] if r.get("evaluation_id")}
-    baseline, candidate = latest.get("P-static-b"), latest.get(policy)
+    baseline, candidate = latest.get(T.DEPLOYED_POLICY), latest.get(policy)
     comparison = {"available": False, "note": "A complete matched target evaluation is missing; no comparison can be claimed."}
     if baseline and candidate:
         comparison = {"available": True, "suite_id": "val-target-v1", "baseline": baseline, "candidate": candidate,
@@ -249,7 +253,7 @@ def execute(name, args):
 def _deployed_evaluation():
     from . import records
     return [e["id"] for e in records.all_of("evaluation")
-            if e["policy_id"] == "P-static-b" and e["suite_id"] == "val-target-v1"][-1]
+            if e["policy_id"] == T.DEPLOYED_POLICY and e["suite_id"] == "val-target-v1"][-1]
 
 
 def _model_result(result):
@@ -341,7 +345,7 @@ def _lineage_report(calls):
                          f"gate verdict {result['verdict']}. Exact artifact: {result['artifact_hash']}.")
     lines.append("An overall rejection does not mean every suite failed. The planner's intervention priorities "
                  "are authored rules. Final-test results are unavailable to these tools; validation does not establish safety.")
-    lines.append("Graph revision: " + ", ".join(str(r) for r in sorted(revisions)) + ". Deployment unchanged.")
+    lines.append("Graph revision: " + ", ".join(str(r) for r in sorted(revisions)) + ". This read-only investigation changed no deployment.")
     return "\n\n".join(lines)
 
 

@@ -1,0 +1,995 @@
+{
+  "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+  "contract_id": "ew-contract-1:2f013b6f4849",
+  "episodes": [
+    {
+      "goal_distance": 0.2431895928560784,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.805669535741645,
+          3.101381675548603
+        ],
+        "movers": [],
+        "start": [
+          0.8056479104020902,
+          6.678001480440694,
+          0.4102870500160674
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "eb89e87d560671f124129dff651f54e7374ad09c0d8e8110bf7c25d1bb3fe39b",
+      "outcome": "success",
+      "seconds": 9.600000000000101,
+      "seed": 5200000,
+      "steps": 96,
+      "trajectory": "trajectories/robust-open-5200000.npz",
+      "trajectory_sha256": "a714039c273be8aa95584800f2691a4a9fb668e5426f58b703d91765d9f418b0"
+    },
+    {
+      "goal_distance": 0.2620105076331353,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.338431248257764,
+          2.0921980398953766
+        ],
+        "movers": [],
+        "start": [
+          1.1606516207230362,
+          4.624886868667755,
+          -0.18264934533213356
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "90a3d9e6c94bbbd3654de0e2d91476cdbee961c70654ba9f3b7987bf356c9f69",
+      "outcome": "success",
+      "seconds": 8.299999999999898,
+      "seed": 5200001,
+      "steps": 83,
+      "trajectory": "trajectories/robust-open-5200001.npz",
+      "trajectory_sha256": "cd3c7f287844fddffffb64107525a28019670e849fb14537e21e91317f12990f"
+    },
+    {
+      "goal_distance": 0.24525444300319868,
+      "hit": null,
+      "layout": {
+        "goal": [
+          9.053007637390552,
+          4.470447959974994
+        ],
+        "movers": [],
+        "start": [
+          0.9942894191078404,
+          3.0868198666263122,
+          0.3307193951950842
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "34d994f2455414538946fccdff797ea387c82dd2f4ee6875006ecb1a6609f3ee",
+      "outcome": "success",
+      "seconds": 9.000000000000007,
+      "seed": 5200002,
+      "steps": 90,
+      "trajectory": "trajectories/robust-open-5200002.npz",
+      "trajectory_sha256": "07057aa77c56ac4822c34225a07e8f54435f408af7c3962f3a3f0f8ba5b3e3e0"
+    },
+    {
+      "goal_distance": 0.21692091951982165,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.433461182091449,
+          5.755139267543758
+        ],
+        "movers": [],
+        "start": [
+          1.1100851883858591,
+          8.46532423796237,
+          -0.5048010168697357
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "851e720f32fb4702e056b64b9ce08a73c6759307f7e81f3c8e21561454655f64",
+      "outcome": "success",
+      "seconds": 8.299999999999898,
+      "seed": 5200003,
+      "steps": 83,
+      "trajectory": "trajectories/robust-open-5200003.npz",
+      "trajectory_sha256": "2cd3f892afa2967822da9b641de751e1e0f11909dbff2943df50c88881a9a9e7"
+    },
+    {
+      "goal_distance": 0.2170992604441015,
+      "hit": null,
+      "layout": {
+        "goal": [
+          9.07171953349324,
+          1.4698795108278455
+        ],
+        "movers": [],
+        "start": [
+          1.4280807964842177,
+          7.214157194544693,
+          -0.8675201142832579
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "4ad2324f2a241666d6d0f1f1bc9a15a2254fc52348e46e9b47a99a5e8f6ba98f",
+      "outcome": "success",
+      "seconds": 10.500000000000242,
+      "seed": 5200004,
+      "steps": 105,
+      "trajectory": "trajectories/robust-open-5200004.npz",
+      "trajectory_sha256": "af3cef704501728faef925fc312c6828fe485bab6cc9ae33c906336905bc6e77"
+    },
+    {
+      "goal_distance": 0.22300276239579958,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.922438623070246,
+          4.822921317247821
+        ],
+        "movers": [],
+        "start": [
+          1.6609141347872636,
+          8.27960786423164,
+          -0.13768016237242992
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "c4c2d7a104c863744adad295860f419d0a5378c4e73f1a4887626cc7c3510b04",
+      "outcome": "success",
+      "seconds": 8.599999999999945,
+      "seed": 5200005,
+      "steps": 86,
+      "trajectory": "trajectories/robust-open-5200005.npz",
+      "trajectory_sha256": "dae8acc6a3f3d4e564fe5dbc3c69bbd2d3aa4f00910d15dc12f9418d17755269"
+    },
+    {
+      "goal_distance": 0.2705318443091464,
+      "hit": null,
+      "layout": {
+        "goal": [
+          9.06683631138869,
+          7.017134693722545
+        ],
+        "movers": [],
+        "start": [
+          1.4419155333968847,
+          1.0663757925983113,
+          0.5511145743158306
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "5e125425ab4403f699acf0d92d336ed575020b8992b14ee2e20746a6e4cbe17b",
+      "outcome": "success",
+      "seconds": 10.800000000000288,
+      "seed": 5200006,
+      "steps": 108,
+      "trajectory": "trajectories/robust-open-5200006.npz",
+      "trajectory_sha256": "75772e1de5f7a0f28af879219f7ac2dadb11e57119c71720e449e6166ebda0f9"
+    },
+    {
+      "goal_distance": 0.28826071741185144,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.225052863178288,
+          4.282645151020579
+        ],
+        "movers": [],
+        "start": [
+          0.800640605439026,
+          4.789098811943716,
+          -1.066046269991501
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "c93648eb274d0228ac7e7145c04cf0163c7b3d9655ceabd7a225c47c4fe851b7",
+      "outcome": "success",
+      "seconds": 8.499999999999929,
+      "seed": 5200007,
+      "steps": 85,
+      "trajectory": "trajectories/robust-open-5200007.npz",
+      "trajectory_sha256": "124bc2b29fe29199f63da6287ee7c69c5555f508dbd63edb9c48c36a00b2851e"
+    },
+    {
+      "goal_distance": 0.23405391593478525,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.207416056004986,
+          8.517143050765814
+        ],
+        "movers": [],
+        "start": [
+          1.1635787444817556,
+          4.338029717713487,
+          1.5197882775005864
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "07652be2a4367f750fd1cc3631b1387dedce1dfd8d6e2f514b758c9903674916",
+      "outcome": "success",
+      "seconds": 8.899999999999991,
+      "seed": 5200008,
+      "steps": 89,
+      "trajectory": "trajectories/robust-open-5200008.npz",
+      "trajectory_sha256": "fbd58a832cc84f966a1a9a4404858043fbf34f2ac918766ea536e612027123c0"
+    },
+    {
+      "goal_distance": 0.20524562722395634,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.879108865625492,
+          2.217387098206787
+        ],
+        "movers": [],
+        "start": [
+          1.028416860035305,
+          7.2395299756552856,
+          -1.3501670852318655
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "6fec6910ce98f08b5444e02a61c6fe6dada582149e32484c5572e7e24956861d",
+      "outcome": "success",
+      "seconds": 10.600000000000257,
+      "seed": 5200009,
+      "steps": 106,
+      "trajectory": "trajectories/robust-open-5200009.npz",
+      "trajectory_sha256": "d0be28a727bf147f8130825c7998a66bb99e91dd6d8a294365340d97d6263e7f"
+    },
+    {
+      "goal_distance": 0.2852042439746768,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.292755181304083,
+          8.244946272682732
+        ],
+        "movers": [],
+        "start": [
+          1.5639594460171706,
+          1.2293579287842595,
+          1.1781096061840501
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "2eda2519e60359e9ddff73c4d749e7a0db541db5290e24041383ddf8461d4176",
+      "outcome": "success",
+      "seconds": 10.600000000000257,
+      "seed": 5200010,
+      "steps": 106,
+      "trajectory": "trajectories/robust-open-5200010.npz",
+      "trajectory_sha256": "6bd2c42f30e4e86331f20b8a133059f739082fb6038e28f9cea94f343e1cae9e"
+    },
+    {
+      "goal_distance": 0.271122325834997,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.650417739446677,
+          1.2005649592300767
+        ],
+        "movers": [],
+        "start": [
+          1.4049756675051146,
+          5.223613755050443,
+          -0.1893780396950145
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "b0433a50bb54947dddb06b7f38510cb329c43becbb71112e8bbadc676e9a0ca0",
+      "outcome": "success",
+      "seconds": 9.100000000000023,
+      "seed": 5200011,
+      "steps": 91,
+      "trajectory": "trajectories/robust-open-5200011.npz",
+      "trajectory_sha256": "8eb31eca4b33f3640f1e440d68151c214f8d0430b452ba6baa2561ad862d6808"
+    },
+    {
+      "goal_distance": 0.23056237012188094,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.604153920151706,
+          8.581101868110364
+        ],
+        "movers": [],
+        "start": [
+          1.0161873792070764,
+          5.779214676023278,
+          0.41829311046991313
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "984a241c1a76dae073c2f8461a658da55636ec5297ff4c78ed6d6531462bd111",
+      "outcome": "success",
+      "seconds": 8.599999999999945,
+      "seed": 5200012,
+      "steps": 86,
+      "trajectory": "trajectories/robust-open-5200012.npz",
+      "trajectory_sha256": "9ccbb71ea9da41f53be9344d808b7f07b79e7fc5c729efff53586547407db5f0"
+    },
+    {
+      "goal_distance": 0.22274725441972648,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.812772564731187,
+          8.329926479604858
+        ],
+        "movers": [],
+        "start": [
+          1.579730103085609,
+          6.1683228016249485,
+          1.287142670783236
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "263b1b51e2a08f64851705cc1065d42a4502ae4ec8684ffd59bc8bfa745f49bd",
+      "outcome": "success",
+      "seconds": 8.099999999999866,
+      "seed": 5200013,
+      "steps": 81,
+      "trajectory": "trajectories/robust-open-5200013.npz",
+      "trajectory_sha256": "d3572edbe220df5c64bfbf94d2bbdf7c36e46e09331c2bab13c6372ab2c13a3b"
+    },
+    {
+      "goal_distance": 0.22753848867935944,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.277866541988804,
+          1.685438172562983
+        ],
+        "movers": [],
+        "start": [
+          1.0669662124855492,
+          1.815421045244963,
+          0.6656750756277342
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "9dcda115556232da3f0785ab44e9f493b39006548418a7f07db4732b5f737aa5",
+      "outcome": "success",
+      "seconds": 8.499999999999929,
+      "seed": 5200014,
+      "steps": 85,
+      "trajectory": "trajectories/robust-open-5200014.npz",
+      "trajectory_sha256": "237f9b4cc671e8ab8dcae1e28684e34600303a2af49605c8b6083fd9c86ecdf5"
+    },
+    {
+      "goal_distance": 0.263674111676967,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.502946781031639,
+          2.5309672454776813
+        ],
+        "movers": [],
+        "start": [
+          0.8663765985230731,
+          7.229253375171404,
+          0.24752616063632915
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "751583623bdd740bee66dafed79f27cefd8db468b0525cab37888ef3bebb8f30",
+      "outcome": "success",
+      "seconds": 9.800000000000132,
+      "seed": 5200015,
+      "steps": 98,
+      "trajectory": "trajectories/robust-open-5200015.npz",
+      "trajectory_sha256": "6e71dbe0e371ab00f8f9c002e16d70cf05ec3aa82a50fc306b1f181037763ba2"
+    },
+    {
+      "goal_distance": 0.22968098682498905,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.755864300743292,
+          1.635200700778598
+        ],
+        "movers": [],
+        "start": [
+          1.4693975842072735,
+          8.358484412606902,
+          -0.9781986891451411
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "ba20986dae6bbd85c70f7c8f868701a81a98089a16586890b665baa40cdd0197",
+      "outcome": "success",
+      "seconds": 10.800000000000288,
+      "seed": 5200016,
+      "steps": 108,
+      "trajectory": "trajectories/robust-open-5200016.npz",
+      "trajectory_sha256": "89e3f4bf0ab751b667dd8bbbec487e59c58a4e2b83a1dc5224c96a2d4c07486a"
+    },
+    {
+      "goal_distance": 0.29910903162321273,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.924199268142925,
+          1.6647463656943318
+        ],
+        "movers": [],
+        "start": [
+          0.8183674023697177,
+          6.2643694900806715,
+          0.05204166979804137
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "c50e993c0c0788dd1cb550f055ad6153dd3d4930e82c29fe7474787e24c6b84f",
+      "outcome": "success",
+      "seconds": 10.200000000000195,
+      "seed": 5200017,
+      "steps": 102,
+      "trajectory": "trajectories/robust-open-5200017.npz",
+      "trajectory_sha256": "03ad48499b4b22b69ed50fc34f9bbe747084fc0e15b3c77340f623268a0e3030"
+    },
+    {
+      "goal_distance": 0.27306319019827957,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.381252525435425,
+          5.189484214265026
+        ],
+        "movers": [],
+        "start": [
+          1.4978642962942628,
+          4.14261649400737,
+          0.010554921126820965
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "9d917a15385366448509e2e0c812ebfdd8f645541723c4383e026502713b997b",
+      "outcome": "success",
+      "seconds": 7.499999999999862,
+      "seed": 5200018,
+      "steps": 75,
+      "trajectory": "trajectories/robust-open-5200018.npz",
+      "trajectory_sha256": "b039c5dbc9f03ed9859e3e5ce2cd4ccb251ee0d2bb846a015c78722bd0202c6b"
+    },
+    {
+      "goal_distance": 0.23014666603847234,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.408931840428137,
+          4.056815450728701
+        ],
+        "movers": [],
+        "start": [
+          1.338037914458185,
+          4.760373313110164,
+          -0.2521169354661934
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "187c85bcf963aefa0c7c2aa9e5d9febace90c7cc6c6c9a6dc91113f876ab5c88",
+      "outcome": "success",
+      "seconds": 7.699999999999858,
+      "seed": 5200019,
+      "steps": 77,
+      "trajectory": "trajectories/robust-open-5200019.npz",
+      "trajectory_sha256": "11adf810b116dfc5d235aa136135507985a3b8992311924e1d5767b89ea26850"
+    },
+    {
+      "goal_distance": 0.252237208375772,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.799656511007534,
+          2.9055058025607465
+        ],
+        "movers": [],
+        "start": [
+          1.2183343787190664,
+          1.142889219588393,
+          -0.5214721642201642
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "eb2dcfcd04492be8f9b5b3417216d5e3f78ca12fcbbcb75908c3e6ed19f2feb1",
+      "outcome": "success",
+      "seconds": 9.100000000000023,
+      "seed": 5200020,
+      "steps": 91,
+      "trajectory": "trajectories/robust-open-5200020.npz",
+      "trajectory_sha256": "09a9edd5f49b8df2f75f7db7ea0e217b8e9ab323437bf09fa78fba5c0b8c67a1"
+    },
+    {
+      "goal_distance": 0.2994421211388864,
+      "hit": null,
+      "layout": {
+        "goal": [
+          9.130861351606963,
+          3.512347899322285
+        ],
+        "movers": [],
+        "start": [
+          1.7902142625900732,
+          4.134821871826299,
+          0.6124155934073701
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "ec70d0b11eabddb8a7f35d5da3148afb6b892a25b44a828af94145f4959c371e",
+      "outcome": "success",
+      "seconds": 7.899999999999854,
+      "seed": 5200021,
+      "steps": 79,
+      "trajectory": "trajectories/robust-open-5200021.npz",
+      "trajectory_sha256": "ed007d51174b7de9ffdcfbe00cefd6b113ebb435eeb91641428ae7dff0705fee"
+    },
+    {
+      "goal_distance": 0.21520709147911685,
+      "hit": null,
+      "layout": {
+        "goal": [
+          9.150837758799057,
+          7.045975630656097
+        ],
+        "movers": [],
+        "start": [
+          0.880597919449057,
+          2.547122382431554,
+          -0.48079963684572025
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "2b5ae83c5818091f4946abdf3e5409656497d2afb5e671385e95774c440bbb52",
+      "outcome": "success",
+      "seconds": 10.900000000000304,
+      "seed": 5200022,
+      "steps": 109,
+      "trajectory": "trajectories/robust-open-5200022.npz",
+      "trajectory_sha256": "5f7b133e455c622ab5d8046e4200d0413109fa6b5e26d895e4c72afbf7ca526d"
+    },
+    {
+      "goal_distance": 0.28786343750629456,
+      "hit": null,
+      "layout": {
+        "goal": [
+          9.046318107673805,
+          4.886670583680703
+        ],
+        "movers": [],
+        "start": [
+          1.5805207898960334,
+          3.309482044288483,
+          0.7162602274303592
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "8e590bb67afccfed4275747fd163192a3efbcc35b4513e92a1726fa4a473b08b",
+      "outcome": "success",
+      "seconds": 8.299999999999898,
+      "seed": 5200023,
+      "steps": 83,
+      "trajectory": "trajectories/robust-open-5200023.npz",
+      "trajectory_sha256": "37d18e71c4eb8075b818fb79e425a448f9d536b8603f958b98bb0ac0dff6bfc1"
+    },
+    {
+      "goal_distance": 0.27772203334781687,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.702627421494839,
+          2.6139632304356715
+        ],
+        "movers": [],
+        "start": [
+          1.2884169148404876,
+          7.045106764524847,
+          -1.2074098081383278
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "57f51b203ad4e15a96094d5990ae30c4f6492d75f1824f6a93c1508b42e5c9e3",
+      "outcome": "success",
+      "seconds": 9.700000000000117,
+      "seed": 5200024,
+      "steps": 97,
+      "trajectory": "trajectories/robust-open-5200024.npz",
+      "trajectory_sha256": "86ff1553b82bae4fa67c3ca9473bcf283bd012976394a6cf7d3d5017d821f9ed"
+    },
+    {
+      "goal_distance": 0.2197748875088195,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.939131831082221,
+          8.099614987022584
+        ],
+        "movers": [],
+        "start": [
+          1.3838802481165349,
+          7.2095190951068755,
+          0.7140640654297976
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "7c12a2c3cff9b02365cd1153f288dc5f9bd0466d0748454487e00ae257b1c095",
+      "outcome": "success",
+      "seconds": 7.999999999999852,
+      "seed": 5200025,
+      "steps": 80,
+      "trajectory": "trajectories/robust-open-5200025.npz",
+      "trajectory_sha256": "4d5f5ec5cfb5c75f7c0df262571215b546b84045db3ada26bc5270f9edb02153"
+    },
+    {
+      "goal_distance": 0.2562528499722692,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.720203729328516,
+          2.324493965954649
+        ],
+        "movers": [],
+        "start": [
+          1.6573252214649603,
+          4.502737405034631,
+          0.5233700408875581
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "a590220cd905538ba79e068379cc48784128f4a24a0c3f1d905208ca40470db8",
+      "outcome": "success",
+      "seconds": 7.999999999999852,
+      "seed": 5200026,
+      "steps": 80,
+      "trajectory": "trajectories/robust-open-5200026.npz",
+      "trajectory_sha256": "eba50d923d945dceb9f02de17ed3e74644bcfd1c429f03242d1db2ca4f53bfab"
+    },
+    {
+      "goal_distance": 0.24680584724213525,
+      "hit": null,
+      "layout": {
+        "goal": [
+          9.18389339334802,
+          8.47896799102239
+        ],
+        "movers": [],
+        "start": [
+          1.004365634492433,
+          1.6351193083813715,
+          1.6258035186107382
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "9b57911d4ecaab662bfb8254a957de69afe89038b9e2111e61ea884c96637d24",
+      "outcome": "success",
+      "seconds": 11.800000000000445,
+      "seed": 5200027,
+      "steps": 118,
+      "trajectory": "trajectories/robust-open-5200027.npz",
+      "trajectory_sha256": "81310906f640f0c9cbbf9e3e3c108f979aade97ebce90a14ae316fd5bd77c73d"
+    },
+    {
+      "goal_distance": 0.26096925967113005,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.399792831975153,
+          4.967480104066925
+        ],
+        "movers": [],
+        "start": [
+          1.348889670731816,
+          8.955846578062769,
+          -0.07039688925695681
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "6b657b48bf93221d4fe50d1a86a765b0b70a31506871c77e414371d90c2fcc71",
+      "outcome": "success",
+      "seconds": 8.599999999999945,
+      "seed": 5200028,
+      "steps": 86,
+      "trajectory": "trajectories/robust-open-5200028.npz",
+      "trajectory_sha256": "54c284bbf8a0e8ed8f821350a95e413b93f9df49250211d6fdbfd7b730a8a416"
+    },
+    {
+      "goal_distance": 0.23259012025389827,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.790552821573334,
+          4.89398307995877
+        ],
+        "movers": [],
+        "start": [
+          1.2481102196805856,
+          7.185804261663526,
+          -0.379630427808114
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "6cc9a014dcb3dd73117606537ddebb1dc210d48e1ec5e81368fed8ed68f1a19e",
+      "outcome": "success",
+      "seconds": 8.499999999999929,
+      "seed": 5200029,
+      "steps": 85,
+      "trajectory": "trajectories/robust-open-5200029.npz",
+      "trajectory_sha256": "44409a28129c027d0a0591b04e55ad85b4c5de5646f52d9cf0a97c25f57ee4f4"
+    },
+    {
+      "goal_distance": 0.2710996459109744,
+      "hit": null,
+      "layout": {
+        "goal": [
+          9.157194220139932,
+          3.875411641244229
+        ],
+        "movers": [],
+        "start": [
+          1.5868422513991567,
+          1.7919004225244937,
+          0.9232869291163606
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "b13d7bdc1c5a0af4846d0727479718b9e76fe111afb31a5e54c5bf5662d1c2de",
+      "outcome": "success",
+      "seconds": 8.69999999999996,
+      "seed": 5200030,
+      "steps": 87,
+      "trajectory": "trajectories/robust-open-5200030.npz",
+      "trajectory_sha256": "f87c3ff21cc3425f079e396ea7ab7456c671364b44160ac8d6ad946cd45f04ee"
+    },
+    {
+      "goal_distance": 0.27648162555052164,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.52551454671673,
+          2.2968729108766643
+        ],
+        "movers": [],
+        "start": [
+          1.5512557880161626,
+          8.256066226938483,
+          -0.7606327710107492
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "96ad790ae4174b1d8a95ef8e86af7bfb5c3fc08276e616e25b17bdd32e2aaa43",
+      "outcome": "success",
+      "seconds": 9.900000000000148,
+      "seed": 5200031,
+      "steps": 99,
+      "trajectory": "trajectories/robust-open-5200031.npz",
+      "trajectory_sha256": "2c839e60641a51f9fa7526a95cadb456d513f947d5012ed587023aa094d7fb51"
+    },
+    {
+      "goal_distance": 0.2184840142512802,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.754423791002205,
+          7.536571692031584
+        ],
+        "movers": [],
+        "start": [
+          1.4115733177525298,
+          4.909417911760361,
+          0.6395763965958747
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "68f9a70f3c5c182026ccd67a698e37c34d2519439ab5dc49ed15416d02af11f9",
+      "outcome": "success",
+      "seconds": 8.499999999999929,
+      "seed": 5200032,
+      "steps": 85,
+      "trajectory": "trajectories/robust-open-5200032.npz",
+      "trajectory_sha256": "1de66f4821452fbc414c3a225c93aceb38dec49bca2cc303b63750bf9fca0ac8"
+    },
+    {
+      "goal_distance": 0.25053206415352147,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.724875991672562,
+          5.6897318116628925
+        ],
+        "movers": [],
+        "start": [
+          1.3847685884466245,
+          5.117092843296852,
+          -0.9391932168648613
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "b3e76bead5d731d43c8bfbee065fe45b4e48feb4a16d2aeb356a199b5023d85a",
+      "outcome": "success",
+      "seconds": 8.499999999999929,
+      "seed": 5200033,
+      "steps": 85,
+      "trajectory": "trajectories/robust-open-5200033.npz",
+      "trajectory_sha256": "0aece9463ad643008d02e4b6437e9328b6316f3f6639505c5f6073b464369b8c"
+    },
+    {
+      "goal_distance": 0.24706964376452165,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.771950127091939,
+          5.15586966040067
+        ],
+        "movers": [],
+        "start": [
+          1.468980414774598,
+          6.5202397513708,
+          0.21410452685911893
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "726ff849ae6a7d8c9660df730d6a8dc2ef7a50c2121f71b18ca45d31cf3a1f49",
+      "outcome": "success",
+      "seconds": 7.999999999999852,
+      "seed": 5200034,
+      "steps": 80,
+      "trajectory": "trajectories/robust-open-5200034.npz",
+      "trajectory_sha256": "e1df0753c4b0090a7b3641a519ba817995040986edf8d3db924d109ed823d095"
+    },
+    {
+      "goal_distance": 0.2862612804866631,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.999177147961642,
+          2.6086743516423905
+        ],
+        "movers": [],
+        "start": [
+          1.7308763131873488,
+          3.0105158992576833,
+          0.4950966206318383
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "218352eac8a9d21d46725d71a5c59bcd76c2a77f32c4feffb3f3f6c5cf1a70ff",
+      "outcome": "success",
+      "seconds": 7.899999999999854,
+      "seed": 5200035,
+      "steps": 79,
+      "trajectory": "trajectories/robust-open-5200035.npz",
+      "trajectory_sha256": "ca5fb1882839c2a7d57a1eca88815f34a2ffb485b737265e8d38c379d23acbd1"
+    },
+    {
+      "goal_distance": 0.2625074635018473,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.880430108574352,
+          4.010849583015786
+        ],
+        "movers": [],
+        "start": [
+          1.5815432791315862,
+          1.9312723967544887,
+          -0.3785543862381792
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "44e639bb5fa05f30321ecf8141552f6980b5af0a089ef481d1f2eb13451f93e7",
+      "outcome": "success",
+      "seconds": 8.599999999999945,
+      "seed": 5200036,
+      "steps": 86,
+      "trajectory": "trajectories/robust-open-5200036.npz",
+      "trajectory_sha256": "adfae96fde8ba0dce93659f30a8cd26d2c0aad1f9720b8dbd7025a1b15b2f461"
+    },
+    {
+      "goal_distance": 0.29011844178593515,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.524080601731866,
+          4.2613744391543715
+        ],
+        "movers": [],
+        "start": [
+          1.7755039119856808,
+          2.7873691330193973,
+          -0.5040125100597791
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "4cd57119178d5bea101182468ec7689451053fad367e3949d4d3f05659283087",
+      "outcome": "success",
+      "seconds": 7.799999999999856,
+      "seed": 5200037,
+      "steps": 78,
+      "trajectory": "trajectories/robust-open-5200037.npz",
+      "trajectory_sha256": "378e091f60db062bf73ca693dd50415995a6af5b8249f5f62e8b7d834da892c7"
+    },
+    {
+      "goal_distance": 0.23084641000330444,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.93500763584379,
+          4.816582689571696
+        ],
+        "movers": [],
+        "start": [
+          1.4482019272545217,
+          5.231942237170752,
+          0.6437445174439322
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "77805615ce03450a94b4b8aa828e7ef6f6bc88657fd2c3bf6505dfa8b7edcb2e",
+      "outcome": "success",
+      "seconds": 8.199999999999882,
+      "seed": 5200038,
+      "steps": 82,
+      "trajectory": "trajectories/robust-open-5200038.npz",
+      "trajectory_sha256": "ad4e20d0c98901dbcbf8e89e5963dc34133db43806f28e354367f9def45b974d"
+    },
+    {
+      "goal_distance": 0.24233186222788733,
+      "hit": null,
+      "layout": {
+        "goal": [
+          8.947399297722464,
+          6.9842635202019805
+        ],
+        "movers": [],
+        "start": [
+          1.1847067715955215,
+          2.1389528657631303,
+          1.3409558299233602
+        ],
+        "statics": []
+      },
+      "model_xml_sha256": "58969a74547ce458a9e81dcea5df46f7e36f759dbd4f3a1cc8429ca4836f649e",
+      "outcome": "success",
+      "seconds": 10.200000000000195,
+      "seed": 5200039,
+      "steps": 102,
+      "trajectory": "trajectories/robust-open-5200039.npz",
+      "trajectory_sha256": "aa9cbfdf536952c5f38346af0d1b3d5d013b0427eec7363cd4acbbe5ab9078c5"
+    }
+  ],
+  "family": "open",
+  "id": "mj2-robust-open-b027851f2ffe",
+  "label": "robust",
+  "physics": "mujoco",
+  "policy_id": "robust-20261016140226-352fd7",
+  "protocol_hash": "1c845409315019c103528100cffd02fb6851b1db846f9331ffed2891711a1990",
+  "role": "sim2sim",
+  "runtime": {
+    "machine": "arm64",
+    "mujoco": "3.3.7",
+    "python": "3.13.15"
+  },
+  "suite_fingerprint": "9abd9d61b32b46f4e266cb08cad8b17c5df491d648be316c29f89e41ab8f8092",
+  "suite_id": "sim2sim-mujoco-v2-open",
+  "summary": {
+    "collision": 0,
+    "collision_rate": 0.0,
+    "collisions_by_object": {
+      "mover": 0,
+      "static": 0,
+      "wall": 0
+    },
+    "episodes": 40,
+    "success": 40,
+    "success_rate": 1.0,
+    "timeout": 0,
+    "timeout_rate": 0.0
+  },
+  "wall_s": 7.816
+}

@@ -171,6 +171,21 @@ def test_gate_comparison_uses_matched_measurements_without_inventing_a_baseline(
     assert result["deployment_changed"] is False
 
 
+def test_comparison_tracks_configured_deployment_instead_of_historical_baseline(public_agent, monkeypatch):
+    monkeypatch.setattr(J.T, "DEPLOYED_POLICY", "confirmed-current")
+    monkeypatch.setattr(J.Q, "run", lambda *a: SimpleNamespace(dicts=lambda: [{"id": "candidate"}]))
+    monkeypatch.setattr(J.service, "promotion_preview", lambda p: {"verdict": "promoted", "policy_id": p})
+    def query(name, params):
+        assert params["ids"] == ["candidate", "confirmed-current"]
+        return {"rows": [{"policy_id": pid, "evaluation_id": pid+"-evaluation", "success_rate": sr,
+                          "collision_rate": cr} for pid,sr,cr in
+                         [("candidate", .9, .08), ("confirmed-current", .95, .03), ("P-static-b", .37, .48)]]}
+    monkeypatch.setattr(J, "_query", query)
+    result = J.execute("check_checkpoint", {"policy_id": "candidate"})["comparison_to_deployed"]
+    assert result["baseline"]["policy_id"] == "confirmed-current"
+    assert result["collision_delta"] == .05
+
+
 def test_overload_fallback_uses_only_free_nvidia_models(public_agent, monkeypatch):
     sent = []
     class Response:

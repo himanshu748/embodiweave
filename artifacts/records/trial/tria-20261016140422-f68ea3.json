@@ -1,0 +1,49 @@
+{
+ "budget_steps": 600000,
+ "child_artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+ "child_policy_id": "robust-20261016140226-352fd7",
+ "consumed_steps": 600064,
+ "contract_id": "ew-contract-1:2f013b6f4849",
+ "decision_id": "deci-20261016140226-d320a0",
+ "final_evaluation_id": "eval-20261016140420-2a0258",
+ "id": "tria-20261016140422-f68ea3",
+ "intervention": "collision",
+ "kind": "trial",
+ "parent_artifact_hash": "b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565",
+ "parent_id": "search-20261015185749-4a6581",
+ "protocol_sha256": "0f6b86d6a098d80cce69f765b528613338ad13c4d94369475203f28bf9d5dc6c",
+ "recipe": "ppo-rehearsal-collision20-v2",
+ "recorded_at": "2026-10-16T14:04:22+0530",
+ "run_id": "run-20261016140226-92e611",
+ "schedule": [
+  {
+   "collision_rate": 0.0333,
+   "collisions_by_object": {
+    "mover": 1,
+    "static": 1,
+    "wall": 0
+   },
+   "episodes": 60,
+   "mean_success_steps": 97.1,
+   "steps": 600064,
+   "success_rate": 0.95,
+   "suite_id": "val-target-v1",
+   "timeout_rate": 0.0167
+  }
+ ],
+ "search_rule": "robustness-v2",
+ "seed": 19,
+ "status": "completed",
+ "steps_to_threshold": 600064,
+ "suite_id": "val-target-v1",
+ "target_family": "static_crossing",
+ "target_family_id": "static_crossing@43ce902c",
+ "threshold": {
+  "max_collision": 0.1,
+  "min_success": 0.8,
+  "suite_id": "val-target-v1"
+ },
+ "threshold_id": "thr-target-1",
+ "threshold_reached": true,
+ "validation_every": null
+}

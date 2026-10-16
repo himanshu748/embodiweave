@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EmbodiWeave</title>
-<meta name="description" content="FalkorDB evidence guides robot training. A new lineage passed validation; its one held-out target test still failed the collision limit.">
+<meta name="description" content="FalkorDB evidence guides robot training. A graph-selected checkpoint passed validation and a fresh four-family confirmation; the physics transfer gap is reported.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Ccircle cx=%278%27 cy=%278%27 r=%276%27 fill=%27%23ea580c%27/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,9 +36,9 @@
     <p class="eyebrow e1">GraphHacks 2026 · Track 1 · built on FalkorDB</p>
     <h1 id="heroTitle" class="e1">A robot fails.<br><span class="hl">Choose what it learns next.</span></h1>
     <p class="lede e3">The agent follows connected failures, checkpoints and past trials in <b>FalkorDB</b> to choose the next robot training run. The graph supplies the evidence; fixed checks decide whether the result qualifies.</p>
-    <p class="hero-verdict e3"><span class="tag rec">Latest measured result</span> New lineage passed <b>all four validation checks.</b> Its one held-out target test still failed: <b>13% collisions, above the 10% limit.</b></p>
+    <p class="hero-verdict e3"><span class="tag rec">Latest measured result</span> New checkpoint passed <b>all four validation checks and fresh confirmation families.</b> Target confirmation: <b>8% collisions, under the 10% limit.</b> MuJoCo transfer still missed its target collision limit.</p>
     <div class="ctas e3">
-      <a class="btn" href="evidence.html">Follow the graph decision <span aria-hidden="true" class="arrow">→</span></a>
+      <a class="btn" href="robustness.html">Follow the graph decision <span aria-hidden="true" class="arrow">→</span></a>
       <a class="btn ghost" href="live.html#training">Train on the live simulator</a>
       <a class="btn ghost" href="guide.html#film">Watch the 2-minute film</a>
     </div>
@@ -53,11 +53,11 @@
 
       <p class="hint" aria-hidden="true">Drag to orbit</p>
     </div>
-      <div class="who" id="who3d"><p><i class="k depl"></i>Deployed <b id="lab3A" class="mono">P-static-b</b> <em id="out3A"></em></p>
+      <div class="who" id="who3d"><p><i class="k depl"></i>Historical baseline <b id="lab3A" class="mono">P-static-b</b> <em id="out3A"></em></p>
         <p><i class="k robot"></i>Original adaptation <b id="lab3B" class="mono">scratch~a7ee2c-s7</b> <em id="out3B"></em></p></div>
     <div class="arenas" id="arenas2d" hidden>
       <div class="arena-card">
-        <div class="arena-head"><span>Deployed policy</span><b id="labA" class="mono">P-static-b</b></div>
+        <div class="arena-head"><span>Historical baseline</span><b id="labA" class="mono">P-static-b</b></div>
         <svg id="arenaA" viewBox="0 0 100 100" role="img" aria-label="Recorded episode of the deployed policy colliding with the pedestrian"></svg>
         <div class="arena-foot" id="outA">&nbsp;</div>
       </div>
@@ -85,12 +85,12 @@
 <section class="stats reveal" aria-label="Original rejected run: deployed policy against its adaptation on the target suite">
   <div class="stat"><span class="label">Target success</span><span class="num"><span id="sBefore">37%</span><span class="to" aria-hidden="true">→</span><span id="sAfter" class="good">87%</span></span><span class="cap">original run, deployed vs adaptation, 60 episodes</span></div>
   <div class="stat"><span class="label">Collisions</span><span class="num"><span id="cBefore">48%</span><span class="to" aria-hidden="true">→</span><span id="cAfter" class="good">13%</span></span><span class="cap">limit for promotion is 10%</span></div>
-  <div class="stat"><span class="label">Promotion gate</span><span class="num bad" id="gate">Rejected</span><span class="cap" id="gateCap">3 of 4 suites failed, deployed policy kept</span></div>
+  <div class="stat"><span class="label">Promotion gate</span><span class="num bad" id="gate">Rejected</span><span class="cap" id="gateCap">Original run: 3 of 4 suites failed</span></div>
 </section>
 
 <section class="judge-route reveal" aria-label="A short route through the demo">
   <div><p class="eyebrow">Judge walkthrough</p><h2>Start with the graph decision.</h2></div>
-  <ol><li><a href="evidence.html"><span>01 / Evidence</span><b>Follow the two new attempts</b><small>Rejected, validation pass, then held-out failure</small></a></li><li><a href="live.html#training"><span>02 / Live</span><b>Train in the simulator</b><small>Watch 2D or 3D, then inspect the gate</small></a></li><li><a href="guide.html#film"><span>03 / Film</span><b>Watch the walkthrough</b><small>Graph evidence and the honest verdict</small></a></li></ol>
+  <ol><li><a href="robustness.html"><span>01 / Evidence</span><b>Follow the confirmed checkpoint</b><small>Fresh confirmation passed; physics gap reported</small></a></li><li><a href="live.html#training"><span>02 / Live</span><b>Train in the simulator</b><small>Watch 2D or 3D, then inspect the gate</small></a></li><li><a href="guide.html#film"><span>03 / Film</span><b>Watch the walkthrough</b><small>Graph evidence and the honest verdict</small></a></li></ol>
 </section>
 <section id="live" class="band console-band reveal" aria-labelledby="liveTitle">
   <div class="band-head">

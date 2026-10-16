@@ -1,0 +1,330 @@
+{
+  "study": "robustness-v2",
+  "protocol_sha256": "0f6b86d6a098d80cce69f765b528613338ad13c4d94369475203f28bf9d5dc6c",
+  "attempts": [
+    {
+      "policy_id": "robust-20261016140226-352fd7",
+      "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+      "parent_id": "search-20261015185749-4a6581",
+      "decision_id": "deci-20261016140226-d320a0",
+      "trial_id": "tria-20261016140422-f68ea3",
+      "recipe": "ppo-rehearsal-collision20-v2",
+      "requested_steps": 600000,
+      "actual_steps": 600064,
+      "seed": 19,
+      "checks": [
+        {
+          "collision_rate": 0.0333,
+          "evaluation_id": "eval-20261016140420-2a0258",
+          "max_collision": 0.1,
+          "min_success": 0.8,
+          "pass": true,
+          "role": "target",
+          "success_rate": 0.95,
+          "suite_id": "val-target-v1"
+        },
+        {
+          "collision_rate": 0.0,
+          "evaluation_id": "eval-20261016140420-e4a5fa",
+          "max_collision": 0.05,
+          "min_success": 0.9,
+          "pass": true,
+          "role": "retained",
+          "success_rate": 1.0,
+          "suite_id": "val-open-v1"
+        },
+        {
+          "collision_rate": 0.025,
+          "evaluation_id": "eval-20261016140421-14d22c",
+          "max_collision": 0.1,
+          "min_success": 0.75,
+          "pass": true,
+          "role": "retained",
+          "success_rate": 0.975,
+          "suite_id": "val-static-v1"
+        },
+        {
+          "collision_rate": 0.0,
+          "evaluation_id": "eval-20261016140422-a2e964",
+          "max_collision": 0.15,
+          "min_success": 0.75,
+          "pass": true,
+          "role": "retained",
+          "success_rate": 1.0,
+          "suite_id": "val-crossing-v1"
+        }
+      ],
+      "validation_verdict": "promoted",
+      "bundle_url": "api/download/robust-20261016140226-352fd7-b027851f2ffe-repro-v3.zip",
+      "bundle_sha256": "e00c259f385a8899fcb39d91ebd4f8f92f0af29356435ddbd2db8a99927108db"
+    }
+  ],
+  "selected_policy": "robust-20261016140226-352fd7",
+  "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+  "selection_stopped": true,
+  "confirmation": {
+    "policy_id": "robust-20261016140226-352fd7",
+    "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+    "results": [
+      {
+        "id": "eval-20261016140533-d662eb",
+        "family": "static_crossing",
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.92,
+          "collision_rate": 0.08,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 100.4,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 3,
+            "mover": 5
+          }
+        },
+        "min_success": 0.8,
+        "max_collision": 0.1,
+        "pass": true
+      },
+      {
+        "id": "eval-20261016140542-2f64b1",
+        "family": "open",
+        "summary": {
+          "episodes": 100,
+          "success_rate": 1.0,
+          "collision_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 82.9,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 0,
+            "mover": 0
+          }
+        },
+        "min_success": 0.9,
+        "max_collision": 0.05,
+        "pass": true
+      },
+      {
+        "id": "eval-20261016140551-39bf50",
+        "family": "static",
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.93,
+          "collision_rate": 0.04,
+          "timeout_rate": 0.03,
+          "mean_success_steps": 96.5,
+          "collisions_by_object": {
+            "wall": 1,
+            "static": 3,
+            "mover": 0
+          }
+        },
+        "min_success": 0.75,
+        "max_collision": 0.1,
+        "pass": true
+      },
+      {
+        "id": "eval-20261016140600-678ee7",
+        "family": "crossing",
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.95,
+          "collision_rate": 0.05,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 93.3,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 0,
+            "mover": 5
+          }
+        },
+        "min_success": 0.75,
+        "max_collision": 0.15,
+        "pass": true
+      }
+    ]
+  },
+  "confirmation_pass": true,
+  "transfer": [
+    {
+      "artifact_hash": "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+      "family": "open",
+      "id": "mj2-deployed-open-eef89a9a248e",
+      "label": "deployed",
+      "policy_id": "P-static-b",
+      "suite_id": "sim2sim-mujoco-v2-open",
+      "summary": {
+        "collision": 0,
+        "collision_rate": 0.0,
+        "collisions_by_object": {
+          "mover": 0,
+          "static": 0,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 40,
+        "success_rate": 1.0,
+        "timeout": 0,
+        "timeout_rate": 0.0
+      }
+    },
+    {
+      "artifact_hash": "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+      "family": "static",
+      "id": "mj2-deployed-static-eef89a9a248e",
+      "label": "deployed",
+      "policy_id": "P-static-b",
+      "suite_id": "sim2sim-mujoco-v2-static",
+      "summary": {
+        "collision": 10,
+        "collision_rate": 0.25,
+        "collisions_by_object": {
+          "mover": 0,
+          "static": 10,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 18,
+        "success_rate": 0.45,
+        "timeout": 12,
+        "timeout_rate": 0.3
+      }
+    },
+    {
+      "artifact_hash": "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+      "family": "crossing",
+      "id": "mj2-deployed-crossing-eef89a9a248e",
+      "label": "deployed",
+      "policy_id": "P-static-b",
+      "suite_id": "sim2sim-mujoco-v2-crossing",
+      "summary": {
+        "collision": 21,
+        "collision_rate": 0.525,
+        "collisions_by_object": {
+          "mover": 21,
+          "static": 0,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 19,
+        "success_rate": 0.475,
+        "timeout": 0,
+        "timeout_rate": 0.0
+      }
+    },
+    {
+      "artifact_hash": "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+      "family": "static_crossing",
+      "id": "mj2-deployed-static_crossing-eef89a9a248e",
+      "label": "deployed",
+      "policy_id": "P-static-b",
+      "suite_id": "sim2sim-mujoco-v2-static_crossing",
+      "summary": {
+        "collision": 21,
+        "collision_rate": 0.525,
+        "collisions_by_object": {
+          "mover": 11,
+          "static": 10,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 14,
+        "success_rate": 0.35,
+        "timeout": 5,
+        "timeout_rate": 0.125
+      }
+    },
+    {
+      "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+      "family": "open",
+      "id": "mj2-robust-open-b027851f2ffe",
+      "label": "robust",
+      "policy_id": "robust-20261016140226-352fd7",
+      "suite_id": "sim2sim-mujoco-v2-open",
+      "summary": {
+        "collision": 0,
+        "collision_rate": 0.0,
+        "collisions_by_object": {
+          "mover": 0,
+          "static": 0,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 40,
+        "success_rate": 1.0,
+        "timeout": 0,
+        "timeout_rate": 0.0
+      }
+    },
+    {
+      "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+      "family": "static",
+      "id": "mj2-robust-static-b027851f2ffe",
+      "label": "robust",
+      "policy_id": "robust-20261016140226-352fd7",
+      "suite_id": "sim2sim-mujoco-v2-static",
+      "summary": {
+        "collision": 1,
+        "collision_rate": 0.025,
+        "collisions_by_object": {
+          "mover": 0,
+          "static": 1,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 38,
+        "success_rate": 0.95,
+        "timeout": 1,
+        "timeout_rate": 0.025
+      }
+    },
+    {
+      "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+      "family": "crossing",
+      "id": "mj2-robust-crossing-b027851f2ffe",
+      "label": "robust",
+      "policy_id": "robust-20261016140226-352fd7",
+      "suite_id": "sim2sim-mujoco-v2-crossing",
+      "summary": {
+        "collision": 4,
+        "collision_rate": 0.1,
+        "collisions_by_object": {
+          "mover": 4,
+          "static": 0,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 36,
+        "success_rate": 0.9,
+        "timeout": 0,
+        "timeout_rate": 0.0
+      }
+    },
+    {
+      "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+      "family": "static_crossing",
+      "id": "mj2-robust-static_crossing-b027851f2ffe",
+      "label": "robust",
+      "policy_id": "robust-20261016140226-352fd7",
+      "suite_id": "sim2sim-mujoco-v2-static_crossing",
+      "summary": {
+        "collision": 6,
+        "collision_rate": 0.15,
+        "collisions_by_object": {
+          "mover": 3,
+          "static": 3,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 32,
+        "success_rate": 0.8,
+        "timeout": 2,
+        "timeout_rate": 0.05
+      }
+    }
+  ],
+  "transfer_meets_reference_limits": false,
+  "deployment_eligible": true,
+  "deployment_scope": "2D simulator only. MuJoCo transfer has not cleared target collision requirements.",
+  "notice": "New preregistered study. Existing search-v1 and MuJoCo-v1 results remain frozen. Confirmation never enters the planning graph."
+}

@@ -32,14 +32,14 @@
 <div class="question-sheet">
   <p class="eyebrow">Ask the agent</p><h2>Ask about the results</h2>
   <div class="prompt-list" aria-label="Example questions">
-    <button type="button" class="prompt" data-question="Inspect the mission, query search_lineage, and check search-20261015185749-4a6581. Explain why the graph selected rehearsal and whether this exact checkpoint passed validation. Keep the original Sonnet run separate.">Explain the new graph-selected lineage <span aria-hidden="true">↗</span></button>
+    <button type="button" class="prompt" data-question="Inspect the mission, query search_lineage, and check robust-20261016140226-352fd7. Explain why the graph selected the rehearsal parent for a stronger collision penalty and whether this exact checkpoint passed validation. Keep the original Sonnet run separate.">Explain the confirmed checkpoint <span aria-hidden="true">↗</span></button>
     <button type="button" class="prompt" data-question="Inspect the mission, then call run_ppo_flow to launch one 60000-step PPO run, 180 validation episodes, the gate and checkpoint export. Report its pending session ID and direct me to the PPO panel for measured completion.">Ask the agent to train <span aria-hidden="true">↗</span></button>
     <button type="button" class="prompt" data-question="Why does the graph recommend training from scratch instead of reusing a compatible parent at a 150000-step budget? Cite the applicable trials and rule estimates.">Why start from scratch? <span aria-hidden="true">↗</span></button>
     <button type="button" class="prompt" data-question="Check scratch~a7ee2c-s7 against the exact-artifact promotion gate. Why is the recorded result rejected even though target success improved? Cite the validation evidence.">Explain the rejected checkpoint <span aria-hidden="true">↗</span></button>
   </div>
   <form id="investigationForm">
     <label for="question">Your question</label>
-    <textarea id="question" rows="5" minlength="8" maxlength="800" required>Inspect the mission, query search_lineage, and check search-20261015185749-4a6581. Explain why the graph selected rehearsal and whether this exact checkpoint passed validation. Keep the original Sonnet run separate.</textarea>
+    <textarea id="question" rows="5" minlength="8" maxlength="800" required>Inspect the mission, query search_lineage, and check robust-20261016140226-352fd7. Explain why the graph selected the rehearsal parent for a stronger collision penalty and whether this exact checkpoint passed validation. Keep the original Sonnet run separate.</textarea>
     <p class="fine">Keep private information out. Your question and public graph evidence are sent to <span id="providerName">the configured model provider</span>. The server keeps the API key private.</p>
     <label class="live-consent"><input id="consent" type="checkbox"> <span>I agree to send this question and public graph evidence to the model provider.</span></label>
     <label class="live-consent"><input id="agentTrainingConsent" type="checkbox"><span>Also let the agent launch one 60,000-step training run (seed 7) when I ask it to train.</span></label>

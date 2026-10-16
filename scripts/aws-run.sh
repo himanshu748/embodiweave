@@ -18,6 +18,8 @@ docker run -d --name ew-api --restart unless-stopped --network embodiweave-net \
   --memory 1500m --memory-swap 2g --cpus 1.8 --pids-limit 256 \
   --log-opt max-size=10m --log-opt max-file=3 \
   --env-file "$EW_ENV_FILE" -e EW_ARTIFACTS=/data -e EW_PERSISTENT_ARTIFACTS=1 \
+  -e EW_DEPLOYED_POLICY="${EW_DEPLOYED_POLICY:-robust-20261016140226-352fd7}" \
+  -e EW_LATEST_VALIDATION_POLICY="${EW_LATEST_VALIDATION_POLICY:-robust-20261016140226-352fd7}" \
   -e EW_GIT_COMMIT="$(git rev-parse HEAD)" -v embodiweave-data:/data "$EW_IMAGE"
 docker run -d --name ew-proxy --restart unless-stopped --network embodiweave-net \
   --log-opt max-size=10m --log-opt max-file=3 -p 80:80 -p 443:443 \

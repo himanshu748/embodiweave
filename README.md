@@ -2,13 +2,34 @@
 
 An agent uses connected robot failures and checkpoint history in FalkorDB to choose what to train next, then checks the saved policy against a fixed deployment gate.
 
-**[Live demo](https://embodiweave.52.202.25.181.sslip.io) · [Judge walkthrough](https://embodiweave.52.202.25.181.sslip.io/evidence.html) · [2-minute film](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v2.mp4) · [Train in your browser](https://embodiweave.52.202.25.181.sslip.io/live.html#training)**
+**[Live demo](https://embodiweave.52.202.25.181.sslip.io) · [Judge walkthrough](https://embodiweave.52.202.25.181.sslip.io/robustness.html) · [2-minute film](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v2.mp4) · [Train in your browser](https://embodiweave.52.202.25.181.sslip.io/live.html#training)**
 
 [![Tests](https://github.com/himanshu748/embodiweave/actions/workflows/tests.yml/badge.svg)](https://github.com/himanshu748/embodiweave/actions/workflows/tests.yml)
 
-## Result
+## Current result: confirmed in 2D
 
-**The graph-selected rehearsal lineage passed all four validation suites. Its single held-out target evaluation still failed the collision limit.** We stopped model selection before that held-out evaluation and did no further tuning.
+**The new graph-selected checkpoint passed all four unchanged validation suites and one fresh, preregistered confirmation batch.** Target confirmation recorded **92 goals, 8 collisions, 0 timeouts across 100 episodes**, under the original 10% collision limit. It is the current **2D demo** policy; MuJoCo target transfer still fails its reference collision limit.
+
+| Measurement | Target | Open | Static | Crossing |
+|---|---:|---:|---:|---:|
+| **Collision limit (maximum)** | **10%** | **5%** | **10%** | **15%** |
+| Canonical validation collisions | 2/60 | 0/40 | 1/40 | 0/40 |
+| Fresh confirmation goals | 92/100 | 100/100 | 93/100 | 95/100 |
+| Fresh confirmation collisions | 8/100 | 0/100 | 4/100 | 5/100 |
+| Fresh confirmation timeouts | 0/100 | 0/100 | 3/100 | 0/100 |
+| Requirements met | Pass | Pass | Pass | Pass |
+| MuJoCo transfer collisions, fresh study | 6/40 | 0/40 | 1/40 | 4/40 |
+
+FalkorDB selected the rehearsal parent, whose crossing validation had no collision margin. The new trial kept cyclic rehearsal and doubled the **training-only** terminal collision penalty to -20. It requested 600,000 steps and consumed **600,064**, seed **19**, with no seed sweep. The candidate passed 4/4 canonical suites with the preregistered collision clearance, so selection stopped. Its artifact hash was frozen before the single fresh confirmation batch. No training followed those outcomes.
+
+Current checkpoint: `robust-20261016140226-352fd7`, hash `b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4`.
+[Measured study and checksums](evidence/robustness-v2/) · [Protocol and diagnosis](docs/robustness-v2.md) · [Download checkpoint + evidence](https://embodiweave.52.202.25.181.sslip.io/api/download/robust-20261016140226-352fd7-b027851f2ffe-repro-v3.zip).
+
+MuJoCo uses fresh paired seeds and unchanged 2D-trained weights. Its **6/40 target collisions (15%)** exceed the 10% reference limit; crossing is **4/40 (10%)**. This study is separate from the earlier 24/40 baseline result below. No physics safety claim is made, and no MuJoCo outcome is used for further tuning. [All 320 transfer episodes](evidence/mujoco-v2/).
+
+## Earlier study: search-v1
+
+**The graph-selected rehearsal lineage passed all four validation suites. Its single held-out target evaluation still failed the collision limit.** Selection stopped before that held-out evaluation. This study remained frozen; the separately preregistered robustness-v2 study above started later with new confirmation seeds.
 
 | Measured candidate | Target success / collision | Open | Static | Crossing | Fixed promo-1 gate |
 |---|---|---|---|---|---|
@@ -19,7 +40,7 @@ An agent uses connected robot failures and checkpoint history in FalkorDB to cho
 
 Each candidate uses the same complete validation suites: target 60 episodes, open 40, static 40, crossing 40, **180 total per candidate**. Candidate cells show success / collision; the limits row shows each suite's maximum collision rate from the fixed [promo-1 criteria](ew/criteria.py). Each new attempt requested 300,000 additional steps and consumed 301,056 after rollout rounding, with seed 7 fixed before training. The passing lineage consumed 753,664 steps including its root.
 
-**Held-out target confirmation: 86 goals, 13 collisions, 1 timeout in 100 episodes.** The target permits at most 10% collisions. Held-out retained tasks were not evaluated. Passing validation is not a claim of general safety; production remains `P-static-b`.
+**Held-out target confirmation: 86 goals, 13 collisions, 1 timeout in 100 episodes.** The target permits at most 10% collisions. Held-out retained tasks were not evaluated. Passing validation is not a claim of general safety; `P-static-b` was retained at the end of search-v1 and remains visible as the historical baseline.
 
 Exact IDs, artifact hashes, gate checks and bundle SHA-256 values: [evidence index](evidence/search-v1/summary.json). The passing artifact is `b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565`.
 
@@ -91,7 +112,7 @@ but still collides in **8/40 crossing episodes (20%)**. This small transfer
 study is not a safety certificate or another promo-1 gate. The existing
 validation and held-out results above remain unchanged.
 
-`P-static-b` remains the unchanged demo baseline because the proposed replacement failed its held-out collision limit; its 24/40 MuJoCo collisions are a documented failure, and the demo makes no hardware-safety claim.
+`P-static-b` was retained after search-v1 failed its held-out limit; robustness-v2 now supplies the confirmed 2D demo policy. Its historical 24/40 MuJoCo collisions remain a documented failure, with no hardware-safety claim.
 
 FalkorDB stores these as separate `Suite` nodes with `role='sim2sim'` and
 `physics='mujoco'`, exact-artifact `Evaluation` nodes and collision `Failure`
@@ -153,7 +174,7 @@ Training uses a 2D unicycle robot with range rays and moving obstacles. The sepa
 
 ## Judge walkthrough
 
-1. Open the [evidence page](https://embodiweave.52.202.25.181.sslip.io/evidence.html). It immediately shows both new attempts and the held-out failure. Click **Query the live lineage** to see the current FalkorDB rows and recorded reasons. This route needs no account, API key or model request.
+1. Open the [current evidence page](https://embodiweave.52.202.25.181.sslip.io/robustness.html). It shows the validation pass, fresh confirmation and physical transfer gap. Click **Query this decision** for live FalkorDB rows and recorded reasons; earlier rejected attempts remain linked. This route needs no account, API key or model request.
 2. Open a candidate in Studio to replay its recorded target episodes in 2D or 3D. Download its bundle and inspect `checksums.json`, decision queries and per-episode outcomes.
 3. On [Train live](https://embodiweave.52.202.25.181.sslip.io/live.html#training), click **Start training** with the default budget. The graph selects the starting point; the server trains, reloads the saved artifact, runs all validation episodes, records the gate and exports the result. Finishing training does not guarantee a pass.
 4. Optionally ask the live model a question and inspect its actual tool calls. Provider consent is separate from training consent. The free provider can be busy; training and the recorded evidence route do not require it.
@@ -195,12 +216,12 @@ Bundles include saved model weights, normalization, contract, validation records
 
 ## Honest limitations
 
-- The held-out target failed. The validation crossing collision rate was exactly at its limit. This is a simulator research prototype, not evidence of physical robot safety.
-- Two adaptive attempts at one fixed training seed do not establish a reliable improvement or selection-efficiency advantage. Rehearsal also used more total training than the original checkpoint.
+- Search-v1 failed its held-out target test. Robustness-v2 passed fresh 2D confirmation, but its MuJoCo target still had 6/40 collisions (15%), above the 10% reference limit. This is not evidence of physical robot safety.
+- Three adaptive attempts across two studies do not establish a reliable improvement or selection-efficiency advantage. Each study fixed one training seed. The new candidate also used more training than earlier checkpoints.
 - The planner uses authored, versioned rules. The live LLM chooses bounded tools and explains evidence; the frozen search experiments used the deterministic graph planner.
-- Existing historical benchmark protocols and revisions remain in the repository. The new confirmation was defined only after validation selection stopped because the older final suites were already spent. No existing suite was changed or reused.
+- Historical benchmark protocols and results remain frozen. Robustness-v2 registered new confirmation seeds before training and froze its candidate before opening them once. All earlier final suites remain spent; no existing suite was changed or reused.
 - The public trainer is shared and quota-limited; the free model provider can refuse or delay requests. Recorded evidence remains available when either is busy.
-- A validation promotion record does not automatically replace production weights. The deployed checkpoint remains unchanged.
+- A validation promotion record does not automatically replace production weights. The current 2D demo policy was explicitly released after its separate fresh confirmation; physics transfer remains a research result.
 
 ## Film and credits
 

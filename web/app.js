@@ -537,7 +537,7 @@ async function init() {
   const prefix = last ? (last.action === "train_from_scratch" ? "scratch~" : last.selected ? last.selected + "~" : null) : null;
   const dep = S.status?.deployed_policy, tgt = S.evals.filter((e) => e.suite_id === "val-target-v1");
   const children = tgt.filter((e) => e.policy_id.includes("~"));
-  const before = tgt.filter((e) => e.policy_id === dep).pop();
+  const before = tgt.filter((e) => e.policy_id === (new URLSearchParams(location.search).has("policy") ? "P-static-b" : dep)).pop();
   const requestedPolicy = new URLSearchParams(location.search).get("policy");
   const after = (requestedPolicy && tgt.filter((e) => e.policy_id === requestedPolicy).pop()) || (prefix && children.filter((e) => e.policy_id.startsWith(prefix)).pop()) || children.pop();
   if (before) { $("#evalA").value = before.id; await loadReplay("A", before.id); }

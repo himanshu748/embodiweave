@@ -572,6 +572,12 @@ def search_lineage():
     return {**r.to_log(), "via": "GRAPH.RO_QUERY", "at": time.time()}
 
 
+@app.get("/api/robustness/lineage")
+def robustness_lineage():
+    r = Q.run("search_lineage", {"rule": "robustness-v2"})
+    return {**r.to_log(), "via": "GRAPH.RO_QUERY", "at": time.time()}
+
+
 @app.get("/api/transfer/mujoco")
 def mujoco_transfer():
     r = Q.run("mujoco_transfer", {})

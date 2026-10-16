@@ -54,10 +54,10 @@ def ingest(root: Path = DEFAULT_ROOT, graph=None, *, strict=True):
             if strict: raise ValueError("Transfer policy is absent or its artifact differs")
             continue  # isolated test graph may intentionally contain only test artifacts
         db.rw("MERGE (s:Suite {id:$id}) SET s.role='sim2sim', s.physics='mujoco', s.version='1', "
-              "s.episodes=$n, s.seeds=$seeds, s.fingerprint=$fp, s.protocol_hash=$ph "
+              "s.episodes=$n, s.seeds=$seeds, s.fingerprint=$fp, s.protocol_hash=$ph, s.study=$study "
               "WITH s MATCH (f:Family {id:$fid}) MERGE (s)-[:DRAWS_FROM]->(f)",
               {"id": s["id"], "n": len(s["seeds"]), "seeds": s["seeds"], "fp": e["suite_fingerprint"],
-               "ph": ph, "fid": FAMILIES[s["family"]].fid()}, graph)
+               "ph": ph, "fid": FAMILIES[s["family"]].fid(), "study": root.name}, graph)
         summary = e["summary"]
         db.rw("MERGE (e:Evaluation {id:$id}) SET e.artifact_hash=$hash, e.success_rate=$sr, "
               "e.collision_rate=$cr, e.timeout_rate=$tr, e.episodes=$n, e.measured=true, "
@@ -68,7 +68,7 @@ def ingest(root: Path = DEFAULT_ROOT, graph=None, *, strict=True):
               {"id": e["id"], "hash": e["artifact_hash"], "sr": summary["success_rate"],
                "cr": summary["collision_rate"], "tr": summary["timeout_rate"], "n": summary["episodes"],
                "fp": e["suite_fingerprint"], "ph": ph, "contract": e["contract_id"],
-               "path": "evidence/mujoco-v1/"+path.name, "policy": e["policy_id"], "suite": s["id"]}, graph)
+               "path": "evidence/"+root.name+"/"+path.name, "policy": e["policy_id"], "suite": s["id"]}, graph)
         for hit in ("wall", "static", "mover"):
             seeds = [ep["seed"] for ep in e["episodes"] if ep["outcome"] == "collision" and ep["hit"] == hit]
             if seeds:

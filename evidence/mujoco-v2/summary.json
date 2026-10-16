@@ -1,0 +1,181 @@
+{
+  "protocol_hash": "1c845409315019c103528100cffd02fb6851b1db846f9331ffed2891711a1990",
+  "results": [
+    {
+      "artifact_hash": "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+      "family": "open",
+      "id": "mj2-deployed-open-eef89a9a248e",
+      "label": "deployed",
+      "policy_id": "P-static-b",
+      "suite_id": "sim2sim-mujoco-v2-open",
+      "summary": {
+        "collision": 0,
+        "collision_rate": 0.0,
+        "collisions_by_object": {
+          "mover": 0,
+          "static": 0,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 40,
+        "success_rate": 1.0,
+        "timeout": 0,
+        "timeout_rate": 0.0
+      }
+    },
+    {
+      "artifact_hash": "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+      "family": "static",
+      "id": "mj2-deployed-static-eef89a9a248e",
+      "label": "deployed",
+      "policy_id": "P-static-b",
+      "suite_id": "sim2sim-mujoco-v2-static",
+      "summary": {
+        "collision": 10,
+        "collision_rate": 0.25,
+        "collisions_by_object": {
+          "mover": 0,
+          "static": 10,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 18,
+        "success_rate": 0.45,
+        "timeout": 12,
+        "timeout_rate": 0.3
+      }
+    },
+    {
+      "artifact_hash": "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+      "family": "crossing",
+      "id": "mj2-deployed-crossing-eef89a9a248e",
+      "label": "deployed",
+      "policy_id": "P-static-b",
+      "suite_id": "sim2sim-mujoco-v2-crossing",
+      "summary": {
+        "collision": 21,
+        "collision_rate": 0.525,
+        "collisions_by_object": {
+          "mover": 21,
+          "static": 0,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 19,
+        "success_rate": 0.475,
+        "timeout": 0,
+        "timeout_rate": 0.0
+      }
+    },
+    {
+      "artifact_hash": "eef89a9a248ebc2223ea3ee5895b3d67f2d5d7f91141052135560746f842408c",
+      "family": "static_crossing",
+      "id": "mj2-deployed-static_crossing-eef89a9a248e",
+      "label": "deployed",
+      "policy_id": "P-static-b",
+      "suite_id": "sim2sim-mujoco-v2-static_crossing",
+      "summary": {
+        "collision": 21,
+        "collision_rate": 0.525,
+        "collisions_by_object": {
+          "mover": 11,
+          "static": 10,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 14,
+        "success_rate": 0.35,
+        "timeout": 5,
+        "timeout_rate": 0.125
+      }
+    },
+    {
+      "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+      "family": "open",
+      "id": "mj2-robust-open-b027851f2ffe",
+      "label": "robust",
+      "policy_id": "robust-20261016140226-352fd7",
+      "suite_id": "sim2sim-mujoco-v2-open",
+      "summary": {
+        "collision": 0,
+        "collision_rate": 0.0,
+        "collisions_by_object": {
+          "mover": 0,
+          "static": 0,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 40,
+        "success_rate": 1.0,
+        "timeout": 0,
+        "timeout_rate": 0.0
+      }
+    },
+    {
+      "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+      "family": "static",
+      "id": "mj2-robust-static-b027851f2ffe",
+      "label": "robust",
+      "policy_id": "robust-20261016140226-352fd7",
+      "suite_id": "sim2sim-mujoco-v2-static",
+      "summary": {
+        "collision": 1,
+        "collision_rate": 0.025,
+        "collisions_by_object": {
+          "mover": 0,
+          "static": 1,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 38,
+        "success_rate": 0.95,
+        "timeout": 1,
+        "timeout_rate": 0.025
+      }
+    },
+    {
+      "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+      "family": "crossing",
+      "id": "mj2-robust-crossing-b027851f2ffe",
+      "label": "robust",
+      "policy_id": "robust-20261016140226-352fd7",
+      "suite_id": "sim2sim-mujoco-v2-crossing",
+      "summary": {
+        "collision": 4,
+        "collision_rate": 0.1,
+        "collisions_by_object": {
+          "mover": 4,
+          "static": 0,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 36,
+        "success_rate": 0.9,
+        "timeout": 0,
+        "timeout_rate": 0.0
+      }
+    },
+    {
+      "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+      "family": "static_crossing",
+      "id": "mj2-robust-static_crossing-b027851f2ffe",
+      "label": "robust",
+      "policy_id": "robust-20261016140226-352fd7",
+      "suite_id": "sim2sim-mujoco-v2-static_crossing",
+      "summary": {
+        "collision": 6,
+        "collision_rate": 0.15,
+        "collisions_by_object": {
+          "mover": 3,
+          "static": 3,
+          "wall": 0
+        },
+        "episodes": 40,
+        "success": 32,
+        "success_rate": 0.8,
+        "timeout": 2,
+        "timeout_rate": 0.05
+      }
+    }
+  ]
+}
