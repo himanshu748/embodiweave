@@ -39,3 +39,16 @@ def test_physics_selection_cannot_resume_after_freeze(tmp_path,monkeypatch):
     (tmp_path/"physics-adapt-v1-selected.json").write_text('{}')
     with pytest.raises(PermissionError,match="frozen"):
         physics_study.run_next()
+
+
+def test_training_cost_changes_no_contact_dynamics():
+    from ew.physics_train import PhysicsTrainingEnv
+    base=MuJoCoNavEnv("open")
+    trained=PhysicsTrainingEnv("open",CONTRACT_V1,RECIPES["ppo-mixed-mujoco-v1"])
+    layout={"start":[.21,5,np.pi],"goal":[8.5,5],"statics":[],"movers":[]}
+    np.testing.assert_array_equal(base.reset(options={"layout":layout})[0],trained.reset(options={"layout":layout})[0])
+    a,b=base.step([1.,0.]),trained.step([1.,0.])
+    np.testing.assert_array_equal(a[0],b[0])
+    np.testing.assert_array_equal(base.data.qpos,trained.data.qpos)
+    assert a[2:]==b[2:] and a[4]["hit"]=="wall"
+    assert b[1]<a[1]-9.9

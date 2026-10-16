@@ -234,4 +234,9 @@ def rebuild(g: str | None = None) -> int:
     from .transfer import DEFAULT_ROOT, ingest as transfer_ingest
     transfer_ingest(graph=g, strict=False)
     transfer_ingest(DEFAULT_ROOT.with_name("mujoco-v2"), graph=g, strict=False)
+    from ..physics_study import OUT as physics_root, ingest_development
+    if (physics_root / "protocol.json").exists():
+        for folder in sorted((physics_root / "development").glob("*")):
+            if (folder / "summary.json").exists() and (POLICIES / folder.name / "manifest.json").exists():
+                ingest_development(folder.name, g)
     return db.bump_revision("rebuild", g)
