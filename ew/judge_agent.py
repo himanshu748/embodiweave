@@ -36,8 +36,8 @@ You may propose a new adaptation plan and preview the exact-artifact promotion g
 The current 2D demo policy is {T.DEPLOYED_POLICY}; P-static-b is the historical baseline.
 The original Sonnet child is scratch~a7ee2c-s7. The latest validation child is {VALIDATION_CHILD}. It is a separate deterministic search,
 not an LLM discovery. For the confirmed 2D checkpoint, request these independent reads together in your first
-tool turn: inspect_mission with exactly {{}}, query_evidence with topic robustness_lineage, and
-check_checkpoint with the exact policy_id. Do not add topic to inspect_mission; it accepts NO arguments.
+tool turn: inspect_mission with topic mission, query_evidence with topic robustness_lineage, and
+check_checkpoint with the exact policy_id. Use the documented argument schema for each tool.
 For original scratch-versus-parent questions, propose_adaptation
 uses the historical ew-select-3 protocol. Do not conflate that protocol with search-v1 or claim training superiority.
 The separate robustness-v2 study ranks complete canonical validation and collision clearance. Its decision
@@ -74,7 +74,8 @@ def _spec(name, description, properties=None, required=None):
 
 
 TOOLS = [
-    _spec("inspect_mission", "Read current mission requirements, deployed checkpoint failure evidence, and semantic contract. Takes NO arguments: call with exactly {}."),
+    _spec("inspect_mission", "Read current mission requirements, deployed checkpoint failure evidence, and semantic contract. The only supported topic is mission.",
+          {"topic": {"type": "string", "enum": ["mission"]}}, ["topic"]),
     _spec("query_evidence", "Read live validation evidence. robustness_lineage covers the confirmed 2D decision and ranked alternatives; physics_lineage covers mixed-domain development; search_lineage reads all historical studies.",
           {"topic": {"type": "string", "enum": ["eligibility", "lineage", "parent_trials", "scratch_trials", "failures", "search_lineage", "robustness_lineage", "physics_lineage"]}}, ["topic"]),
     _spec("propose_adaptation", "Compute a fresh adaptation plan from live graph evidence using frozen ew-select-3. No training or graph writes.",
@@ -204,6 +205,8 @@ def execute(name, args):
         raise ValueError("Invalid tool arguments")
     req = {**service.target_request(budget=150000), "candidate_run_kinds": ["library"]}
     if name == "inspect_mission":
+        if args["topic"] != "mission":
+            raise ValueError("The only mission topic is mission")
         return {"deployed_policy": T.DEPLOYED_POLICY, "recorded_child": FEATURED_CHILD, "latest_validation_child": VALIDATION_CHILD,
                 "contract": CONTRACT_V1.contract_id, "request": req,
                 "queries": [_query("mission_requirements", {"mission": req["mission"]}),
@@ -365,8 +368,9 @@ def _lineage_report(calls):
     if any((row.get("rule") or "").startswith("physics-") or row["candidate"].startswith("physics-")
            for row in decisions.values()):
         lines.append("Physics children trained in both simulators. Their 2D gate verdict does not establish physics clearance or confirmation; inspect the separate physics study.")
-    lines.append("An overall rejection does not mean every suite failed. The planner's intervention priorities "
-                 "are authored rules. Final-test results are unavailable to these tools; validation does not establish safety.")
+    if any(row["verdict"] == "rejected" for row in decisions.values()):
+        lines.append("An overall rejection does not mean every suite failed.")
+    lines.append("The planner's priorities are authored rules. Final-test results are unavailable to these tools; validation does not establish safety.")
     if revisions:
         lines.append("Graph revision: " + ", ".join(str(r) for r in sorted(revisions)) + ". This read-only investigation changed no deployment.")
     return "\n\n".join(lines)

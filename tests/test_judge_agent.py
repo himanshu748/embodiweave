@@ -70,6 +70,17 @@ def test_dispatch_refuses_unbounded_tools_and_arguments(public_agent):
             J.execute(name, args)
 
 
+def test_mission_read_requires_its_fixed_topic(public_agent, monkeypatch):
+    monkeypatch.setattr(J, "_deployed_evaluation", lambda: "measured-target")
+    monkeypatch.setattr(J, "_query", lambda name, params: {"template": name, "params": params})
+    for args in ({}, {"topic": "{}"}, {"topic": "other"}, {"topic": "mission", "policy_id": "other"}):
+        with pytest.raises(ValueError):
+            J.execute("inspect_mission", args)
+    result = J.execute("inspect_mission", {"topic": "mission"})
+    assert result["queries"][1] == {"template": "failure_inspection", "params": {"evaluation": "measured-target"}}
+    assert result["deployed_policy"] == J.T.DEPLOYED_POLICY
+
+
 def test_lineage_report_uses_overall_recorded_verdict_not_model_interpretation():
     row = {"decision":"d1", "origin":"parent", "candidate":"longer-child", "intervention":"longer", "verdict":"rejected"}
     report = J._lineage_report([{"result":{"queries":[{"template":"search_lineage", "graph_revision":10, "rows":[row, row]}]}}])
@@ -115,12 +126,12 @@ def test_provider_failure_keeps_only_actual_completed_graph_evidence(public_agen
 def test_invalid_model_arguments_return_schema_without_executing_tool(public_agent, monkeypatch):
     owner = J.visitor(None)
     s = J.start("Explain the confirmed result", True, owner)
-    responses = iter([{"choices": [{"message": {"tool_calls": [{"id": "bad", "function": {"name": "inspect_mission", "arguments": '{"topic":"mission"}'}}]}}]},
+    responses = iter([{"choices": [{"message": {"tool_calls": [{"id": "bad", "function": {"name": "inspect_mission", "arguments": '{"topic":"{}"}'}}]}}]},
                       {"choices": [{"message": {"content": "Could not read evidence"}, "finish_reason": "stop"}]}])
     monkeypatch.setattr(J, "_completion", lambda *args: next(responses))
     J._run(json.loads(J._path(s["id"]).read_text()))
     result = J.status(s["id"], owner)["calls"][0]["result"]
-    assert result["argument_schema"] == {"type": "object", "properties": {}, "required": [], "additionalProperties": False}
+    assert result["argument_schema"] == {"type": "object", "properties": {"topic": {"type": "string", "enum": ["mission"]}}, "required": ["topic"], "additionalProperties": False}
     assert "no action was performed" in result["error"]
 
 
@@ -134,7 +145,7 @@ def test_live_loop_selects_tools_then_reports_actual_model(public_agent, monkeyp
     def completion(messages, config, remaining):
         messages_seen.append(json.loads(json.dumps(messages)))
         if len(messages_seen) == 1:
-            msg = {"tool_calls": [{"id": "call1", "type": "function", "function": {"name": "inspect_mission", "arguments": "{}"}}]}
+            msg = {"tool_calls": [{"id": "call1", "type": "function", "function": {"name": "inspect_mission", "arguments": '{"topic":"mission"}'}}]}
         else:
             msg = {"content": "Evidence says no new training. test-provider-secret"}
         return {"model": "provider/actual-free-model", "choices": [{"message": msg, "finish_reason": finish}],
@@ -168,7 +179,7 @@ def test_model_loop_stops_at_turn_limit(public_agent, monkeypatch):
     owner = J.visitor(None)
     s = J.start("Investigate the failure", True, owner)
     monkeypatch.setattr(J, "_completion", lambda *a: {"choices": [{"message": {"tool_calls": [
-        {"id": "c", "function": {"name": "inspect_mission", "arguments": "{}"}}]}}]})
+        {"id": "c", "function": {"name": "inspect_mission", "arguments": '{"topic":"mission"}'}}]}}]})
     monkeypatch.setattr(J, "execute", lambda *a: {"queries": []})
     J._run(json.loads(J._path(s["id"]).read_text()))
     result = J.status(s["id"], owner)
