@@ -1,0 +1,43 @@
+{
+  "verified_at_utc": "2026-10-16T18:07:52.813958+00:00",
+  "deployed_commit": "832364f0cc7de4d5f62047b75148a860691078ea",
+  "local_tests": {
+    "passed": 148,
+    "seconds": 75.95,
+    "command": "EW_FALKOR_PORT=16379 ../prd-audit-venv/bin/python -m pytest -q"
+  },
+  "CI": {
+    "url": "https://github.com/himanshu748/embodiweave/actions/runs/38944225214",
+    "conclusion": "success",
+    "commit": "832364f0cc7de4d5f62047b75148a860691078ea"
+  },
+  "deployment": {
+    "container": "ew-api",
+    "study": "public-agent-mcp",
+    "proxy_changed": false,
+    "decisiondebt_changed": false
+  },
+  "protected_source_hashes_match": {
+    "ew/criteria.py": true,
+    "ew/scenarios.py": true,
+    "evidence/mcp-agent-v3/agent-receipt.json": true,
+    "web/media/embodiweave-demo-v5.mp4": true
+  },
+  "all_prior_media_unchanged": true,
+  "preregistered_attempts": 1,
+  "further_retries": 0,
+  "readme_links": {
+    "checked": 78,
+    "failed": 0
+  },
+  "public_routes": {
+    "checked": 36,
+    "all_200": true,
+    "initial_catalog_tls_timeout_resolved_by_read_only_recheck": true
+  },
+  "decisiondebt": {
+    "revision": 16,
+    "mode": "public-readonly"
+  },
+  "submission_made": false
+}

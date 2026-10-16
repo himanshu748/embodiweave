@@ -1,5 +1,4 @@
 {
-  "uploaded_at_utc": "2026-10-16T18:01:09.419372+00:00",
   "url": "https://youtu.be/IfFo4cicShk",
   "video_id": "IfFo4cicShk",
   "visibility": "unlisted",
@@ -33,5 +32,7 @@
   "historical_manifest": "../checksums.json",
   "notes_previous_sha256": "3e4b85c8c492960854a5528a29949c52f029cf3b4c2c9f5c859e1c934a12f567",
   "notes_current_sha256": "cc4e3dd5068cfcfd065d53734a67ee71b1d1238dd8da46f9a7fd348d4d69a54a",
-  "manifest_note": "The original film checksum manifest is retained as the pre-upload snapshot; only YOUTUBE.md metadata changed. This upload manifest records current notes and unchanged media hashes."
+  "manifest_note": "The original film checksum manifest is retained as the pre-upload snapshot; only YOUTUBE.md metadata changed. This upload manifest records current notes and unchanged media hashes.",
+  "recorded_at_utc": "2026-10-16T18:01:09.419372+00:00",
+  "fresh_unsigned_Chromium": "Watch-page navigation succeeded; media delivery returned HTTP 403. Signed-in in-app 1080p/English playback verified. MP4 fallback preserved."
 }

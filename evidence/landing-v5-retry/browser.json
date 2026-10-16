@@ -1,0 +1,19 @@
+{
+  "desktop": {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "live": "Live from FalkorDB: 712 nodes, 3,385 edges, read in 15.9 ms",
+    "confirmed": true
+  },
+  "mobile": {
+    "width": 375,
+    "scrollWidth": 375
+  },
+  "youtube": "https://youtu.be/IfFo4cicShk",
+  "clickedURL": "https://www.youtube.com/watch?v=IfFo4cicShk",
+  "title": "EmbodiWeave: an MCP agent retrains a robot, FalkorDB keeps the evidence - YouTube",
+  "profile": "fresh nonpersistent Chromium",
+  "landing_console_errors": [],
+  "youtube_fresh_profile_errors": "Watch page reached; Google passive sign-in returned 401 and googlevideo media requests returned 403. Signed-in in-app playback separately verified 1920x1080 with English CC.",
+  "deployed_commit": "832364f0cc7de4d5f62047b75148a860691078ea"
+}

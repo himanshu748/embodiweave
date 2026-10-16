@@ -1,0 +1,180 @@
+{
+  "at": "2026-10-16T18:04:44.678703+00:00",
+  "deployed_commit": "832364f0cc7de4d5f62047b75148a860691078ea",
+  "public_GET_endpoints": [
+    {
+      "path": "/",
+      "status": 200
+    },
+    {
+      "path": "/live.html",
+      "status": 200
+    },
+    {
+      "path": "/guide.html",
+      "status": 200
+    },
+    {
+      "path": "/robustness.html",
+      "status": 200
+    },
+    {
+      "path": "/physics.html",
+      "status": 200
+    },
+    {
+      "path": "/studio.html",
+      "status": 200
+    },
+    {
+      "path": "/api/status",
+      "status": 200
+    },
+    {
+      "path": "/api/catalog",
+      "initial_error": "<urlopen error _ssl.c:1112: The handshake operation timed out>",
+      "status": 200,
+      "rechecked_at": "2026-10-16T18:05:07.632140+00:00"
+    },
+    {
+      "path": "/api/decisions",
+      "status": 200
+    },
+    {
+      "path": "/api/evaluations",
+      "status": 200
+    },
+    {
+      "path": "/api/trials",
+      "status": 200
+    },
+    {
+      "path": "/api/jobs",
+      "status": 200
+    },
+    {
+      "path": "/api/promotions",
+      "status": 200
+    },
+    {
+      "path": "/api/agent_traces",
+      "status": 200
+    },
+    {
+      "path": "/api/agent/config",
+      "status": 200
+    },
+    {
+      "path": "/api/judge/config",
+      "status": 200
+    },
+    {
+      "path": "/api/public-training/config",
+      "status": 200
+    },
+    {
+      "path": "/api/results",
+      "status": 200
+    },
+    {
+      "path": "/api/live/overview",
+      "status": 200
+    },
+    {
+      "path": "/api/search/lineage",
+      "status": 200
+    },
+    {
+      "path": "/api/robustness/lineage",
+      "status": 200
+    },
+    {
+      "path": "/api/physics/lineage",
+      "status": 200
+    },
+    {
+      "path": "/api/transfer/mujoco",
+      "status": 200
+    },
+    {
+      "path": "/api/live/featured",
+      "status": 200
+    },
+    {
+      "path": "/api/live/query/failure",
+      "status": 200
+    },
+    {
+      "path": "/api/live/query/transfer",
+      "status": 200
+    },
+    {
+      "path": "/api/live/query/scratch",
+      "status": 200
+    },
+    {
+      "path": "/api/live/query/decision",
+      "status": 200
+    },
+    {
+      "path": "/api/live/query/gate",
+      "status": 200
+    },
+    {
+      "path": "/api/decisions/deci-20261016175734-1b2724",
+      "status": 200
+    },
+    {
+      "path": "/api/subgraph/deci-20261016175734-1b2724",
+      "status": 200
+    },
+    {
+      "path": "/api/evidence/deci-20261016175734-1b2724",
+      "status": 200
+    },
+    {
+      "path": "/api/replay/eval-20261016175812-e0b762",
+      "status": 200
+    },
+    {
+      "path": "/media/embodiweave-demo-v5.mp4",
+      "status": 200
+    },
+    {
+      "path": "/media/embodiweave-demo-v5-720p.mp4",
+      "status": 200
+    },
+    {
+      "path": "/media/embodiweave-demo-v5.srt",
+      "status": 200
+    }
+  ],
+  "decisiondebt": {
+    "status": 200,
+    "body": {
+      "status": "ok",
+      "graph_revision": 16,
+      "synthetic": true,
+      "source_mode": "live_falkordb",
+      "provider_configured": false,
+      "mode": "public-readonly"
+    }
+  },
+  "embodiweave": {
+    "graph": {
+      "up": true,
+      "revision": 10,
+      "name": "ew"
+    },
+    "worker": {
+      "alive": false,
+      "running": []
+    },
+    "deployed_policy": "robust-20261016140226-352fd7",
+    "contract": "ew-contract-1:2f013b6f4849",
+    "world": "simulated",
+    "server_time": 1792173884.5846946,
+    "hosted_readonly": true
+  },
+  "scope": "Public page and read routes with valid recorded IDs. Owner-cookie session routes and mutating actions are not anonymous 200 checks. MCP separately verified via SDK."
+}
