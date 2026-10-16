@@ -217,7 +217,7 @@ def execute(name, args):
         if not isinstance(topic, str) or topic not in topics:
             raise ValueError("Unknown evidence topic")
         if topic == "search_lineage":
-            return {"queries": [_query("search_lineage", {"rule": rule}) for rule in ("search-v1", "robustness-v2")]}
+            return {"queries": [_query("search_lineage", {"rule": rule}) for rule in ("search-v1", "robustness-v2", "physics-adapt-v1")]}
         return {"queries": [_query(*topics[topic])]}
     if name == "propose_adaptation":
         if type(args["budget"]) is not int or args["budget"] not in (60000, 150000):

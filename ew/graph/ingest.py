@@ -222,6 +222,12 @@ def rebuild(g: str | None = None) -> int:
     for e in records.all_of("evaluation"):
         if e["suite_id"] in SUITES and SUITES[e["suite_id"]].role not in PROTECTED_ROLES and not e.get("custom_family"):
             evaluation(e, g)
+    # Physics evaluations must exist before Decision BASED_ON edges are restored.
+    from ..physics_study import OUT as physics_root, ingest_development
+    if (physics_root / "protocol.json").exists():
+        for folder in sorted((physics_root / "development").glob("*")):
+            if (folder / "summary.json").exists() and (POLICIES / folder.name / "manifest.json").exists():
+                ingest_development(folder.name, g)
     for t in records.all_of("trial"):
         trial(t, g)
     for d in records.all_of("decision"):
@@ -234,9 +240,4 @@ def rebuild(g: str | None = None) -> int:
     from .transfer import DEFAULT_ROOT, ingest as transfer_ingest
     transfer_ingest(graph=g, strict=False)
     transfer_ingest(DEFAULT_ROOT.with_name("mujoco-v2"), graph=g, strict=False)
-    from ..physics_study import OUT as physics_root, ingest_development
-    if (physics_root / "protocol.json").exists():
-        for folder in sorted((physics_root / "development").glob("*")):
-            if (folder / "summary.json").exists() and (POLICIES / folder.name / "manifest.json").exists():
-                ingest_development(folder.name, g)
     return db.bump_revision("rebuild", g)

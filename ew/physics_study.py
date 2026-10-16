@@ -51,10 +51,17 @@ def ingest_development(pid, graph=None):
         if not file.is_relative_to(folder.resolve()) or artifacts.sha256_file(file)!=expected: raise ValueError("Physics evidence checksum mismatch")
     for suite in p["suites"]:
         e=json.loads((folder/f"candidate-{suite['family']}.json").read_text());summary=e["summary"]
-        if e["role"]!="validation" or e["protocol_hash"]!=fingerprint(p) or [ep["seed"] for ep in e["episodes"]]!=suite["seeds"]:
+        if (e["role"]!="validation" or e["protocol_hash"]!=fingerprint(p)
+            or e["policy_id"]!=pid or e["artifact_hash"]!=p["policies"]["candidate"]["artifact_hash"]
+            or e["suite_id"]!=suite["id"] or e["family"]!=suite["family"]
+            or summary["episodes"]!=len(suite["seeds"])
+            or [ep["seed"] for ep in e["episodes"]]!=suite["seeds"]):
             raise ValueError("Incomplete or protected physics evidence")
         for outcome in ("success","collision","timeout"):
             if sum(ep["outcome"]==outcome for ep in e["episodes"])!=summary[outcome]: raise ValueError("Physics counts disagree")
+            if summary[outcome+"_rate"]!=summary[outcome]/summary["episodes"]: raise ValueError("Physics rates disagree")
+        if sum(summary[k] for k in ("success","collision","timeout"))!=summary["episodes"]:
+            raise ValueError("Unknown physics outcome")
         if not records.exists("evaluation", e["id"]):
             records.write("evaluation", {"id":e["id"],"policy_id":pid,"artifact_hash":e["artifact_hash"],
                 "suite_id":suite["id"],"suite_role":"validation","suite_version":RULE,

@@ -578,6 +578,13 @@ def robustness_lineage():
     return {**r.to_log(), "via": "GRAPH.RO_QUERY", "at": time.time()}
 
 
+@app.get("/api/physics/lineage")
+def physics_lineage():
+    r = Q.run("search_lineage", {"rule": "physics-adapt-v1"})
+    return {**r.to_log(), "via": "GRAPH.RO_QUERY", "at": time.time(),
+            "notice": "Mixed 2D and MuJoCo training. Development validation only; confirmation excluded."}
+
+
 @app.get("/api/transfer/mujoco")
 def mujoco_transfer():
     r = Q.run("mujoco_transfer", {})

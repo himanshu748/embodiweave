@@ -79,9 +79,28 @@ def publish():
         for name in ("physics-adapt-v1-selected.json","physics-adapt-v1-confirmation-started.json"):
             if (artifacts.ROOT/name).exists():
                 target=destination/name;copy_once(artifacts.ROOT/name,target);paths.append(target)
+    confirmation_bundle = None
+    if selected and confirmation:
+        attempt=next(a for a in attempts if a["policy_id"]==selected["policy_id"])
+        base=destination/"exports"/Path(attempt["bundle_url"]).name
+        target=base.with_name(base.name.replace("physics-repro-v1","physics-confirmation-v1"))
+        if not target.exists():
+            with zipfile.ZipFile(base) as src, zipfile.ZipFile(target,"w",zipfile.ZIP_DEFLATED) as z:
+                for n in src.namelist():
+                    if n!="checksums.json":z.writestr(n,src.read(n))
+                z.write(OUT/"selected.json","frozen-selection.json")
+                z.write(artifacts.ROOT/"physics-adapt-v1-confirmation-started.json","confirmation-started.json")
+                for f in sorted((OUT/"confirmation").rglob("*")):
+                    if f.is_file():z.write(f,"physics-confirmation/"+str(f.relative_to(OUT/"confirmation")))
+                z.writestr("checksums.json",json.dumps({n:hashlib.sha256(z.read(n)).hexdigest() for n in z.namelist()},indent=2))
+        with zipfile.ZipFile(target) as z:
+            assert all(hashlib.sha256(z.read(n)).hexdigest()==h for n,h in json.loads(z.read("checksums.json")).items())
+        paths.append(target)
+        confirmation_bundle={"url":"api/download/"+target.name,"sha256":artifacts.sha256_file(target)}
     summary={"study":RULE,"protocol_sha256":study_hash(),"training_domains":["2D","MuJoCo"],
         "attempts":attempts,"selected_policy":selected["policy_id"] if selected else None,
         "physics_confirmation":confirmation,"physics_confirmation_pass":all(r["pass"] for r in confirmation) if confirmation else None,
+        "confirmation_bundle":confirmation_bundle,
         "notice":"Separate mixed-domain adaptation. Earlier unchanged transfer and 2D confirmation stay frozen. Physics confirmation never enters planning; no new 2D held-out evaluation was authorized."}
     for target in (OUT/"summary.json",ROOT/"web/media/physics-evidence.json"):
         target.write_text(json.dumps(summary,indent=2)+"\n");paths.append(target)

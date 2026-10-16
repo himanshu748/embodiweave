@@ -52,3 +52,44 @@ def test_training_cost_changes_no_contact_dynamics():
     np.testing.assert_array_equal(base.data.qpos,trained.data.qpos)
     assert a[2:]==b[2:] and a[4]["hit"]=="wall"
     assert b[1]<a[1]-9.9
+
+
+@pytest.mark.parametrize("field,value,message",[("role","final_test","protected"),("artifact_hash","0"*64,"protected"),("success_rate",.123,"rates")])
+def test_physics_ingester_rejects_protected_or_inconsistent_evidence(tmp_path,monkeypatch,field,value,message):
+    import shutil
+    from ew import artifacts
+    pid="robust-20261016140226-352fd7"
+    monkeypatch.setattr(artifacts,"POLICIES",physics_study.ROOT/"artifacts/policies")
+    original=physics_study.OUT
+    shutil.copyfile(original/"protocol.json",tmp_path/"protocol.json")
+    folder=tmp_path/"development"/pid
+    shutil.copytree(original/"development"/pid,folder)
+    target=folder/"candidate-open.json"
+    e=json.loads(target.read_text())
+    (e["summary"] if field=="success_rate" else e)[field]=value
+    target.write_text(json.dumps(e))
+    hashes=json.loads((folder/"checksums.json").read_text())
+    hashes[target.name]=artifacts.sha256_file(target)
+    (folder/"checksums.json").write_text(json.dumps(hashes))
+    monkeypatch.setattr(physics_study,"OUT",tmp_path)
+    with pytest.raises(ValueError,match=message):physics_study.ingest_development(pid)
+
+
+def test_recovery_restores_physics_decision_evidence_without_confirmation(monkeypatch):
+    from ew import artifacts, records
+    from ew.graph import db, ingest, queries
+    root=physics_study.ROOT/"artifacts"
+    monkeypatch.setattr(artifacts,"ROOT",root)
+    monkeypatch.setattr(artifacts,"POLICIES",root/"policies")
+    monkeypatch.setattr(records,"RECORDS",root/"records")
+    graph="ew_test_physics_recovery"
+    try:
+        ingest.rebuild(graph)
+        rows=queries.run("search_lineage",{"rule":"physics-adapt-v1"},graph).dicts()
+        assert rows
+        for decision in {r["decision"] for r in rows}:
+            selected=[r for r in rows if r["decision"]==decision]
+            assert len(selected)==8
+            assert len([r for r in selected if r["evidence_suite"].startswith("val-physics-adapt-v1-")])==4
+        assert db.ro("MATCH (e:Evaluation) WHERE e.id STARTS WITH 'pft1-' RETURN count(e)",graph_name=graph)[1]==[[0]]
+    finally:db.delete_graph(graph)
