@@ -4,14 +4,32 @@ An agent that reads a robot's training history in FalkorDB, decides which checkp
 
 Track: Agents That Act on Connected Data
 
-I built EmbodiWeave to make checkpoint selection and deployment checks inspectable.
+## Result: confirmed in 2D
 
-FalkorDB connects exact artifacts, semantic sensor/action contracts, training origins, trials, evaluations, failures and Decisions. The live agent discovers domain tools through MCP. It diagnoses a checkpoint, compares eligible origins and calls FalkorDB's shortest-path algorithm to find a passing ancestor. It proposes its own origin and launches CPU PPO. An authored guardrail can veto missing evidence, incompatible semantics, stale hashes or unsupported budgets. Each Decision saves the model, actual tool calls, Cypher, parameters, candidates and verdict before training.
+Graph-selected `robust-20261016140226-352fd7` passed 4/4 unchanged validation suites and fresh preregistered confirmation: 100 episodes per family. Collisions: target 8/100 (10% limit), open 0/100 (5%), static 4/100 (10%), crossing 5/100 (15%). [Evidence](../evidence/robustness-v2/).
 
-The trusted worker reloads the new artifact, runs 180 validation episodes and applies the unchanged promotion gate. Provider failure uses an explicitly labelled deterministic MCP fallback; graph failure stops planning. Judges can watch the 2D simulator or its 3D rendering and download evidence.
+## Why Track 01
 
-Frozen results remain visible: the earlier rehearsal checkpoint failed held-out target collisions at 13/100. A separate study passed all four fresh confirmation families, with 8/100 target collisions against a 10% limit. Its unchanged-weight MuJoCo transfer still had 6/40 target collisions. Physics confirmation remains unopened. These are simulation results, not hardware-safety proof.
+FalkorDB connects exact artifacts, semantic sensor/action contracts, origins, trials, evaluations, failures and Decisions. Decisions save model, tool calls, Cypher, parameters, candidates and verdict before training. [Queries](../README.md#why-track-01).
 
-The [new public MCP run](../evidence/mcp-agent-v2/) used GPT-4.1 Mini and passed 4/4 suites: target collisions 3/60, below 10%. Target and crossing regressed against its parent; no improvement is claimed. The provider-down fallback remains visible separately.
+## The agent acting on the graph, and the guardrail
 
-[Why Track 01 and actual queries](../README.md#why-track-01). Next: independent training seeds and stronger crossing behaviour. Claude and Codex assisted with implementation and experiments; measurements come from saved checkpoints.
+GPT-4.1 Mini discovered MCP tools, diagnosed a checkpoint, compared origins and read FalkorDB's shortestPath to a passing ancestor. It chose `physics-20261016150004-25da9c`, launching 60,000 requested / 61,440 consumed CPU PPO steps. The reloaded checkpoint passed 4/4 gates across 180 validation episodes. Target 3/60 and crossing 1/40 collisions regressed against the parent's 2/60 and 0/40. The comparison kept this child from release; the demo policy stayed unchanged. [Recorded action](../evidence/mcp-agent-v2/).
+
+The pre-training guardrail can veto missing evidence, incompatible semantics, stale hashes or unsupported budgets. Provider failure uses a labelled [deterministic MCP fallback](../evidence/mcp-agent-v1/); graph failure stops planning.
+
+## Judge walkthrough
+
+Watch 2D simulation or its 3D rendering and download evidence.
+
+## Earlier studies and MuJoCo
+
+Earlier rehearsal failed held-out target collisions at 13/100. Unchanged-weight MuJoCo target transfer remains 6/40; physics confirmation is unopened.
+
+## Honest limitations
+
+[Rehearsal](../evidence/rehearsal-recovery-v1/): parent and both children had 7/180 collisions. [Stronger collision cost](../evidence/collision-recovery-v1/): 12/180 versus control 14/180, parent 12/180.
+
+These simulations establish no hardware safety, improvement over the parent or planner advantage.
+
+Next: independent training seeds and stronger crossing behaviour. Claude and Codex assisted implementation and experiments; measurements come from saved checkpoints.

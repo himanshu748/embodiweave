@@ -8,39 +8,9 @@ An agent that reads a robot's training history in FalkorDB, decides which checkp
 
 GraphHacks Track 01: **Agents That Act on Connected Data**.
 
-## Why Track 01
+## Result: confirmed in 2D
 
-| Focus | Concrete implementation |
-|---|---|
-| Multi-hop reasoning | [`DERIVED_FROM*1..8` query](ew/graph/queries.py), [actual returned ancestor paths](evidence/mcp-agent-v2/algorithm.json) |
-| Graph queries and algorithms as tools | [Exact native `shortestPath` Cypher](evidence/mcp-agent-v2/nearest-passing-ancestor.cypher), bounded and unweighted |
-| Tool selection through MCP | [Actual model and four MCP calls](evidence/mcp-agent-v2/agent-receipt.json), [stdio + HTTP server](ew/mcp_server.py) |
-| Actions based on graph evidence | [New public PPO run, 180 validation episodes and gate](evidence/mcp-agent-v2/training-receipt.json), [checkpoint bundle](evidence/mcp-agent-v2/repro-v3.zip) |
-| Explainable results | [Decision `deci-20261016121309-c0c93f`](evidence/mcp-agent-v2/decision.json): model, calls, Cypher, parameters, candidates, guardrail and revision, saved before training |
-
-**[Let the live agent choose and train](https://embodiweave.52.202.25.181.sslip.io/live.html#investigate)**. It discovers domain tools over MCP and proposes its own origin; the guardrail can veto but does not replace that choice with rank one. A separately labelled deterministic MCP fallback handles inference failure on an explicitly consented training task. FalkorDB failure still stops planning. [Protocol, tool contract and client setup](docs/MCP.md).
-
-### Recorded public agent action
-
-GPT-4.1 Mini used MCP, read FalkorDB's shortest-path result, chose `physics-20261016150004-25da9c` and launched **60,000 requested / 61,440 consumed PPO steps**. Its new checkpoint passed **4/4 suites across 180 validation episodes**. Collision counts were target **3/60** (10% limit), open **0/40** (5%), static **1/40** (10%) and crossing **1/40** (15%).
-
-**The gate passed, but target and crossing collisions were worse than the chosen parent's 2/60 and 0/40. No safety improvement is established.** The default demo policy stays unchanged. This action demonstration is separate from the frozen studies below. [Full result, exact hashes, provider usage and evidence](evidence/mcp-agent-v2/). The earlier [provider-down deterministic fallback](evidence/mcp-agent-v1/) is retained and labelled.
-
-[![Recorded public MCP tool selection](web/media/embodiweave-demo-v4.gif)](https://embodiweave.52.202.25.181.sslip.io/guide.html#film)
-
-### Connect MCP from Claude Desktop or Cursor
-
-Run `docker compose up --build` first, then configure a stdio server using your checkout's absolute Compose path:
-
-```json
-{"mcpServers":{"embodiweave":{"command":"docker","args":["compose","-f","/absolute/path/embodiweave/compose.yaml","exec","-T","embodiweave","/app/.venv/bin/python","-m","ew.mcp_server"]}}}
-```
-
-Claude Desktop uses `claude_desktop_config.json`; Cursor uses `.cursor/mcp.json`. Cursor's HTTP form is `{"mcpServers":{"embodiweave":{"url":"https://embodiweave.52.202.25.181.sslip.io/mcp/"}}}`. Public HTTP connections can read; training needs the webpage's separate consent. [Local training opt-in, standalone HTTP and optional official FalkorDB MCP](docs/MCP.md).
-
-## Current result: confirmed in 2D
-
-**The new graph-selected checkpoint passed all four unchanged validation suites and one fresh, preregistered confirmation batch.** Target confirmation recorded **92 goals, 8 collisions, 0 timeouts across 100 episodes**, under the original 10% collision limit. It is the current **2D demo** policy; MuJoCo target transfer still fails its reference collision limit.
+The graph-selected checkpoint `robust-20261016140226-352fd7` passed **4/4 unchanged validation suites** and one fresh, preregistered confirmation batch of **100 episodes per family**: collisions were target **8/100** (10% limit), open **0/100** (5%), static **4/100** (10%) and crossing **5/100** (15%). It is the current **2D demo** policy.
 
 | Measurement | Target | Open | Static | Crossing |
 |---|---:|---:|---:|---:|
@@ -57,52 +27,39 @@ FalkorDB selected the rehearsal parent, whose crossing validation had no collisi
 Current checkpoint: `robust-20261016140226-352fd7`, hash `b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4`.
 [Measured study and checksums](evidence/robustness-v2/) · [Protocol and diagnosis](docs/robustness-v2.md) · [Download checkpoint + evidence](https://embodiweave.52.202.25.181.sslip.io/api/download/robust-20261016140226-352fd7-b027851f2ffe-repro-v3.zip).
 
-MuJoCo uses fresh paired seeds and unchanged 2D-trained weights. Its **6/40 target collisions (15%)** exceed the 10% reference limit; crossing is **4/40 (10%)**. This study is separate from the earlier 24/40 baseline result below. No physics safety claim is made. This transfer study remains frozen; the separately authorized adaptation below uses new physics development suites. [All 320 transfer episodes](evidence/mujoco-v2/).
+MuJoCo uses fresh paired seeds and unchanged 2D-trained weights. Its 6/40 target collisions (15%) still fail the 10% reference limit; crossing is **4/40 (10%)**. This study is separate from the earlier 24/40 baseline result below. No physics safety claim is made. This transfer study remains frozen; the separately authorized adaptation below uses new physics development suites. [All 320 transfer episodes](evidence/mujoco-v2/).
 
 [![Fresh MuJoCo paired replay, illustrative seed 5203012](web/media/embodiweave-demo-v3.gif)](https://embodiweave.52.202.25.181.sslip.io/guide.html#film)
 
-<!-- physics-adapt-v1:start -->
-## Separate MuJoCo adaptation
+## Why Track 01
 
-**These new checkpoints train in both 2D and MuJoCo.** The unchanged-weight transfer measurements above remain frozen. This preregistered study uses fresh physics development suites and keeps the confirmed 2D parent as the default 2D demo policy.
+| Focus | Concrete implementation |
+|---|---|
+| Multi-hop reasoning | [`DERIVED_FROM*1..8` query](ew/graph/queries.py), [actual returned ancestor paths](evidence/mcp-agent-v2/algorithm.json) |
+| Graph queries and algorithms as tools | [Exact native `shortestPath` Cypher](evidence/mcp-agent-v2/nearest-passing-ancestor.cypher), bounded and unweighted |
+| Tool selection through MCP | [Actual model and four MCP calls](evidence/mcp-agent-v2/agent-receipt.json), [stdio + HTTP server](ew/mcp_server.py) |
+| Actions based on graph evidence | [New public PPO run, 180 validation episodes and gate](evidence/mcp-agent-v2/training-receipt.json), [checkpoint bundle](evidence/mcp-agent-v2/repro-v3.zip) |
+| Explainable results | [Decision `deci-20261016121309-c0c93f`](evidence/mcp-agent-v2/decision.json): model, calls, Cypher, parameters, candidates, guardrail and revision, saved before training |
 
-| Completed trial | Original 2D gate | Physics target | Physics open | Physics static | Physics crossing | Selection |
-|---|---:|---:|---:|---:|---:|---|
-| **Collision limit (maximum)** | Four suites | **10%** | **5%** | **10%** | **15%** | Extra clearance required |
-| ppo-mixed-mujoco-v1 | 4/4 | 6/40 (Fail) | 0/40 (Pass) | 1/40 (Pass) | 5/40 (Pass) | 7/8; 3 episodes short of clearance |
-| ppo-mixed-mujoco-collision40-v1 | 4/4 | 4/40 (Pass) | 0/40 (Pass) | 2/40 (Pass) | 6/40 (Pass) | 8/8; 2 episodes short of clearance |
-| ppo-mixed-mujoco-lr-v1 | 4/4 | 2/40 (Pass) | 0/40 (Pass) | 1/40 (Pass) | 6/40 (Pass) | 8/8; 1 episode short of clearance |
-| ppo-mixed-mujoco-lr-v1 (600k follow-up) | 4/4 | 7/40 (Fail) | 0/40 (Pass) | 1/40 (Pass) | 6/40 (Pass) | 7/8; 5 episodes short of clearance |
+## The agent acting on the graph, and the guardrail
 
-Physics cells show collision counts on 40 development episodes per family. Pass also requires the original success floors: target 80%, open 90%, static 75%, crossing 75%. The original three trials request 300,000 steps each; a separately preregistered longer follow-up requests 600,000. All use fixed seed 23. Actual rollout-rounded steps and exact artifact hashes are in the evidence index. The authored graph rule requires all eight validation suites plus one episode of physics collision clearance before selection stops. Promo-1 code and thresholds are unchanged.
+GPT-4.1 Mini used MCP, read FalkorDB's `shortestPath` result, chose `physics-20261016150004-25da9c` and launched **60,000 requested / 61,440 consumed PPO steps**. Its new checkpoint passed **4/4 suites across 180 validation episodes**. Collision counts were target 3/60 (10% limit), open 0/40 (5%), static 1/40 (10%) and crossing 1/40 (15%).
 
-No new child has completed the registered physics selection rule. The one-time physics confirmation remains unopened.
+Target and crossing collisions were worse than the chosen parent's 2/60 and 0/40, so EmbodiWeave did not release this child and the demo policy stayed unchanged. Graph evidence chose the training action, and the measured parent comparison kept the regression from shipping. No safety improvement over the parent is established. This action demonstration is separate from the frozen studies below. [Full result, exact hashes, provider usage and evidence](evidence/mcp-agent-v2/). The earlier [provider-down deterministic fallback](evidence/mcp-agent-v1/) is retained and labelled.
 
-[Recorded physics comparison](https://embodiweave.52.202.25.181.sslip.io/physics.html#replay) · [Physics judge page](https://embodiweave.52.202.25.181.sslip.io/physics.html) · [Protocol and interpretation](docs/physics-adaptation.md) · [Every episode and checksum](evidence/physics-adapt-v1/)
+**[Let the live agent choose and train](https://embodiweave.52.202.25.181.sslip.io/live.html#investigate)**. It discovers domain tools over MCP and proposes its own origin; the guardrail can veto but does not replace that choice with rank one. A separately labelled deterministic MCP fallback handles inference failure on an explicitly consented training task. FalkorDB failure still stops planning. [Protocol, tool contract and client setup](docs/MCP.md).
 
-Successful simulation does not establish hardware safety. The base uses velocity servos and scripted pedestrians; the documented dynamics and sensor mismatches remain.
-<!-- physics-adapt-v1:end -->
+[![Recorded public MCP tool selection](web/media/embodiweave-demo-v4.gif)](https://embodiweave.52.202.25.181.sslip.io/guide.html#film)
 
-## Earlier study: search-v1
+## Connect MCP from Claude Desktop or Cursor
 
-**The graph-selected rehearsal lineage passed all four validation suites. Its single held-out target evaluation still failed the collision limit.** Selection stopped before that held-out evaluation. This study remained frozen; the separately preregistered robustness-v2 study above started later with new confirmation seeds.
+Run `docker compose up --build` first, then configure a stdio server using your checkout's absolute Compose path:
 
-| Measured candidate | Target success / collision | Open | Static | Crossing | Fixed promo-1 gate |
-|---|---|---|---|---|---|
-| **Collision limit (maximum)** | **≤10%** | **≤5%** | **≤10%** | **≤15%** | All four required |
-| Original scratch checkpoint | 86.67% / 13.33% | 72.5% / 0% | 95% / 2.5% | 72.5% / 17.5% | Rejected, 1/4 |
-| Longer training | 91.67% / 8.33% | 82.5% / 0% | 92.5% / 5% | 85% / 10% | Rejected, 3/4 |
-| Rehearsal across training families | 95% / 5% | 100% / 0% | 97.5% / 2.5% | 85% / 15% | Passed, 4/4 |
+```json
+{"mcpServers":{"embodiweave":{"command":"docker","args":["compose","-f","/absolute/path/embodiweave/compose.yaml","exec","-T","embodiweave","/app/.venv/bin/python","-m","ew.mcp_server"]}}}
+```
 
-Each candidate uses the same complete validation suites: target 60 episodes, open 40, static 40, crossing 40, **180 total per candidate**. Candidate cells show success / collision; the limits row shows each suite's maximum collision rate from the fixed [promo-1 criteria](ew/criteria.py). Each new attempt requested 300,000 additional steps and consumed 301,056 after rollout rounding, with seed 7 fixed before training. The passing lineage consumed 753,664 steps including its root.
-
-**Held-out target confirmation: 86 goals, 13 collisions, 1 timeout in 100 episodes.** The target permits at most 10% collisions. Held-out retained tasks were not evaluated. Passing validation is not a claim of general safety; `P-static-b` was retained at the end of search-v1 and remains visible as the historical baseline.
-
-Exact IDs, artifact hashes, gate checks and bundle SHA-256 values: [evidence index](evidence/search-v1/summary.json). The passing artifact is `b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565`.
-
-- [Passing validation candidate + held-out evidence bundle](https://embodiweave.52.202.25.181.sslip.io/api/download/search-20261015185749-4a6581-b7e2fcc95869-repro-v3.zip)
-- [Rejected longer-training bundle](https://embodiweave.52.202.25.181.sslip.io/api/download/search-20261015185536-6720c9-a08219d163fd-repro-v3.zip)
-- [Diagnosis and search protocol](docs/diagnosis.md) · [Held-out protocol](docs/final-protocol.md) · [Evidence checksums](evidence/search-v1/checksums.json)
+Claude Desktop uses `claude_desktop_config.json`; Cursor uses `.cursor/mcp.json`. Cursor's HTTP form is `{"mcpServers":{"embodiweave":{"url":"https://embodiweave.52.202.25.181.sslip.io/mcp/"}}}`. Public HTTP connections can read; training needs the webpage's separate consent. [Local training opt-in, standalone HTTP and optional official FalkorDB MCP](docs/MCP.md).
 
 ## Why FalkorDB is load-bearing
 
@@ -152,59 +109,6 @@ RETURN p.id, p.artifact_hash, s.id, e.id, e.success_rate, e.collision_rate
 ```
 
 The backend also verifies the model and normalization hashes and reconciles the immutable episode records. Partial, custom, stale-hash or incompatible-contract evidence cannot promote a checkpoint. Final-test outcomes never enter the planning graph. The thresholds, suite definitions and promotion implementation were unchanged for these attempts.
-
-## MuJoCo sim-to-sim transfer
-
-**The same saved 2D-trained checkpoints, unchanged, running in contact physics.**
-In this earlier, frozen transfer study, no policy was trained or tuned in MuJoCo. Each checkpoint ran the same 40 fresh
-seeds in each of four suites, **160 episodes per checkpoint, 480 total**.
-
-| Checkpoint | Open | Static | Crossing | Target (static + crossing) |
-|---|---|---|---|---|
-| Historical baseline `P-static-b` | 40 / 0 / 0 | 16 / 12 / 12 | 30 / 10 / 0 | 7 / 24 / 9 |
-| Original scratch | 35 / 0 / 5 | 37 / 1 / 2 | 30 / 9 / 1 | 34 / 4 / 2 |
-| Graph-selected rehearsal | 40 / 0 / 0 | 37 / 3 / 0 | 32 / 8 / 0 | 37 / 3 / 0 |
-
-Cells are **goals / collisions / timeouts out of 40**, not percentages. Rehearsal
-has fewer target collisions (3/40, 7.5%) than the historical baseline (24/40, 60%),
-but still collides in **8/40 crossing episodes (20%)**. This small transfer
-study is not a safety certificate or another promo-1 gate. The existing
-validation and held-out results above remain unchanged.
-
-`P-static-b` was retained after search-v1 failed its held-out limit; robustness-v2 now supplies the confirmed 2D demo policy. Its historical 24/40 MuJoCo collisions remain a documented failure, with no hardware-safety claim.
-
-FalkorDB stores these as separate `Suite` nodes with `role='sim2sim'` and
-`physics='mujoco'`, exact-artifact `Evaluation` nodes and collision `Failure`
-nodes. This query answers which recorded lineage holds up when physics changes:
-
-```cypher
-MATCH (p:Policy)<-[:ASSESSED]-(e:Evaluation)-[:ON_SUITE]->(s:Suite)
-WHERE s.role = 'sim2sim' AND s.physics = 'mujoco'
-  AND e.artifact_hash = p.artifact_hash AND e.complete_suite = true
-  AND e.suite_fingerprint = s.fingerprint
-OPTIONAL MATCH (p)-[:DERIVED_FROM*1..8]->(ancestor:Policy)
-RETURN p.id, s.id, e.episodes, e.success_rate, e.collision_rate,
-       collect(DISTINCT ancestor.id) AS lineage
-ORDER BY s.id, p.id
-```
-
-[Run the live transfer query](https://embodiweave.52.202.25.181.sslip.io/api/transfer/mujoco)
-· [Results and exact artifact hashes](evidence/mujoco-v1/summary.json)
-· [Frozen protocol and seeds](evidence/mujoco-v1/protocol.json)
-· [Checksums](evidence/mujoco-v1/checksums.json)
-· [Observation mapping and known mismatches](docs/mujoco-transfer.md).
-
-[![Earlier MuJoCo replay, illustrative episode 5103011](web/media/embodiweave-demo-v2.gif)](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v2.mp4)
-
-The GIF is an illustrative recorded episode. Full-suite results are in the table above.
-
-The robot is a torque-limited differential drive with gravity, inertia, friction
-and physical contacts. Pedestrians are scripted kinematic capsules. Sensor
-height, slip, finite acceleration and substep collision detection differ from
-the original ideal 2D unicycle. The optional CPU stack is pinned in
-`requirements-mujoco.txt`; run `python -m sim.mujoco.evaluate` after installing
-it and the main requirements. The hosted service reads recorded transfer
-evidence; live browser PPO continues to train in the original 2D simulator.
 
 ## Architecture
 
@@ -276,10 +180,105 @@ PYTHONPATH=source .venv/bin/python -m ew.cli evaluate --policy-dir policy --suit
 
 Bundles include saved model weights, normalization, contract, validation records, graph decisions, replays, source hashes, exact captured training source and per-file checksums. The passing bundle also contains the one held-out confirmation and its protocol. Cross-hardware retraining is not promised bitwise identical.
 
+<!-- physics-adapt-v1:start -->
+## Separate MuJoCo adaptation
+
+**These new checkpoints train in both 2D and MuJoCo.** The unchanged-weight transfer measurements above remain frozen. This preregistered study uses fresh physics development suites and keeps the confirmed 2D parent as the default 2D demo policy.
+
+| Completed trial | Original 2D gate | Physics target | Physics open | Physics static | Physics crossing | Selection |
+|---|---:|---:|---:|---:|---:|---|
+| **Collision limit (maximum)** | Four suites | **10%** | **5%** | **10%** | **15%** | Extra clearance required |
+| ppo-mixed-mujoco-v1 | 4/4 | 6/40 (Fail) | 0/40 (Pass) | 1/40 (Pass) | 5/40 (Pass) | 7/8; 3 episodes short of clearance |
+| ppo-mixed-mujoco-collision40-v1 | 4/4 | 4/40 (Pass) | 0/40 (Pass) | 2/40 (Pass) | 6/40 (Pass) | 8/8; 2 episodes short of clearance |
+| ppo-mixed-mujoco-lr-v1 | 4/4 | 2/40 (Pass) | 0/40 (Pass) | 1/40 (Pass) | 6/40 (Pass) | 8/8; 1 episode short of clearance |
+| ppo-mixed-mujoco-lr-v1 (600k follow-up) | 4/4 | 7/40 (Fail) | 0/40 (Pass) | 1/40 (Pass) | 6/40 (Pass) | 7/8; 5 episodes short of clearance |
+
+Physics cells show collision counts on 40 development episodes per family. Pass also requires the original success floors: target 80%, open 90%, static 75%, crossing 75%. The original three trials request 300,000 steps each; a separately preregistered longer follow-up requests 600,000. All use fixed seed 23. Actual rollout-rounded steps and exact artifact hashes are in the evidence index. The authored graph rule requires all eight validation suites plus one episode of physics collision clearance before selection stops. Promo-1 code and thresholds are unchanged.
+
+No new child has completed the registered physics selection rule. The one-time physics confirmation remains unopened.
+
+[Recorded physics comparison](https://embodiweave.52.202.25.181.sslip.io/physics.html#replay) · [Physics judge page](https://embodiweave.52.202.25.181.sslip.io/physics.html) · [Protocol and interpretation](docs/physics-adaptation.md) · [Every episode and checksum](evidence/physics-adapt-v1/)
+
+Successful simulation does not establish hardware safety. The base uses velocity servos and scripted pedestrians; the documented dynamics and sensor mismatches remain.
+<!-- physics-adapt-v1:end -->
+
+## MuJoCo sim-to-sim transfer
+
+**The same saved 2D-trained checkpoints, unchanged, running in contact physics.**
+In this earlier, frozen transfer study, no policy was trained or tuned in MuJoCo. Each checkpoint ran the same 40 fresh
+seeds in each of four suites, **160 episodes per checkpoint, 480 total**.
+
+| Checkpoint | Open | Static | Crossing | Target (static + crossing) |
+|---|---|---|---|---|
+| Historical baseline `P-static-b` | 40 / 0 / 0 | 16 / 12 / 12 | 30 / 10 / 0 | 7 / 24 / 9 |
+| Original scratch | 35 / 0 / 5 | 37 / 1 / 2 | 30 / 9 / 1 | 34 / 4 / 2 |
+| Graph-selected rehearsal | 40 / 0 / 0 | 37 / 3 / 0 | 32 / 8 / 0 | 37 / 3 / 0 |
+
+Cells are **goals / collisions / timeouts out of 40**, not percentages. Rehearsal
+has fewer target collisions (3/40, 7.5%) than the historical baseline (24/40, 60%),
+but still collides in **8/40 crossing episodes (20%)**. This small transfer
+study is not a safety certificate or another promo-1 gate. The existing
+validation and held-out results above remain unchanged.
+
+`P-static-b` was retained after search-v1 failed its held-out limit; robustness-v2 now supplies the confirmed 2D demo policy. Its historical 24/40 MuJoCo collisions remain a documented failure, with no hardware-safety claim.
+
+FalkorDB stores these as separate `Suite` nodes with `role='sim2sim'` and
+`physics='mujoco'`, exact-artifact `Evaluation` nodes and collision `Failure`
+nodes. This query answers which recorded lineage holds up when physics changes:
+
+```cypher
+MATCH (p:Policy)<-[:ASSESSED]-(e:Evaluation)-[:ON_SUITE]->(s:Suite)
+WHERE s.role = 'sim2sim' AND s.physics = 'mujoco'
+  AND e.artifact_hash = p.artifact_hash AND e.complete_suite = true
+  AND e.suite_fingerprint = s.fingerprint
+OPTIONAL MATCH (p)-[:DERIVED_FROM*1..8]->(ancestor:Policy)
+RETURN p.id, s.id, e.episodes, e.success_rate, e.collision_rate,
+       collect(DISTINCT ancestor.id) AS lineage
+ORDER BY s.id, p.id
+```
+
+[Run the live transfer query](https://embodiweave.52.202.25.181.sslip.io/api/transfer/mujoco)
+· [Results and exact artifact hashes](evidence/mujoco-v1/summary.json)
+· [Frozen protocol and seeds](evidence/mujoco-v1/protocol.json)
+· [Checksums](evidence/mujoco-v1/checksums.json)
+· [Observation mapping and known mismatches](docs/mujoco-transfer.md).
+
+[![Earlier MuJoCo replay, illustrative episode 5103011](web/media/embodiweave-demo-v2.gif)](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v2.mp4)
+
+The GIF is an illustrative recorded episode. Full-suite results are in the table above.
+
+The robot is a torque-limited differential drive with gravity, inertia, friction
+and physical contacts. Pedestrians are scripted kinematic capsules. Sensor
+height, slip, finite acceleration and substep collision detection differ from
+the original ideal 2D unicycle. The optional CPU stack is pinned in
+`requirements-mujoco.txt`; run `python -m sim.mujoco.evaluate` after installing
+it and the main requirements. The hosted service reads recorded transfer
+evidence; live browser PPO continues to train in the original 2D simulator.
+
+## Earlier study: search-v1
+
+**The graph-selected rehearsal lineage passed all four validation suites. Its single held-out target evaluation still failed the collision limit.** Selection stopped before that held-out evaluation. This study remained frozen; the separately preregistered robustness-v2 study above started later with new confirmation seeds.
+
+| Measured candidate | Target success / collision | Open | Static | Crossing | Fixed promo-1 gate |
+|---|---|---|---|---|---|
+| **Collision limit (maximum)** | **≤10%** | **≤5%** | **≤10%** | **≤15%** | All four required |
+| Original scratch checkpoint | 86.67% / 13.33% | 72.5% / 0% | 95% / 2.5% | 72.5% / 17.5% | Rejected, 1/4 |
+| Longer training | 91.67% / 8.33% | 82.5% / 0% | 92.5% / 5% | 85% / 10% | Rejected, 3/4 |
+| Rehearsal across training families | 95% / 5% | 100% / 0% | 97.5% / 2.5% | 85% / 15% | Passed, 4/4 |
+
+Each candidate uses the same complete validation suites: target 60 episodes, open 40, static 40, crossing 40, **180 total per candidate**. Candidate cells show success / collision; the limits row shows each suite's maximum collision rate from the fixed [promo-1 criteria](ew/criteria.py). Each new attempt requested 300,000 additional steps and consumed 301,056 after rollout rounding, with seed 7 fixed before training. The passing lineage consumed 753,664 steps including its root.
+
+**Held-out target confirmation: 86 goals, 13 collisions, 1 timeout in 100 episodes.** The target permits at most 10% collisions. Held-out retained tasks were not evaluated. Passing validation is not a claim of general safety; `P-static-b` was retained at the end of search-v1 and remains visible as the historical baseline.
+
+Exact IDs, artifact hashes, gate checks and bundle SHA-256 values: [evidence index](evidence/search-v1/summary.json). The passing artifact is `b7e2fcc958695920db1970a4abdb40c65788a76f35e756bf6332729a8e3ba565`.
+
+- [Passing validation candidate + held-out evidence bundle](https://embodiweave.52.202.25.181.sslip.io/api/download/search-20261015185749-4a6581-b7e2fcc95869-repro-v3.zip)
+- [Rejected longer-training bundle](https://embodiweave.52.202.25.181.sslip.io/api/download/search-20261015185536-6720c9-a08219d163fd-repro-v3.zip)
+- [Diagnosis and search protocol](docs/diagnosis.md) · [Held-out protocol](docs/final-protocol.md) · [Evidence checksums](evidence/search-v1/checksums.json)
+
 ## Honest limitations
 
-Separate local development studies tested [family rehearsal](evidence/rehearsal-recovery-v1/) and [a stronger collision cost](evidence/collision-recovery-v1/). The first recorded 7/180 collisions for parent and both children. On a different paired batch, the stronger-cost child had 12/180 versus the control's 14/180, matching the parent's 12/180. Neither study established an improvement over its parent or justified a release. The recorded MCP regression and confirmed demo policy remain separate.
-
+- Separate local development studies tested [family rehearsal](evidence/rehearsal-recovery-v1/) and [a stronger collision cost](evidence/collision-recovery-v1/). The first recorded 7/180 collisions for parent and both children. On a different paired batch, the stronger-cost child had 12/180 versus the control's 14/180, matching the parent's 12/180. Neither study established an improvement over its parent or justified a release. The recorded MCP regression and confirmed demo policy remain separate.
 - Search-v1 failed its held-out target test. Robustness-v2 passed fresh 2D confirmation, but its MuJoCo target still had 6/40 collisions (15%), above the 10% reference limit. This is not evidence of physical robot safety.
 - The two 2D studies added three adaptive attempts; the physics study and its separate follow-up added four. These small studies do not establish a reliable improvement or selection-efficiency advantage. Each study fixed one training seed, and later candidates also used more training.
 - The frozen search experiments used authored deterministic planners. The separate live MCP agent chooses an origin and can launch training after a guardrail; provider-down fallback is explicitly deterministic. None of this establishes an advantage over another planner or baseline.
