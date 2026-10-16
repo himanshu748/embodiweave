@@ -1,0 +1,159 @@
+1
+00:00:00,080 --> 00:00:04,160
+My agent reads FalkorDB through MCP. It
+
+2
+00:00:04,160 --> 00:00:07,040
+chooses tools to diagnose a checkpoint, compare
+
+3
+00:00:07,040 --> 00:00:09,680
+origins, and trace a passing ancestor.
+
+4
+00:00:10,260 --> 00:00:12,340
+It chooses a starting checkpoint and calls
+
+5
+00:00:12,340 --> 00:00:15,220
+start training. The guardrail approves the evidence
+
+6
+00:00:15,220 --> 00:00:17,220
+and budget before the worker starts.
+
+7
+00:00:17,700 --> 00:00:23,140
+FalkorDB connects policies, training runs, trials, evaluations,
+
+8
+00:00:23,380 --> 00:00:26,500
+failures, and decisions. The links preserve what
+
+9
+00:00:26,500 --> 00:00:27,220
+produced what.
+
+10
+00:00:27,600 --> 00:00:30,640
+The shortest path tool runs inside FalkorDB.
+
+11
+00:00:30,880 --> 00:00:33,600
+It returned the nearest passing ancestor one
+
+12
+00:00:33,600 --> 00:00:36,560
+hop away. The agent considered it alongside
+
+13
+00:00:36,560 --> 00:00:38,400
+17 eligible origins.
+
+14
+00:00:38,847 --> 00:00:41,007
+Contracts tie a checkpoint to sensor and
+
+15
+00:00:41,007 --> 00:00:45,087
+action meanings. The guardrail vetoes incompatible origins,
+
+16
+00:00:45,087 --> 00:00:49,327
+stale hashes, incomplete validation, or unsupported budgets.
+
+17
+00:00:49,880 --> 00:00:52,760
+Before training, the decision saves the model,
+
+18
+00:00:52,760 --> 00:00:56,440
+tool calls, Cypher, parameters, and returned records.
+
+19
+00:00:56,680 --> 00:01:00,360
+If FalkorDB is unavailable, planning stops.
+
+20
+00:01:00,833 --> 00:01:05,633
+The worker trained 61,440 PPO steps, then
+
+21
+00:01:05,633 --> 00:01:09,073
+reloaded the checkpoint for 180 validation episodes.
+
+22
+00:01:09,633 --> 00:01:12,513
+All four suites passed the unchanged gate.
+
+23
+00:01:12,673 --> 00:01:15,473
+Target collisions were three in sixty. Open
+
+24
+00:01:15,473 --> 00:01:18,033
+had zero. Static and crossing had one
+
+25
+00:01:18,033 --> 00:01:18,833
+each in 40.
+
+26
+00:01:19,333 --> 00:01:21,333
+But the parent had two target collisions
+
+27
+00:01:21,333 --> 00:01:24,293
+and no crossing collisions. Both measures got
+
+28
+00:01:24,293 --> 00:01:26,853
+worse. Passing the gate does not establish
+
+29
+00:01:26,853 --> 00:01:28,853
+an improvement, so I kept the demo
+
+30
+00:01:28,853 --> 00:01:29,893
+policy unchanged.
+
+31
+00:01:30,733 --> 00:01:34,093
+The earlier failure stays visible. 13 target
+
+32
+00:01:34,093 --> 00:01:37,213
+collisions in 100 held out episodes. The
+
+33
+00:01:37,213 --> 00:01:39,693
+separate confirmed checkpoint still has eight in
+
+34
+00:01:39,693 --> 00:01:40,253
+100.
+
+35
+00:01:40,833 --> 00:01:44,113
+That confirmed two dimensional checkpoint also collided
+
+36
+00:01:44,113 --> 00:01:46,913
+six times in 40 MuJoCo target episodes
+
+37
+00:01:46,913 --> 00:01:49,873
+without retraining. This is a separate transfer
+
+38
+00:01:49,873 --> 00:01:50,273
+study.
+
+39
+00:01:50,893 --> 00:01:52,973
+The graph and checksummed evidence make these
+
+40
+00:01:52,973 --> 00:01:56,733
+results inspectable. EmbodiWeave. Built on FalkorDB.
