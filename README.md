@@ -12,13 +12,19 @@ GraphHacks Track 01: **Agents That Act on Connected Data**.
 
 | Focus | Concrete implementation |
 |---|---|
-| Multi-hop reasoning | [`DERIVED_FROM*1..8` lineage and exact-artifact diagnosis](ew/graph/queries.py) |
-| Graph queries and algorithms as tools | [`nearest_passing_ancestor`: native FalkorDB `shortestPath`](ew/mcp_domain.py), bounded and unweighted |
-| Tool selection through MCP | [SDK discovery and calls](ew/mcp_client.py), [stdio + HTTP domain server](ew/mcp_server.py) |
-| Actions based on graph evidence | [Model origin proposal and guardrail before real PPO](ew/judge_mcp.py); [prospective demonstration protocol](evidence/mcp-agent-v1/protocol.json) |
-| Explainable results | [Decision records model, actual MCP calls, Cypher, parameters, candidates and veto/allow verdict before training](ew/mcp_domain.py) |
+| Multi-hop reasoning | [`DERIVED_FROM*1..8` query](ew/graph/queries.py), [actual returned ancestor paths](evidence/mcp-agent-v2/algorithm.json) |
+| Graph queries and algorithms as tools | [Exact native `shortestPath` Cypher](evidence/mcp-agent-v2/nearest-passing-ancestor.cypher), bounded and unweighted |
+| Tool selection through MCP | [Actual model and four MCP calls](evidence/mcp-agent-v2/agent-receipt.json), [stdio + HTTP server](ew/mcp_server.py) |
+| Actions based on graph evidence | [New public PPO run, 180 validation episodes and gate](evidence/mcp-agent-v2/training-receipt.json), [checkpoint bundle](evidence/mcp-agent-v2/repro-v3.zip) |
+| Explainable results | [Decision `deci-20261016121309-c0c93f`](evidence/mcp-agent-v2/decision.json): model, calls, Cypher, parameters, candidates, guardrail and revision, saved before training |
 
 **[Let the live agent choose and train](https://embodiweave.52.202.25.181.sslip.io/live.html#investigate)**. It discovers domain tools over MCP and proposes its own origin; the guardrail can veto but does not replace that choice with rank one. A separately labelled deterministic MCP fallback handles inference failure on an explicitly consented training task. FalkorDB failure still stops planning. [Protocol, tool contract and client setup](docs/MCP.md).
+
+### Recorded public agent action
+
+GPT-4.1 Mini used MCP, read FalkorDB's shortest-path result, chose `physics-20261016150004-25da9c` and launched **60,000 requested / 61,440 consumed PPO steps**. Its new checkpoint passed **4/4 suites across 180 validation episodes**. Collision counts were target **3/60** (10% limit), open **0/40** (5%), static **1/40** (10%) and crossing **1/40** (15%).
+
+**The gate passed, but target and crossing collisions were worse than the chosen parent's 2/60 and 0/40. No safety improvement is established.** The default demo policy stays unchanged. This action demonstration is separate from the frozen studies below. [Full result, exact hashes, provider usage and evidence](evidence/mcp-agent-v2/). The earlier [provider-down deterministic fallback](evidence/mcp-agent-v1/) is retained and labelled.
 
 ### Connect MCP from Claude Desktop or Cursor
 

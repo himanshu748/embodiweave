@@ -12,4 +12,6 @@ The trusted worker reloads the new artifact, runs 180 validation episodes and ap
 
 Frozen results remain visible: the earlier rehearsal checkpoint failed held-out target collisions at 13/100. A separate study passed all four fresh confirmation families, with 8/100 target collisions against a 10% limit. Its unchanged-weight MuJoCo transfer still had 6/40 target collisions. Physics confirmation remains unopened. These are simulation results, not hardware-safety proof.
 
-The new MCP demonstration has its own [protocol and evidence](../evidence/mcp-agent-v1/). [Why Track 01 and actual queries](../README.md#why-track-01). Next: independent training seeds and stronger crossing behaviour. Claude and Codex assisted with implementation and experiments; measured results come from saved checkpoints.
+The [new public MCP run](../evidence/mcp-agent-v2/) used GPT-4.1 Mini and passed 4/4 suites: target collisions 3/60, below 10%. Target and crossing regressed against its parent; no improvement is claimed. The provider-down fallback remains visible separately.
+
+[Why Track 01 and actual queries](../README.md#why-track-01). Next: independent training seeds and stronger crossing behaviour. Claude and Codex assisted with implementation and experiments; measurements come from saved checkpoints.
