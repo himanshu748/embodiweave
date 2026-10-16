@@ -34,7 +34,7 @@
     <p class="eyebrow e1">GraphHacks 2026 · Track 01 · built on FalkorDB</p>
     <h1 id="heroTitle" class="e1">Robot retraining<br><span class="hl">you can inspect.</span></h1>
     <p class="lede e3">An agent that reads a robot's training history in FalkorDB, decides which checkpoint to retrain, launches training, and proves whether the new policy got safer.</p>
-    <a class="hero-outcome e3" href="#mcp-proof">Recorded MCP run: 4/4 validation gates passed <span aria-hidden="true">↗</span></a>
+    <a class="hero-outcome e3" href="robustness.html">Shipped 2D checkpoint: 4/4 suites, fresh confirmation passed <span aria-hidden="true">↗</span></a>
     <p class="hero-context e3">FalkorDB connects each checkpoint to its sensor contract, lineage and test results. The agent follows those connections before it can start training.</p>
     <div class="ctas e3">
       <a class="btn" href="live.html#investigate">Try the live agent <span aria-hidden="true" class="arrow">→</span></a>
@@ -45,38 +45,21 @@
   <div class="hero-right">
     <figure class="hero-film e2" aria-labelledby="heroFilmCap">
       <div class="replay-top"><span class="tag rec">Recorded public MCP run</span><span>GPT-4.1 Mini · 4 tool calls</span></div>
-      <video class="demo-film" aria-label="Watch the real MCP agent choose tools and launch training" controls preload="metadata" playsinline poster="media/demo-v4-poster.webp"><source src="media/embodiweave-demo-v4-720p.mp4" type="video/mp4"><a href="media/embodiweave-demo-v4.mp4">Download the demo film.</a></video>
-      <figcaption id="heroFilmCap">Tool choice and training launch in the opening 15 seconds. Real simulator footage and the measured verdict follow.</figcaption>
-      <dl class="run-proof" aria-label="Measured results of the recorded MCP action">
-        <div><dt>PPO steps</dt><dd>61,440</dd></div><div><dt>Validation episodes</dt><dd>180</dd></div><div><dt>Fixed gates passed</dt><dd>4<span>/4</span></dd></div>
-      </dl>
-      <p class="note">The gate passed. Two collision counts regressed against the parent. <a href="#mcp-proof">See the full comparison →</a></p>
+      <video class="demo-film" aria-label="Watch the real MCP agent choose tools and launch training" controls preload="metadata" playsinline poster="media/demo-v5-poster.webp"><source src="media/embodiweave-demo-v5-720p.mp4" type="video/mp4"><a href="media/embodiweave-demo-v5.mp4">Download the demo film.</a></video>
+      <figcaption id="heroFilmCap">Real MCP actions, the measured parent comparison and the confirmed 2D checkpoint. All results link to recorded evidence.</figcaption>
+      <a id="current-release" class="release-proof" href="robustness.html" aria-label="Inspect the shipped graph-selected checkpoint">
+        <span class="proof-label">Shipped, graph-selected 2D policy</span>
+        <div class="proof-value"><strong>8<span>/100</span></strong><p>Fresh confirmation target collisions<br><b>10% limit · 4/4 validation suites passed</b></p></div>
+        <span class="mono">robust-20261016140226-352fd7</span>
+      </a>
+      <p class="note">Unchanged MuJoCo target transfer recorded 6/40 collisions, above its 10% reference limit; <a href="physics.html">inspect the separate physics study</a>.</p>
     </figure>
   </div>
 </section>
 
-<section class="judge-route reveal" aria-label="A short route through the demo">
-  <div><p class="eyebrow">Try EmbodiWeave</p><h2>See the agent act.<br>Inspect what it chose.</h2><p class="note">The recorded path works when the shared trainer or model is busy. A live run asks for consent before it spends a training slot.</p></div>
-  <ol><li><a href="guide.html#film"><span>01 / Watch</span><b>The complete recorded action</b><small>Under two minutes, with the actual tool calls and result</small></a></li><li><a href="live.html#investigate"><span>02 / Run</span><b>Let the agent choose and train</b><small>MCP tools, a guarded origin choice and real PPO</small></a></li><li><a href="#mcp-proof"><span>03 / Verify</span><b>Follow the Decision record</b><small>Cypher, candidates, checkpoint and all four gates</small></a></li></ol>
-</section>
-
-<section id="loop" class="band reveal">
-  <p class="eyebrow">How it works</p>
-  <h2>From graph evidence to a tested checkpoint</h2>
-  <p class="sub">The LLM picks each tool call over MCP. Trusted code enforces contracts, budgets and the gate, and every outcome is written back to the graph.</p>
-  <ol class="loop">
-    <li><span class="n">1</span><b>Observe</b><span>Inspect the checkpoint’s measured validation, recorded failures and semantic contract.</span></li>
-    <li><span class="n">2</span><b>Query</b><span>Read-only Cypher templates over lineage, semantic contracts and matched validation.</span></li>
-    <li><span class="n">3</span><b>Decide</b><span>The model proposes an eligible origin. The guardrail checks its evidence and can veto it before training.</span></li>
-    <li><span class="n">4</span><b>Train</b><span>One bounded PPO run from the chosen start. No retries to chase a better number.</span></li>
-    <li><span class="n">5</span><b>Measure</b><span>Retained-behaviour suites, tied to the exact artifact hash of the new checkpoint.</span></li>
-    <li><span class="n">6</span><b>Gate</b><span>Record the fixed gate verdict. Passing validation does not automatically replace the demo policy.</span></li>
-  </ol>
-</section>
-
 <section id="mcp-proof" class="band alt reveal" aria-labelledby="mcpProofTitle">
-  <p class="eyebrow">Latest recorded public action / agent-mcp-v2</p>
-  <h2 id="mcpProofTitle">The agent chose an origin. The worker finished the run.</h2>
+  <p class="eyebrow">Completed public action / agent-mcp-v2</p>
+  <h2 id="mcpProofTitle">Graph evidence chose the action. The comparison stopped a regression from shipping.</h2>
   <p class="sub">GPT-4.1 Mini discovered the MCP tools, diagnosed the checkpoint and inspected FalkorDB's native shortest-path result. It compared 17 eligible origins, chose one and called start_training. The guardrail allowed the proposal. The worker trained 61,440 PPO steps and validated the saved artifact on all 180 episodes.</p>
   <ol class="action-path" aria-label="Recorded agent tool sequence">
     <li><span>01 / Inspect</span><code>diagnose_policy</code><p>Read the exact checkpoint’s validation and failure evidence.</p></li>
@@ -105,6 +88,33 @@ RETURN a.id AS ancestor_id, a.artifact_hash AS artifact_hash, length(path) AS ho
 ORDER BY hops, collision_rate, ancestor_id LIMIT 20</pre></details>
   <p class="note">The fixed gate passed 4/4 suites. Target collisions rose from 2/60 to 3/60; crossing rose from 0/40 to 1/40. This run demonstrates the complete agent-to-training workflow. It does not establish a safety improvement, so the current demo policy stayed unchanged.</p>
   <p class="note"><a href="https://github.com/himanshu748/embodiweave/tree/main/evidence/mcp-agent-v2">Actual tool trace, query, checkpoint and checksums →</a> · <a href="/api/decisions/deci-20261016121309-c0c93f">Inspect the Decision node →</a> · <a href="live.html#investigate">Try the agent yourself →</a></p>
+  <div class="two">
+    <div><h3>V2: the outcome returned to the graph</h3><p>The child now connects to its parent through measured comparison and regression edges. Its Decision links to the outcome, the run and the exact evaluations. The original evidence is unchanged.</p></div>
+    <div><h3>V3: the agent read that outcome</h3><p>GPT-4.1 Mini called both new MCP tools. The next model request exceeded the context cap, so no origin was chosen and no training started. I preserved the attempt and did not retry it. No decision change is established.</p></div>
+  </div>
+  <details class="query-details"><summary>Inspect the outcome and weighted graph ranking</summary><p class="note">For the chosen v2 origin, one child contributes 1/60 + 1/40 = 0.04167 weighted regression degree. Origins without observations return null. This counts observed regressions; it does not predict safety.</p><pre class="code" tabindex="0">MATCH (d:Decision)-[:SELECTED]-&gt;(origin:Policy)
+MATCH (d)-[:LAUNCHED]-&gt;(run:Run)-[:PRODUCED]-&gt;(child:Policy)
+MATCH (d)-[:HAS_OUTCOME]-&gt;(outcome:DecisionOutcome)-[:ASSESSED]-&gt;(child)
+RETURN d.id, origin.id, child.id, outcome.suites</pre><p><a href="https://github.com/himanshu748/embodiweave/tree/main/evidence/mcp-agent-v3">Read the real v3 trace, failure and weighted-degree Cypher →</a></p></details>
+</section>
+
+<section class="judge-route reveal" aria-label="A short route through the demo">
+  <div><p class="eyebrow">Try EmbodiWeave</p><h2>See the agent act.<br>Inspect what it chose.</h2><p class="note">The recorded path works when the shared trainer or model is busy. A live run asks for consent before it spends a training slot.</p></div>
+  <ol><li><a href="guide.html#film"><span>01 / Watch</span><b>The complete recorded action</b><small>Under two minutes, with the actual tool calls and result</small></a></li><li><a href="live.html#investigate"><span>02 / Run</span><b>Let the agent choose and train</b><small>MCP tools, a guarded origin choice and real PPO</small></a></li><li><a href="#mcp-proof"><span>03 / Verify</span><b>Follow the Decision record</b><small>Cypher, candidates, checkpoint and all four gates</small></a></li></ol>
+</section>
+
+<section id="loop" class="band reveal">
+  <p class="eyebrow">How it works</p>
+  <h2>From graph evidence to a tested checkpoint</h2>
+  <p class="sub">The LLM picks each tool call over MCP. Trusted code enforces contracts, budgets and the gate, and every outcome is written back to the graph.</p>
+  <ol class="loop">
+    <li><span class="n">1</span><b>Observe</b><span>Inspect the checkpoint’s measured validation, recorded failures and semantic contract.</span></li>
+    <li><span class="n">2</span><b>Query</b><span>Read-only Cypher templates over lineage, semantic contracts and matched validation.</span></li>
+    <li><span class="n">3</span><b>Decide</b><span>The model proposes an eligible origin. The guardrail checks its evidence and can veto it before training.</span></li>
+    <li><span class="n">4</span><b>Train</b><span>One bounded PPO run from the chosen start. No retries to chase a better number.</span></li>
+    <li><span class="n">5</span><b>Measure</b><span>Retained-behaviour suites, tied to the exact artifact hash of the new checkpoint.</span></li>
+    <li><span class="n">6</span><b>Gate</b><span>Record the fixed gate verdict. Passing validation does not automatically replace the demo policy.</span></li>
+  </ol>
 </section>
 
 <section id="graph" class="band alt reveal">
@@ -139,15 +149,43 @@ RETURN d.id, d.model, d.graph_revision, origin.id,
   </div>
 </section>
 
-<section id="current-release" class="band alt reveal" aria-labelledby="releaseTitle">
-  <p class="eyebrow">Current demo policy / separate confirmed result</p>
-  <h2 id="releaseTitle">The running demo has its own release evidence.</h2>
-  <div class="release-grid">
-    <div><div class="release-proof" aria-label="Confirmed 2D checkpoint result"><span class="proof-label">robustness-v2 · fresh confirmation</span><div class="proof-value"><strong>8<span>/100</span></strong><p>Target collisions<br><b>10% limit · 4/4 families passed</b></p></div></div><p class="sub">The current 2D checkpoint passed validation and a fresh confirmation batch after its artifact was frozen. The new MCP trial above is a separate child and did not replace it.</p><a class="btn ghost" href="robustness.html">Inspect the confirmed checkpoint →</a></div>
-    <div><h3>Physics has a separate evidence trail.</h3><p class="sub">Unchanged transfer of that 2D checkpoint into MuJoCo recorded 6/40 target collisions, above the 10% reference limit. The later mixed-domain training trials are labelled separately. Their physics confirmation remains unopened.</p><div class="ctas"><a class="btn ghost" href="physics.html">Inspect the physics study →</a><a class="btn ghost" href="studio.html">Open Studio →</a></div><p class="note">These are software simulations. There is no physical robot safety claim.</p></div>
+<section id="live" class="band console-band reveal" aria-labelledby="liveTitle">
+  <div class="band-head">
+    <div>
+      <p class="eyebrow">Original case / queries running live</p>
+      <h2 id="liveTitle">Re-run the original case’s graph queries.</h2>
+      <p class="sub">Each question re-runs, right now, the exact read-only Cypher template the original Sonnet run used, with the
+        parameters stored in its decision record. Rows come straight back from FalkorDB through <span class="mono">GRAPH.RO_QUERY</span>.</p>
+    </div>
+    <div class="graphcount" id="graphCount" aria-live="polite"><span class="tag live-tag"><i></i>Live</span><span id="gcText">Counting nodes</span></div>
+  </div>
+  <div class="console">
+    <div class="qlist" role="tablist" aria-label="Questions for the graph">
+      <button role="tab" class="q" data-q="failure" aria-selected="true"><span class="qn">1</span><span><b>Why did the robot fail?</b><small>failure_inspection</small></span></button>
+      <button role="tab" class="q" data-q="transfer" aria-selected="false"><span class="qn">2</span><span><b>Did fine-tuning any parent ever work?</b><small>relevant_trials</small></span></button>
+      <button role="tab" class="q" data-q="scratch" aria-selected="false"><span class="qn">3</span><span><b>Does training from scratch work?</b><small>scratch_trials</small></span></button>
+      <button role="tab" class="q" data-q="decision" aria-selected="false"><span class="qn">4</span><span><b>What did the agent decide?</b><small>decision_provenance</small></span></button>
+      <button role="tab" class="q" data-q="gate" aria-selected="false"><span class="qn">5</span><span><b>Did the original checkpoint pass?</b><small>promotion_evidence</small></span></button>
+    </div>
+    <div class="qpanel" role="tabpanel" id="qPanel" aria-live="polite">
+      <div class="qbar"><span class="tag live-tag"><i></i>Live</span><span id="qMeta" class="mono">Waiting for FalkorDB</span>
+        <button type="button" id="qRun" class="btn ghost small">Run again</button></div>
+      <p class="qread" id="qRead"></p>
+      <pre class="code cy" id="qCypher" tabindex="0"></pre>
+      <div class="params" id="qParams"></div>
+      <div class="tablewrap qtable" tabindex="0" role="region" aria-label="Rows returned by FalkorDB"><table id="qRows"><tbody><tr><td class="state">Loading rows from FalkorDB</td></tr></tbody></table></div>
+    </div>
   </div>
 </section>
 
+<section class="band why reveal" aria-label="Design principles">
+  <div><span class="n">01</span><h3>Planning follows connected evidence</h3><p>Remove the transfer history and the decision changes. The no-history arm in exp-1 exists to show it.</p></div>
+  <div><span class="n">02</span><h3>Results stay tied to their artifacts</h3><p>Final-test suites are invisible to the agent, spent suites are refused in code and every number traces to a record.</p></div>
+  <div><span class="n">03</span><h3>Isolated what-ifs</h3><p>Hypothetical evidence runs on a GRAPH.COPY sandbox and can never launch a training job.</p></div>
+</section>
+
+
+<details id="earlier-history" class="history-group"><summary>History: earlier runs and benchmarks</summary>
 <section id="history" class="band reveal" aria-labelledby="historyTitle">
   <p class="eyebrow">Where this started / preserved original recording</p>
   <h2 id="historyTitle">The first run, including its rejection.</h2>
@@ -195,35 +233,6 @@ RETURN d.id, d.model, d.graph_revision, origin.id,
   </a>
 </section>
 
-<section id="live" class="band console-band reveal" aria-labelledby="liveTitle">
-  <div class="band-head">
-    <div>
-      <p class="eyebrow">Original case / queries running live</p>
-      <h2 id="liveTitle">Re-run the original case’s graph queries.</h2>
-      <p class="sub">Each question re-runs, right now, the exact read-only Cypher template the original Sonnet run used, with the
-        parameters stored in its decision record. Rows come straight back from FalkorDB through <span class="mono">GRAPH.RO_QUERY</span>.</p>
-    </div>
-    <div class="graphcount" id="graphCount" aria-live="polite"><span class="tag live-tag"><i></i>Live</span><span id="gcText">Counting nodes</span></div>
-  </div>
-  <div class="console">
-    <div class="qlist" role="tablist" aria-label="Questions for the graph">
-      <button role="tab" class="q" data-q="failure" aria-selected="true"><span class="qn">1</span><span><b>Why did the robot fail?</b><small>failure_inspection</small></span></button>
-      <button role="tab" class="q" data-q="transfer" aria-selected="false"><span class="qn">2</span><span><b>Did fine-tuning any parent ever work?</b><small>relevant_trials</small></span></button>
-      <button role="tab" class="q" data-q="scratch" aria-selected="false"><span class="qn">3</span><span><b>Does training from scratch work?</b><small>scratch_trials</small></span></button>
-      <button role="tab" class="q" data-q="decision" aria-selected="false"><span class="qn">4</span><span><b>What did the agent decide?</b><small>decision_provenance</small></span></button>
-      <button role="tab" class="q" data-q="gate" aria-selected="false"><span class="qn">5</span><span><b>Did the original checkpoint pass?</b><small>promotion_evidence</small></span></button>
-    </div>
-    <div class="qpanel" role="tabpanel" id="qPanel" aria-live="polite">
-      <div class="qbar"><span class="tag live-tag"><i></i>Live</span><span id="qMeta" class="mono">Waiting for FalkorDB</span>
-        <button type="button" id="qRun" class="btn ghost small">Run again</button></div>
-      <p class="qread" id="qRead"></p>
-      <pre class="code cy" id="qCypher" tabindex="0"></pre>
-      <div class="params" id="qParams"></div>
-      <div class="tablewrap qtable" tabindex="0" role="region" aria-label="Rows returned by FalkorDB"><table id="qRows"><tbody><tr><td class="state">Loading rows from FalkorDB</td></tr></tbody></table></div>
-    </div>
-  </div>
-</section>
-
 <section id="decide" class="band alt reveal" aria-labelledby="decideTitle">
   <p class="eyebrow">Original case / authored selection rule</p>
   <h2 id="decideTitle">Why the original planner chose scratch</h2>
@@ -264,18 +273,14 @@ RETURN d.id, d.model, d.graph_revision, origin.id,
   <ol class="steps" id="agentSteps"></ol>
   <div class="verdict" id="agentVerdict" hidden></div>
 </section>
+</details>
 
-<section class="band why reveal" aria-label="Design principles">
-  <div><span class="n">01</span><h3>Planning follows connected evidence</h3><p>Remove the transfer history and the decision changes. The no-history arm in exp-1 exists to show it.</p></div>
-  <div><span class="n">02</span><h3>Results stay tied to their artifacts</h3><p>Final-test suites are invisible to the agent, spent suites are refused in code and every number traces to a record.</p></div>
-  <div><span class="n">03</span><h3>Isolated what-ifs</h3><p>Hypothetical evidence runs on a GRAPH.COPY sandbox and can never launch a training job.</p></div>
-</section>
 </main>
 
 <footer>
   <span>EmbodiWeave · MIT licensed · FalkorDB is the primary database · everything shown is a software simulation</span>
   <span>GraphHacks 2026 · <a href="guide.html">Judge guide, video and local setup</a> · <a href="?motion=reduce">Use still replay</a> · AI assistance disclosed in the README</span>
 </footer>
-<script type="module" src="landing.js?v=mcp-current1"></script>
+<script type="module" src="landing.js?v=landing-v5"></script>
 </body>
 </html>

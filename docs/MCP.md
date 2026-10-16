@@ -76,3 +76,12 @@ Free NVIDIA endpoints remain the default. The owner can explicitly set `EW_AGENT
 The first public [v1 attempt](../evidence/mcp-agent-v1/agent-receipt.json) exhausted the account's daily free-model quota and used the labelled deterministic fallback. The owner then authorized paid credits for a separately registered [v2 demonstration](../evidence/mcp-agent-v2/protocol.json). Ongoing judge runs use the [public protocol](../evidence/mcp-agent/protocol.json), rather than being counted as additional attempts in either one-run study.
 
 The completed [v2 record](../evidence/mcp-agent-v2/) contains the actual model choice, four MCP calls, shortest-path output, guardrail Decision and 180-episode gate. The independent [public SDK check](../evidence/mcp-agent-v2/public-client-verification.json) also reads all six read tools, including the saved Decision and new checkpoint's gate. CI runs the README's exact Docker Compose stdio command and the HTTP client against a fresh Compose launch. Reproduce those read-only checks with `python -m scripts.check_mcp --stdio docker compose -f "$PWD/compose.yaml" exec -T embodiweave /app/.venv/bin/python -m ew.mcp_server` or `python -m scripts.check_mcp --url http://127.0.0.1:8000/mcp/`.
+
+
+## Connected outcomes and weighted regression degree
+
+`get_decision_outcomes(target_policy)` follows recorded Decisions through selected origins, launched runs, produced children and exact-artifact validation comparisons. Trusted worker completion writes a separate append-only DecisionOutcome and parent comparison edges; it never overwrites the pre-training Decision or changes promo-1.
+
+`rank_regression_origins(target_policy)` computes weighted incoming degree in FalkorDB using Cypher over measured COMPARED_AGAINST edges. Each edge weighs the sum of positive per-suite collision-rate deltas. The output includes observed-child support; no observations means null. It is descriptive and can grow with more trials, not a probability of safety. Current output is restricted to eligible origins to keep the bounded model context small.
+
+[The one preregistered v3 attempt](../evidence/mcp-agent-v3/) called both tools but exceeded the model-context cap before choosing an origin. Its original receipt is retained. The context repair is tested offline, not claimed as a successful second run. The v3 attempt is not retried and cannot silently launch deterministic fallback training.

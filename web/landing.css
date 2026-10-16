@@ -460,3 +460,10 @@ section[id] { scroll-margin-top: 84px; }
   .hero .live { border-radius: 12px; font-size: 12px; }
   .hero .live span:last-child { overflow-wrap: anywhere; }
 }
+
+/* Existing paper, graphite and orange system; grouped history stays opt-in. */
+.history-group { margin: 3rem 0; border: 1px solid var(--line, #d1d0c7); border-radius: 10px; }
+.history-group > summary { padding: 24px; min-height: 48px; cursor: pointer; font-size: 1.2rem; font-weight: 600; }
+.hero-film .release-proof { display: block; margin: 16px; color: inherit; text-decoration: none; }
+.hero-film .release-proof .mono { display: block; margin-top: 12px; font-size: .72rem; overflow-wrap: anywhere; }
+.hero-film > .note { padding: 0 16px; }

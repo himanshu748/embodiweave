@@ -1,0 +1,27 @@
+{
+  "before": [
+    "hero current-hero",
+    "judge-route reveal",
+    "loop",
+    "mcp-proof",
+    "graph",
+    "current-release",
+    "history",
+    "live",
+    "decide",
+    "results",
+    "agent",
+    "band why reveal"
+  ],
+  "after": [
+    "hero: confirmed 2D result",
+    "agent v2 and v3 outcome",
+    "judge route",
+    "loop",
+    "graph model and why a graph",
+    "live FalkorDB queries",
+    "design principles",
+    "collapsed history: history, decide, results, agent"
+  ],
+  "history_content_preserved": true
+}
