@@ -1,4 +1,6 @@
 from copy import deepcopy
+import json
+from pathlib import Path
 
 import pytest
 
@@ -10,6 +12,16 @@ from ew.scenarios import SUITES
 def test_rehearsal_is_the_only_changed_training_setting():
     changed = {k: v for k, v in RECIPES["ppo-rehearsal-v1"].items() if RECIPES["ppo-r1"].get(k) != v}
     assert changed == {"training_families": ["open", "static", "crossing", "static_crossing"]}
+
+
+def test_followup_changes_only_the_training_collision_cost():
+    changed = {k: v for k, v in RECIPES["ppo-rehearsal-collision40-v3"].items()
+               if RECIPES["ppo-rehearsal-v1"].get(k) != v}
+    assert changed == {"collision_penalty": -40.0}
+    p = json.loads((Path(__file__).parents[1] / "evidence/collision-recovery-v1/protocol.json").read_text())
+    previous = {seed for suite in development_suites(protocol()) for seed in suite.seeds}
+    fresh = {seed for suite in development_suites(p) for seed in suite.seeds}
+    assert len(fresh) == 180 and not previous.intersection(fresh)
 
 
 def test_recovery_development_uses_fresh_disjoint_seeds():

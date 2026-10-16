@@ -98,7 +98,8 @@ def run(catalog):
     digest = artifacts.sha256_file(OUT / "protocol.json")
     if artifacts.ROOT.resolve() in (catalog.resolve(), (ROOT / "artifacts").resolve(), Path("/data")):
         raise PermissionError("Use a new isolated EW_ARTIFACTS directory")
-    if (p["training_seed"], p["requested_steps_per_arm"], p["max_training_runs"]) != (31, 60000, 2):
+    if (p["training_seed"], p["requested_steps_per_arm"]) != (31, 60000) or (
+            p["max_training_runs"] != len(p["arms"]) or len(p["arms"]) not in (1, 2)):
         raise ValueError("Registered training budget changed")
     # Spend the study before graph writes, model execution or any measurements.
     save("started.json", {"protocol_sha256": digest})
@@ -114,6 +115,11 @@ def run(catalog):
         raise ValueError("No verifiable complete-validation origin")
     parent = ranking[0]["policy_id"]
     parent_hash = artifacts.verify_policy(parent)
+    if p.get("control_id"):
+        control = artifacts.load_manifest(p["control_id"])
+        if (control["parent_id"], control["seed"], control["budget_steps"], control["recipe"]) != (
+                parent, 31, 60000, "ppo-rehearsal-v1"):
+            raise ValueError("The saved paired control does not match the preregistered design")
     save("parent-selection.json", {"queries": [q.to_log()], "ranking": ranking,
                                    "selected": parent, "artifact_hash": parent_hash, "protocol_sha256": digest})
     graph = p["study_graph"]
@@ -125,14 +131,16 @@ def run(catalog):
         SUITES[suite.suite_id] = suite
     ingest.init_world(graph)
     measurements = {"parent": measure(parent, suites, graph)}
+    if p.get("control_id"):
+        measurements["control"] = measure(p["control_id"], suites, graph)
     outcomes = []
     for arm in p["arms"]:
-        pid = "recovery-v1-" + arm["id"]
+        pid = p.get("policy_prefix", "recovery-v1") + "-" + arm["id"]
         decision = records.write("decision", {"rule_version": p["study"], "mode": "deterministic_controlled_study",
             "graph_revision": db.revision(graph), "action": "train_from_parent", "selected": parent,
             "request": service.target_request(p["requested_steps_per_arm"], arm["recipe"]),
             "ranking": ranking, "rejected": [], "queries": [q.to_log()], "protocol_sha256": digest,
-            "explanation": "Graph-ranked origin; paired, preregistered rehearsal intervention. No LLM decision claimed."})
+            "explanation": "Graph-ranked origin; paired, preregistered development intervention. No LLM decision claimed."})
         ingest.decision(decision, graph)
         save(arm["id"] + "-decision.json", decision)
         result = service.train_run(pid, family="static_crossing", budget_steps=p["requested_steps_per_arm"],
@@ -156,7 +164,8 @@ def run(catalog):
         save(arm["id"] + "-trial.json", trial)
         outcomes.append({"arm": arm["id"], "policy_id": pid, "artifact_hash": result["manifest"]["artifact_hash"],
                          "consumed_steps": result["run"]["consumed_steps"], "trial_id": trial["id"]})
-    verdict = comparison(measurements["parent"], measurements["target_only"], measurements["rehearsal"])
+    verdict = comparison(measurements["parent"], measurements["control" if p.get("control_id") else "target_only"],
+                         measurements[p.get("intervention_arm", "rehearsal")])
     save("summary.json", {"study": p["study"], "protocol_sha256": digest, "origin": parent,
                          "arms": outcomes, "measurements": measurements, "verdict": verdict})
     for arm in outcomes:
@@ -182,5 +191,8 @@ def run(catalog):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--catalog", type=Path, required=True)
+    parser.add_argument("--study", choices=["rehearsal-recovery-v1", "collision-recovery-v1"],
+                        default="rehearsal-recovery-v1")
     args = parser.parse_args()
+    OUT = ROOT / "evidence" / args.study
     run(args.catalog)

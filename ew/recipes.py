@@ -25,6 +25,9 @@ RECIPES["ppo-mixed-mujoco-v1"] = {**RECIPES["ppo-rehearsal-collision20-v2"], "ph
 RECIPES["ppo-mixed-mujoco-collision40-v1"] = {**RECIPES["ppo-mixed-mujoco-v1"], "collision_penalty": -40.0}
 RECIPES["ppo-mixed-mujoco-lr-v1"] = {**RECIPES["ppo-mixed-mujoco-v1"], "learning_rate": 1e-4}
 
+# Separate collision-recovery development study, original 2D dynamics only.
+RECIPES["ppo-rehearsal-collision40-v3"] = {**RECIPES["ppo-rehearsal-v1"], "collision_penalty": -40.0}
+
 
 def reserved_steps(budget: int, recipe: str = "ppo-r1") -> int:
     if not isinstance(budget, int) or isinstance(budget, bool) or budget <= 0:

@@ -1,0 +1,26 @@
+{
+  "study": "collision-recovery-v1",
+  "registered_date": "2026-10-16",
+  "reason": "The completed rehearsal-recovery-v1 study did not reduce total collisions. Test the next single training change: retain a -40 terminal collision cost in the original 2D rehearsal continuation. No cause of the earlier public regression has been established.",
+  "domain": "original 2D simulator only",
+  "source_graph": "ew_rehearsal_recovery_v1",
+  "study_graph": "ew_collision_recovery_v1",
+  "parent_selection": "The unchanged exact-artifact complete canonical-validation ranking, read using GRAPH.RO_QUERY. Fresh development outcomes do not change the chosen origin.",
+  "training_seed": 31,
+  "requested_steps_per_arm": 60000,
+  "max_training_runs": 1,
+  "policy_prefix": "collision-recovery-v1",
+  "arms": [{"id": "collision40", "recipe": "ppo-rehearsal-collision40-v3"}],
+  "control_id": "recovery-v1-rehearsal",
+  "intervention_arm": "collision40",
+  "intervention": "Only the training terminal collision cost changes, from -10 to -40. The saved -10 rehearsal control and the new child independently start from the same parent, with seed 31, identical 60,000-step requests, optimizer settings and family rehearsal. No dynamics, observation, inference controller or evaluation reward changes.",
+  "development": [
+    {"id": "dev-collision-recovery-v1-target", "family": "static_crossing", "seed_base": 8700000, "episodes": 60},
+    {"id": "dev-collision-recovery-v1-open", "family": "open", "seed_base": 8701000, "episodes": 40},
+    {"id": "dev-collision-recovery-v1-static", "family": "static", "seed_base": 8702000, "episodes": 40},
+    {"id": "dev-collision-recovery-v1-crossing", "family": "crossing", "seed_base": 8703000, "episodes": 40}
+  ],
+  "measurement": "Evaluate parent, saved rehearsal control and new collision40 child once each on all 180 new paired development episodes. Prior development suites and every frozen result remain unchanged. This is not promo-1 or held-out confirmation.",
+  "acceptance": "Meet all four original success floors and collision maxima on these development suites. The new child must have no more collisions and no fewer goals in any family than both parent and control, and fewer total collisions than each. Otherwise do not adopt the recipe or claim recovery.",
+  "stopping": "One new training run, no retries or seed sweep. No confirmation or final-test access. No automatic release. Stop and report whatever happens. A development pass cannot establish collision-free operation, best-in-class performance or physical robot safety."
+}
