@@ -575,7 +575,8 @@ def search_lineage():
 @app.get("/api/robustness/lineage")
 def robustness_lineage():
     r = Q.run("search_lineage", {"rule": "robustness-v2"})
-    return {**r.to_log(), "via": "GRAPH.RO_QUERY", "at": time.time()}
+    origins = Q.run("study_origins", {"rule": "robustness-v2"})
+    return {**r.to_log(), "origins": origins.to_log(), "via": "GRAPH.RO_QUERY", "at": time.time()}
 
 
 @app.get("/api/physics/lineage")

@@ -96,7 +96,8 @@ The root had pedestrian collisions and open-arena timeouts. Longer target traini
 ### 2. Explain the chosen lineage and rejected alternatives
 
 ```cypher
-MATCH (d:Decision {rule_version:'search-v1'})-[rank:CONSIDERED]->(option:Policy)
+MATCH (d:Decision)-[rank:CONSIDERED]->(option:Policy)
+WHERE d.rule_version IN ['search-v1','robustness-v2']
 MATCH (d)-[:SELECTED]->(origin:Policy)
 MATCH (d)-[:LAUNCHED]->(r:Run)-[:PRODUCED]->(child:Policy)
 MATCH (g:Promotion)-[:FOR]->(child)
@@ -105,6 +106,8 @@ ORDER BY d.id, rank.rank
 ```
 
 Candidates need complete validation on their exact artifact. The rule ranks failed-suite count, worst deficit, total deficit, then summed success-minus-collision and ID. The first origin, `scratch~10715f-s7`, tied the featured original checkpoint on validation and won the ID tie. The next decision selected its improved child, then rehearsed open, static, crossing and target families during training. These are transparent authored priorities, not a claim that the database invented an RL algorithm.
+
+In robustness-v2, collision clearance is ranked after failed-suite count. The recorded decision considered five origins: the rehearsal parent passed 4/4 suites, the longer-training origin passed 3/4, and each remaining origin passed 1/4. The [live decision comparison](https://embodiweave.52.202.25.181.sslip.io/robustness.html#decision) shows their saved ranks, keys and graph relationships, alongside the exact Cypher receipt.
 
 ### 3. Bind the gate to the saved checkpoint
 

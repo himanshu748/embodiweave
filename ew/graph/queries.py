@@ -36,6 +36,20 @@ RETURN d.id AS decision, parent.id AS origin, t.intervention AS intervention,
        child.id AS candidate, gate.verdict AS verdict, d.explanation AS rationale
 ORDER BY decision, evidence_suite LIMIT 100""",
 
+    "study_origins": """
+MATCH (d:Decision {rule_version:$rule})-[rank:CONSIDERED]->(option:Policy)
+MATCH (d)-[:SELECTED]->(origin:Policy)
+MATCH (d)-[:LAUNCHED]->(r:Run)-[:PRODUCED]->(child:Policy)
+MATCH (t:Trial)-[:VIA_RUN]->(r)
+MATCH (gate:Promotion)-[:FOR]->(child)
+WHERE gate.artifact_hash = child.artifact_hash
+RETURN d.id AS decision, d.rule_version AS rule, d.graph_revision AS decision_revision,
+       option.id AS option, option.recipe AS option_recipe, rank.rank AS rank, rank.key AS ranking_key,
+       origin.id AS origin, r.id AS run, t.id AS trial, t.intervention AS intervention,
+       child.id AS candidate, child.artifact_hash AS artifact_hash,
+       gate.id AS promotion, gate.verdict AS verdict, d.explanation AS rationale
+ORDER BY decision, rank LIMIT 100""",
+
     "physics_lineage": """
 MATCH (d:Decision)-[:SELECTED]->(parent:Policy)
 MATCH (d)-[:LAUNCHED]->(r:Run)-[:PRODUCED]->(child:Policy)
