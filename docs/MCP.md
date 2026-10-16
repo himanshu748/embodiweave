@@ -11,12 +11,14 @@ The live agent discovers schemas with `tools/list` and executes `tools/call` thr
 | `lineage(policy_id, max_hops=8)` | Bounded `DERIVED_FROM` paths |
 | `find_training_origins(target_policy)` | Verified, compatible origins with all four complete validation suites |
 | `nearest_passing_ancestor(policy_id, suite_id, max_hops=8)` | FalkorDB shortest-path algorithm, minimum unweighted lineage distance to a passing ancestor |
+| `get_decision_outcomes(target_policy)` | Connected Decisions, selected origins, child runs and measured parent comparisons |
+| `rank_regression_origins(target_policy)` | Native Cypher weighted incoming degree from observed child collision-rate deltas, with support counts |
 | `start_training(origin_id, reason, budget=60000)` | Record the model proposal, check guardrails, then queue one consented PPO run |
 | `check_gate(policy_id)` | Read the unchanged promo-1 preview; no evaluation or deployment |
 
 All reads execute [parameterized `GRAPH.RO_QUERY` templates](../ew/graph/queries.py). There is no arbitrary Cypher or protected-suite tool. The server appends Decisions through trusted ingestion and launches the existing bounded CPU worker. Anonymous HTTP clients cannot train. Model credentials stay in the API; the MCP capability is never included in model context, tool arguments, public receipts or the training environment.
 
-## The graph algorithm
+## The lineage graph algorithm
 
 `shortestPath` executes in FalkorDB, in a `WITH` clause as required by the pinned runtime. It traverses only `DERIVED_FROM`, at most eight hops, then filters same-contract ancestors by complete, exact-hash, fingerprint-matched validation on the requested canonical suite. Results sort by hop count, collision rate and ID. No eligible ancestor produces an explicit empty result.
 
