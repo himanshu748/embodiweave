@@ -127,7 +127,7 @@ def test_real_sdk_stdio_discovery_and_algorithm(world):
             async with ClientSession(*streams) as client:
                 await client.initialize()
                 tools = await client.list_tools()
-                assert len(tools.tools) == 7
+                assert len(tools.tools) == 9
                 r = C.unpack(await client.call_tool("nearest_passing_ancestor", {"policy_id": "target"}))
                 assert r["nearest"]["hops"] == 2
     asyncio.run(run())
@@ -137,7 +137,7 @@ def test_real_sdk_http_reads_and_unauthorized_action(world):
     async def run():
         async with api.lifespan(api.app):
             async with C.connect(url="http://testserver/mcp/", transport=httpx2.ASGITransport(api.app)) as (client, tools, initialized):
-                assert len(tools) == 7 and initialized["serverInfo"]["name"] == "EmbodiWeave"
+                assert len(tools) == 9 and initialized["serverInfo"]["name"] == "EmbodiWeave"
                 assert C.unpack(await client.call_tool("lineage", {"policy_id": "target"}))["ancestors"]
                 assert C.unpack(await client.call_tool("diagnose_policy", {"policy_id": "target"}))["validation_and_failures"]
                 result = C.unpack(await client.call_tool("start_training", {"origin_id": "root", "reason": "Unauthorized action must stop"}))
@@ -198,3 +198,57 @@ def test_live_agent_uses_discovered_mcp_tools_and_labels_fallback(world, monkeyp
         assert "pending run" in saved["answer"]
     assert any(call["tool"] == "nearest_passing_ancestor" for call in decision["mcp_tool_calls"])
     assert "test-only-provider" not in json.dumps(decision)
+
+
+def test_weighted_degree_preserves_unknown_and_ignores_stale_hash(world):
+    q = D.rank_regression_origins("target")
+    assert all(r['observed_children'] == 0 and r['weighted_regression_degree'] is None for r in q['ranking'])
+    db.rw("MATCH (c:Policy {id:'target'}), (p:Policy {id:'root'}) "
+          "CREATE (c)-[:COMPARED_AGAINST {weight:0.05, child_hash:'fixture-target', parent_hash:'fixture-root'}]->(p)")
+    row = next(r for r in D.rank_regression_origins('target')['ranking'] if r['origin_id']=='root')
+    assert row['observed_children'] == 1 and row['weighted_regression_degree'] == .05
+    db.rw("MATCH (c:Policy {id:'target'}) SET c.artifact_hash='changed'")
+    row = next(r for r in D.rank_regression_origins('target')['ranking'] if r['origin_id']=='root')
+    assert row['observed_children'] == 0 and row['weighted_regression_degree'] is None
+
+
+def test_outcome_is_immutable_connected_and_replayable(world):
+    from ew.decision_outcomes import record_outcome
+    # Exact fixture parent has success in every episode; child times out.
+    world['target']['parent_id'] = 'root'
+    ranking = inspect_training_origins('target', 60000)['ranking']
+    d = records.write('decision', dict(id='decision-outcome-test', rule_version='fixture', mode='fixture',
+        request={'target_family_id':'fixture'}, ranking=ranking, rejected=[], action='train_from_parent',
+        selected='root', graph_revision=db.revision()))
+    ingest.decision(d)
+    run = records.write('run', dict(id='outcome-run', decision_id=d['id'], parent_id='root', child_policy_id='target',
+        status='completed', run_kind='fixture', recipe='fixture', seed=1, budget_steps=60000, consumed_steps=61440,
+        wall_s=0, family_id='fixture', family='fixture'))
+    ingest.run(run)
+    ids = ['target-'+sid for sid in D.SUITES]
+    gate = {'id':'gate-fixture', 'policy_id':'target', 'artifact_hash':'fixture-target', 'evaluation_ids':ids, 'verdict':'rejected'}
+    out = record_outcome(d['id'], run['id'], 'target', ids, gate)
+    assert out['regressed'] and not out['deployment_changed'] and out['release_verdict']=='not_released_regression'
+    assert record_outcome(d['id'], run['id'], 'target', ids, gate) == out
+    rows = D.get_decision_outcomes('target')['outcomes']
+    assert len(rows)==1 and rows[0]['decision_id']==d['id'] and len(rows[0]['evaluation_ids'])==8
+    assert len(rows[0]['outcome']['suites'])==4
+    assert D.explain_decision(d['id'])['decision']['selected']=='root'
+    assert records.read('decision', d['id']) == d
+    with pytest.raises(ValueError):
+        record_outcome(d['id'], run['id'], 'target', ids[:3], gate)
+    with pytest.raises(ValueError):
+        record_outcome(d['id'], run['id'], 'target', ids, {**gate, 'artifact_hash':'wrong'})
+    # Restoring the persisted outcome restores graph edges without touching the original Decision.
+    db.rw("MATCH (o:DecisionOutcome) DETACH DELETE o")
+    ingest.decision_outcome(records.read('decision_outcome', out['id']))
+    assert len(D.get_decision_outcomes('target')['outcomes'])==1
+
+
+def test_v3_requires_outcome_reads_before_launch(world, monkeypatch):
+    monkeypatch.setattr(D.public_training, 'start', lambda *a, **k: pytest.fail('must veto'))
+    flow = D.Workflow('v3-test', 'owner', True, True, target='target', study_id='agent-mcp-v3')
+    reads(flow)
+    veto = D.dispatch('start_training', {'origin_id':'root','budget':60000,
+                        'reason':'root is the ancestor but no prior outcomes were read'}, flow)
+    assert 'Read prior outcomes' in ';'.join(veto['guardrail']['reasons'])

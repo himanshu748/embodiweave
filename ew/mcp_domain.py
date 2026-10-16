@@ -121,6 +121,25 @@ def nearest_passing_ancestor(policy_id, suite_id="val-target-v1", max_hops=8):
             "notice": "A passing ancestor is a recovery option. Graph distance is not evidence that extra PPO improves safety."}
 
 
+def get_decision_outcomes(target_policy):
+    p = policy(target_policy)
+    q = query("mcp_decision_outcomes", {"policy": target_policy, "suites": SUITES})
+    rows = q['rows']
+    for row in rows:
+        row['outcome']['suites'] = json.loads(row['outcome']['suites'])
+    return {"outcomes": rows, "queries": [p, q],
+            "notice": "Completed parent comparisons; no new evaluation. No outcomes means unknown, not safe."}
+
+
+def rank_regression_origins(target_policy):
+    p = policy(target_policy)
+    q = query("mcp_regression_degree", {"policy": target_policy})
+    return {"algorithm": "FalkorDB Cypher weighted incoming degree over measured COMPARED_AGAINST edges",
+            "ranking": q['rows'], "queries": [p, q],
+            "weight": "For each child: sum of positive (child collisions - parent collisions) / suite episodes over four canonical suites. Sum these edge weights per origin.",
+            "notice": "Descending observed regression burden, not expected safety. More attempts can increase degree. Zero with support differs from null without observations; no statistical or planner advantage claim."}
+
+
 def check_gate(policy_id):
     policy(policy_id)
     result = service.promotion_preview(policy_id)
@@ -128,7 +147,7 @@ def check_gate(policy_id):
 
 
 def _record(workflow, guard, origin_id, budget, reason, *, action="train_from_parent"):
-    protocols = {"public-agent-mcp": "mcp-agent", "agent-mcp-v2": "mcp-agent-v2"}
+    protocols = {"public-agent-mcp": "mcp-agent", "agent-mcp-v2": "mcp-agent-v2", "agent-mcp-v3": "mcp-agent-v3"}
     if workflow.study_id not in protocols:
         raise ValueError("Unknown agent evidence protocol")
     protocol_path = Path(__file__).resolve().parents[1] / "evidence" / protocols[workflow.study_id] / "protocol.json"
@@ -172,6 +191,9 @@ def start_training(origin_id, budget, reason, workflow):
                  c["args"].get("policy_id", c["args"].get("target_policy")) == workflow.target}
         if not {"diagnose_policy", "find_training_origins", "nearest_passing_ancestor"} <= reads:
             guard["reasons"].append("Read diagnosis, origins and the graph algorithm before proposing training")
+        if workflow.study_id == "agent-mcp-v3":
+            if not {"get_decision_outcomes", "rank_regression_origins"} <= reads:
+                guard["reasons"].append("Read prior outcomes and weighted regression degree before the v3 proposal")
         algorithms = [c["result"].get("nearest") for c in workflow.calls if c["tool"] == "nearest_passing_ancestor"
                       and c["args"].get("policy_id") == workflow.target and c["result"].get("nearest")]
         if algorithms and algorithms[-1]["ancestor_id"] not in reason:
@@ -190,7 +212,7 @@ def start_training(origin_id, budget, reason, workflow):
                 "detail": "Real PPO queued. The trusted worker will evaluate 180 validation episodes and record the gate. Follow the training panel; this is not a completed result."}
 
 
-READS = {name: globals()[name] for name in ("diagnose_policy", "explain_decision", "lineage", "find_training_origins", "nearest_passing_ancestor", "check_gate")}
+READS = {name: globals()[name] for name in ("diagnose_policy", "explain_decision", "lineage", "find_training_origins", "nearest_passing_ancestor", "check_gate", "get_decision_outcomes", "rank_regression_origins")}
 
 
 def dispatch(name, args, workflow=None):

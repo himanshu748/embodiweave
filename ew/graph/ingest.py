@@ -216,6 +216,27 @@ def promotion(p: dict, g: str | None = None) -> None:
               {"id": p["id"], "e": eid}, g)
 
 
+def decision_outcome(o: dict, g: str | None = None) -> None:
+    """A separate measured outcome preserves the original pre-action Decision."""
+    db.rw("MATCH (d:Decision {id:$decision}), (r:Run {id:$run}), (p:Policy {id:$parent}), (c:Policy {id:$child}) "
+          "WHERE p.artifact_hash=$ph AND c.artifact_hash=$ch "
+          "MERGE (o:DecisionOutcome {id:$id}) SET o.regressed=$regressed, o.gate_verdict=$gate, "
+          "o.release_verdict=$release, o.suites=$suites, o.measured=true, o.deployment_changed=false "
+          "MERGE (d)-[:HAS_OUTCOME]->(o) MERGE (o)-[:FOR_RUN]->(r) MERGE (o)-[:ASSESSED]->(c) "
+          "MERGE (c)-[e:COMPARED_AGAINST {outcome_id:$id}]->(p) "
+          "SET e.weight=$weight, e.parent_hash=$ph, e.child_hash=$ch, e.suites=$suites "
+          "FOREACH (_ IN CASE WHEN $regressed THEN [1] ELSE [] END | "
+          "MERGE (c)-[x:REGRESSED_AGAINST {outcome_id:$id}]->(p) SET x.weight=$weight, x.suites=$suites)",
+          dict(decision=o['decision_id'], run=o['run_id'], parent=o['parent_id'], child=o['child_id'],
+               ph=o['parent_hash'], ch=o['child_hash'], id=o['id'], regressed=o['regressed'],
+               gate=o['gate_verdict'], release=o['release_verdict'], suites=json.dumps(o['suites']),
+               weight=o['weighted_regression']), g)
+    for row in o['suites']:
+        for eid in (row['parent_evaluation_id'], row['child_evaluation_id']):
+            db.rw("MATCH (o:DecisionOutcome {id:$id}), (e:Evaluation {id:$eid}) "
+                  "MERGE (o)-[:BASED_ON]->(e)", {'id':o['id'], 'eid':eid}, g)
+
+
 def rebuild(g: str | None = None) -> int:
     """Rebuild the decision graph from persisted records (recovery only)."""
     db.delete_graph(g or db.GRAPH)
@@ -248,6 +269,8 @@ def rebuild(g: str | None = None) -> int:
         run(r, g)
     for p in records.all_of("promotion"):
         promotion(p, g)
+    for outcome in records.all_of("decision_outcome"):
+        decision_outcome(outcome, g)
     from .transfer import DEFAULT_ROOT, ingest as transfer_ingest
     transfer_ingest(graph=g, strict=False)
     transfer_ingest(DEFAULT_ROOT.with_name("mujoco-v2"), graph=g, strict=False)

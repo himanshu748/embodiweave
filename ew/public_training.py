@@ -272,8 +272,12 @@ def _worker(sid):
         db.bump_revision("public trial " + trial["id"])
         _update(sid, phase="gate", trial_id=trial["id"], detail="Checking the exact artifact against all four canonical suites.")
         gate = service.promote(child)
+        outcome = None
+        if s.get("agent_decision_id"):
+            from .decision_outcomes import record_outcome
+            outcome = record_outcome(d['id'], run['id'], child, [e['id'] for e in evaluations], gate)
         exported = service.export_bundle(child)
-        _update(sid, state="completed", phase="complete", gate=gate, replay_evaluation_id=target["id"],
+        _update(sid, state="completed", phase="complete", gate=gate, decision_outcome=outcome, replay_evaluation_id=target["id"],
                 bundle={"filename": Path(exported["path"]).name, "sha256": exported["sha256"], "bytes": exported["bytes"]},
                 graph_revision=db.revision(), finished_at=time.time(),
                 detail="Training and all 180 test episodes finished. Your checkpoint and results are ready to download.")

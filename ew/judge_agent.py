@@ -176,6 +176,8 @@ def start(question, consent, token, training_consent=False, training_requested=F
                 if s["owner"] == owner:
                     return _public(s)  # double click or reload never launches a second model loop
                 raise Limited("Another investigation is running. Please try again in two minutes.")
+        if os.environ.get("EW_AGENT_STUDY") == "agent-mcp-v3" and any(s.get("study_id") == "agent-mcp-v3" for s in sessions):
+            raise Limited("The single preregistered v3 attempt has already been used. Its evidence is retained.")
         day = time.strftime("%Y-%m-%d", time.gmtime(now))
         today = [s for s in sessions if s["day"] == day]
         if len(today) >= DAILY_RUNS:

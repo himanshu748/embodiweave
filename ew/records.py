@@ -16,7 +16,7 @@ from pathlib import Path
 from .artifacts import ROOT
 
 RECORDS = ROOT / "records"
-KINDS = ("run", "evaluation", "trial", "decision", "promotion", "job", "agent_trace")
+KINDS = ("run", "evaluation", "trial", "decision", "promotion", "job", "agent_trace", "decision_outcome")
 
 
 def new_id(prefix: str) -> str:

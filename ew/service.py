@@ -225,6 +225,7 @@ def export_bundle(policy_id: str) -> dict:
            "evaluations": [e for e in records.all_of("evaluation") if e["policy_id"] == policy_id],
            "trials": [t for t in records.all_of("trial") if policy_id in (t.get("child_policy_id"), t.get("parent_id"))],
            "promotions": [p for p in records.all_of("promotion") if p["policy_id"] == policy_id]}
+    rel["decision_outcomes"] = [o for o in records.all_of("decision_outcome") if o["child_id"] == policy_id]
     decision_ids = {r.get("decision_id") for kind in ("runs", "trials") for r in rel[kind]}
     rel["decisions"] = [d for d in records.all_of("decision") if d["id"] in decision_ids]
     lineage, cur = [], m

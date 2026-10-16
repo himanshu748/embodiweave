@@ -11,7 +11,7 @@ from mcp.client.stdio import StdioServerParameters, stdio_client
 from ew import agent_tools, mcp_client as C
 
 EXPECTED = {"diagnose_policy", "explain_decision", "lineage", "find_training_origins",
-            "nearest_passing_ancestor", "start_training", "check_gate"}
+            "nearest_passing_ancestor", "start_training", "check_gate", "get_decision_outcomes", "rank_regression_origins"}
 
 
 @asynccontextmanager
@@ -35,6 +35,8 @@ async def check(args):
                  ("lineage", {"policy_id": args.policy, "max_hops": 8}),
                  ("find_training_origins", {"target_policy": args.policy}),
                  ("nearest_passing_ancestor", {"policy_id": args.policy}),
+                 ("get_decision_outcomes", {"target_policy": args.policy}),
+                 ("rank_regression_origins", {"target_policy": args.policy}),
                  ("check_gate", {"policy_id": args.child or args.policy})]
         if args.decision:
             calls.append(("explain_decision", {"decision_id": args.decision}))

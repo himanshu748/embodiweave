@@ -56,6 +56,16 @@ def create_server():
         """Run FalkorDB shortestPath to the nearest same-contract ancestor passing a canonical suite. Minimum unweighted hops, not a safety prediction."""
         return D.dispatch("nearest_passing_ancestor", {"policy_id": policy_id, "suite_id": suite_id, "max_hops": max_hops}, _workflow(ctx))
 
+    @server.tool(annotations=READ)
+    def get_decision_outcomes(target_policy: str, ctx: Context) -> dict:
+        """Follow Decisions through origins, runs, children and complete validation to measured parent comparisons."""
+        return D.dispatch("get_decision_outcomes", {"target_policy": target_policy}, _workflow(ctx))
+
+    @server.tool(annotations=READ)
+    def rank_regression_origins(target_policy: str, ctx: Context) -> dict:
+        """Weighted incoming degree of observed regression edges, largest burden first. Unknown origins are not assigned zero risk."""
+        return D.dispatch("rank_regression_origins", {"target_policy": target_policy}, _workflow(ctx))
+
     @server.tool(annotations=WRITE)
     def start_training(origin_id: str, reason: str, ctx: Context, budget: Annotated[int, Field(strict=True)] = 60000) -> dict:
         """Propose an origin, citing the algorithm and evidence in reason. Guardrail records a Decision BEFORE one real 60000-step PPO run in the original 2D simulator (seed29, ppo-r1), 180 validation episodes and the gate. No MuJoCo or deployment. Consent required; returns a pending session."""

@@ -12,6 +12,27 @@ from dataclasses import asdict, dataclass, field
 from . import db
 
 TEMPLATES = {
+    "mcp_decision_outcomes": """
+MATCH (target:Policy {id:$policy})-[:USES_CONTRACT]->(contract:Contract)<-[:USES_CONTRACT]-(origin:Policy)
+MATCH (d:Decision)-[:SELECTED]->(origin), (d)-[:LAUNCHED]->(run:Run)-[:PRODUCED]->(child:Policy)
+MATCH (d)-[:HAS_OUTCOME]->(o:DecisionOutcome)-[:ASSESSED]->(child)
+MATCH (child)-[comparison:COMPARED_AGAINST {outcome_id:o.id}]->(origin)
+MATCH (o)-[:BASED_ON]->(ev:Evaluation)-[:ON_SUITE]->(suite:Suite)
+WHERE comparison.parent_hash=origin.artifact_hash AND comparison.child_hash=child.artifact_hash
+  AND suite.role='validation' AND suite.id IN $suites
+  AND ev.complete_suite=true AND ev.suite_fingerprint=suite.fingerprint
+RETURN d.id AS decision_id, origin.id AS origin_id, run.id AS run_id, child.id AS child_id,
+       properties(o) AS outcome, collect(DISTINCT ev.id) AS evaluation_ids
+ORDER BY decision_id DESC LIMIT 40""",
+    "mcp_regression_degree": """
+MATCH (target:Policy {id:$policy})-[:USES_CONTRACT]->(contract:Contract)<-[:USES_CONTRACT]-(origin:Policy)
+OPTIONAL MATCH (child:Policy)-[edge:COMPARED_AGAINST]->(origin)
+WHERE edge.parent_hash=origin.artifact_hash AND edge.child_hash=child.artifact_hash
+RETURN origin.id AS origin_id, count(edge) AS observed_children,
+       CASE WHEN count(edge)=0 THEN null ELSE sum(edge.weight) END AS weighted_regression_degree,
+       collect(child.id) AS children
+ORDER BY weighted_regression_degree DESC, origin_id LIMIT 100""",
+
     "mcp_policy": """
 MATCH (p:Policy {id:$policy})-[:USES_CONTRACT]->(c:Contract)-[:FOR_ROBOT]->(r:Robot)
 RETURN p.id AS policy_id, p.artifact_hash AS artifact_hash, p.status AS status,
