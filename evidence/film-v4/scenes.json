@@ -1,8 +1,8 @@
 [
   {
     "id": 1,
-    "title": "The agent chooses its tools",
-    "narration": "My agent reads Falkor-D-B through M-C-P. It chooses tools to diagnose a checkpoint, compare origins, and trace a passing ancestor.",
+    "title": "A complete MCP run: four gates passed",
+    "narration": "My agent used M-C-P and Falkor-D-B to launch real robot training. The run passed four validation gates.",
     "visual": "mcp-read"
   },
   {

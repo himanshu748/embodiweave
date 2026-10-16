@@ -1,202 +1,202 @@
 [
   [
-    0.08,
-    4.16,
-    "My agent reads FalkorDB through MCP. It"
+    0.0,
+    2.96,
+    "My agent used MCP and FalkorDB to"
   ],
   [
-    4.16,
-    7.04,
-    "chooses tools to diagnose a checkpoint, compare"
+    2.96,
+    5.92,
+    "launch real robot training. The run passed"
   ],
   [
-    7.04,
-    9.679999,
-    "origins, and trace a passing ancestor."
+    5.92,
+    7.2,
+    "four validation gates."
   ],
   [
-    10.26,
-    12.34,
+    7.86,
+    9.940000000000001,
     "It chooses a starting checkpoint and calls"
   ],
   [
-    12.34,
-    15.219999999999999,
+    9.940000000000001,
+    12.82,
     "start training. The guardrail approves the evidence"
   ],
   [
-    15.219999999999999,
-    17.22,
+    12.82,
+    14.82,
     "and budget before the worker starts."
   ],
   [
-    17.7,
-    23.14,
+    15.3,
+    20.740000000000002,
     "FalkorDB connects policies, training runs, trials, evaluations,"
   ],
   [
-    23.38,
-    26.5,
+    20.98,
+    24.1,
     "failures, and decisions. The links preserve what"
   ],
   [
-    26.5,
-    27.2199995,
+    24.1,
+    24.8199995,
     "produced what."
   ],
   [
-    27.6,
-    30.64,
+    25.200000000000003,
+    28.240000000000002,
     "The shortest path tool runs inside FalkorDB."
   ],
   [
-    30.880000000000003,
-    33.6,
+    28.480000000000004,
+    31.200000000000003,
     "It returned the nearest passing ancestor one"
   ],
   [
-    33.6,
-    36.56,
+    31.200000000000003,
+    34.160000000000004,
     "hop away. The agent considered it alongside"
   ],
   [
-    36.56,
-    38.400000000000006,
+    34.160000000000004,
+    36.0,
     "17 eligible origins."
   ],
   [
-    38.846666666666664,
-    41.00666666666667,
+    36.446666666666665,
+    38.60666666666667,
     "Contracts tie a checkpoint to sensor and"
   ],
   [
-    41.00666666666667,
-    45.08666636666666,
+    38.60666666666667,
+    42.68666636666667,
     "action meanings. The guardrail vetoes incompatible origins,"
   ],
   [
-    45.08666636666666,
-    49.32666566666666,
+    42.68666636666667,
+    46.926665666666665,
     "stale hashes, incomplete validation, or unsupported budgets."
   ],
   [
-    49.879999999999995,
-    52.759999799999996,
+    47.48,
+    50.3599998,
     "Before training, the decision saves the model,"
   ],
   [
-    52.76,
-    56.44,
+    50.36,
+    54.04,
     "tool calls, Cypher, parameters, and returned records."
   ],
   [
-    56.679999599999995,
-    60.359998999999995,
+    54.2799996,
+    57.959998999999996,
     "If FalkorDB is unavailable, planning stops."
   ],
   [
-    60.83333333333333,
-    65.63333303333333,
+    58.43333333333333,
+    63.23333303333333,
     "The worker trained 61,440 PPO steps, then"
   ],
   [
-    65.63333303333333,
-    69.07333333333332,
+    63.23333303333333,
+    66.67333333333333,
     "reloaded the checkpoint for 180 validation episodes."
   ],
   [
-    69.63333333333333,
-    72.51333323333333,
+    67.23333333333333,
+    70.11333323333334,
     "All four suites passed the unchanged gate."
   ],
   [
-    72.67333333333333,
-    75.47333303333332,
+    70.27333333333334,
+    73.07333303333334,
     "Target collisions were three in sixty. Open"
   ],
   [
-    75.47333303333332,
-    78.03333333333333,
+    73.07333303333334,
+    75.63333333333334,
     "had zero. Static and crossing had one"
   ],
   [
-    78.03333333333333,
-    78.83333333333333,
+    75.63333333333334,
+    76.43333333333334,
     "each in 40."
   ],
   [
-    79.33333333333333,
-    81.33333333333333,
+    76.93333333333334,
+    78.93333333333334,
     "But the parent had two target collisions"
   ],
   [
-    81.33333333333333,
-    84.29333333333332,
+    78.93333333333334,
+    81.89333333333333,
     "and no crossing collisions. Both measures got"
   ],
   [
-    84.29333333333332,
-    86.85333333333332,
+    81.89333333333333,
+    84.45333333333333,
     "worse. Passing the gate does not establish"
   ],
   [
-    86.85333333333332,
-    88.85333283333333,
+    84.45333333333333,
+    86.45333283333333,
     "an improvement, so I kept the demo"
   ],
   [
-    88.85333283333333,
-    89.89333233333333,
+    86.45333283333333,
+    87.49333233333334,
     "policy unchanged."
   ],
   [
-    90.73333333333333,
-    94.09333333333333,
+    88.33333333333334,
+    91.69333333333334,
     "The earlier failure stays visible. 13 target"
   ],
   [
-    94.09333333333333,
-    97.21333333333334,
+    91.69333333333334,
+    94.81333333333335,
     "collisions in 100 held out episodes. The"
   ],
   [
-    97.21333333333334,
-    99.69333333333333,
+    94.81333333333335,
+    97.29333333333335,
     "separate confirmed checkpoint still has eight in"
   ],
   [
-    99.69333333333333,
-    100.25333283333333,
+    97.29333333333335,
+    97.85333283333334,
     "100."
   ],
   [
-    100.83333333333333,
-    104.11333333333333,
+    98.43333333333334,
+    101.71333333333334,
     "That confirmed two dimensional checkpoint also collided"
   ],
   [
-    104.11333333333333,
-    106.91333333333333,
+    101.71333333333334,
+    104.51333333333334,
     "six times in 40 MuJoCo target episodes"
   ],
   [
-    106.91333333333333,
-    109.87333333333333,
+    104.51333333333334,
+    107.47333333333333,
     "without retraining. This is a separate transfer"
   ],
   [
-    109.87333333333333,
-    110.27333333333333,
+    107.47333333333333,
+    107.87333333333333,
     "study."
   ],
   [
-    110.89333333333333,
-    112.97333333333333,
+    108.49333333333334,
+    110.57333333333334,
     "The graph and checksummed evidence make these"
   ],
   [
-    112.97333333333333,
-    116.73333333333333,
+    110.57333333333334,
+    114.33333333333334,
     "results inspectable. EmbodiWeave. Built on FalkorDB."
   ]
 ]

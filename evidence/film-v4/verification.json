@@ -2,8 +2,8 @@
   "media_probe": [
     {
       "file": "embodiweave-demo-v4.mp4",
-      "seconds": "117.600000",
-      "bytes": 7089116,
+      "seconds": "115.200000",
+      "bytes": 6817400,
       "width": 1920,
       "height": 1080,
       "fps": "30/1",
@@ -12,8 +12,8 @@
     },
     {
       "file": "embodiweave-demo-v4-720p.mp4",
-      "seconds": "117.610000",
-      "bytes": 3759754,
+      "seconds": "115.200000",
+      "bytes": 3632502,
       "width": 1280,
       "height": 720,
       "fps": "30/1",
@@ -22,8 +22,8 @@
     },
     {
       "file": "embodiweave-demo-v4-narration-free.mp4",
-      "seconds": "117.600000",
-      "bytes": 6944173,
+      "seconds": "115.200000",
+      "bytes": 6674410,
       "width": 1920,
       "height": 1080,
       "fps": "30/1",
@@ -45,8 +45,9 @@
     "ew/scenarios.py": "18396d0c9ac7e9221e72b7d0ad3bb4563647850793e3baf3ab47ae779d1a0168"
   },
   "render_source_checksums": {
-    "scripts/film/mcp_update.py": "d50545bee2c3e3a8f5592e582b8848d0b181b7409ab33055c3632ee3782d4d55",
-    "scripts/film/mcp_render.py": "90b3c48d7d7d721ac7d7761ae0ff4f2d9730c2633e4db8308a920a3f806379ae",
+    "scripts/film/mcp_update.py": "fd4ceeb8bf34b624dd44f43b1d3e5565b7223b4e59c66b675791bd6f6f1def81",
+    "scripts/film/mcp_render.py": "6d417fb03a901024c0b050602f9aa4e95798006b74786d1bc8ad991e241b9ffb",
     "scripts/film/narrate-v4.sh": "f8f4575ed9c66406165a88c23fc78f1a6339a343cf1bdc848acf3745f9f61b4e"
-  }
+  },
+  "opening": "Completed MCP-to-PPO workflow and four validation gates passed, stated in the first narration clip. Parent regression remains in scene 9."
 }

@@ -65,6 +65,20 @@ class Clip:
         self.process.wait()
 
 
+def physics_source():
+    original = OUT.parent/'film-v3/scene-11.mp4'
+    if original.exists():
+        return original
+    # A fresh checkout has the preserved v3 master, not local intermediates.
+    master = ROOT/'web/media/embodiweave-demo-v3.mp4'
+    assert sha(master) == load(E/'v3-backup-checksums.json')[str(master.relative_to(ROOT))]
+    scene = next(s for s in load(ROOT/'evidence/film-v3/timeline.json')['scenes'] if s['id']==11)
+    extracted = OUT/'physics-v3-source.mp4'
+    run('-ss',scene['start'],'-i',master,'-t',scene['duration'],'-an','-r','30','-fps_mode','cfr',
+        '-c:v','libx264','-preset','fast','-crf','18','-pix_fmt','yuv420p',extracted)
+    return extracted
+
+
 def browser_clips():
     """Use the browser-video-recording skill renderer for captured UI motion."""
     capture = E/'browser'
@@ -201,8 +215,8 @@ class Film:
             image.paste(panel, (1165, 220)); d = ImageDraw.Draw(image)
             text(d, (80, 185), 'RECORDED PUBLIC RUN / LLM → MCP', 25, ORANGE, True)
             if i == 1:
-                text(d, (80, 240), 'The model chose', 48)
-                text(d, (80, 298), 'what to ask.', 48)
+                text(d, (80, 240), 'Real agent → real PPO', 45)
+                text(d, (80, 298), '4 / 4 validation gates passed', 42, ORANGE)
                 names = s['mcp_calls'][:3]
                 for j, name in enumerate(names):
                     y = 410+j*130
@@ -328,7 +342,7 @@ def render(scene_ids):
         if i not in scene_ids:
             continue
         source = Clip(OUT/f'browser-{i:02}.mp4') if i in (1,2) else (
-            Clip(OUT.parent/'film-v3/scene-11.mp4') if i == 11 else None)
+            Clip(physics_source()) if i == 11 else None)
         encoder=subprocess.Popen(['ffmpeg','-y','-hide_banner','-loglevel','error','-f','rawvideo',
             '-pix_fmt','rgb24','-s','1920x1080','-r','30','-i','pipe:0','-an','-c:v','libx264',
             '-preset','fast','-crf','21','-pix_fmt','yuv420p',str(OUT/f'scene-{i:02}.mp4')],stdin=subprocess.PIPE)
@@ -390,6 +404,7 @@ def assemble():
     run('-ss','3','-i',master,'-frames:v','1',DOC/'thumbnail.png')
     with Image.open(DOC/'thumbnail.png') as p:
         p.resize((1280,720),Image.Resampling.LANCZOS).save(ROOT/'web/media/demo-v4-poster.webp',quality=88)
+    physics = physics_source()
     receipt={'seconds':seconds,'fps':30,'width':1920,'height':1080,'narration_model':data['model'],
         'narration_seconds':sum(s['voice_seconds'] for s in data['scenes']),
         'training_launch_scene_start':data['scenes'][1]['start'],
@@ -397,7 +412,9 @@ def assemble():
         'assets':{p.name:{'bytes':p.stat().st_size,'sha256':sha(p)} for p in (master,site,backup,gif)},
         'music':{'title':'Cipher','artist':'Kevin MacLeod','license':'CC BY 3.0','sha256':sha(music),
                  'url':'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Cipher2.mp3','gain_below_normalized_voice_db':18},
-        'physics_source':{'path':'outputs/film-v3/scene-11.mp4','sha256':sha(OUT.parent/'film-v3/scene-11.mp4')},
+        'physics_source':{'path':os.path.relpath(physics, ROOT.parents[1]),'sha256':sha(physics),
+                          'preserved_v3_master_sha256':sha(ROOT/'web/media/embodiweave-demo-v3.mp4')},
+        'scene_video_sha256':{p.name:sha(p) for p in parts},
         'new_robot_motion':{'source':'evidence/film-v4/policy-replay.json','seed':1300030,'domain':'original 2D simulator',
                             'selection':'First target collision in the recorded suite; all aggregates shown. No interpolated poses.'},
         'editorial':'Browser captures replay completed evidence; waiting time removed. Graph layout, titles and highlights are editorial. No learning curve is invented.',

@@ -4,13 +4,13 @@ YOUTUBE_URL: YOUTUBE_URL
 
 ## Title
 
-EmbodiWeave: an MCP agent retrains a robot, then shows the regression | FalkorDB Graph Hacks
+MCP agent launches robot training: 4/4 gates | EmbodiWeave x FalkorDB
 
 ## Description
 
 I built an agent that reads a robot's training history in FalkorDB, decides which checkpoint to retrain, launches PPO training, and records whether the saved result meets a fixed gate.
 
-The first 18 seconds show the real public MCP run: GPT-4.1 Mini chooses graph tools, proposes an origin and calls start_training. A deterministic guardrail validates the proposal before the worker starts. The completed run trained 61,440 steps and evaluated 180 validation episodes.
+The first line states the measured win: the workflow completed and all four validation gates passed. The first 15 seconds show the real public MCP run: GPT-4.1 Mini chooses graph tools, proposes an origin and calls start_training. A deterministic guardrail validates the proposal before the worker starts. The completed run trained 61,440 steps and evaluated 180 validation episodes.
 
 All four fixed gates passed. But target collisions rose from 2/60 to 3/60 and crossing collisions from 0/40 to 1/40 against the chosen parent. I kept that regression visible. This run did not replace the demo policy, and it does not establish a safety improvement.
 
@@ -29,7 +29,7 @@ Source run: https://github.com/himanshu748/embodiweave/tree/main/evidence/mcp-ag
 Film evidence: https://github.com/himanshu748/embodiweave/tree/main/evidence/film-v4
 
 Narration: Deepgram Aura-2. Captions: Deepgram Nova-3.
-Voice: aura-2-thalia-en; 112.48 seconds of narration. Word timings and request receipts are saved. Two unchanged clips retain their original receipts.
+Voice: aura-2-thalia-en; 110.08 seconds of narration. Word timings and request receipts are saved. Two unchanged clips retain their original receipts.
 Music: “Cipher” by Kevin MacLeod (incompetech.com), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/
 Track: https://incompetech.com/music/royalty-free/mp3-royaltyfree/Cipher2.mp3
 Edited excerpt, normalized and mixed about 18 dB below narration.
@@ -39,15 +39,15 @@ Robot motion is saved policy output from real simulators. Graph layout, titles, 
 
 ## Chapters
 
-00:00 Agent chooses MCP tools and launches training
-00:17 FalkorDB provenance graph
-00:27 Native lineage shortest path
-00:38 Contract and guardrail
-00:49 Decision before action
-01:00 Real PPO, saved replay and fixed gate
-01:19 Honest parent-to-child regression
-01:30 Frozen earlier studies
-01:40 Separate MuJoCo transfer and credits
+00:00 Agent acts through MCP; four gates passed
+00:15 FalkorDB provenance graph
+00:25 Native lineage shortest path
+00:36 Contract and guardrail
+00:47 Decision before action
+00:58 Real PPO, saved replay and fixed gate
+01:16 Honest parent-to-child regression
+01:28 Frozen earlier studies
+01:38 Separate MuJoCo transfer and credits
 
 ## Tags
 

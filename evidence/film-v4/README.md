@@ -7,7 +7,7 @@ The film is a new edit of the recorded public `agent-mcp-v2` action. It does not
 - `browser/`: actual public-page evidence captures. The browser renderer adds only editorial cursor motion. `browser-edit-*.json` preserve its edit instructions.
 - `policy-replay.json`: saved original-2D validation states from the checkpoint bundle. The film shows seed 1300030, the first target collision; full-suite counts remain visible.
 - `voice-receipts.json`: Aura-2 model, request IDs, character counts, audio hashes, Nova-3 receipt IDs and transcript comparison. Scenes 3 and 12 reuse unchanged original Deepgram clips. Raw transcripts remain unchanged. One caption word (and → in) is corrected to match the spoken script at its original word timing.
-- `timeline.json`, `captions.json`: scene and word-timed caption edit, 117.6 seconds total.
+- `timeline.json`, `captions.json`: scene and word-timed caption edit, 115.2 seconds total.
 - `v3-backup-checksums.json`: immutable v3 media, docs and evidence snapshot, checked before and after rendering.
 - `film-receipt.json`: final output sizes, hashes, duration, source physics clip and music credit.
 - `checksums.json`: this evidence directory and final public media checksums.
@@ -27,3 +27,5 @@ python -m scripts.film.mcp_render assemble
 ```
 
 New voice text requires `DEEPGRAM_API_KEY` in the process environment only; `scripts/film/narrate-v4.sh` accepts it through a hidden prompt. Never save the key in a file. The pipeline never modifies frozen criteria, suites, checkpoint weights or v3 backups. Outputs go to the workspace `outputs/film-v4/` directory, and finished public exports to `web/media/`.
+
+The opening was revised to state the measured four-gate result immediately. The earlier v4 opening remains recoverable in Git at `ba089e4`; v3 backups remain unchanged. A fresh film rebuild extracts its physics segment from the preserved v3 master if local intermediates are absent.

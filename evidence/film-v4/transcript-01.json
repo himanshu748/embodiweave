@@ -1,10 +1,10 @@
 {
   "metadata": {
     "transaction_key": "deprecated",
-    "request_id": "01a144c7-c444-7ed2-ab74-b0df5b7b3ca9",
-    "sha256": "69073d3fc626f295b42940b8cedcb1c4c5cb588ec8a9c7fd22a9e3bcd223b16a",
-    "created": "2026-10-16T12:55:05.819Z",
-    "duration": 9.72,
+    "request_id": "01a144ee-509c-7751-889e-aa1ae6ef1ccc",
+    "sha256": "3909b2bdf7a81f788fdeffc2bc9bc1d0a260f3eee81aa1101c9f8dc9804b0507",
+    "created": "2026-10-16T13:37:11.935Z",
+    "duration": 7.32,
     "channels": 1,
     "models": [
       "2187e11a-3532-4498-b076-81fa530bdd49"
@@ -22,169 +22,148 @@
       {
         "alternatives": [
           {
-            "transcript": "My agent reads FalkorDB through MCP. It chooses tools to diagnose a checkpoint, compare origins, and trace a passing ancestor.",
-            "confidence": 0.99902344,
+            "transcript": "My agent used MCP and FalkorDB to launch real robot training. The run passed four validation gates.",
+            "confidence": 0.99572754,
             "words": [
               {
                 "word": "my",
-                "start": 0.08,
-                "end": 0.39999998,
-                "confidence": 0.9941406,
+                "start": 0.0,
+                "end": 0.32,
+                "confidence": 0.99609375,
                 "punctuated_word": "My"
               },
               {
                 "word": "agent",
-                "start": 0.39999998,
-                "end": 0.71999997,
-                "confidence": 0.9838867,
+                "start": 0.32,
+                "end": 0.64,
+                "confidence": 0.9980469,
                 "punctuated_word": "agent"
               },
               {
-                "word": "reads",
-                "start": 0.71999997,
-                "end": 1.1999999,
-                "confidence": 1.0,
-                "punctuated_word": "reads"
-              },
-              {
-                "word": "falkordb",
-                "start": 1.1999999,
-                "end": 2.32,
-                "confidence": 0.9926758,
-                "punctuated_word": "FalkorDB"
-              },
-              {
-                "word": "through",
-                "start": 2.32,
-                "end": 2.6399999,
-                "confidence": 0.99609375,
-                "punctuated_word": "through"
+                "word": "used",
+                "start": 0.64,
+                "end": 0.96,
+                "confidence": 0.96972656,
+                "punctuated_word": "used"
               },
               {
                 "word": "mcp",
-                "start": 2.6399999,
-                "end": 3.7599998,
-                "confidence": 0.9977214,
-                "punctuated_word": "MCP."
-              },
-              {
-                "word": "it",
-                "start": 3.9199998,
-                "end": 4.16,
-                "confidence": 0.99902344,
-                "punctuated_word": "It"
-              },
-              {
-                "word": "chooses",
-                "start": 4.16,
-                "end": 4.56,
-                "confidence": 0.99316406,
-                "punctuated_word": "chooses"
-              },
-              {
-                "word": "tools",
-                "start": 4.56,
-                "end": 4.88,
-                "confidence": 1.0,
-                "punctuated_word": "tools"
-              },
-              {
-                "word": "to",
-                "start": 4.88,
-                "end": 5.12,
-                "confidence": 1.0,
-                "punctuated_word": "to"
-              },
-              {
-                "word": "diagnose",
-                "start": 5.12,
-                "end": 5.6,
-                "confidence": 0.9970703,
-                "punctuated_word": "diagnose"
-              },
-              {
-                "word": "a",
-                "start": 5.6,
-                "end": 5.8399997,
-                "confidence": 0.99609375,
-                "punctuated_word": "a"
-              },
-              {
-                "word": "checkpoint",
-                "start": 5.8399997,
-                "end": 6.56,
-                "confidence": 0.9926758,
-                "punctuated_word": "checkpoint,"
-              },
-              {
-                "word": "compare",
-                "start": 6.64,
-                "end": 7.04,
-                "confidence": 1.0,
-                "punctuated_word": "compare"
-              },
-              {
-                "word": "origins",
-                "start": 7.04,
-                "end": 8.0,
-                "confidence": 0.98551434,
-                "punctuated_word": "origins,"
+                "start": 0.96,
+                "end": 1.5999999,
+                "confidence": 0.99853516,
+                "punctuated_word": "MCP"
               },
               {
                 "word": "and",
-                "start": 8.0,
-                "end": 8.08,
+                "start": 1.5999999,
+                "end": 1.8399999,
                 "confidence": 1.0,
                 "punctuated_word": "and"
               },
               {
-                "word": "trace",
-                "start": 8.08,
-                "end": 8.48,
+                "word": "falkordb",
+                "start": 1.8399999,
+                "end": 2.6399999,
+                "confidence": 0.99572754,
+                "punctuated_word": "FalkorDB"
+              },
+              {
+                "word": "to",
+                "start": 2.6399999,
+                "end": 2.96,
                 "confidence": 1.0,
-                "punctuated_word": "trace"
+                "punctuated_word": "to"
               },
               {
-                "word": "a",
-                "start": 8.48,
-                "end": 8.639999,
-                "confidence": 0.99902344,
-                "punctuated_word": "a"
-              },
-              {
-                "word": "passing",
-                "start": 8.639999,
-                "end": 8.96,
+                "word": "launch",
+                "start": 2.96,
+                "end": 3.1999998,
                 "confidence": 1.0,
-                "punctuated_word": "passing"
+                "punctuated_word": "launch"
               },
               {
-                "word": "ancestor",
-                "start": 8.96,
-                "end": 9.679999,
+                "word": "real",
+                "start": 3.1999998,
+                "end": 3.6,
+                "confidence": 0.97265625,
+                "punctuated_word": "real"
+              },
+              {
+                "word": "robot",
+                "start": 3.6,
+                "end": 4.08,
                 "confidence": 0.99902344,
-                "punctuated_word": "ancestor."
+                "punctuated_word": "robot"
+              },
+              {
+                "word": "training",
+                "start": 4.08,
+                "end": 4.8,
+                "confidence": 0.9863281,
+                "punctuated_word": "training."
+              },
+              {
+                "word": "the",
+                "start": 5.04,
+                "end": 5.2799997,
+                "confidence": 0.9921875,
+                "punctuated_word": "The"
+              },
+              {
+                "word": "run",
+                "start": 5.2799997,
+                "end": 5.52,
+                "confidence": 0.99316406,
+                "punctuated_word": "run"
+              },
+              {
+                "word": "passed",
+                "start": 5.52,
+                "end": 5.92,
+                "confidence": 0.890625,
+                "punctuated_word": "passed"
+              },
+              {
+                "word": "four",
+                "start": 5.92,
+                "end": 6.24,
+                "confidence": 0.99316406,
+                "punctuated_word": "four"
+              },
+              {
+                "word": "validation",
+                "start": 6.24,
+                "end": 6.72,
+                "confidence": 1.0,
+                "punctuated_word": "validation"
+              },
+              {
+                "word": "gates",
+                "start": 6.72,
+                "end": 7.2,
+                "confidence": 0.99316406,
+                "punctuated_word": "gates."
               }
             ],
             "paragraphs": {
-              "transcript": "\nMy agent reads FalkorDB through MCP. It chooses tools to diagnose a checkpoint, compare origins, and trace a passing ancestor.",
+              "transcript": "\nMy agent used MCP and FalkorDB to launch real robot training. The run passed four validation gates.",
               "paragraphs": [
                 {
                   "sentences": [
                     {
-                      "text": "My agent reads FalkorDB through MCP.",
-                      "start": 0.08,
-                      "end": 3.7599998
+                      "text": "My agent used MCP and FalkorDB to launch real robot training.",
+                      "start": 0.0,
+                      "end": 4.8
                     },
                     {
-                      "text": "It chooses tools to diagnose a checkpoint, compare origins, and trace a passing ancestor.",
-                      "start": 3.9199998,
-                      "end": 9.679999
+                      "text": "The run passed four validation gates.",
+                      "start": 5.04,
+                      "end": 7.2
                     }
                   ],
-                  "num_words": 20,
-                  "start": 0.08,
-                  "end": 9.679999
+                  "num_words": 17,
+                  "start": 0.0,
+                  "end": 7.2
                 }
               ]
             }
@@ -194,194 +173,143 @@
     ],
     "utterances": [
       {
-        "start": 0.08,
-        "end": 2.32,
-        "confidence": 0.9926758,
+        "start": 0.0,
+        "end": 4.8,
+        "confidence": 0.99237615,
         "channel": 0,
-        "transcript": "My agent reads FalkorDB",
+        "transcript": "My agent used MCP and FalkorDB to launch real robot training.",
         "words": [
           {
             "word": "my",
-            "start": 0.08,
-            "end": 0.39999998,
-            "confidence": 0.9941406,
+            "start": 0.0,
+            "end": 0.32,
+            "confidence": 0.99609375,
             "punctuated_word": "My"
           },
           {
             "word": "agent",
-            "start": 0.39999998,
-            "end": 0.71999997,
-            "confidence": 0.9838867,
+            "start": 0.32,
+            "end": 0.64,
+            "confidence": 0.9980469,
             "punctuated_word": "agent"
           },
           {
-            "word": "reads",
-            "start": 0.71999997,
-            "end": 1.1999999,
-            "confidence": 1.0,
-            "punctuated_word": "reads"
-          },
-          {
-            "word": "falkordb",
-            "start": 1.1999999,
-            "end": 2.32,
-            "confidence": 0.9926758,
-            "punctuated_word": "FalkorDB"
-          }
-        ],
-        "id": "3a9cf99f-b684-4284-94f9-562276fd9f4e"
-      },
-      {
-        "start": 2.32,
-        "end": 3.7599998,
-        "confidence": 0.9969076,
-        "channel": 0,
-        "transcript": "through MCP.",
-        "words": [
-          {
-            "word": "through",
-            "start": 2.32,
-            "end": 2.6399999,
-            "confidence": 0.99609375,
-            "punctuated_word": "through"
+            "word": "used",
+            "start": 0.64,
+            "end": 0.96,
+            "confidence": 0.96972656,
+            "punctuated_word": "used"
           },
           {
             "word": "mcp",
-            "start": 2.6399999,
-            "end": 3.7599998,
-            "confidence": 0.9977214,
-            "punctuated_word": "MCP."
-          }
-        ],
-        "id": "89ff0b18-c4bf-4c2e-a338-b8b3c0e766dd"
-      },
-      {
-        "start": 3.9199998,
-        "end": 6.56,
-        "confidence": 0.99686104,
-        "channel": 0,
-        "transcript": "It chooses tools to diagnose a checkpoint,",
-        "words": [
-          {
-            "word": "it",
-            "start": 3.9199998,
-            "end": 4.16,
-            "confidence": 0.99902344,
-            "punctuated_word": "It"
+            "start": 0.96,
+            "end": 1.5999999,
+            "confidence": 0.99853516,
+            "punctuated_word": "MCP"
           },
-          {
-            "word": "chooses",
-            "start": 4.16,
-            "end": 4.56,
-            "confidence": 0.99316406,
-            "punctuated_word": "chooses"
-          },
-          {
-            "word": "tools",
-            "start": 4.56,
-            "end": 4.88,
-            "confidence": 1.0,
-            "punctuated_word": "tools"
-          },
-          {
-            "word": "to",
-            "start": 4.88,
-            "end": 5.12,
-            "confidence": 1.0,
-            "punctuated_word": "to"
-          },
-          {
-            "word": "diagnose",
-            "start": 5.12,
-            "end": 5.6,
-            "confidence": 0.9970703,
-            "punctuated_word": "diagnose"
-          },
-          {
-            "word": "a",
-            "start": 5.6,
-            "end": 5.8399997,
-            "confidence": 0.99609375,
-            "punctuated_word": "a"
-          },
-          {
-            "word": "checkpoint",
-            "start": 5.8399997,
-            "end": 6.56,
-            "confidence": 0.9926758,
-            "punctuated_word": "checkpoint,"
-          }
-        ],
-        "id": "28cc3d8d-4fa8-44ea-85b7-56169e945db7"
-      },
-      {
-        "start": 6.64,
-        "end": 8.0,
-        "confidence": 0.9927572,
-        "channel": 0,
-        "transcript": "compare origins,",
-        "words": [
-          {
-            "word": "compare",
-            "start": 6.64,
-            "end": 7.04,
-            "confidence": 1.0,
-            "punctuated_word": "compare"
-          },
-          {
-            "word": "origins",
-            "start": 7.04,
-            "end": 8.0,
-            "confidence": 0.98551434,
-            "punctuated_word": "origins,"
-          }
-        ],
-        "id": "2f0b2807-cdbd-42c2-bc41-40a887c533ec"
-      },
-      {
-        "start": 8.0,
-        "end": 9.679999,
-        "confidence": 0.99960935,
-        "channel": 0,
-        "transcript": "and trace a passing ancestor.",
-        "words": [
           {
             "word": "and",
-            "start": 8.0,
-            "end": 8.08,
+            "start": 1.5999999,
+            "end": 1.8399999,
             "confidence": 1.0,
             "punctuated_word": "and"
           },
           {
-            "word": "trace",
-            "start": 8.08,
-            "end": 8.48,
+            "word": "falkordb",
+            "start": 1.8399999,
+            "end": 2.6399999,
+            "confidence": 0.99572754,
+            "punctuated_word": "FalkorDB"
+          },
+          {
+            "word": "to",
+            "start": 2.6399999,
+            "end": 2.96,
             "confidence": 1.0,
-            "punctuated_word": "trace"
+            "punctuated_word": "to"
           },
           {
-            "word": "a",
-            "start": 8.48,
-            "end": 8.639999,
-            "confidence": 0.99902344,
-            "punctuated_word": "a"
-          },
-          {
-            "word": "passing",
-            "start": 8.639999,
-            "end": 8.96,
+            "word": "launch",
+            "start": 2.96,
+            "end": 3.1999998,
             "confidence": 1.0,
-            "punctuated_word": "passing"
+            "punctuated_word": "launch"
           },
           {
-            "word": "ancestor",
-            "start": 8.96,
-            "end": 9.679999,
+            "word": "real",
+            "start": 3.1999998,
+            "end": 3.6,
+            "confidence": 0.97265625,
+            "punctuated_word": "real"
+          },
+          {
+            "word": "robot",
+            "start": 3.6,
+            "end": 4.08,
             "confidence": 0.99902344,
-            "punctuated_word": "ancestor."
+            "punctuated_word": "robot"
+          },
+          {
+            "word": "training",
+            "start": 4.08,
+            "end": 4.8,
+            "confidence": 0.9863281,
+            "punctuated_word": "training."
           }
         ],
-        "id": "b6889a68-c35f-4a1b-b580-985dcd8fed2b"
+        "id": "4e815e91-fffc-4e02-a5b4-6e961c863cd0"
+      },
+      {
+        "start": 5.04,
+        "end": 7.2,
+        "confidence": 0.9770508,
+        "channel": 0,
+        "transcript": "The run passed four validation gates.",
+        "words": [
+          {
+            "word": "the",
+            "start": 5.04,
+            "end": 5.2799997,
+            "confidence": 0.9921875,
+            "punctuated_word": "The"
+          },
+          {
+            "word": "run",
+            "start": 5.2799997,
+            "end": 5.52,
+            "confidence": 0.99316406,
+            "punctuated_word": "run"
+          },
+          {
+            "word": "passed",
+            "start": 5.52,
+            "end": 5.92,
+            "confidence": 0.890625,
+            "punctuated_word": "passed"
+          },
+          {
+            "word": "four",
+            "start": 5.92,
+            "end": 6.24,
+            "confidence": 0.99316406,
+            "punctuated_word": "four"
+          },
+          {
+            "word": "validation",
+            "start": 6.24,
+            "end": 6.72,
+            "confidence": 1.0,
+            "punctuated_word": "validation"
+          },
+          {
+            "word": "gates",
+            "start": 6.72,
+            "end": 7.2,
+            "confidence": 0.99316406,
+            "punctuated_word": "gates."
+          }
+        ],
+        "id": "62eddd1c-7e1f-46ca-b5e3-61d5ac8a561b"
       }
     ]
   }

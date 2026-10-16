@@ -55,7 +55,7 @@ def prepare():
     else:
         write(E/'v3-backup-checksums.json', snapshot)
     specs = [
-        ('The agent chooses its tools', 'My agent reads Falkor-D-B through M-C-P. It chooses tools to diagnose a checkpoint, compare origins, and trace a passing ancestor.', 'mcp-read'),
+        ('A complete MCP run: four gates passed', 'My agent used M-C-P and Falkor-D-B to launch real robot training. The run passed four validation gates.', 'mcp-read'),
         ('The agent launches training', 'It chooses a starting checkpoint and calls start training. The guardrail approves the evidence and budget before the worker starts.', 'mcp-launch'),
         ('FalkorDB connects the evidence', 'Falkor-D-B connects policies, training runs, trials, evaluations, failures and decisions. The links preserve what produced what.', 'graph'),
         ('A shortest path through real lineage', 'The shortest-path tool runs inside Falkor-D-B. It returned the nearest passing ancestor, one hop away. The agent considered it alongside seventeen eligible origins.', 'algorithm'),

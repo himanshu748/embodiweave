@@ -288,7 +288,7 @@ Bundles include saved model weights, normalization, contract, validation records
 
 ## Film and credits
 
-The v4 film is **117.60 seconds, 1920×1080 at 30 fps**, with **112.48 seconds** of Deepgram Thalia narration. The first **17.34 seconds** show the real MCP tool choices, model-selected origin, allowed guardrail and queued training action. The later completion shows 61,440 PPO steps and all 180 validation episodes. The candidate passed 4/4 gates, but target collisions rose from **2/60 to 3/60** and crossing from **0/40 to 1/40** against the chosen parent. No safety improvement or deployment change is claimed.
+The v4 film is **115.20 seconds, 1920×1080 at 30 fps**, with **110.08 seconds** of Deepgram Thalia narration. The opening states the completed workflow and 4/4 gate result. The first **14.94 seconds** show the real MCP tool choices, model-selected origin, allowed guardrail and queued training action. The later completion shows 61,440 PPO steps and all 180 validation episodes. The candidate passed 4/4 gates, but target collisions rose from **2/60 to 3/60** and crossing from **0/40 to 1/40** against the chosen parent. No safety improvement or deployment change is claimed.
 
 Robot motion uses saved policy states: the new child's original **2D** validation replay, followed by the separately labelled **MuJoCo-v2 sim-to-sim transfer** footage. Physics footage is reused from v3 and is not the new MCP child. Graph nodes and edges come from FalkorDB; titles, graph layout, highlights and cursor movement are editorial. Browser captures replay completed evidence with waiting time removed. Only a final training-progress sample was retained, so this edit does not invent a learning curve. [Source records and checksums](evidence/film-v4/).
 

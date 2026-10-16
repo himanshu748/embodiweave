@@ -1,28 +1,28 @@
 {
-  "seconds": 117.6,
+  "seconds": 115.2,
   "fps": 30,
   "width": 1920,
   "height": 1080,
   "narration_model": "aura-2-thalia-en",
-  "narration_seconds": 112.47975000000001,
-  "training_launch_scene_start": 10.1,
-  "launch_narration_ends": 17.339979166666666,
+  "narration_seconds": 110.07975,
+  "training_launch_scene_start": 7.7,
+  "launch_narration_ends": 14.939979166666667,
   "assets": {
     "embodiweave-demo-v4.mp4": {
-      "bytes": 7089116,
-      "sha256": "a3e21f9330e2de9320f7fd8c6c7d781c1811cd081fce7101217f1483344dfac7"
+      "bytes": 6817400,
+      "sha256": "ab163cc2bb41563b02cfcf264e6ce4aad5507f9a97841b91c3a0cbadd03818f9"
     },
     "embodiweave-demo-v4-720p.mp4": {
-      "bytes": 3759754,
-      "sha256": "5ae356a4d84d89f67fb9cf88e30ad0c5e6a2ea2d1e7086a2c4f6b2473488aaa3"
+      "bytes": 3632502,
+      "sha256": "5bd57dcd6e16164d72e3a86665203e0cea6ffd14f55df4768a507ba8f8ef3877"
     },
     "embodiweave-demo-v4-narration-free.mp4": {
-      "bytes": 6944173,
-      "sha256": "6b8909125eb0aed60a58dbaf0df29258bc690ce8bc14be74117028608b028567"
+      "bytes": 6674410,
+      "sha256": "649f9fd044d97b80e85970193ad1aeb3d10fa0bf84b23b11527ef31b05707945"
     },
     "embodiweave-demo-v4.gif": {
-      "bytes": 395929,
-      "sha256": "df1858d833ca2d62f2b6656b7b57135641d078a085fe0c343f5ad6aca502a916"
+      "bytes": 444978,
+      "sha256": "113e3f722a9000d332a1a82956707c4cc84c46ee37ccb00277dabbef547ca20d"
     }
   },
   "music": {
@@ -35,7 +35,22 @@
   },
   "physics_source": {
     "path": "outputs/film-v3/scene-11.mp4",
-    "sha256": "d0e6a76daa9d71f172917f88c50df7feb0012602db3d20ad726fea7dca8b5b3b"
+    "sha256": "d0e6a76daa9d71f172917f88c50df7feb0012602db3d20ad726fea7dca8b5b3b",
+    "preserved_v3_master_sha256": "84283a271914f1fc9f062a1e146155ecc8341ec24c92d3e4ebd4e82621b45e05"
+  },
+  "scene_video_sha256": {
+    "scene-01.mp4": "c5b26b19534dd3176837b1f55a75838424adfcb5efe47d9953dabe08eecc656c",
+    "scene-02.mp4": "7537a0d51769d3d2cb0860c476332ef29b0ec9bb12ab2cdb5f0b6443e28eb866",
+    "scene-03.mp4": "89c98eccd6a6e048276f10e1febaf0992daba427def9ae54c76f51632a1f500a",
+    "scene-04.mp4": "10453a3ab0d48a23b008f4ea84f622a8742723e31cbe0d9eaec4c321bd414da5",
+    "scene-05.mp4": "971240c215b5748a365588309e12ef0fd0bed214fcc2fda098e82b7d6a276b74",
+    "scene-06.mp4": "d5bfca0ff11e05f57b7a82b90e7cddf7c5148be9dda4a31801a59d0a29f5a5c6",
+    "scene-07.mp4": "cd8a3a08c92e2a1151c7cbc0c9c6e0c19541eb3c307f76143dfe4ef364620c99",
+    "scene-08.mp4": "850c335470ba6a10c152d86f9b7d609df51937f130716a7331ce382c1acc001c",
+    "scene-09.mp4": "4d401431fad1bb92c131b3ebf3f7f7c9b6d09904715d4429926192ba6bf59697",
+    "scene-10.mp4": "1f661b6501324bdf9b990d9148531118e5c12b58c8e73741cb59d8bbfacf0794",
+    "scene-11.mp4": "cb36035596b6f3a952febede9fdd8079fe15888ddb10148e6a47529bafb877c2",
+    "scene-12.mp4": "69520b796d4fa8757123b1ad9c74d8216c60e0f0c9232e24b8b6654b5e67f3d3"
   },
   "new_robot_motion": {
     "source": "evidence/film-v4/policy-replay.json",
