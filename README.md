@@ -2,7 +2,7 @@
 
 An agent that reads a robot's training history in FalkorDB, decides which checkpoint to retrain, launches training, and proves whether the new policy got safer.
 
-**[Live demo](https://embodiweave.52.202.25.181.sslip.io) · [Judge walkthrough](https://embodiweave.52.202.25.181.sslip.io/robustness.html) · [2-minute film](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v3.mp4) · [Train in your browser](https://embodiweave.52.202.25.181.sslip.io/live.html#training)**
+**[Live demo](https://embodiweave.52.202.25.181.sslip.io) · [Judge walkthrough](https://embodiweave.52.202.25.181.sslip.io/robustness.html) · [2-minute film](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v4.mp4) · [Train in your browser](https://embodiweave.52.202.25.181.sslip.io/live.html#training)**
 
 [![Tests](https://github.com/himanshu748/embodiweave/actions/workflows/tests.yml/badge.svg)](https://github.com/himanshu748/embodiweave/actions/workflows/tests.yml)
 
@@ -25,6 +25,8 @@ GraphHacks Track 01: **Agents That Act on Connected Data**.
 GPT-4.1 Mini used MCP, read FalkorDB's shortest-path result, chose `physics-20261016150004-25da9c` and launched **60,000 requested / 61,440 consumed PPO steps**. Its new checkpoint passed **4/4 suites across 180 validation episodes**. Collision counts were target **3/60** (10% limit), open **0/40** (5%), static **1/40** (10%) and crossing **1/40** (15%).
 
 **The gate passed, but target and crossing collisions were worse than the chosen parent's 2/60 and 0/40. No safety improvement is established.** The default demo policy stays unchanged. This action demonstration is separate from the frozen studies below. [Full result, exact hashes, provider usage and evidence](evidence/mcp-agent-v2/). The earlier [provider-down deterministic fallback](evidence/mcp-agent-v1/) is retained and labelled.
+
+[![Recorded public MCP tool selection](web/media/embodiweave-demo-v4.gif)](https://embodiweave.52.202.25.181.sslip.io/guide.html#film)
 
 ### Connect MCP from Claude Desktop or Cursor
 
@@ -286,17 +288,19 @@ Bundles include saved model weights, normalization, contract, validation records
 
 ## Film and credits
 
-The v3 film is **116.67 seconds, 1920×1080 at 30 fps, 8.14 MB**, with **108.52 seconds** of Deepgram Thalia narration. Scenes 1-8 preserve the earlier recorded history; scenes 9-11 report the new confirmed checkpoint and MuJoCo-v2 results. Robot motion comes from recorded MuJoCo states produced by the saved PPO checkpoints. Graph layouts, titles, camera moves, sensor overlays and learning-curve plots are editorial graphics backed by the evidence. No robot footage was keyframed or AI-generated.
+The v4 film is **117.60 seconds, 1920×1080 at 30 fps**, with **112.48 seconds** of Deepgram Thalia narration. The first **17.34 seconds** show the real MCP tool choices, model-selected origin, allowed guardrail and queued training action. The later completion shows 61,440 PPO steps and all 180 validation episodes. The candidate passed 4/4 gates, but target collisions rose from **2/60 to 3/60** and crossing from **0/40 to 1/40** against the chosen parent. No safety improvement or deployment change is claimed.
 
-[Watch v3](https://embodiweave.52.202.25.181.sslip.io/guide.html#film) · [v2 fallback](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v2.mp4) · [v1 fallback](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo.mp4) · [Timed script](docs/demo/v3/SCRIPT.md) · [SRT](docs/demo/v3/embodiweave-demo-v3.srt) · [YouTube upload notes](docs/demo/v3/YOUTUBE.md) · [Voice receipts](evidence/film-v3/voice-receipts.json).
+Robot motion uses saved policy states: the new child's original **2D** validation replay, followed by the separately labelled **MuJoCo-v2 sim-to-sim transfer** footage. Physics footage is reused from v3 and is not the new MCP child. Graph nodes and edges come from FalkorDB; titles, graph layout, highlights and cursor movement are editorial. Browser captures replay completed evidence with waiting time removed. Only a final training-progress sample was retained, so this edit does not invent a learning curve. [Source records and checksums](evidence/film-v4/).
 
-[Next-cut script: MCP choice and launch in the first 20 seconds](docs/demo/v4/SCRIPT.md). This is a script update; the v3 MP4 remains the current film and predates the new live MCP demonstration.
+[Watch v4](https://embodiweave.52.202.25.181.sslip.io/guide.html#film) · [1080p download](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v4.mp4) · [Narration-free backup](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v4-narration-free.mp4) · [v3 backup, unchanged](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v3.mp4) · [v2](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v2.mp4) · [v1](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo.mp4).
+
+[Final timed script](docs/demo/v4/SCRIPT.md) · [SRT](docs/demo/v4/embodiweave-demo-v4.srt) · [Thumbnail](docs/demo/v4/thumbnail.png) · [YouTube upload notes](docs/demo/v4/YOUTUBE.md) · [Voice receipts](evidence/film-v4/voice-receipts.json). V3's [script](docs/demo/v3/SCRIPT.md), [receipts](evidence/film-v3/) and all media remain unchanged.
 
 Narration: Deepgram Aura-2. Captions: Deepgram Nova-3. Music: “Cipher” by Kevin MacLeod (incompetech.com), [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/), edited and mixed under narration. [Full credits and reproduction steps](docs/demo/CREDITS.md).
 
 ## AI disclosure
 
-Claude helped build the original simulator, graph tools, experiments and design. Codex audited and extended the implementation, ran the validation search, improved the browser workflow and prepared evidence and documentation. The original recorded tool-driven agent used Sonnet; the public agent uses the configured free OpenRouter NVIDIA provider. New search decisions are explicitly labelled deterministic. All reported outcomes come from saved PPO artifacts and measured episodes; no result was invented to obtain a pass.
+Claude helped build the original simulator, graph tools, experiments and design. Codex audited and extended the implementation, ran the validation search, improved the browser workflow and prepared evidence and documentation. The original recorded tool-driven agent used Sonnet. The recorded public MCP action used GPT-4.1 Mini through OpenRouter/Azure; the configured provider may change. The older search studies and provider-down MCP fallback are explicitly deterministic. Deepgram generated the narration and caption timings; robot motion is recorded simulator output. All reported outcomes come from saved PPO artifacts and measured episodes; no result was invented to obtain a pass.
 
 [Submission draft](docs/submission.md) · [Original PRD](docs/v2-original/prd.md) · [Original specification](docs/v2-original/spec.md) · [MIT license](LICENSE)
 
