@@ -1,0 +1,279 @@
+{
+  "study": "collision-recovery-v1",
+  "protocol_sha256": "2eb6fcfcb7ed43c6df4e7fc45fadab18bf96f6a50f5e168b7455ab92e212fd74",
+  "origin": "physics-20261016150004-25da9c",
+  "arms": [
+    {
+      "arm": "collision40",
+      "policy_id": "collision-recovery-v1-collision40",
+      "artifact_hash": "c8ac0545ae43bfa726889f2d90662aadfa81c42ae8b1c768ea398e68c428c803",
+      "consumed_steps": 61440,
+      "trial_id": "tria-20261016201205-35f596"
+    }
+  ],
+  "measurements": {
+    "parent": {
+      "static_crossing": {
+        "evaluation_id": "eval-20261016201130-93b829",
+        "episodes": 60,
+        "success": 54,
+        "collision": 6,
+        "timeout": 0,
+        "summary": {
+          "episodes": 60,
+          "success_rate": 0.9,
+          "collision_rate": 0.1,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 100.7,
+          "collisions_by_object": {
+            "wall": 1,
+            "static": 3,
+            "mover": 2
+          }
+        }
+      },
+      "open": {
+        "evaluation_id": "eval-20261016201130-a9b298",
+        "episodes": 40,
+        "success": 40,
+        "collision": 0,
+        "timeout": 0,
+        "summary": {
+          "episodes": 40,
+          "success_rate": 1.0,
+          "collision_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 82.8,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 0,
+            "mover": 0
+          }
+        }
+      },
+      "static": {
+        "evaluation_id": "eval-20261016201131-63a723",
+        "episodes": 40,
+        "success": 39,
+        "collision": 1,
+        "timeout": 0,
+        "summary": {
+          "episodes": 40,
+          "success_rate": 0.975,
+          "collision_rate": 0.025,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 97.1,
+          "collisions_by_object": {
+            "wall": 1,
+            "static": 0,
+            "mover": 0
+          }
+        }
+      },
+      "crossing": {
+        "evaluation_id": "eval-20261016201132-bf06f2",
+        "episodes": 40,
+        "success": 35,
+        "collision": 5,
+        "timeout": 0,
+        "summary": {
+          "episodes": 40,
+          "success_rate": 0.875,
+          "collision_rate": 0.125,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 92.7,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 0,
+            "mover": 5
+          }
+        }
+      }
+    },
+    "control": {
+      "static_crossing": {
+        "evaluation_id": "eval-20261016201134-912db5",
+        "episodes": 60,
+        "success": 53,
+        "collision": 7,
+        "timeout": 0,
+        "summary": {
+          "episodes": 60,
+          "success_rate": 0.8833,
+          "collision_rate": 0.1167,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 101.0,
+          "collisions_by_object": {
+            "wall": 1,
+            "static": 4,
+            "mover": 2
+          }
+        }
+      },
+      "open": {
+        "evaluation_id": "eval-20261016201135-46009f",
+        "episodes": 40,
+        "success": 40,
+        "collision": 0,
+        "timeout": 0,
+        "summary": {
+          "episodes": 40,
+          "success_rate": 1.0,
+          "collision_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 82.3,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 0,
+            "mover": 0
+          }
+        }
+      },
+      "static": {
+        "evaluation_id": "eval-20261016201136-555097",
+        "episodes": 40,
+        "success": 38,
+        "collision": 2,
+        "timeout": 0,
+        "summary": {
+          "episodes": 40,
+          "success_rate": 0.95,
+          "collision_rate": 0.05,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 97.5,
+          "collisions_by_object": {
+            "wall": 1,
+            "static": 1,
+            "mover": 0
+          }
+        }
+      },
+      "crossing": {
+        "evaluation_id": "eval-20261016201136-0aaaca",
+        "episodes": 40,
+        "success": 35,
+        "collision": 5,
+        "timeout": 0,
+        "summary": {
+          "episodes": 40,
+          "success_rate": 0.875,
+          "collision_rate": 0.125,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 92.5,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 0,
+            "mover": 5
+          }
+        }
+      }
+    },
+    "collision40": {
+      "static_crossing": {
+        "evaluation_id": "eval-20261016201202-9dbbac",
+        "episodes": 60,
+        "success": 54,
+        "collision": 6,
+        "timeout": 0,
+        "summary": {
+          "episodes": 60,
+          "success_rate": 0.9,
+          "collision_rate": 0.1,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 99.9,
+          "collisions_by_object": {
+            "wall": 1,
+            "static": 3,
+            "mover": 2
+          }
+        }
+      },
+      "open": {
+        "evaluation_id": "eval-20261016201203-4af4ee",
+        "episodes": 40,
+        "success": 40,
+        "collision": 0,
+        "timeout": 0,
+        "summary": {
+          "episodes": 40,
+          "success_rate": 1.0,
+          "collision_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 82.8,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 0,
+            "mover": 0
+          }
+        }
+      },
+      "static": {
+        "evaluation_id": "eval-20261016201204-1978da",
+        "episodes": 40,
+        "success": 39,
+        "collision": 1,
+        "timeout": 0,
+        "summary": {
+          "episodes": 40,
+          "success_rate": 0.975,
+          "collision_rate": 0.025,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 96.8,
+          "collisions_by_object": {
+            "wall": 1,
+            "static": 0,
+            "mover": 0
+          }
+        }
+      },
+      "crossing": {
+        "evaluation_id": "eval-20261016201205-ef91d1",
+        "episodes": 40,
+        "success": 35,
+        "collision": 5,
+        "timeout": 0,
+        "summary": {
+          "episodes": 40,
+          "success_rate": 0.875,
+          "collision_rate": 0.125,
+          "timeout_rate": 0.0,
+          "mean_success_steps": 92.5,
+          "collisions_by_object": {
+            "wall": 0,
+            "static": 0,
+            "mover": 5
+          }
+        }
+      }
+    }
+  },
+  "verdict": {
+    "accepted_for_further_study": false,
+    "checks": [
+      {
+        "family": "static_crossing",
+        "reference_requirements_met": true,
+        "no_regression": true
+      },
+      {
+        "family": "open",
+        "reference_requirements_met": true,
+        "no_regression": true
+      },
+      {
+        "family": "static",
+        "reference_requirements_met": true,
+        "no_regression": true
+      },
+      {
+        "family": "crossing",
+        "reference_requirements_met": true,
+        "no_regression": true
+      }
+    ],
+    "fewer_total_collisions_than_parent_and_control": false,
+    "promo_1": "not evaluated",
+    "confirmation": "not opened",
+    "deployment_changed": false
+  }
+}

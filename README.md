@@ -278,7 +278,7 @@ Bundles include saved model weights, normalization, contract, validation records
 
 ## Honest limitations
 
-A separate [paired rehearsal development study](evidence/rehearsal-recovery-v1/) did not recover the recorded regression: the parent and both new children each had 7 collisions in 180 fresh episodes. The recipe was not adopted; the recorded MCP result and confirmed demo policy remain separate.
+Separate local development studies tested [family rehearsal](evidence/rehearsal-recovery-v1/) and [a stronger collision cost](evidence/collision-recovery-v1/). The first recorded 7/180 collisions for parent and both children. On a different paired batch, the stronger-cost child had 12/180 versus the control's 14/180, matching the parent's 12/180. Neither study established an improvement over its parent or justified a release. The recorded MCP regression and confirmed demo policy remain separate.
 
 - Search-v1 failed its held-out target test. Robustness-v2 passed fresh 2D confirmation, but its MuJoCo target still had 6/40 collisions (15%), above the 10% reference limit. This is not evidence of physical robot safety.
 - The two 2D studies added three adaptive attempts; the physics study and its separate follow-up added four. These small studies do not establish a reliable improvement or selection-efficiency advantage. Each study fixed one training seed, and later candidates also used more training.
