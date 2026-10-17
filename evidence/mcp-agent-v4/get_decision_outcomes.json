@@ -1,0 +1,411 @@
+{
+  "notice": "Completed parent comparisons; no new evaluation. No outcomes means unknown, not safe.",
+  "outcomes": [
+    {
+      "child_id": "judge-c2a3eb9f19f9c4223a36788c304e0e0b",
+      "decision_id": "deci-20261016175734-1b2724",
+      "evaluation_ids": [
+        "eval-20261016152511-290328",
+        "eval-20261016152511-7d0b1d",
+        "eval-20261016152512-d3ad78",
+        "eval-20261016152513-619214",
+        "eval-20261016175812-e0b762",
+        "eval-20261016175815-360546",
+        "eval-20261016175818-6d7cce",
+        "eval-20261016175820-c272b8"
+      ],
+      "origin_id": "physics-20261016150004-25da9c",
+      "outcome": {
+        "deployment_changed": false,
+        "gate_verdict": "promoted",
+        "id": "outcome-deci-20261016175734-1b2724",
+        "measured": true,
+        "regressed": true,
+        "release_verdict": "not_released_regression",
+        "suites": [
+          {
+            "child_collisions": 3,
+            "child_evaluation_id": "eval-20261016175812-e0b762",
+            "child_goals": 57,
+            "collision_delta": 1,
+            "collision_rate_delta": 0.016666666666666666,
+            "episodes": 60,
+            "goal_delta": -1,
+            "parent_collisions": 2,
+            "parent_evaluation_id": "eval-20261016152511-7d0b1d",
+            "parent_goals": 58,
+            "suite_fingerprint": "9447338d94ad2972c1b0ceefaed4e642ff95ed73607743aa63fdeda2321193e7",
+            "suite_id": "val-target-v1"
+          },
+          {
+            "child_collisions": 0,
+            "child_evaluation_id": "eval-20261016175815-360546",
+            "child_goals": 40,
+            "collision_delta": 0,
+            "collision_rate_delta": 0.0,
+            "episodes": 40,
+            "goal_delta": 0,
+            "parent_collisions": 0,
+            "parent_evaluation_id": "eval-20261016152511-290328",
+            "parent_goals": 40,
+            "suite_fingerprint": "c0b2aa125313816e681ee6894301dd982f0dc6f808231faaa714a00b1230a042",
+            "suite_id": "val-open-v1"
+          },
+          {
+            "child_collisions": 1,
+            "child_evaluation_id": "eval-20261016175818-6d7cce",
+            "child_goals": 39,
+            "collision_delta": 0,
+            "collision_rate_delta": 0.0,
+            "episodes": 40,
+            "goal_delta": 0,
+            "parent_collisions": 1,
+            "parent_evaluation_id": "eval-20261016152512-d3ad78",
+            "parent_goals": 39,
+            "suite_fingerprint": "9d78e34ff588089102fcfd03b56e187132d1adff50812d9d40ae262fb07f5bbf",
+            "suite_id": "val-static-v1"
+          },
+          {
+            "child_collisions": 1,
+            "child_evaluation_id": "eval-20261016175820-c272b8",
+            "child_goals": 39,
+            "collision_delta": 1,
+            "collision_rate_delta": 0.025,
+            "episodes": 40,
+            "goal_delta": -1,
+            "parent_collisions": 0,
+            "parent_evaluation_id": "eval-20261016152513-619214",
+            "parent_goals": 40,
+            "suite_fingerprint": "6954fd519f6977849243cacb87327af09ac024002725a747ffaddc2289b663e2",
+            "suite_id": "val-crossing-v1"
+          }
+        ]
+      },
+      "run_id": "run-20261016175735-f9d7b4"
+    },
+    {
+      "child_id": "judge-a524ef1f3d677cd255354736e0cba609",
+      "decision_id": "deci-20261016121309-c0c93f",
+      "evaluation_ids": [
+        "eval-20261016121346-e7a772",
+        "eval-20261016121348-9c60c2",
+        "eval-20261016121351-db5fe4",
+        "eval-20261016121354-2695c2",
+        "eval-20261016152511-290328",
+        "eval-20261016152511-7d0b1d",
+        "eval-20261016152512-d3ad78",
+        "eval-20261016152513-619214"
+      ],
+      "origin_id": "physics-20261016150004-25da9c",
+      "outcome": {
+        "deployment_changed": false,
+        "gate_verdict": "promoted",
+        "id": "outcome-deci-20261016121309-c0c93f",
+        "measured": true,
+        "regressed": true,
+        "release_verdict": "not_released_regression",
+        "suites": [
+          {
+            "child_collisions": 3,
+            "child_evaluation_id": "eval-20261016121346-e7a772",
+            "child_goals": 57,
+            "collision_delta": 1,
+            "collision_rate_delta": 0.016666666666666666,
+            "episodes": 60,
+            "goal_delta": -1,
+            "parent_collisions": 2,
+            "parent_evaluation_id": "eval-20261016152511-7d0b1d",
+            "parent_goals": 58,
+            "suite_fingerprint": "9447338d94ad2972c1b0ceefaed4e642ff95ed73607743aa63fdeda2321193e7",
+            "suite_id": "val-target-v1"
+          },
+          {
+            "child_collisions": 0,
+            "child_evaluation_id": "eval-20261016121348-9c60c2",
+            "child_goals": 40,
+            "collision_delta": 0,
+            "collision_rate_delta": 0.0,
+            "episodes": 40,
+            "goal_delta": 0,
+            "parent_collisions": 0,
+            "parent_evaluation_id": "eval-20261016152511-290328",
+            "parent_goals": 40,
+            "suite_fingerprint": "c0b2aa125313816e681ee6894301dd982f0dc6f808231faaa714a00b1230a042",
+            "suite_id": "val-open-v1"
+          },
+          {
+            "child_collisions": 1,
+            "child_evaluation_id": "eval-20261016121351-db5fe4",
+            "child_goals": 39,
+            "collision_delta": 0,
+            "collision_rate_delta": 0.0,
+            "episodes": 40,
+            "goal_delta": 0,
+            "parent_collisions": 1,
+            "parent_evaluation_id": "eval-20261016152512-d3ad78",
+            "parent_goals": 39,
+            "suite_fingerprint": "9d78e34ff588089102fcfd03b56e187132d1adff50812d9d40ae262fb07f5bbf",
+            "suite_id": "val-static-v1"
+          },
+          {
+            "child_collisions": 1,
+            "child_evaluation_id": "eval-20261016121354-2695c2",
+            "child_goals": 39,
+            "collision_delta": 1,
+            "collision_rate_delta": 0.025,
+            "episodes": 40,
+            "goal_delta": -1,
+            "parent_collisions": 0,
+            "parent_evaluation_id": "eval-20261016152513-619214",
+            "parent_goals": 40,
+            "suite_fingerprint": "6954fd519f6977849243cacb87327af09ac024002725a747ffaddc2289b663e2",
+            "suite_id": "val-crossing-v1"
+          }
+        ]
+      },
+      "run_id": "run-20261016121310-0bfccc"
+    }
+  ],
+  "queries": [
+    {
+      "cypher": "MATCH (p:Policy {id:$policy})-[:USES_CONTRACT]->(c:Contract)-[:FOR_ROBOT]->(r:Robot)\nRETURN p.id AS policy_id, p.artifact_hash AS artifact_hash, p.status AS status,\n       c.id AS contract_id, r.id AS robot_id LIMIT 1",
+      "graph": "ew",
+      "graph_revision": 10,
+      "header": [
+        "policy_id",
+        "artifact_hash",
+        "status",
+        "contract_id",
+        "robot_id"
+      ],
+      "ms": 0.98,
+      "params": {
+        "policy": "robust-20261016140226-352fd7"
+      },
+      "record_ids": [
+        "robust-20261016140226-352fd7"
+      ],
+      "returned_ids": [
+        "robust-20261016140226-352fd7"
+      ],
+      "row_count": 1,
+      "rows": [
+        {
+          "artifact_hash": "b027851f2ffe5595de6742a3df2b5be419a95aa92c8d34c87d8e459aeaaa85b4",
+          "contract_id": "ew-contract-1:2f013b6f4849",
+          "policy_id": "robust-20261016140226-352fd7",
+          "robot_id": "ew-unicycle-r20",
+          "status": "completed"
+        }
+      ],
+      "template": "mcp_policy"
+    },
+    {
+      "cypher": "MATCH (target:Policy {id:$policy})-[:USES_CONTRACT]->(contract:Contract)<-[:USES_CONTRACT]-(origin:Policy)\nMATCH (d:Decision)-[:SELECTED]->(origin), (d)-[:LAUNCHED]->(run:Run)-[:PRODUCED]->(child:Policy)\nMATCH (d)-[:HAS_OUTCOME]->(o:DecisionOutcome)-[:ASSESSED]->(child)\nMATCH (child)-[comparison:COMPARED_AGAINST {outcome_id:o.id}]->(origin)\nMATCH (o)-[:BASED_ON]->(ev:Evaluation)-[:ON_SUITE]->(suite:Suite)\nWHERE comparison.parent_hash=origin.artifact_hash AND comparison.child_hash=child.artifact_hash\n  AND suite.role='validation' AND suite.id IN $suites\n  AND ev.complete_suite=true AND ev.suite_fingerprint=suite.fingerprint\nRETURN d.id AS decision_id, origin.id AS origin_id, run.id AS run_id, child.id AS child_id,\n       properties(o) AS outcome, collect(DISTINCT ev.id) AS evaluation_ids\nORDER BY decision_id DESC LIMIT 40",
+      "graph": "ew",
+      "graph_revision": 10,
+      "header": [
+        "decision_id",
+        "origin_id",
+        "run_id",
+        "child_id",
+        "outcome",
+        "evaluation_ids"
+      ],
+      "ms": 1.27,
+      "params": {
+        "policy": "robust-20261016140226-352fd7",
+        "suites": [
+          "val-target-v1",
+          "val-open-v1",
+          "val-static-v1",
+          "val-crossing-v1"
+        ]
+      },
+      "record_ids": [
+        "deci-20261016121309-c0c93f",
+        "deci-20261016175734-1b2724",
+        "judge-a524ef1f3d677cd255354736e0cba609",
+        "judge-c2a3eb9f19f9c4223a36788c304e0e0b",
+        "run-20261016121310-0bfccc",
+        "run-20261016175735-f9d7b4"
+      ],
+      "returned_ids": [
+        "deci-20261016121309-c0c93f",
+        "deci-20261016175734-1b2724",
+        "judge-a524ef1f3d677cd255354736e0cba609",
+        "judge-c2a3eb9f19f9c4223a36788c304e0e0b",
+        "run-20261016121310-0bfccc",
+        "run-20261016175735-f9d7b4"
+      ],
+      "row_count": 2,
+      "rows": [
+        {
+          "child_id": "judge-c2a3eb9f19f9c4223a36788c304e0e0b",
+          "decision_id": "deci-20261016175734-1b2724",
+          "evaluation_ids": [
+            "eval-20261016152511-290328",
+            "eval-20261016152511-7d0b1d",
+            "eval-20261016152512-d3ad78",
+            "eval-20261016152513-619214",
+            "eval-20261016175812-e0b762",
+            "eval-20261016175815-360546",
+            "eval-20261016175818-6d7cce",
+            "eval-20261016175820-c272b8"
+          ],
+          "origin_id": "physics-20261016150004-25da9c",
+          "outcome": {
+            "deployment_changed": false,
+            "gate_verdict": "promoted",
+            "id": "outcome-deci-20261016175734-1b2724",
+            "measured": true,
+            "regressed": true,
+            "release_verdict": "not_released_regression",
+            "suites": [
+              {
+                "child_collisions": 3,
+                "child_evaluation_id": "eval-20261016175812-e0b762",
+                "child_goals": 57,
+                "collision_delta": 1,
+                "collision_rate_delta": 0.016666666666666666,
+                "episodes": 60,
+                "goal_delta": -1,
+                "parent_collisions": 2,
+                "parent_evaluation_id": "eval-20261016152511-7d0b1d",
+                "parent_goals": 58,
+                "suite_fingerprint": "9447338d94ad2972c1b0ceefaed4e642ff95ed73607743aa63fdeda2321193e7",
+                "suite_id": "val-target-v1"
+              },
+              {
+                "child_collisions": 0,
+                "child_evaluation_id": "eval-20261016175815-360546",
+                "child_goals": 40,
+                "collision_delta": 0,
+                "collision_rate_delta": 0.0,
+                "episodes": 40,
+                "goal_delta": 0,
+                "parent_collisions": 0,
+                "parent_evaluation_id": "eval-20261016152511-290328",
+                "parent_goals": 40,
+                "suite_fingerprint": "c0b2aa125313816e681ee6894301dd982f0dc6f808231faaa714a00b1230a042",
+                "suite_id": "val-open-v1"
+              },
+              {
+                "child_collisions": 1,
+                "child_evaluation_id": "eval-20261016175818-6d7cce",
+                "child_goals": 39,
+                "collision_delta": 0,
+                "collision_rate_delta": 0.0,
+                "episodes": 40,
+                "goal_delta": 0,
+                "parent_collisions": 1,
+                "parent_evaluation_id": "eval-20261016152512-d3ad78",
+                "parent_goals": 39,
+                "suite_fingerprint": "9d78e34ff588089102fcfd03b56e187132d1adff50812d9d40ae262fb07f5bbf",
+                "suite_id": "val-static-v1"
+              },
+              {
+                "child_collisions": 1,
+                "child_evaluation_id": "eval-20261016175820-c272b8",
+                "child_goals": 39,
+                "collision_delta": 1,
+                "collision_rate_delta": 0.025,
+                "episodes": 40,
+                "goal_delta": -1,
+                "parent_collisions": 0,
+                "parent_evaluation_id": "eval-20261016152513-619214",
+                "parent_goals": 40,
+                "suite_fingerprint": "6954fd519f6977849243cacb87327af09ac024002725a747ffaddc2289b663e2",
+                "suite_id": "val-crossing-v1"
+              }
+            ]
+          },
+          "run_id": "run-20261016175735-f9d7b4"
+        },
+        {
+          "child_id": "judge-a524ef1f3d677cd255354736e0cba609",
+          "decision_id": "deci-20261016121309-c0c93f",
+          "evaluation_ids": [
+            "eval-20261016121346-e7a772",
+            "eval-20261016121348-9c60c2",
+            "eval-20261016121351-db5fe4",
+            "eval-20261016121354-2695c2",
+            "eval-20261016152511-290328",
+            "eval-20261016152511-7d0b1d",
+            "eval-20261016152512-d3ad78",
+            "eval-20261016152513-619214"
+          ],
+          "origin_id": "physics-20261016150004-25da9c",
+          "outcome": {
+            "deployment_changed": false,
+            "gate_verdict": "promoted",
+            "id": "outcome-deci-20261016121309-c0c93f",
+            "measured": true,
+            "regressed": true,
+            "release_verdict": "not_released_regression",
+            "suites": [
+              {
+                "child_collisions": 3,
+                "child_evaluation_id": "eval-20261016121346-e7a772",
+                "child_goals": 57,
+                "collision_delta": 1,
+                "collision_rate_delta": 0.016666666666666666,
+                "episodes": 60,
+                "goal_delta": -1,
+                "parent_collisions": 2,
+                "parent_evaluation_id": "eval-20261016152511-7d0b1d",
+                "parent_goals": 58,
+                "suite_fingerprint": "9447338d94ad2972c1b0ceefaed4e642ff95ed73607743aa63fdeda2321193e7",
+                "suite_id": "val-target-v1"
+              },
+              {
+                "child_collisions": 0,
+                "child_evaluation_id": "eval-20261016121348-9c60c2",
+                "child_goals": 40,
+                "collision_delta": 0,
+                "collision_rate_delta": 0.0,
+                "episodes": 40,
+                "goal_delta": 0,
+                "parent_collisions": 0,
+                "parent_evaluation_id": "eval-20261016152511-290328",
+                "parent_goals": 40,
+                "suite_fingerprint": "c0b2aa125313816e681ee6894301dd982f0dc6f808231faaa714a00b1230a042",
+                "suite_id": "val-open-v1"
+              },
+              {
+                "child_collisions": 1,
+                "child_evaluation_id": "eval-20261016121351-db5fe4",
+                "child_goals": 39,
+                "collision_delta": 0,
+                "collision_rate_delta": 0.0,
+                "episodes": 40,
+                "goal_delta": 0,
+                "parent_collisions": 1,
+                "parent_evaluation_id": "eval-20261016152512-d3ad78",
+                "parent_goals": 39,
+                "suite_fingerprint": "9d78e34ff588089102fcfd03b56e187132d1adff50812d9d40ae262fb07f5bbf",
+                "suite_id": "val-static-v1"
+              },
+              {
+                "child_collisions": 1,
+                "child_evaluation_id": "eval-20261016121354-2695c2",
+                "child_goals": 39,
+                "collision_delta": 1,
+                "collision_rate_delta": 0.025,
+                "episodes": 40,
+                "goal_delta": -1,
+                "parent_collisions": 0,
+                "parent_evaluation_id": "eval-20261016152513-619214",
+                "parent_goals": 40,
+                "suite_fingerprint": "6954fd519f6977849243cacb87327af09ac024002725a747ffaddc2289b663e2",
+                "suite_id": "val-crossing-v1"
+              }
+            ]
+          },
+          "run_id": "run-20261016121310-0bfccc"
+        }
+      ],
+      "template": "mcp_decision_outcomes"
+    }
+  ]
+}

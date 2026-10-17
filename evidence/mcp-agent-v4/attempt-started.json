@@ -1,0 +1,36 @@
+{
+  "at": 1792208998.5041962,
+  "protocol_sha256": "8de4374d73ac2195d56d8be5d95dcfe10961b25a60e17085b4fd3639557db0b0",
+  "deployment_commit": "2735e9942f3614eaa17daf5228a87df5e6dd748a",
+  "preregistration_commit": "7b610c225af42a69e71b820807f494e9717ac79b",
+  "config": {
+    "enabled": true,
+    "provider": "OpenRouter",
+    "model": "openai/gpt-4.1-mini",
+    "fallback_models": [],
+    "billing_mode": "bounded_paid",
+    "ephemeral": false,
+    "max_turns": 6,
+    "max_tools": 10,
+    "max_seconds": 120,
+    "daily_runs": 20,
+    "visitor_hourly": 4,
+    "reason": null
+  },
+  "status": {
+    "graph": {
+      "up": true,
+      "revision": 10,
+      "name": "ew"
+    },
+    "worker": {
+      "alive": false,
+      "running": []
+    },
+    "deployed_policy": "robust-20261016140226-352fd7",
+    "contract": "ew-contract-1:2f013b6f4849",
+    "world": "simulated",
+    "server_time": 1792208998.3886154,
+    "hosted_readonly": true
+  }
+}
