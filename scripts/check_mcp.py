@@ -11,7 +11,7 @@ from mcp.client.stdio import StdioServerParameters, stdio_client
 from ew import agent_tools, mcp_client as C
 
 EXPECTED = {"diagnose_policy", "explain_decision", "lineage", "find_training_origins",
-            "nearest_passing_ancestor", "start_training", "check_gate", "get_decision_outcomes", "rank_regression_origins", "get_evidence_record"}
+            "nearest_passing_ancestor", "start_training", "check_gate", "get_decision_outcomes", "rank_regression_origins", "get_evidence_record", "rank_origins_excluding_regressed"}
 
 
 @asynccontextmanager
@@ -31,7 +31,7 @@ async def connection(args):
 async def check(args):
     async with connection(args) as (client, tools, initialized):
         assert set(tools) == EXPECTED
-        calls = [("get_evidence_record", {"record_type":"Policy", "record_id":args.policy}),
+        calls = [("rank_origins_excluding_regressed", {"target_policy":args.policy}), ("get_evidence_record", {"record_type":"Policy", "record_id":args.policy}),
                  ("diagnose_policy", {"policy_id": args.policy}),
                  ("lineage", {"policy_id": args.policy, "max_hops": 8}),
                  ("find_training_origins", {"target_policy": args.policy}),

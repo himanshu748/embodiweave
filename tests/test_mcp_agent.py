@@ -127,7 +127,7 @@ def test_real_sdk_stdio_discovery_and_algorithm(world):
             async with ClientSession(*streams) as client:
                 await client.initialize()
                 tools = await client.list_tools()
-                assert len(tools.tools) == 10
+                assert len(tools.tools) == 11
                 r = C.unpack(await client.call_tool("nearest_passing_ancestor", {"policy_id": "target"}))
                 assert r["nearest"]["hops"] == 2
     asyncio.run(run())
@@ -137,7 +137,7 @@ def test_real_sdk_http_reads_and_unauthorized_action(world):
     async def run():
         async with api.lifespan(api.app):
             async with C.connect(url="http://testserver/mcp/", transport=httpx2.ASGITransport(api.app)) as (client, tools, initialized):
-                assert len(tools) == 10 and initialized["serverInfo"]["name"] == "EmbodiWeave"
+                assert len(tools) == 11 and initialized["serverInfo"]["name"] == "EmbodiWeave"
                 assert C.unpack(await client.call_tool("lineage", {"policy_id": "target"}))["ancestors"]
                 assert C.unpack(await client.call_tool("diagnose_policy", {"policy_id": "target"}))["validation_and_failures"]
                 result = C.unpack(await client.call_tool("start_training", {"origin_id": "root", "reason": "Unauthorized action must stop"}))
@@ -337,13 +337,39 @@ def test_retry_guard_requires_explicit_prior_outcome_citation(world,monkeypatch)
     assert any('outcome ID' in s for s in result['guardrail']['reasons'])
 
 
-def test_retry_cannot_start_a_second_attempt(world,monkeypatch):
+@pytest.mark.parametrize("study", ["v3-retry", "agent-mcp-v4"])
+def test_retry_cannot_start_a_second_attempt(world,monkeypatch,study):
     # This fixture tests attempt reuse, independently of the real study deadline.
     monkeypatch.setattr(J.time, 'time', lambda: 1792173000.0)
-    monkeypatch.setenv('EW_AGENT_STUDY','v3-retry')
+    monkeypatch.setenv('EW_AGENT_STUDY',study)
     monkeypatch.setattr(J,'configuration',lambda:{'enabled':True,'provider':'fixture','model':'fixture'})
     monkeypatch.setattr(J.threading,'Thread',lambda **kw:SimpleNamespace(start=lambda:None))
     first=J.start('Choose once with recorded outcome',True,'one',True,True)
     stored=json.loads(J._path(first['id']).read_text());stored['state']='failed';J._path(first['id']).write_text(json.dumps(stored))
     with pytest.raises(J.Limited,match='already been used'):
         J.start('Choose once with recorded outcome',True,'two',True,True)
+
+
+def test_v4_fresh_exclusion_veto_and_single_proposal(world, monkeypatch):
+    monkeypatch.setattr(D.public_training, 'start', lambda *a,**k: pytest.fail('Excluded origin must not train'))
+    flow=D.Workflow('v4-fixture','owner',True,True,target='target',study_id='agent-mcp-v4')
+    reads(flow)
+    prior='outcome-deci-20261016121309-c0c93f'
+    flow.calls += [dict(tool='get_decision_outcomes',args={'target_policy':'target'},
+                       result={'outcomes':[{'outcome':{'id':prior}}]}),
+                   dict(tool='rank_regression_origins',args={'target_policy':'target'},result={})]
+    # Agent saw a clean ranking; new evidence arrives before proposal.
+    D.dispatch('rank_origins_excluding_regressed',{'target_policy':'target'},flow)
+    db.rw("MATCH (a:Policy {id:'target'}),(b:Policy {id:'root'}) CREATE (a)-[:REGRESSED_AGAINST {outcome_id:$o}]->(b)",{'o':prior})
+    saved=[]
+    def record(workflow,guard,origin,budget,reason):
+        saved.append(guard); workflow.decisions.append('fixture-v4-veto')
+        return {'id':'fixture-v4-veto','guardrail':guard}
+    monkeypatch.setattr(D,'_record',record)
+    reason=f'root is the shortestPath ancestor. regression-lineage-exclusion-v1 cites {prior}.'
+    result=D.dispatch('start_training',{'origin_id':'root','budget':60000,'reason':reason},flow)
+    assert not result['training_started'] and saved[0]['verdict']=='vetoed'
+    assert any('fresh graph' in s for s in saved[0]['reasons'])
+    assert any('REGRESSED_AGAINST' in q['cypher'] for q in saved[0]['queries'])
+    again=D.dispatch('start_training',{'origin_id':'root','budget':60000,'reason':reason},flow)
+    assert 'sole v4 proposal' in again['error'] and len(saved)==1

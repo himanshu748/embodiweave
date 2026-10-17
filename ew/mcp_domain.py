@@ -151,6 +151,20 @@ def rank_regression_origins(target_policy):
             "notice": "Descending observed regression burden, not expected safety. More attempts can increase degree. Zero with support differs from null without observations; no statistical or planner advantage claim."}
 
 
+def rank_origins_excluding_regressed(target_policy, max_hops=8):
+    """Authored exclusion rule, with ranking and reasons computed in FalkorDB."""
+    if type(max_hops) is not int or not 1 <= max_hops <= 8:
+        raise ValueError("Choose between one and eight lineage hops")
+    eligible = inspect_training_origins(target_policy, 60000)
+    q = query("mcp_origins_excluding_regressed", {"policy": target_policy,
+        "origins": [{"id": c["policy_id"], "evaluations": [e["evaluation_id"] for e in c["validation"].values()]}
+                    for c in eligible["ranking"]], "criteria": CRITERIA, "suite_count": len(SUITES),
+        "max_hops": max_hops, "blocked_verdict": "not_released_regression"})
+    return {"origin_ranking": q["rows"], "queries": [*eligible["queries"], q],
+            "ineligible": eligible["rejected"], "rule": "regression-lineage-exclusion-v1",
+            "notice": "Exclude either endpoint of a recorded regression in self/ancestor lineage. Unexamined deeper lineage is excluded. Rank survivors by failed-suite count, then minimum collision clearance, then ID. No recorded regression is not proof of safety; this is an authored rule, not learned behavior."}
+
+
 def check_gate(policy_id):
     policy(policy_id)
     result = service.promotion_preview(policy_id)
@@ -158,7 +172,7 @@ def check_gate(policy_id):
 
 
 def _record(workflow, guard, origin_id, budget, reason, *, action="train_from_parent"):
-    protocols = {"public-agent-mcp": "mcp-agent", "agent-mcp-v2": "mcp-agent-v2", "agent-mcp-v3": "mcp-agent-v3", "v3-retry": "mcp-agent-v3-retry"}
+    protocols = {"public-agent-mcp": "mcp-agent", "agent-mcp-v2": "mcp-agent-v2", "agent-mcp-v3": "mcp-agent-v3", "v3-retry": "mcp-agent-v3-retry", "agent-mcp-v4": "mcp-agent-v4"}
     if workflow.study_id not in protocols:
         raise ValueError("Unknown agent evidence protocol")
     protocol_path = Path(__file__).resolve().parents[1] / "evidence" / protocols[workflow.study_id] / "protocol.json"
@@ -198,6 +212,8 @@ def start_training(origin_id, budget, reason, workflow):
     with workflow.lock:
         if workflow.training_session_id:
             return {"training_session_id": workflow.training_session_id, "state": "already_launched", "decision_ids": workflow.decisions}
+        if workflow.study_id == "agent-mcp-v4" and workflow.decisions:
+            raise PermissionError("The sole v4 proposal has already been recorded; no second proposal is allowed")
         guard = validate_proposed_origin(workflow.target, origin_id, budget)
         if type(budget) is not int or budget != 60000:
             guard["reasons"].append("Page consent authorizes exactly 60000 steps")
@@ -205,15 +221,25 @@ def start_training(origin_id, budget, reason, workflow):
                  c["args"].get("policy_id", c["args"].get("target_policy")) == workflow.target}
         if not {"diagnose_policy", "find_training_origins", "nearest_passing_ancestor"} <= reads:
             guard["reasons"].append("Read diagnosis, origins and the graph algorithm before proposing training")
-        if workflow.study_id in ("agent-mcp-v3", "v3-retry"):
+        if workflow.study_id in ("agent-mcp-v3", "v3-retry", "agent-mcp-v4"):
             if not {"get_decision_outcomes", "rank_regression_origins"} <= reads:
                 guard["reasons"].append("Read prior outcomes and weighted regression degree before the v3 proposal")
-        if workflow.study_id == 'v3-retry':
+        if workflow.study_id in ('v3-retry', 'agent-mcp-v4'):
             prior = 'outcome-deci-20261016121309-c0c93f'
             seen = {r['outcome']['id'] for c in workflow.calls if c['tool']=='get_decision_outcomes'
                     for r in c['result'].get('outcomes', [])}
             if prior not in seen or prior not in reason:
                 guard['reasons'].append('Read and cite the recorded v2 outcome ID in the proposal reason')
+        if workflow.study_id == 'agent-mcp-v4':
+            if 'rank_origins_excluding_regressed' not in reads:
+                guard['reasons'].append('Read the regression-aware origin ranking before the v4 proposal')
+            fresh = rank_origins_excluding_regressed(workflow.target)
+            guard['queries'].extend(fresh['queries'])
+            row = next((r for r in fresh['origin_ranking'] if r['origin_id']==origin_id), None)
+            if row is None or row['excluded']:
+                guard['reasons'].append('Origin excluded by fresh graph regression-lineage evidence or incomplete lineage')
+            if 'regression-lineage-exclusion-v1' not in reason:
+                guard['reasons'].append('Cite regression-lineage-exclusion-v1 and explain the graph exclusion')
         algorithms = [c["result"].get("nearest") for c in workflow.calls if c["tool"] == "nearest_passing_ancestor"
                       and c["args"].get("policy_id") == workflow.target and c["result"].get("nearest")]
         if algorithms and algorithms[-1]["ancestor_id"] not in reason:
@@ -232,7 +258,7 @@ def start_training(origin_id, budget, reason, workflow):
                 "detail": "Real PPO queued. The trusted worker will evaluate 180 validation episodes and record the gate. Follow the training panel; this is not a completed result."}
 
 
-READS = {name: globals()[name] for name in ("diagnose_policy", "explain_decision", "lineage", "find_training_origins", "nearest_passing_ancestor", "check_gate", "get_decision_outcomes", "rank_regression_origins", "get_evidence_record")}
+READS = {name: globals()[name] for name in ("diagnose_policy", "explain_decision", "lineage", "find_training_origins", "nearest_passing_ancestor", "check_gate", "get_decision_outcomes", "rank_regression_origins", "get_evidence_record", "rank_origins_excluding_regressed")}
 
 
 def dispatch(name, args, workflow=None):

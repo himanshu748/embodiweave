@@ -11,7 +11,7 @@ ALL_TOOL_TEXT_BUDGET = 12000
 REQUEST_BYTE_BUDGET = 28000
 MAX_HISTORY_GROUPS = 6
 REQUIRED_READS = {'diagnose_policy', 'find_training_origins', 'nearest_passing_ancestor',
-                  'get_decision_outcomes', 'rank_regression_origins'}
+                  'get_decision_outcomes', 'rank_regression_origins', 'rank_origins_excluding_regressed'}
 
 
 def encode(value):
@@ -33,6 +33,14 @@ def summarize(name, result):
     if result.get('error'):
         out.update(pick(result, ['error', 'graph_unavailable']))
         out['error'] = str(out['error'])[:600]
+    elif 'origin_ranking' in result:
+        rows=result['origin_ranking']
+        eligible=[r for r in rows if not r['excluded']]
+        excluded=[r for r in rows if r['excluded']]
+        out.update(rule=result['rule'], total_eligible=len(eligible), total_excluded=len(excluded),
+            eligible_origins=[pick(r, ['origin_id','failed_suites','collision_clearance']) for r in eligible[:3]],
+            excluded_origins=[{**pick(r,['origin_id','unexamined_ancestors']), 'reasons':r['reasons'][:2]} for r in excluded[:2]],
+            notice='Top-k summary; full exclusions and Cypher retained in Decision audit. No observed regression is not safety.')
     elif 'candidates' in result:
         rows = result['candidates']
         out.update(total_candidates=len(rows), candidate_order='authored eligibility rank; not a safety prediction',
@@ -77,7 +85,7 @@ def summarize(name, result):
                       'guardrail', 'training_started', 'policy_id', 'artifact_hash', 'preview', 'verdict', 'checks',
                       'missing', 'deployment_changed']))
     # Reduce complete rows, never slice JSON or a metric. Full records stay queryable.
-    for key in ['candidates', 'outcomes', 'ranking', 'ancestors']:
+    for key in ['candidates', 'outcomes', 'ranking', 'ancestors', 'eligible_origins', 'excluded_origins']:
         while len(encode(out).encode()) > TOOL_TEXT_BUDGET and len(out.get(key, [])) > 1:
             out[key].pop()
     if 'candidates' in out:

@@ -177,9 +177,9 @@ def start(question, consent, token, training_consent=False, training_requested=F
                     return _public(s)  # double click or reload never launches a second model loop
                 raise Limited("Another investigation is running. Please try again in two minutes.")
         study = os.environ.get('EW_AGENT_STUDY', 'public-agent-mcp')
-        if study in ('agent-mcp-v3', 'v3-retry') and any(s.get('study_id') == study for s in sessions):
+        if study in ('agent-mcp-v3', 'v3-retry', 'agent-mcp-v4') and any(s.get('study_id') == study for s in sessions):
             raise Limited('The single preregistered attempt for this study has already been used. Its evidence is retained.')
-        if study == 'v3-retry' and now + MAX_SECONDS + 480 >= 1792305000:
+        if study in ('v3-retry', 'agent-mcp-v4') and now + MAX_SECONDS + 480 >= 1792305000:
             # 2026-10-18 12:00 IST; leave the existing agent and worker time limits.
             raise Limited('The preregistered completion cutoff has passed; no attempt was started.')
         day = time.strftime("%Y-%m-%d", time.gmtime(now))

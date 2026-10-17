@@ -71,6 +71,11 @@ def create_server():
         """Weighted incoming degree of observed regression edges, largest burden first. Unknown origins are not assigned zero risk."""
         return D.dispatch("rank_regression_origins", {"target_policy": target_policy}, _workflow(ctx))
 
+    @server.tool(annotations=READ)
+    def rank_origins_excluding_regressed(target_policy: str, ctx: Context, max_hops: Hops = 8) -> dict:
+        """Rank verified origins in FalkorDB by failed suites then collision clearance. Exclude self/ancestor lineage connected to REGRESSED_AGAINST or not_released_regression; return exact reasons. Authored conservative rule, not learned safety."""
+        return D.dispatch("rank_origins_excluding_regressed", {"target_policy":target_policy, "max_hops":max_hops}, _workflow(ctx))
+
     @server.tool(annotations=WRITE)
     def start_training(origin_id: str, reason: str, ctx: Context, budget: Annotated[int, Field(strict=True)] = 60000) -> dict:
         """Propose an origin, citing the algorithm and evidence in reason. Guardrail records a Decision BEFORE one real 60000-step PPO run in the original 2D simulator (seed29, ppo-r1), 180 validation episodes and the gate. No MuJoCo or deployment. Consent required; returns a pending session."""
