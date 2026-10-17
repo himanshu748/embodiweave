@@ -60,3 +60,39 @@ def test_transitive_lineage_depth_and_parameter_bounds(snapshot):
         with pytest.raises(ValueError): D.rank_origins_excluding_regressed(TARGET,hops)
     row = next(r for r in D.rank_origins_excluding_regressed(TARGET,1)['origin_ranking'] if r['origin_id']==TARGET)
     assert row['excluded'] and row['unexamined_ancestors']
+
+
+def test_depth_paths_are_real_and_unexamined_never_eligible(snapshot):
+    edges = {(e['source'],e['target']) for e in snapshot['edges'] if e['type']=='DERIVED_FROM'}
+    before = db.revision()
+    for depth in (1,8):
+        result = D.rank_origins_excluding_regressed(TARGET, depth)
+        for row in result['origin_ranking']:
+            for reason in row['reasons'] + row['unexamined_paths']:
+                path = reason['path']
+                assert path[0] == row['origin_id']
+                assert all(pair in edges for pair in zip(path,path[1:]))
+                if reason['reason']=='unexamined, excluded':
+                    assert row['excluded'] and reason['outcome_id'] is None and len(path)==depth+2
+                else:
+                    assert reason['outcome_id'] and len(path)<=depth+1
+            if row['unexamined_ancestors']: assert row['excluded']
+    assert db.revision()==before
+
+
+def test_read_only_guide_endpoints_and_depth_allowlist(snapshot, monkeypatch):
+    from fastapi.testclient import TestClient
+    from ew import api, graph_guide, public_training
+    monkeypatch.setattr(graph_guide.agent_tools,'DEPLOYED_POLICY',TARGET)
+    monkeypatch.setattr(public_training,'start',lambda *a,**k:pytest.fail('No training from a read'))
+    client=TestClient(api.app)
+    for depth in (1,8):
+        response=client.get('/api/graph-guide/depth',params={'max_hops':depth})
+        assert response.status_code==200 and response.json()['max_hops']==depth
+        assert response.json()['read_only']
+    assert client.get('/api/graph-guide/depth?max_hops=2').status_code==400
+    review=client.get('/api/graph-guide/rationale-v4').json()
+    assert 'unsupported comparison' in review['note']
+    missing=client.get('/api/graph-guide/lineage-path',params={'from_policy':'invented','to_policy':TARGET}).json()
+    assert missing['outcome']=='unknown_policy'
+    assert all(q['template']=='mcp_resolve_policy' for q in missing['queries'])

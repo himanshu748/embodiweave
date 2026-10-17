@@ -90,6 +90,10 @@ function paint(s) {
   $("#answerPanel").hidden = !s.answer;
   $("#answerPanel h3").textContent = s.answer_source === "compiled_live_graph_evidence" ? "Measured lineage report" : s.answer_source === "deterministic_fallback" ? "Deterministic fallback" : "Agent report via MCP";
   renderAnswer(s.answer || "");
+  $("#rationaleNotes").replaceChildren();
+  for(const check of s.rationale_checks||[]){if(check.note){const p=document.createElement('p');p.className='error';p.textContent=check.note;$("#rationaleNotes").append(p);}}
+  $("#modelRationale").textContent=s.display_rationale||'';
+  $("#answerPanel").hidden=!(s.answer||s.rationale_checks?.some(c=>c.note));
   if (receiptUrl) URL.revokeObjectURL(receiptUrl);
   receiptUrl = URL.createObjectURL(new Blob([JSON.stringify(s, null, 2)], { type: "application/json" }));
   $("#downloadReceipt").href = receiptUrl;

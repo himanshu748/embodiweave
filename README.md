@@ -41,10 +41,20 @@ MuJoCo uses fresh paired seeds and unchanged 2D-trained weights. Its 6/40 target
 | Focus | Concrete implementation |
 |---|---|
 | Multi-hop reasoning | [`DERIVED_FROM*1..8` query](ew/graph/queries.py), [actual returned ancestor paths](evidence/mcp-agent-v2/algorithm.json) |
-| Graph queries and algorithms as tools | [Exact native `shortestPath` Cypher](evidence/mcp-agent-v2/nearest-passing-ancestor.cypher), bounded and unweighted; [v4 lineage regression exclusion](evidence/mcp-agent-v4/rank-origins.cypher), [weighted regression degree](evidence/mcp-agent-v3/mcp_regression_degree.cypher) with [actual tool output](evidence/mcp-agent-v3/rank_regression_origins.json) |
+| Graph queries and algorithms as tools | [Native `CALL algo.SPpaths` tool](ew/graph/cypher/lineage_path.cypher), verified on the pinned FalkorDB 6.0.2 image;  [Exact native `shortestPath` Cypher](evidence/mcp-agent-v2/nearest-passing-ancestor.cypher), bounded and unweighted; [v4 lineage regression exclusion](evidence/mcp-agent-v4/rank-origins.cypher), [weighted regression degree](evidence/mcp-agent-v3/mcp_regression_degree.cypher) with [actual tool output](evidence/mcp-agent-v3/rank_regression_origins.json) |
 | Tool selection through MCP | [V2 model and four MCP calls](evidence/mcp-agent-v2/agent-receipt.json), [v3-retry six MCP calls with outcome citation](evidence/mcp-agent-v3-retry/agent-receipt.json), [v4 seven MCP calls](evidence/mcp-agent-v4/agent-receipt.json), [stdio + HTTP server](ew/mcp_server.py) |
 | Actions based on graph evidence | [New public PPO run, 180 validation episodes and gate](evidence/mcp-agent-v2/training-receipt.json), [checkpoint bundle](evidence/mcp-agent-v2/repro-v3.zip); [one completed v3-retry and measured regression](evidence/mcp-agent-v3-retry/summary.json); [v4 changed origin, gate and regression](evidence/mcp-agent-v4/summary.json) |
 | Explainable results | [Decision `deci-20261016121309-c0c93f`](evidence/mcp-agent-v2/decision.json): model, calls, Cypher, parameters, candidates, guardrail and revision, saved before training; [v3-retry Decision citing the prior outcome](evidence/mcp-agent-v3-retry/decision.json); [v4 exclusion-driven Decision](evidence/mcp-agent-v4/decision.json) |
+
+## Aligned with the WeMakeDevs guide
+
+Following [How to Build an Agent That Reasons Over a Graph](https://www.wemakedevs.org/blogs/how-to-build-an-agent-that-reasons-over-a-graph):
+
+- **Native algorithm tool:** [lineage_path](ew/graph/cypher/lineage_path.cypher) uses `CALL algo.SPpaths`, resolved policy IDs and capped traversal. [Pinned-runtime verification](docs/MCP.md#native-procedure-verified-on-the-pinned-image). Lineage distance is not a safety signal.
+- **Checked model sentences:** [accepts](ew/rationale.py) rejects invented IDs and unsupported comparisons, then displays returned rows with a rejection note. [The saved v4 “safest” regression test](tests/test_rationale.py) leaves the original receipt intact.
+- **Hop-depth contrast:** [Try depth 1 and 8](https://embodiweave.52.202.25.181.sslip.io/live.html#graph-tools), with eligible/excluded origins, outcome IDs and actual policy paths from [this Cypher](ew/graph/cypher/rank_origins_excluding_regressed.cypher). Unexamined lineage is excluded. The caption reflects the current results, including when eligibility does not change.
+
+These are read-only inspection and display changes. No new PPO run, MCP agent run or evaluation was started for them. The confirmed result, frozen receipts and film remain unchanged.
 
 ## The agent acting on the graph, and the guardrail
 

@@ -3,7 +3,7 @@
 <title>Train and test · EmbodiWeave</title><meta name="description" content="Train a robot policy, watch the simulator in 2D or 3D, and inspect the test results.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
-<link rel="stylesheet" href="landing.css?v=live1"><link rel="stylesheet" href="live.css?v=search2"><script src="live.js?v=mcp2" defer></script></head>
+<link rel="stylesheet" href="landing.css?v=live1"><link rel="stylesheet" href="live.css?v=graph-guide1"><script src="live.js?v=graph-guide1" defer></script><script src="graph-guide.js?v=1" defer></script></head>
 <body><a class="skip" href="#training">Skip to training</a>
 <header class="nav"><a class="brand" href="./">EmbodiWeave</a><nav aria-label="Main"><a href="guide.html">Judge guide</a><a href="./#live">Graph console</a><a href="studio.html">Studio</a><a href="https://github.com/himanshu748/embodiweave">Source</a></nav></header>
 <main>
@@ -48,6 +48,7 @@
     <button class="btn ghost" type="button" id="retryConnection" hidden>Reconnect</button>
     <p id="startError" class="error" role="alert"></p><p class="fine"><a href="evidence.html">Model busy? Inspect the measured attempts and live graph directly →</a></p>
   </form>
+  <details><summary>Read-only tools available to the agent</summary><p><code>lineage_path</code> runs native <code>algo.SPpaths</code> with resolved policy IDs. Existing diagnosis, origin ranking, outcome, shortestPath and gate-preview tools remain available. <a href="#graph-tools">Try the graph reads without a model call</a>.</p></details>
   <div class="run-boundaries"><b>What runs here</b><p>The agent discovers tools through MCP, reads FalkorDB, and proposes its own origin. The guardrail can veto it. If the model provider is unavailable, a labelled deterministic MCP fallback can act on an explicitly requested training task. Watch the run above.</p><p id="limits">Up to 6 model turns, 10 tool calls and 2 minutes. One investigation runs at a time.</p><p><a href="#training">Back to simulator</a> · <a href="./#mcp-proof">Recorded MCP run</a> · <a href="guide.html#reproduce">Run full training locally</a></p></div>
 </div>
 <div class="evidence-sheet" aria-labelledby="evidenceTitle">
@@ -56,9 +57,20 @@
   <p class="fine mono" id="runMeta"></p><p id="agentDecisions" class="fine"></p>
   <ol id="toolTrace" class="tool-trace" aria-label="Completed live tool calls"></ol>
   <div class="trace-empty" id="traceEmpty"><span class="mono">Your question and the agent’s tool calls will appear here.</span><p>You can inspect the Cypher queries, source records and test results for each call.</p><a href="./#live">Prefer a direct query? Open the live graph console →</a></div>
-  <section class="agent-answer" id="answerPanel" hidden><h3>Agent report</h3><p class="fine">The report is compiled from completed MCP results. The model's origin proposal and reason are preserved in the Decision; the training panel shows the measured gate.</p><div id="answer"></div></section>
+  <section class="agent-answer" id="answerPanel" hidden><h3>Agent report</h3><p class="fine">The report is compiled from completed MCP results. The model's origin proposal and reason are preserved in the Decision; the training panel shows the measured gate.</p><div id="answer"></div><div id="rationaleNotes" role="status"></div><p id="modelRationale"></p></section>
   <p><button class="btn ghost small" id="resume" type="button" hidden>Resume session status</button><a id="downloadReceipt" class="btn ghost small" hidden download="embodiweave-live-investigation.json">Download agent log</a></p>
 </div>
+</section>
+<section class="graph-checks" id="graph-tools" aria-labelledby="graphChecksTitle">
+<p class="eyebrow">Read-only graph tools</p><h2 id="graphChecksTitle">Inspect the path. Check the sentence.</h2>
+<p>These controls read graph evidence directly. They do not start an agent, training or evaluation.</p>
+<h3>Native lineage path</h3><p class="fine"><code>lineage_path</code> calls FalkorDB <code>algo.SPpaths</code>. Both policy IDs must exist; the search follows at most eight child-to-parent edges. Unit-weight lineage distance is not a safety signal.</p>
+<form id="lineageTool"><label for="lineageFrom">From checkpoint<input id="lineageFrom" maxlength="160" required value="robust-20261016140226-352fd7"></label><label for="lineageTo">To ancestor<input id="lineageTo" maxlength="160" required value="search-20261015185749-4a6581"></label><button class="btn small" id="lineageRead">Read lineage path</button></form>
+<pre id="lineageResult" role="status">Choose two policy IDs to read their lineage path.</pre>
+<h3>A recorded rationale, checked before display</h3><p class="fine">V4 used “safest” without a measured number in that sentence. This check reads the original receipt and its tool rows; it leaves the receipt unchanged.</p><button type="button" class="btn ghost small" id="rationaleReview">Check recorded v4 wording</button><p id="rationaleStatus" class="rejected-note" role="status"></p><p id="rationaleFlat"></p>
+<div class="depth-controls" role="group" aria-label="Lineage depth"><b>Lineage depth:</b><button type="button" data-depth="1" aria-pressed="false">1</button><button type="button" data-depth="8" aria-pressed="true">8</button></div>
+<p class="fine">Both columns call <code>rank_origins_excluding_regressed</code> on the live graph. Select a depth to read it again. A boundary path identifies an unexamined ancestor, not a known outcome beyond the depth limit.</p><p id="depthCaption" role="status">Reading both depths. A missing result cannot establish eligibility.</p>
+<div class="depth-columns"><article id="depth1" aria-label="Depth 1 origins"></article><article id="depth8" aria-label="Depth 8 origins"></article></div>
 </section>
 <section class="live-footnote"><span class="tag rec">About this demo</span><p>The robot runs in a simulator. The 3D view uses the same positions as 2D; it adds no new physics. Model requests are bounded and may reach a provider or shared quota. The recorded MCP run and direct training button remain available.</p></section>
 </main><footer><span>EmbodiWeave · MIT · software simulation</span><a href="guide.html">Judge guide, video and reproduction →</a></footer></body></html>

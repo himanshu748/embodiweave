@@ -9,6 +9,8 @@ The live agent discovers schemas with `tools/list` and executes `tools/call` thr
 | `diagnose_policy(policy_id)` | Exact-artifact canonical validation and collision failures |
 | `explain_decision(decision_id)` | Decision node, model, actual tool calls, candidates, query receipts and guardrail |
 | `get_evidence_record(record_type, record_id)` | Full Policy, Decision, DecisionOutcome or canonical-validation Evaluation properties by exact ID; bounded model-facing view |
+| `lineage_path(from_policy, to_policy)` | Native `algo.SPpaths`, resolved IDs, at most eight unit-weight lineage edges |
+| `rank_origins_excluding_regressed(target_policy, max_hops=8)` | Graph-ranked origins, exclusion outcomes and actual ancestry paths |
 | `lineage(policy_id, max_hops=8)` | Bounded `DERIVED_FROM` paths |
 | `find_training_origins(target_policy)` | Verified, compatible origins with all four complete validation suites |
 | `nearest_passing_ancestor(policy_id, suite_id, max_hops=8)` | FalkorDB shortest-path algorithm, minimum unweighted lineage distance to a passing ancestor |
@@ -94,3 +96,21 @@ The completed [v2 record](../evidence/mcp-agent-v2/) contains the actual model c
 The [current graph snapshot and budget tests](../evidence/mcp-agent-v3-retry/context-fix.json) retain full query records in the Decision audit while sending top-k rows, exact IDs and per-suite deltas to the model. Each tool reply is at most 2,000 UTF-8 bytes, retained tool text at most 12,000 bytes, history at most six whole exchanges and a provider request at most 28,000 bytes. UTF-8 byte counts conservatively upper-bound byte-BPE text tokens, rather than estimating tokenizer usage. Required first reads and the latest exchange stay together with their call/response IDs. Oversized required evidence fails closed before sending another request.
 
 `get_evidence_record` gives read-only clients full properties by ID; the live model receives a bounded view. Only canonical validation Evaluation records are exposed. Summaries mark omitted candidates; this limited model view is not the full candidate set. The retry's largest actual serialized request was 17,926 bytes, and the original receipt was preserved.
+
+## Native procedure verified on the pinned image
+
+The Dockerfile, Compose and CI use `falkordb/falkordb@sha256:107455e862a824e45e8e9f5a7fbfdf5e00a08b14e13eae2577c72fd9e3f59ba6`. On October 17, 2026, `redis-cli MODULE LIST` reported `graph ver 60002` (FalkorDB 6.0.2) both in the isolated local container and the existing AWS API container.
+
+Read-only procedure probes on that digest confirmed registration of `algo.SPpaths`, `algo.SSpaths`, `algo.BFS`, `algo.pageRank`, `algo.MSF`, `algo.WCC`, `algo.betweenness` and `algo.maxFlow`. Empty-argument probes returned argument-count validation for procedures requiring arguments; MSF, WCC and betweenness ran on an isolated two-node fixture. `db.procedures()`, `algo.CDLP` and `algo.allShortestPaths` returned unknown-function errors. This is the tested procedure set, not a claim that those are the only procedures. The runtime itself, not a latest-version documentation assumption, determined the new tool.
+
+`lineage_path(from_policy, to_policy)` executes the [exact `CALL algo.SPpaths` template](../ew/graph/cypher/lineage_path.cypher) through `GRAPH.RO_QUERY`. Both strings are capped at 160 characters and first resolved with a parameterized Policy lookup. An unknown ID returns `outcome: unknown_policy`; only resolution reads run, never the algorithm query. A known but disconnected pair returns `no_path_within_bound`. The procedure follows at most eight outgoing `DERIVED_FROM` edges and returns one path as policy IDs plus `pathWeight`. Equal-cost path choice is unspecified.
+
+[Trusted ingestion](../ew/graph/ingest.py) assigns a missing `DERIVED_FROM.weight` the value 1. No read tool adds weights. These unit weights represent **unweighted lineage distance**, not a safety signal. The existing shortestPath and weighted-degree tools are unchanged. [Native procedure and unknown-ID tests](../tests/test_mcp_agent.py). [Official SPpaths documentation](https://docs.falkordb.com/algorithms/sppath).
+
+## Checked sentences and depth contrast
+
+[accepts(sentence, answer)](../ew/rationale.py) validates identifier membership against returned tool fields, rejects unsupported comparison words unless the same sentence contains a returned measurement, and rejects improvement claims from empty or excluded origin rankings. Rejected wording is replaced by a flat rendering of returned ranking rows with a visible rejection reason. This is a conservative lexical check, not proof that a comparison is scientifically justified. A number alone does not establish safety, improvement or causation. The original raw audit remains unchanged.
+
+The public response boundary applies this check to proposal rationales and final model wording. The [saved v4 fixture test](../tests/test_rationale.py) demonstrates rejection of its unsupported “safest” sentence. The page can repeat that display check without an LLM request or a new Decision.
+
+[The depth comparison](https://embodiweave.52.202.25.181.sslip.io/live.html#graph-tools) runs `rank_origins_excluding_regressed` with depths 1 and 8 against the live graph. The [exact Cypher](../ew/graph/cypher/rank_origins_excluding_regressed.cypher) now includes the actual policy path for every exclusion reason and outcome ID. A boundary path identifies the next unexamined ancestor, with no fabricated outcome ID. Such lineage is excluded, never called safe. The caption is computed from returned rows; it does not assume that eligibility changes between depths. [Frozen projection tests](../tests/test_regression_exclusion.py) check path adjacency and conservative exclusion. These additions create no new training, agent run or evaluation evidence.

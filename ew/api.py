@@ -82,6 +82,27 @@ def status():
             "hosted_readonly": STATIC_MODE}
 
 
+@app.get("/api/graph-guide/lineage-path")
+def guide_lineage_path(from_policy: str, to_policy: str):
+    from .mcp_domain import dispatch
+    return dispatch("lineage_path", {"from_policy":from_policy,"to_policy":to_policy})
+
+
+@app.get("/api/graph-guide/depth")
+def guide_depth(max_hops: int = 8):
+    from .graph_guide import depth_ranking
+    try:
+        return depth_ranking(max_hops)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc))
+
+
+@app.get("/api/graph-guide/rationale-v4")
+def guide_rationale_v4():
+    from .rationale import recorded_v4_review
+    return recorded_v4_review()
+
+
 @app.get("/api/catalog")
 def catalog():
     """Policy lineage from FalkorDB plus manifest facts from the artifact store."""

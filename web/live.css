@@ -69,3 +69,16 @@ textarea { display: block; resize: vertical; width: 100%; min-height: 150px; pad
 @media(max-width:800px) { .evidence-intro { grid-template-columns:minmax(0,1fr); gap:28px; }.evidence-flow { margin-left:8px; } }
 
 #attempts { scroll-margin-top:100px; }
+
+/* Read-only graph tools preserve the engineering-paper layout. */
+.graph-checks{max-width:1200px;margin:36px auto;padding:24px;border:1px solid var(--line,#d6d3cb);border-radius:12px;background:var(--paper,#faf9f5)}
+.graph-checks h2{margin:8px 0 16px}.graph-checks h3{margin:16px 0 8px}
+.graph-checks form{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+.graph-checks label{display:flex;flex-direction:column;gap:6px;min-width:0}.graph-checks input{width:100%;min-width:0;padding:12px;font:inherit;background:transparent;border:1px solid #aaa;border-radius:6px}
+.graph-checks pre{white-space:pre-wrap;overflow-wrap:anywhere}.depth-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:20px 0}
+.depth-controls button{min-width:44px;min-height:44px;border:1px solid #8c8a84;border-radius:6px;background:transparent;color:inherit;font:inherit;cursor:pointer}
+.depth-controls button[aria-pressed=true]{background:#262a2e;color:#fff}.depth-controls button:disabled{opacity:.55;cursor:wait}
+.depth-columns{display:grid;grid-template-columns:1fr 1fr;gap:20px}.depth-columns>article{min-width:0;padding:16px;border:1px solid #d6d3cb;border-radius:8px}
+.depth-columns details{padding:12px 0;border-top:1px solid #d6d3cb}.depth-columns summary{cursor:pointer;min-height:40px;overflow-wrap:anywhere}.origin-state{display:block;font-size:.8rem;margin-top:4px}
+.lineage-route{display:block;margin:8px 0;overflow-wrap:anywhere;white-space:normal}.graph-checks .rejected-note{color:#923d17}.graph-checks button:focus-visible,.depth-columns summary:focus-visible{outline:2px solid #ac4c20;outline-offset:3px}
+@media(max-width:680px){.graph-checks{margin:20px 16px;padding:16px}.depth-columns,.graph-checks form{grid-template-columns:1fr}}
