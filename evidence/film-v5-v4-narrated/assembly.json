@@ -1,0 +1,16 @@
+{
+  "source_sha256": {
+    "web/media/embodiweave-demo-v5.mp4": "2dfe700299b8b30ad6143b4279268b191ed057d4d34385ec10503faa8b7d9e2e",
+    "web/media/embodiweave-demo-v5-with-v4.mp4": "c1212a08c9ace2baec173402c364fb0a9fad7e6cbbe553dbad2507464ca697c1"
+  },
+  "duration_seconds": 138.1,
+  "output": "web/media/embodiweave-demo-v5-with-v4-narrated.mp4",
+  "output_sha256": "afdea66a3e6dacc82b69ed2d2d83b9171e7c5a1a10d31b9da5372ea0ea86c360",
+  "bytes": 6622790,
+  "captions": "docs/demo/v5-v4/embodiweave-demo-v5-with-v4-narrated.srt",
+  "captions_sha256": "a4912becd024ee91e24bdfff74c52a200b166c4a903dee7113b65700dcbe1119",
+  "voice_model": "aura-2-thalia-en",
+  "captions_model": "nova-3",
+  "appendix_narration_seconds": 14.919916666666667,
+  "editorial": "Original v5 retained; four new Deepgram clips narrate the existing title and v4 evidence appendix. No new simulation or training; original silent combined film also preserved."
+}

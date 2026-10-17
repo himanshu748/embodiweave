@@ -1,0 +1,151 @@
+WEBVTT
+
+00:00.080 --> 00:03.200
+This robot collided. Choosing a checkpoint to
+
+00:03.200 --> 00:05.920
+retrain needs its lineage, sensor contract, and
+
+00:05.920 --> 00:09.680
+exact test results. FalkorDB connects that evidence.
+
+00:10.100 --> 00:13.060
+My agent used MCP and FalkorDB to
+
+00:13.060 --> 00:16.020
+launch real robot training. The run passed
+
+00:16.020 --> 00:17.300
+four validation gates.
+
+00:17.860 --> 00:19.940
+It chooses a starting checkpoint and calls
+
+00:19.940 --> 00:22.820
+start training. The guardrail approves the evidence
+
+00:22.820 --> 00:24.820
+and budget before the worker starts.
+
+00:25.200 --> 00:28.480
+FalkorDB connects each policy to its training
+
+00:28.480 --> 00:32.960
+run, evaluations, failures, and recorded decisions.
+
+00:33.400 --> 00:35.800
+Its shortest path query returned a passing
+
+00:35.800 --> 00:39.160
+ancestor one hop away. The agent compared
+
+00:39.160 --> 00:41.960
+17 eligible origins and chose a different
+
+00:41.960 --> 00:42.520
+checkpoint.
+
+00:42.900 --> 00:46.740
+The guardrail check sensor contracts, artifact hashes,
+
+00:46.820 --> 00:49.940
+complete validation, and the training budget. It
+
+00:49.940 --> 00:51.860
+can veto an incompatible origin.
+
+00:52.313 --> 00:55.033
+Before training, a decision saves the model,
+
+00:55.033 --> 00:58.633
+tool calls, Cypher, parameters, and returned records.
+
+00:58.953 --> 01:00.873
+Planning stops without FalkorDB.
+
+01:01.133 --> 01:05.933
+The worker trained 61,440 PPO steps, then
+
+01:05.933 --> 01:09.373
+reloaded the checkpoint for 180 validation episodes.
+
+01:09.833 --> 01:12.713
+All four suites passed the unchanged gate.
+
+01:12.873 --> 01:15.673
+Target collisions were three in sixty. Open
+
+01:15.673 --> 01:18.233
+had zero. Static and crossing had one
+
+01:18.233 --> 01:19.033
+each in 40.
+
+01:19.433 --> 01:21.433
+But the parent had two target collisions
+
+01:21.433 --> 01:24.393
+and no crossing collisions. Both measures got
+
+01:24.393 --> 01:26.953
+worse. Passing the gate does not establish
+
+01:26.953 --> 01:28.953
+an improvement, so I kept the demo
+
+01:28.953 --> 01:29.993
+policy unchanged.
+
+01:30.367 --> 01:32.447
+The next agent read that regression and
+
+01:32.447 --> 01:35.087
+the weighted graph ranking. Its context limit
+
+01:35.087 --> 01:37.567
+stopped the attempt before training. I did
+
+01:37.567 --> 01:38.207
+not retry.
+
+01:38.500 --> 01:41.300
+The shipped graph selected checkpoint passed all
+
+01:41.300 --> 01:44.740
+four validation suites and fresh confirmation. Eight
+
+01:44.740 --> 01:47.220
+target collisions in a 100 episodes below
+
+01:47.220 --> 01:48.260
+the 10% limit.
+
+01:48.780 --> 01:50.460
+Every action is a node you can
+
+01:50.460 --> 01:53.660
+query. Inspect the decision, the live demo,
+
+01:53.660 --> 01:57.660
+and the evidence. EmbodiWeave. Built on FalkorDB.
+
+01:58.340 --> 01:59.060
+Version four.
+
+02:00.100 --> 02:02.580
+The graph excludes the old origin using
+
+02:02.580 --> 02:04.020
+recorded regression evidence.
+
+02:06.100 --> 02:08.900
+The agent chooses a different checkpoint. The
+
+02:08.900 --> 02:10.980
+fixed gate passes all four suites.
+
+02:12.340 --> 02:14.580
+Target collisions rise from two in sixty
+
+02:14.580 --> 02:16.820
+to four in sixty. Not released.
