@@ -129,7 +129,8 @@ def _owner(token):
 
 
 def _public(session):
-    return _redact({k: v for k, v in session.items() if k not in ("owner", "pid")})
+    from .rationale import session_display
+    return _redact(session_display({k: v for k, v in session.items() if k not in ("owner", "pid")}))
 
 
 def _redact(value):
