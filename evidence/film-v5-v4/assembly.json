@@ -1,0 +1,56 @@
+{
+  "title_card_text": "v4: graph-backed origin exclusion \u2014 same gate, different origin, still not released.",
+  "segments": [
+    {
+      "source": "web/media/embodiweave-demo-v5.mp4",
+      "start_seconds": 0,
+      "end_seconds": 118.1
+    },
+    {
+      "source": "evidence/film-v5-v4/title-card.png",
+      "start_seconds": 118.1,
+      "end_seconds": 120.1
+    },
+    {
+      "source": "web/media/embodiweave-v4-outcome-clip.mp4",
+      "start_seconds": 120.1,
+      "end_seconds": 138.1
+    }
+  ],
+  "final_table_seconds": [
+    132.1,
+    138.1
+  ],
+  "target_collisions": {
+    "parent": "2/60",
+    "child": "4/60"
+  },
+  "outcome_source": {
+    "path": "evidence/mcp-agent-v4/outcome.json",
+    "sha256": "3f510bfc53ce635f12e898c74ce3eeb3eed974d78f16cbc63b55cdd32b5a7f4f"
+  },
+  "source_sha256": {
+    "web/media/embodiweave-demo-v5.mp4": "2dfe700299b8b30ad6143b4279268b191ed057d4d34385ec10503faa8b7d9e2e",
+    "web/media/embodiweave-v4-outcome-clip.mp4": "42e52af755cb9333d4b9ba7c781460f286efc3ca0478fbf91790952605d7c605"
+  },
+  "output": {
+    "path": "web/media/embodiweave-demo-v5-with-v4.mp4",
+    "sha256": "c1212a08c9ace2baec173402c364fb0a9fad7e6cbbe553dbad2507464ca697c1",
+    "bytes": 6303450,
+    "duration_seconds": 138.1,
+    "frames": 4143,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30
+  },
+  "title_card_sha256": "fcb0041b23352b13738c3edde186a02e2e010ddc014f7a846f51c3fa13045ac8",
+  "captions": {
+    "path": "web/media/embodiweave-demo-v5-with-v4.srt",
+    "sha256": "69a916397e6a1e84bdbb4d0c01d1eab25d699c35f58c17195e7ab014bc234b24",
+    "source_path": "web/media/embodiweave-demo-v5.srt",
+    "source_sha256": "37f2a25572459bdb110bfc23f0cc4336d634629c9ccfc8ab0d5354de15f35cd1",
+    "note": "Original v5 captions retained; appended text captions describe the silent evidence segment."
+  },
+  "audio": "Existing v5 soundtrack retained; two-second card and eighteen-second evidence clip are silent.",
+  "editorial": "New title card and assembly only. No new robot footage, simulation, training, or result. Original v5 and v4 source files unchanged."
+}
