@@ -1,0 +1,19 @@
+{
+  "seconds": 18,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "audio": "none; captioned evidence clip",
+  "sources": {
+    "summary.json": "b8a537fc0c2e202db7b47653db6769673ad780caeb9e3a6073c3b776d624443b",
+    "decision.json": "eaf19fb3c0c89314bb73d1a4973d8e753893fdf082122d3eedbb281c1b93a488",
+    "rank_origins_excluding_regressed.json": "73e99c130891a58de4f94b076fbbe24476ffdfbe531689df04f69ebc5af977c7",
+    "outcome.json": "3f510bfc53ce635f12e898c74ce3eeb3eed974d78f16cbc63b55cdd32b5a7f4f",
+    "gate.json": "3302bd7f1c355dc462f862f5fef5ebaebb0a6d7be9e137b642e05247985d1ec3"
+  },
+  "files": {
+    "web/media/embodiweave-v4-outcome-clip.mp4": "42e52af755cb9333d4b9ba7c781460f286efc3ca0478fbf91790952605d7c605",
+    "web/media/embodiweave-v4-outcome-clip.webp": "20ccbbbd9aeb066c6012c61545d3769daa1a1cc0d61b9d5eab69a04e4b033802"
+  },
+  "editorial": "Typesetting, connectors and highlights animate saved MCP records. No robot footage or new simulation. V5 media unchanged."
+}

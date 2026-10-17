@@ -99,8 +99,19 @@ MATCH (d)-[:HAS_OUTCOME]-&gt;(outcome:DecisionOutcome)-[:ASSESSED]-&gt;(child)
 RETURN d.id, origin.id, child.id, outcome.suites</pre><p><a href="https://github.com/himanshu748/embodiweave/tree/main/evidence/mcp-agent-v3">Read the real v3 trace, failure and weighted-degree Cypher →</a></p></details>
   <h3>V3-retry: the full loop completed, the regression stayed visible</h3>
   <p>The one registered retry read the earlier outcome and cited it in its Decision. GPT-4.1 Mini chose the same origin as v2, trained 61,440 steps and passed all four gates over 180 validation episodes: target 3/60, open 0/40, static 1/40 and crossing 1/40 collisions.</p>
-  <p class="note">Target and crossing again exceeded the parent's 2/60 and 0/40. The child was not released. Citation was explicitly prompted; this run does not establish learning, a better choice or an improvement. No further retry was made.</p>
+  <p class="note">Target and crossing again exceeded the parent's 2/60 and 0/40. The child was not released. Citation was explicitly prompted; this run does not establish learning, a better choice or an improvement. The v3-retry study ended after this run. A separately preregistered v4 follows below.</p>
   <p class="note"><a href="https://github.com/himanshu748/embodiweave/tree/main/evidence/mcp-agent-v3-retry">Preregistration, six MCP calls and complete results →</a> · <a href="/api/decisions/deci-20261016175734-1b2724">Inspect the retry Decision →</a></p>
+  <div id="v4">
+    <p class="eyebrow">One preregistered attempt / agent-mcp-v4</p>
+    <h3>The recorded regression changed the next origin.</h3>
+    <p>FalkorDB excluded the previous origin through its regression relationships and outcomes. GPT-4.1 Mini read the new MCP tool and chose <code>robust-20261016140226-352fd7</code> instead. The Decision cites the prior outcome and the authored exclusion rule.</p>
+    <video class="demo-film" aria-label="18-second recorded v4 origin choice and honest regression result" controls preload="metadata" playsinline poster="media/embodiweave-v4-outcome-clip.webp"><source src="media/embodiweave-v4-outcome-clip.mp4" type="video/mp4"><a href="media/embodiweave-v4-outcome-clip.mp4">Download the 18-second v4 clip.</a></video>
+    <p class="note">Silent, captioned clip of recorded MCP evidence. The layouts and highlights are editorial. The v5 film above is unchanged.</p>
+    <p>The run consumed 61,440 PPO steps and completed 180 validation episodes. All four fixed gates passed: target 4/60, open 0/40, static 1/40 and crossing 1/40 collisions. Target and crossing exceeded the parent's 2/60 and 0/40, so the parent comparison recorded <code>not_released_regression</code>. The confirmed 8/100 demo policy stayed deployed.</p>
+    <p class="note">The rule and outcome citation were explicitly required. This changed choice does not establish learning, planner advantage or improved safety. The model's raw “safest” wording is unsupported. No second v4 attempt or final evaluation was made.</p>
+    <p class="note"><a href="https://github.com/himanshu748/embodiweave/tree/feat/outcome-aware-v4/evidence/mcp-agent-v4">Protocol, all seven MCP calls and complete receipts →</a> · <a href="/api/decisions/deci-20261017035005-e07545">Inspect the v4 Decision →</a></p>
+  </div>
+
 </section>
 
 <section class="judge-route reveal" aria-label="A short route through the demo">
