@@ -38,16 +38,16 @@
     <p class="hero-context e3">FalkorDB connects each checkpoint to its sensor contract, lineage and test results. The agent follows those connections before it can start training.</p>
     <div class="ctas e3">
       <a class="btn" href="live.html#investigate">Try the live agent <span aria-hidden="true" class="arrow">→</span></a>
-      <a class="btn ghost" href="https://youtu.be/IfFo4cicShk">Watch the 2-minute demo</a>
-      <a class="btn ghost" href="media/embodiweave-demo-v5.mp4">MP4 fallback</a>
+      <a class="btn ghost" href="https://youtu.be/38VWQOkhjpc">Watch the 2:18 demo</a>
+      <a class="btn ghost" href="media/embodiweave-demo-v5-with-v4-final.mp4">MP4 fallback</a>
     </div>
     <a class="live e4" href="#live" aria-live="polite"><span class="dot" id="liveDot"></span><span id="liveText">Connecting to FalkorDB</span></a>
   </div>
   <div class="hero-right">
     <figure class="hero-film e2" aria-labelledby="heroFilmCap">
-      <div class="replay-top"><span class="tag rec">Recorded public MCP run</span><span>GPT-4.1 Mini · 4 tool calls</span></div>
-      <video class="demo-film" aria-label="Watch the real MCP agent choose tools and launch training" controls preload="metadata" playsinline poster="media/demo-v5-poster.webp"><source src="media/embodiweave-demo-v5-720p.mp4" type="video/mp4"><a href="media/embodiweave-demo-v5.mp4">Download the demo film.</a></video>
-      <figcaption id="heroFilmCap">Real MCP actions, the measured parent comparison and the confirmed 2D checkpoint. All results link to recorded evidence.</figcaption>
+      <div class="replay-top"><span class="tag rec">Recorded MCP runs</span><span>V5 film + narrated v4 follow-up</span></div>
+      <video class="demo-film" aria-label="Watch the real MCP agent choose tools and launch training" controls preload="metadata" playsinline poster="media/demo-v5-poster.webp"><source src="media/embodiweave-demo-v5-with-v4-final.mp4" type="video/mp4"><track kind="captions" src="media/embodiweave-demo-v5-with-v4-narrated.vtt" srclang="en" label="English"><a href="media/embodiweave-demo-v5-with-v4-final.mp4">Download the demo film.</a></video>
+      <figcaption id="heroFilmCap">Real MCP actions, the confirmed 2D checkpoint and the v4 follow-up: a different origin, target collisions 2/60 to 4/60, still not released. <a href="https://youtu.be/IfFo4cicShk">Original v5 backup</a>.</figcaption>
       <a id="current-release" class="release-proof" href="robustness.html" aria-label="Inspect the shipped graph-selected checkpoint">
         <span class="proof-label">Shipped, graph-selected 2D policy</span>
         <div class="proof-value"><strong>8<span>/100</span></strong><p>Fresh confirmation target collisions<br><b>10% limit · 4/4 validation suites passed</b></p></div>
@@ -106,7 +106,7 @@ RETURN d.id, origin.id, child.id, outcome.suites</pre><p><a href="https://github
     <h3>The recorded regression changed the next origin.</h3>
     <p>FalkorDB excluded the previous origin through its regression relationships and outcomes. GPT-4.1 Mini read the new MCP tool and chose <code>robust-20261016140226-352fd7</code> instead. The Decision cites the prior outcome and the authored exclusion rule.</p>
     <video class="demo-film" aria-label="18-second recorded v4 origin choice and honest regression result" controls preload="metadata" playsinline poster="media/embodiweave-v4-outcome-clip.webp"><source src="media/embodiweave-v4-outcome-clip.mp4" type="video/mp4"><a href="media/embodiweave-v4-outcome-clip.mp4">Download the 18-second v4 clip.</a></video>
-    <p class="note">Silent, captioned clip of recorded MCP evidence. The layouts and highlights are editorial. The v5 film above is unchanged.</p>
+    <p class="note">Silent, captioned clip of recorded MCP evidence. The layouts and highlights are editorial. The combined film above includes this evidence with narration; the original v5 remains available as a backup.</p>
     <p>The run consumed 61,440 PPO steps and completed 180 validation episodes. All four fixed gates passed: target 4/60, open 0/40, static 1/40 and crossing 1/40 collisions. Target and crossing exceeded the parent's 2/60 and 0/40, so the parent comparison recorded <code>not_released_regression</code>. The confirmed 8/100 demo policy stayed deployed.</p>
     <p class="note">The rule and outcome citation were explicitly required. This changed choice does not establish learning, planner advantage or improved safety. The model's raw “safest” wording is unsupported. No second v4 attempt or final evaluation was made.</p>
     <p class="note"><a href="https://github.com/himanshu748/embodiweave/tree/feat/outcome-aware-v4/evidence/mcp-agent-v4">Protocol, all seven MCP calls and complete receipts →</a> · <a href="/api/decisions/deci-20261017035005-e07545">Inspect the v4 Decision →</a></p>

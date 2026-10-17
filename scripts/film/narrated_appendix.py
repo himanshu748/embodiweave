@@ -178,8 +178,28 @@ def assemble():
     print(str(output))
 
 
+def balance_audio():
+    media = ROOT / 'web/media'
+    source = media / 'embodiweave-demo-v5-with-v4-narrated.mp4'
+    mix = ROOT.parents[1] / 'outputs/film-v5-v4-narrated/appendix.wav'
+    output = media / 'embodiweave-demo-v5-with-v4-final.mp4'
+    subprocess.run(['ffmpeg', '-y', '-hide_banner', '-loglevel', 'error',
+        '-i', str(source), '-i', str(mix), '-filter_complex',
+        '[0:a]atrim=duration=118.1,asetpts=PTS-STARTPTS[a0];'
+        '[1:a]loudnorm=I=-16:TP=-1.5:LRA=11,alimiter=limit=0.89,aresample=48000[a1];'
+        '[a0][a1]concat=n=2:v=0:a=1[a]', '-map', '0:v', '-map', '[a]',
+        '-c:v', 'copy', '-c:a', 'aac', '-b:a', '160k', '-t', '138.1',
+        '-movflags', '+faststart', str(output)], check=True)
+    write(E / 'balanced-assembly.json', dict(source=str(source.relative_to(ROOT)),
+        source_sha256=sha(source), output=str(output.relative_to(ROOT)),
+        output_sha256=sha(output), duration_seconds=138.1,
+        appendix_audio='loudnorm=I=-16:TP=-1.5:LRA=11,alimiter=limit=0.89,aresample=48000',
+        video='Stream copy of the narrated export; timing and pictures unchanged.',
+        prior_receipts='All earlier media and receipts retained unchanged.'))
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('action', choices=['voice', 'assemble'])
+    parser.add_argument('action', choices=['voice', 'assemble', 'balance'])
     args = parser.parse_args()
-    {'voice': narrate, 'assemble': assemble}[args.action]()
+    {'voice': narrate, 'assemble': assemble, 'balance': balance_audio}[args.action]()

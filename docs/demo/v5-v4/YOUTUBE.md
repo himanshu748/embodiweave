@@ -1,8 +1,8 @@
 # Combined film: v5 with narrated v4 agent follow-up
 
-YOUTUBE_URL: https://youtu.be/XVHaa5T7tiU
+YOUTUBE_URL: https://youtu.be/38VWQOkhjpc
 
-Uploaded unlisted on October 17, 2026. Verified 1920×1080 playback and the uploaded English captions, including the narrated ending. YouTube reports a 138.121-second playback container. [Upload receipt](../../../evidence/film-v5-v4-narrated/youtube-upload.json). Original v5 upload unchanged.
+Uploaded unlisted on October 17, 2026. Verified 1920×1080 playback and the uploaded English captions, including the narrated ending. YouTube reports a 138.121-second playback container. [Upload receipt](../../../evidence/film-v5-v4-narrated/youtube-final-upload.json). Original v5 upload unchanged.
 
 ## Title
 

@@ -1,0 +1,16 @@
+{
+  "source": "web/media/embodiweave-demo-v5-with-v4-narrated.mp4",
+  "source_sha256": "afdea66a3e6dacc82b69ed2d2d83b9171e7c5a1a10d31b9da5372ea0ea86c360",
+  "output": "web/media/embodiweave-demo-v5-with-v4-final.mp4",
+  "output_sha256": "89ed0c2ff04261c00fe1df81a8e00a660335799457a68f413dea074c354337e3",
+  "duration_seconds": 138.1,
+  "appendix_audio": "loudnorm=I=-16:TP=-1.5:LRA=11,alimiter=limit=0.89,aresample=48000",
+  "video": "Stream copy of the narrated export; timing and pictures unchanged.",
+  "prior_receipts": "All earlier media and receipts retained unchanged.",
+  "volume_check": {
+    "original_closing_mean_db": -19.7,
+    "appendix_before_mean_db": -28.5,
+    "appendix_after_mean_db": -20.4,
+    "appendix_peak_db": -0.6
+  }
+}

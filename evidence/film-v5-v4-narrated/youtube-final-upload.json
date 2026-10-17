@@ -1,0 +1,33 @@
+{
+  "youtube_url": "https://youtu.be/38VWQOkhjpc",
+  "video_id": "38VWQOkhjpc",
+  "visibility": "unlisted",
+  "title": "EmbodiWeave: the graph changes the origin, the regression blocks release",
+  "source": "web/media/embodiweave-demo-v5-with-v4-final.mp4",
+  "source_sha256": "89ed0c2ff04261c00fe1df81a8e00a660335799457a68f413dea074c354337e3",
+  "source_duration_seconds": 138.1,
+  "playback": {
+    "width": 1920,
+    "height": 1080,
+    "duration_seconds": 138.121,
+    "playing_verified": true,
+    "muted": false,
+    "appendix_caption_seen": "Target collisions rise from two in sixty"
+  },
+  "captions": {
+    "language": "English",
+    "source": "docs/demo/v5-v4/embodiweave-demo-v5-with-v4-narrated.srt",
+    "sha256": "a4912becd024ee91e24bdfff74c52a200b166c4a903dee7113b65700dcbe1119",
+    "studio_status": "English by you"
+  },
+  "copyright_checks": "No issues found",
+  "backup_url": "https://youtu.be/IfFo4cicShk",
+  "backup_changed": false,
+  "proof": [
+    "youtube-final-published.jpg",
+    "youtube-final-playback.jpg"
+  ],
+  "verified_at": "2026-10-17T04:40:10.175478+00:00",
+  "replaces_intermediate_upload": "https://youtu.be/XVHaa5T7tiU",
+  "audio_balance_receipt": "balanced-assembly.json"
+}
