@@ -47,6 +47,12 @@ def create_server():
         return D.dispatch('get_evidence_record', {'record_type':record_type, 'record_id':record_id}, _workflow(ctx))
 
     @server.tool(annotations=READ)
+    def lineage_path(from_policy: Annotated[str, Field(min_length=1, max_length=160)],
+                     to_policy: Annotated[str, Field(min_length=1, max_length=160)], ctx: Context) -> dict:
+        """Native algo.SPpaths over at most eight outgoing DERIVED_FROM edges. Resolve both IDs first. Unit-weight distance, not safety."""
+        return D.dispatch("lineage_path", {"from_policy": from_policy, "to_policy": to_policy}, _workflow(ctx))
+
+    @server.tool(annotations=READ)
     def lineage(policy_id: str, ctx: Context, max_hops: Hops = 8) -> dict:
         """Read multi-hop DERIVED_FROM paths, bounded to one through eight hops."""
         return D.dispatch("lineage", {"policy_id": policy_id, "max_hops": max_hops}, _workflow(ctx))

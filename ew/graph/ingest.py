@@ -92,7 +92,7 @@ def policy(m: dict, g: str | None = None) -> None:
            "fam": m["family"], "cs": m["consumed_steps"], "seed": m["seed"], "rec": m["recipe"],
            "cid": m["contract_id"]}, g)
     if m.get("parent_id"):
-        db.rw("MATCH (p:Policy {id:$id}), (q:Policy {id:$pid}) MERGE (p)-[:DERIVED_FROM]->(q)",
+        db.rw("MATCH (p:Policy {id:$id}), (q:Policy {id:$pid}) MERGE (p)-[edge:DERIVED_FROM]->(q) SET edge.weight=coalesce(edge.weight,1)",
               {"id": m["policy_id"], "pid": m["parent_id"]}, g)
 
 

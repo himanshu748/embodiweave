@@ -127,7 +127,7 @@ def test_real_sdk_stdio_discovery_and_algorithm(world):
             async with ClientSession(*streams) as client:
                 await client.initialize()
                 tools = await client.list_tools()
-                assert len(tools.tools) == 11
+                assert len(tools.tools) == 12
                 r = C.unpack(await client.call_tool("nearest_passing_ancestor", {"policy_id": "target"}))
                 assert r["nearest"]["hops"] == 2
     asyncio.run(run())
@@ -137,8 +137,10 @@ def test_real_sdk_http_reads_and_unauthorized_action(world):
     async def run():
         async with api.lifespan(api.app):
             async with C.connect(url="http://testserver/mcp/", transport=httpx2.ASGITransport(api.app)) as (client, tools, initialized):
-                assert len(tools) == 11 and initialized["serverInfo"]["name"] == "EmbodiWeave"
+                assert len(tools) == 12 and initialized["serverInfo"]["name"] == "EmbodiWeave"
                 assert C.unpack(await client.call_tool("lineage", {"policy_id": "target"}))["ancestors"]
+                assert C.unpack(await client.call_tool("lineage_path", {"from_policy":"target","to_policy":"root"}))["paths"][0]["pathWeight"]==2
+                assert C.unpack(await client.call_tool("lineage_path", {"from_policy":"missing","to_policy":"root"}))["outcome"]=="unknown_policy"
                 assert C.unpack(await client.call_tool("diagnose_policy", {"policy_id": "target"}))["validation_and_failures"]
                 result = C.unpack(await client.call_tool("start_training", {"origin_id": "root", "reason": "Unauthorized action must stop"}))
                 assert "read-only" in result["error"]
@@ -374,3 +376,24 @@ def test_v4_fresh_exclusion_veto_and_single_proposal(world, monkeypatch):
     assert any('REGRESSED_AGAINST' in q['cypher'] for q in saved[0]['queries'])
     again=D.dispatch('start_training',{'origin_id':'root','budget':60000,'reason':reason},flow)
     assert 'sole v4 proposal' in again['error'] and len(saved)==1
+
+
+def test_native_sppaths_and_unknown_policy_do_not_run_algorithm(world, monkeypatch):
+    before = db.revision()
+    result = D.lineage_path("target", "root")
+    assert result["paths"] == [{"path": ["target", "mid", "root"], "pathWeight": 2}]
+    assert "CALL algo.SPpaths" in result["queries"][-1]["cypher"]
+    assert D.lineage_path("root", "target")["outcome"] == "no_path_within_bound"
+    called = []
+    real = D.query
+    def track(name, args):
+        called.append(name)
+        return real(name, args)
+    monkeypatch.setattr(D, "query", track)
+    missing = D.lineage_path("invented", "root")
+    assert missing["outcome"] == "unknown_policy" and missing["unknown_ids"] == ["invented"]
+    assert called == ["mcp_resolve_policy", "mcp_resolve_policy"]
+    assert db.revision() == before
+    with pytest.raises(ValueError): D.lineage_path("x"*161, "root")
+    # Trusted ingestion fills missing unit weights without changing existing weights.
+    assert db.ro("MATCH ()-[e:DERIVED_FROM]->() RETURN e.weight")[1] == [[1], [1]]

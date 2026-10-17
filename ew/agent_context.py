@@ -33,6 +33,8 @@ def summarize(name, result):
     if result.get('error'):
         out.update(pick(result, ['error', 'graph_unavailable']))
         out['error'] = str(out['error'])[:600]
+    elif 'paths' in result:
+        out.update(pick(result, ['outcome', 'unknown_ids', 'paths', 'algorithm', 'notice']))
     elif 'origin_ranking' in result:
         rows=result['origin_ranking']
         eligible=[r for r in rows if not r['excluded']]

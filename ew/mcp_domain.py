@@ -97,6 +97,24 @@ def get_evidence_record(record_type, record_id):
     return {'record_type': record_type, 'record': q['rows'][0]['record'], 'queries': [q]}
 
 
+def resolve_policy(policy_id):
+    if not isinstance(policy_id, str) or not 1 <= len(policy_id) <= 160:
+        raise ValueError("Use a policy ID of 1 to 160 characters")
+    return query("mcp_resolve_policy", {"policy": policy_id})
+
+
+def lineage_path(from_policy, to_policy):
+    """Native minimum unit-weight ancestry distance, capped at eight edges."""
+    resolved = [resolve_policy(pid) for pid in dict.fromkeys((from_policy, to_policy))]
+    unknown = [q["params"]["policy"] for q in resolved if not q["rows"]]
+    if unknown:
+        return {"outcome": "unknown_policy", "unknown_ids": unknown, "paths": [], "queries": resolved}
+    q = query("mcp_lineage_path", {"from_policy": from_policy, "to_policy": to_policy})
+    return {"outcome": "answered" if q["rows"] else "no_path_within_bound", "paths": q["rows"],
+            "algorithm": "FalkorDB algo.SPpaths", "queries": [*resolved, q],
+            "notice": "Unweighted lineage distance, at most eight outgoing DERIVED_FROM edges. Trusted ingest assigns missing weights 1. Distance is not a safety signal."}
+
+
 def lineage(policy_id, max_hops=8):
     if type(max_hops) is not int or not 1 <= max_hops <= 8:
         raise ValueError("Choose between one and eight lineage hops")
@@ -155,12 +173,15 @@ def rank_origins_excluding_regressed(target_policy, max_hops=8):
     """Authored exclusion rule, with ranking and reasons computed in FalkorDB."""
     if type(max_hops) is not int or not 1 <= max_hops <= 8:
         raise ValueError("Choose between one and eight lineage hops")
+    resolved = resolve_policy(target_policy)
+    if not resolved["rows"]:
+        return {"outcome": "unknown_policy", "unknown_ids": [target_policy], "origin_ranking": [], "queries": [resolved]}
     eligible = inspect_training_origins(target_policy, 60000)
     q = query("mcp_origins_excluding_regressed", {"policy": target_policy,
         "origins": [{"id": c["policy_id"], "evaluations": [e["evaluation_id"] for e in c["validation"].values()]}
                     for c in eligible["ranking"]], "criteria": CRITERIA, "suite_count": len(SUITES),
         "max_hops": max_hops, "blocked_verdict": "not_released_regression"})
-    return {"origin_ranking": q["rows"], "queries": [*eligible["queries"], q],
+    return {"origin_ranking": q["rows"], "queries": [resolved, *eligible["queries"], q],
             "ineligible": eligible["rejected"], "rule": "regression-lineage-exclusion-v1",
             "notice": "Exclude either endpoint of a recorded regression in self/ancestor lineage. Unexamined deeper lineage is excluded. Rank survivors by failed-suite count, then minimum collision clearance, then ID. No recorded regression is not proof of safety; this is an authored rule, not learned behavior."}
 
@@ -258,7 +279,7 @@ def start_training(origin_id, budget, reason, workflow):
                 "detail": "Real PPO queued. The trusted worker will evaluate 180 validation episodes and record the gate. Follow the training panel; this is not a completed result."}
 
 
-READS = {name: globals()[name] for name in ("diagnose_policy", "explain_decision", "lineage", "find_training_origins", "nearest_passing_ancestor", "check_gate", "get_decision_outcomes", "rank_regression_origins", "get_evidence_record", "rank_origins_excluding_regressed")}
+READS = {name: globals()[name] for name in ("diagnose_policy", "explain_decision", "lineage_path", "lineage", "find_training_origins", "nearest_passing_ancestor", "check_gate", "get_decision_outcomes", "rank_regression_origins", "get_evidence_record", "rank_origins_excluding_regressed")}
 
 
 def dispatch(name, args, workflow=None):
