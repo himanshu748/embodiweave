@@ -1,6 +1,11 @@
 # EmbodiWeave
 
-An agent that reads a robot's training history in FalkorDB, decides which checkpoint to retrain, launches training, and proves whether the new policy got safer.
+FalkorDB connects the evidence that determines which checkpoint the agent can retrain. In v4, a recorded regression excluded the previous origin and the MCP agent chose a different one. The child passed the unchanged gate but regressed against its parent, so the release comparison blocked it. The confirmed 8/100 checkpoint stays deployed. This demonstrates an authored graph rule changing eligibility and the next decision, not learning or improved safety.
+
+1. [Open the live demo](https://embodiweave.52.202.25.181.sslip.io/#v4).
+2. [Read one Cypher query](evidence/mcp-agent-v4/rank-origins.cypher).
+3. [Inspect the agent's Decision receipt](evidence/mcp-agent-v4/decision.json).
+4. [Check the gate and parent comparison](evidence/mcp-agent-v4/summary.json).
 
 **[YouTube demo](https://youtu.be/IfFo4cicShk) · [Live demo](https://embodiweave.52.202.25.181.sslip.io) · [Judge walkthrough](https://embodiweave.52.202.25.181.sslip.io/robustness.html) · [MP4 fallback](https://embodiweave.52.202.25.181.sslip.io/media/embodiweave-demo-v5.mp4) · [Train in your browser](https://embodiweave.52.202.25.181.sslip.io/live.html#training)**
 
@@ -36,10 +41,10 @@ MuJoCo uses fresh paired seeds and unchanged 2D-trained weights. Its 6/40 target
 | Focus | Concrete implementation |
 |---|---|
 | Multi-hop reasoning | [`DERIVED_FROM*1..8` query](ew/graph/queries.py), [actual returned ancestor paths](evidence/mcp-agent-v2/algorithm.json) |
-| Graph queries and algorithms as tools | [Exact native `shortestPath` Cypher](evidence/mcp-agent-v2/nearest-passing-ancestor.cypher), bounded and unweighted; [weighted regression degree](evidence/mcp-agent-v3/mcp_regression_degree.cypher) with [actual tool output](evidence/mcp-agent-v3/rank_regression_origins.json) |
-| Tool selection through MCP | [V2 model and four MCP calls](evidence/mcp-agent-v2/agent-receipt.json), [v3-retry six MCP calls with outcome citation](evidence/mcp-agent-v3-retry/agent-receipt.json), [stdio + HTTP server](ew/mcp_server.py) |
-| Actions based on graph evidence | [New public PPO run, 180 validation episodes and gate](evidence/mcp-agent-v2/training-receipt.json), [checkpoint bundle](evidence/mcp-agent-v2/repro-v3.zip); [one completed v3-retry and measured regression](evidence/mcp-agent-v3-retry/summary.json) |
-| Explainable results | [Decision `deci-20261016121309-c0c93f`](evidence/mcp-agent-v2/decision.json): model, calls, Cypher, parameters, candidates, guardrail and revision, saved before training; [v3-retry Decision citing the prior outcome](evidence/mcp-agent-v3-retry/decision.json) |
+| Graph queries and algorithms as tools | [Exact native `shortestPath` Cypher](evidence/mcp-agent-v2/nearest-passing-ancestor.cypher), bounded and unweighted; [v4 lineage regression exclusion](evidence/mcp-agent-v4/rank-origins.cypher), [weighted regression degree](evidence/mcp-agent-v3/mcp_regression_degree.cypher) with [actual tool output](evidence/mcp-agent-v3/rank_regression_origins.json) |
+| Tool selection through MCP | [V2 model and four MCP calls](evidence/mcp-agent-v2/agent-receipt.json), [v3-retry six MCP calls with outcome citation](evidence/mcp-agent-v3-retry/agent-receipt.json), [v4 seven MCP calls](evidence/mcp-agent-v4/agent-receipt.json), [stdio + HTTP server](ew/mcp_server.py) |
+| Actions based on graph evidence | [New public PPO run, 180 validation episodes and gate](evidence/mcp-agent-v2/training-receipt.json), [checkpoint bundle](evidence/mcp-agent-v2/repro-v3.zip); [one completed v3-retry and measured regression](evidence/mcp-agent-v3-retry/summary.json); [v4 changed origin, gate and regression](evidence/mcp-agent-v4/summary.json) |
+| Explainable results | [Decision `deci-20261016121309-c0c93f`](evidence/mcp-agent-v2/decision.json): model, calls, Cypher, parameters, candidates, guardrail and revision, saved before training; [v3-retry Decision citing the prior outcome](evidence/mcp-agent-v3-retry/decision.json); [v4 exclusion-driven Decision](evidence/mcp-agent-v4/decision.json) |
 
 ## The agent acting on the graph, and the guardrail
 
@@ -55,7 +60,7 @@ The single preregistered [v3 attempt](evidence/mcp-agent-v3/) called both new gr
 
 The [single preregistered retry](evidence/mcp-agent-v3-retry/protocol.json) completed with GPT-4.1 Mini. It called six MCP tools, read both outcome tools and explicitly cited `outcome-deci-20261016121309-c0c93f` in its [pre-training Decision](evidence/mcp-agent-v3-retry/decision.json). Citation was required by the protocol and prompt. It chose the **same** v2 origin, `physics-20261016150004-25da9c`, and consumed **61,440 PPO steps**, then **180 validation episodes**. All **4/4 gates passed**: target **3/60**, open **0/40**, static **1/40**, crossing **1/40** collisions, against unchanged limits **10%, 5%, 10%, 15%**.
 
-Target and crossing again regressed against the parent's **2/60** and **0/40**. The [connected outcome](evidence/mcp-agent-v3-retry/outcome.json) records `not_released_regression`; the demo policy stayed unchanged. The registered process completed, but neither changed origin choice, learning, planner advantage nor improvement is established. No further retry was made. [Full receipts and checkpoint bundle](evidence/mcp-agent-v3-retry/).
+Target and crossing again regressed against the parent's **2/60** and **0/40**. The [connected outcome](evidence/mcp-agent-v3-retry/outcome.json) records `not_released_regression`; the demo policy stayed unchanged. The registered process completed, but neither changed origin choice, learning, planner advantage nor improvement is established. The v3-retry study ended after this single run. The separately preregistered v4 below changes origin eligibility. [Full receipts and checkpoint bundle](evidence/mcp-agent-v3-retry/).
 
 The original overflow came from **33,515 bytes** of tool results exceeding the application's **32,000-byte** request guard before prompt overhead. Summaries now cap each tool at **2,000 UTF-8 bytes**, retained tool text at **12,000 bytes**, history at **six exchange groups** and the whole request at **28,000 bytes**. Full records remain fetchable by ID. The real retry peaked at **17,926 request bytes**. These byte counts bound byte-BPE text tokens; they are not exact tokenizer counts. [Context diagnosis and full-graph tests](evidence/mcp-agent-v3-retry/context-fix.json).
 
@@ -65,9 +70,22 @@ The original overflow came from **33,515 bytes** of tool results exceeding the a
 
 ## Regression-aware origin choice (v4)
 
+The [single preregistered v4 attempt](evidence/mcp-agent-v4/protocol.json) completed. GPT-4.1 Mini called seven MCP tools, including the new exclusion query, and cited the [prior v2 outcome](evidence/mcp-agent-v3/get_decision_outcomes.json) by its outcome ID in the [pre-training Decision](evidence/mcp-agent-v4/decision.json). The graph excluded `physics-20261016150004-25da9c`; the agent chose `robust-20261016140226-352fd7`, different from v2 and v3-retry. Citation and rule use were required by the protocol and prompt.
+
+It consumed **61,440 PPO steps** and completed **180 unchanged validation episodes**. The [fixed gate passed 4/4](evidence/mcp-agent-v4/gate.json), but the [parent comparison](evidence/mcp-agent-v4/outcome.json) again recorded `not_released_regression`:
+
+| Suite | Parent collisions | V4 child collisions | Limit | Gate |
+|---|---:|---:|---:|---|
+| Target | 2/60 | 4/60 | 10% | Pass |
+| Open | 0/40 | 0/40 | 5% | Pass |
+| Static | 1/40 | 1/40 | 10% | Pass |
+| Crossing | 0/40 | 1/40 | 15% | Pass |
+
+The process criteria were met; the child was not released. A different choice is not proof of learning, planner advantage or improvement. The model's raw rationale calls its choice “safest”; that comparison is unsupported. The v4 exclusion rule constrains this registered study; the tool is also available to ordinary MCP clients. No second attempt or final evaluation was made. [18-second recorded v4 clip](https://embodiweave.52.202.25.181.sslip.io/#v4) · [Full tool trace](evidence/mcp-agent-v4/agent-receipt.json) · [Training and checkpoint bundle](evidence/mcp-agent-v4/) · [Recorded query result and exclusions](evidence/mcp-agent-v4/rank_origins_excluding_regressed.json).
+
 `rank_origins_excluding_regressed(target_policy, max_hops=8)` first verifies compatible contracts, checkpoint hashes and complete canonical validation records. FalkorDB then excludes either endpoint of a recorded regression in an origin’s self/ancestor lineage, including `not_released_regression` outcomes even without the relationship. Unexamined lineage beyond the depth bound is excluded. Survivors are ordered by failed-suite count, minimum collision clearance, then ID. This is an authored rule; missing regression evidence does not establish safety or learned behavior.
 
-The [read-only query](evidence/mcp-agent-v4/rank-origins.cypher) runs through `GRAPH.RO_QUERY` with verified evaluation IDs and the unchanged criteria as parameters. The guardrail re-runs it before training and can veto a stale proposal. [Tests](tests/test_regression_exclusion.py) use the [saved graph projection](evidence/mcp-agent-v4/graph-snapshot.json), with controls confined to an isolated test graph.
+The [read-only query](evidence/mcp-agent-v4/rank-origins.cypher) runs through `GRAPH.RO_QUERY` with verified evaluation IDs and the unchanged criteria as parameters. The v4 guardrail re-runs it before training and can veto a stale proposal. [Tests](tests/test_regression_exclusion.py) use the [saved graph projection](evidence/mcp-agent-v4/graph-snapshot.json), with controls confined to an isolated test graph.
 
 ```cypher
 UNWIND $origins AS verified
