@@ -364,10 +364,11 @@ def test_v4_fresh_exclusion_veto_and_single_proposal(world, monkeypatch):
     saved=[]
     def record(workflow,guard,origin,budget,reason):
         saved.append(guard); workflow.decisions.append('fixture-v4-veto')
-        return {'id':'fixture-v4-veto','guardrail':guard}
+        return {'id':'fixture-v4-veto','guardrail':{k:guard[k] for k in ('verdict','reasons')}}
     monkeypatch.setattr(D,'_record',record)
     reason=f'root is the shortestPath ancestor. regression-lineage-exclusion-v1 cites {prior}.'
     result=D.dispatch('start_training',{'origin_id':'root','budget':60000,'reason':reason},flow)
+    assert 'error' not in result, result
     assert not result['training_started'] and saved[0]['verdict']=='vetoed'
     assert any('fresh graph' in s for s in saved[0]['reasons'])
     assert any('REGRESSED_AGAINST' in q['cypher'] for q in saved[0]['queries'])
