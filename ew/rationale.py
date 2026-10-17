@@ -9,7 +9,7 @@ import copy
 import json
 import re
 
-IDS = re.compile(r"(?<![\w-])(?:outcome-deci-[\w~-]+|deci-[\w~-]+|run-[\w~-]+|ppo-[\w~-]+|P-[\w~.-]+|(?:robust|search|physics|rehearsal|scratch|collision|policy|checkpoint|origin)[~-][\w~.-]+)")
+IDS = re.compile(r"(?<![\w-])(?:outcome-[\w~-]+|decision-[\w~-]+|judge-[\w~-]+|deci-[\w~-]+|run-[\w~-]+|ppo-[\w~-]+|P-[\w~.-]+|(?:robust|search|physics|rehearsal|scratch|collision|policy|checkpoint|origin)[~-][\w~.-]+)")
 COMPARISON = re.compile(r"\b(?:safest|safer|safe|guaranteed|best)\b", re.I)
 IMPACT = re.compile(r"\b(?:improv\w*|impact|reduc\w*|prevent\w*|safer|safest|safe|best|guaranteed)\b", re.I)
 NUMBER = re.compile(r"(?<![\w-])\d+(?:\.\d+)?%?(?![\w-])")
@@ -24,12 +24,14 @@ def facts(answer):
     def walk(value, key=''):
         if isinstance(value, dict):
             for k, v in value.items():
-                if k not in {'queries','params','cypher','reason','explanation','notice','error','question'}:
+                if k == 'queries' and isinstance(v,list):
+                    for query in v: walk(query.get('rows',[]))
+                elif k not in {'queries','params','cypher','reason','explanation','notice','error','question'}:
                     walk(v, k)
         elif isinstance(value, list):
             for v in value: walk(v, key)
         elif isinstance(value, str):
-            if key == 'id' or key.endswith('_id') or key.endswith('_ids') or key in {'selected','proposed_origin','path','children','unexamined_ancestors'}:
+            if key == 'id' or key.endswith('_id') or key.endswith('_ids') or key in {'selected','proposed_origin','origin','candidate','decision','run','outcome','path','children','unexamined_ancestors'}:
                 ids.add(value)
         elif type(value) in (int,float) and key in METRICS:
             numbers.add(format(value,'.12g'))

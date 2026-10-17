@@ -386,7 +386,10 @@ def _lineage_report(calls):
         lines.append(f"- {row['intervention']}: {row['origin']} → {row['candidate']}. "
                      f"Canonical 2D validation gate: {row['verdict']} ({did}).")
         if len(decisions) == 1 and row.get("rationale"):
-            lines.append(row["rationale"])
+            from .rationale import checked
+            display = checked(row["rationale"], {"results":[c["result"] for c in calls], "selected_origin":row["origin"]})
+            lines.append(display["text"])
+            if display["note"]: lines.append(display["note"])
     for result in previews:
         passed = sum(check["pass"] for check in result["checks"])
         total = len(result["checks"]) + len(result["missing"])

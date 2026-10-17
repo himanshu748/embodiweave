@@ -14,6 +14,8 @@ def test_identifiers_must_be_returned_in_this_turn():
     verdict=accepts('Policy ID invented. Run ID run-fake; decision deci-fake and outcome-deci-fake.',answer())
     assert not verdict['accepted']
     assert {'invented','run-fake','deci-fake','outcome-deci-fake'} <= set(verdict['invented_ids'])
+    assert not accepts('judge-invented, decision-invented and outcome-invented.',answer())['accepted']
+    assert accepts('judge-returned',{'queries':[{'rows':[{'policy_id':'judge-returned'}]}]})['accepted']
     assert not accepts('Checkpoint fabricated has no collisions.',answer())['accepted']
     assert accepts('Origin robust-known has collision clearance 0.05.',answer())['accepted']
     poisoned={'results':[{'queries':[{'params':{'policy':'robust-fake'}}]}]}
