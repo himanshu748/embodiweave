@@ -187,6 +187,11 @@ The backend also verifies the model and normalization hashes and reconciles the 
 
 ## Graph model
 
+![EmbodiWeave graph model: nodes and edges](docs/diagrams/graph-model.png)
+
+<details>
+<summary>Mermaid source</summary>
+
 ```mermaid
 graph LR
   Policy -->|USES_CONTRACT| Contract
@@ -205,9 +210,16 @@ graph LR
   Child -->|REGRESSED_AGAINST, outcome_id| Origin
 ```
 
+</details>
+
 These are the core nodes and edges the agent and guardrail read. A `Policy` is one exact checkpoint, identified by its artifact hash. An `Evaluation` counts only when it covers a complete validation `Suite` for that same hash. `Decision` keeps every origin it ranked, the one it picked, the `Run` it launched and the release outcome. `REGRESSED_AGAINST` is the edge v4 reads to exclude an origin's lineage. Ingestion lives in [`ew/graph/ingest.py`](ew/graph/ingest.py) and the read queries in [`ew/graph/queries.py`](ew/graph/queries.py). The trusted trainer writes extra provenance edges (robot, contract and run links) that aren't drawn here.
 
 ## Architecture
+
+![EmbodiWeave architecture](docs/diagrams/architecture.png)
+
+<details>
+<summary>Mermaid source</summary>
 
 ```mermaid
 flowchart LR
@@ -232,6 +244,8 @@ flowchart LR
   Records --> Export[Checksummed evidence bundles]
   Saved --> View[Live 2D / 3D simulator view]
 ```
+
+</details>
 
 Browser training uses a 2D unicycle robot with range rays and moving obstacles. The separate MuJoCo studies add physical contact dynamics: first unchanged-weight transfer, then explicitly labelled mixed-domain training. The live 3D view renders the same 2D simulator states; it adds no physics. On AWS Lightsail, FalkorDB and the API share one persistent CPU server. A single bounded PPO subprocess runs at a time. Model credentials stay server-side and are excluded from the training subprocess environment.
 
