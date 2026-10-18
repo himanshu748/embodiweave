@@ -3,13 +3,46 @@
 <title>Train and test · EmbodiWeave</title><meta name="description" content="Train a robot policy, watch the simulator in 2D or 3D, and inspect the test results.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
-<link rel="stylesheet" href="landing.css?v=live1"><link rel="stylesheet" href="live.css?v=graph-guide1"><script src="live.js?v=graph-guide1" defer></script><script src="graph-guide.js?v=1" defer></script></head>
-<body><a class="skip" href="#training">Skip to training</a>
+<link rel="stylesheet" href="landing.css?v=live1"><link rel="stylesheet" href="live.css?v=graph-guide1"><script src="live.js?v=clarity1" defer></script><script src="graph-guide.js?v=1" defer></script><link rel="stylesheet" href="clarity.css?v=1"></head>
+<body class="clarity-workbench"><a class="skip" href="#investigate">Skip to agent</a>
 <header class="nav"><a class="brand" href="./">EmbodiWeave</a><nav aria-label="Main"><a href="guide.html">Judge guide</a><a href="./#live">Graph console</a><a href="studio.html">Studio</a><a href="https://github.com/himanshu748/embodiweave">Source</a></nav></header>
 <main>
-<section class="live-intro"><p class="eyebrow">EmbodiWeave / simulator</p><h1>Train a policy.<br><span class="hl">Watch the robot run.</span></h1><p class="lede">Choose a training budget and follow the robot in 2D or 3D. After training, we test the saved checkpoint on 180 episodes and check whether it qualifies for deployment.</p><div class="live" role="status" id="availability">Connecting…</div></section>
+<section class="live-intro"><p class="eyebrow">EmbodiWeave / live workbench</p><h1>Follow a training<br><span class="hl">decision.</span></h1><p class="lede">Ask the agent to read the robot’s history, or let it choose a starting policy and train. You can inspect the evidence before authorizing a new run.</p><div class="live" role="status" id="availability">Checking the graph and model connection...</div><nav class="workbench-paths" aria-label="Choose a demo path"><a href="#investigate">Ask the agent ↓</a><a href="#training">Train and watch ↓</a><a href="evidence.html">Browse recorded results ↗</a></nav></section>
+<section class="investigation" id="investigate" aria-label="Live agent investigation">
+<div class="question-sheet">
+  <p class="eyebrow">Start with the history</p><h2>What should the agent investigate?</h2><p class="fine">Choose an example below, then review your question. Nothing is sent until you give consent and press Ask agent.</p>
+  <div class="prompt-list" aria-label="Example questions">
+    <button type="button" class="prompt" data-question="Use the MCP tools to explain the confirmed checkpoint robust-20261016140226-352fd7. Trace its lineage, inspect the nearest passing ancestor and check its exact-artifact validation gate. Keep the frozen studies separate.">Explain the confirmed policy <span aria-hidden="true">↗</span></button>
+    <button type="button" class="prompt" data-task="train" data-question="Use MCP to diagnose the current policy, find eligible origins and run the nearest-passing-ancestor algorithm. Choose an origin using that evidence, explain why, and launch one 60000-step PPO run. Report the actual Decision and pending session; the worker will run all 180 validation episodes and the fixed gate.">Choose a policy and train <span aria-hidden="true">↗</span></button>
+    <button type="button" class="prompt" data-question="Use lineage and nearest_passing_ancestor for robust-20261016140226-352fd7. Which ancestor passes val-target-v1, how many hops away is it, and what does this say and not say about training?">Trace its training history <span aria-hidden="true">↗</span></button>
+    <button type="button" class="prompt" data-question="Use diagnose_policy and check_gate on scratch~a7ee2c-s7. Explain the failed validation checks without claiming every suite failed.">Explain an earlier rejection <span aria-hidden="true">↗</span></button>
+  </div>
+  <form id="investigationForm">
+    <label for="agentTask">Agent task</label><select id="agentTask"><option value="investigate">Explain the graph evidence</option><option value="train">Choose an origin and start training</option></select>
+    <label for="question">Your question</label>
+    <textarea id="question" rows="5" minlength="8" maxlength="800" required>Use the MCP tools to explain the confirmed checkpoint robust-20261016140226-352fd7. Trace its lineage, inspect the nearest passing ancestor and check its exact-artifact validation gate. Keep the frozen studies separate.</textarea>
+    <p class="fine">Keep private information out. Your question and public graph evidence are sent to <span id="providerName">the configured model provider</span>. The server keeps the API key private.</p>
+    <label class="live-consent"><input id="consent" type="checkbox"> <span>I agree to send this question and public graph evidence to the model provider.</span></label>
+    <label class="live-consent" hidden><input id="agentTrainingConsent" type="checkbox"><span>I authorize one agent-chosen 60,000-step training run (seed 29), followed by validation and the fixed gate.</span></label>
+    <button class="btn" id="start" disabled>Ask agent <span aria-hidden="true">→</span></button>
+    <button class="btn ghost" type="button" id="retryConnection" hidden>Reconnect</button>
+    <p id="startError" class="error" role="alert"></p><p class="fine"><a href="evidence.html">Model busy? Inspect the measured attempts and live graph directly →</a></p>
+  </form>
+  <details><summary>Read-only tools available to the agent</summary><p><code>lineage_path</code> runs native <code>algo.SPpaths</code> with resolved policy IDs. Existing diagnosis, origin ranking, outcome, shortestPath and gate-preview tools remain available. <a href="#graph-tools">Try the graph reads without a model call</a>.</p></details>
+  <div class="run-boundaries"><b>How this works</b><p>The agent discovers tools through MCP, reads FalkorDB, and proposes its own origin. The guardrail can veto it. If the model provider is unavailable, a labelled deterministic MCP fallback can act on an explicitly requested training task. Watch the simulator below.</p><p id="limits">Up to 6 model turns, 10 tool calls and 2 minutes. One investigation runs at a time.</p><p><a href="#training">Go to simulator</a> · <a href="./#mcp-proof">Recorded MCP run</a> · <a href="guide.html#reproduce">Run full training locally</a></p></div>
+</div>
+<div class="evidence-sheet" aria-labelledby="evidenceTitle">
+  <div class="sheet-head"><div><p class="eyebrow">Tool calls</p><h2 id="evidenceTitle">Agent activity</h2></div><span class="tag" id="runState">Ready when you are</span></div>
+  <p id="runStatus" role="status">Choose a question and agree to send it to the model provider.</p>
+  <p class="fine mono" id="runMeta"></p><p id="agentDecisions" class="fine"></p>
+  <ol id="toolTrace" class="tool-trace" aria-label="Completed live tool calls"></ol>
+  <div class="trace-empty" id="traceEmpty"><span class="mono">The agent’s evidence will appear here.</span><p>Each step shows what the agent asked, what FalkorDB returned, and the records behind its answer.</p><a href="./#live">Prefer a direct query? Open the live graph console →</a></div>
+  <section class="agent-answer" id="answerPanel" hidden><h3>Agent report</h3><p class="fine">The report is compiled from completed MCP results. The model's origin proposal and reason are preserved in the Decision; the training panel shows the measured gate.</p><div id="answer"></div><div id="rationaleNotes" role="status"></div><p id="modelRationale"></p></section>
+  <p><button class="btn ghost small" id="resume" type="button" hidden>Resume session status</button><a id="downloadReceipt" class="btn ghost small" hidden download="embodiweave-live-investigation.json">Download agent log</a></p>
+</div>
+</section>
 <section class="ppo-sheet" id="training" aria-labelledby="ppoTitle">
-<div class="sheet-head"><div><p class="eyebrow">New training run</p><h2 id="ppoTitle">Try it in the simulator</h2></div><span class="tag" id="ppoState">Connecting</span></div>
+<div class="sheet-head"><div><p class="eyebrow">New training run</p><h2 id="ppoTitle">Train a policy. Watch the result.</h2><p class="fine">Start training directly with the controls below, or watch a run launched by the agent above. A finished run does not automatically replace the demo policy.</p></div><span class="tag" id="ppoState">Connecting</span></div>
 <div class="run-workspace">
 <section class="run-arena" aria-label="Simulator view">
 <div class="arena-toolbar"><span id="arenaSource" class="tag">Waiting for simulator</span><div role="group" aria-label="Simulator view"><button type="button" data-run-view="2d" aria-pressed="true">2D</button><button type="button" data-run-view="3d" aria-pressed="false">3D</button></div></div>
@@ -28,39 +61,6 @@
 <div class="ppo-result"><p id="ppoStatus" role="status">Choose a budget and start training.</p><progress id="ppoProgress" max="61440" value="0" aria-label="PPO training steps"></progress><p class="fine" id="ppoMeta"></p>
 <div id="ppoGate"></div><p id="ppoLinks" hidden><a class="btn small" id="ppoDownload">Download checkpoint and results</a> <a class="btn ghost small" id="ppoReplay">Compare in Studio →</a></p>
 <button type="button" class="btn ghost small" id="ppoResume" hidden>Reconnect to run</button><details id="ppoDetails" hidden><summary>Run details and source records</summary><pre id="ppoReceipt" tabindex="0"></pre></details></div></section>
-<section class="investigation" id="investigate" aria-label="Live agent investigation">
-<div class="question-sheet">
-  <p class="eyebrow">Ask the agent</p><h2>Ask about the results</h2>
-  <div class="prompt-list" aria-label="Example questions">
-    <button type="button" class="prompt" data-question="Use the MCP tools to explain the confirmed checkpoint robust-20261016140226-352fd7. Trace its lineage, inspect the nearest passing ancestor and check its exact-artifact validation gate. Keep the frozen studies separate.">Explain the confirmed checkpoint <span aria-hidden="true">↗</span></button>
-    <button type="button" class="prompt" data-task="train" data-question="Use MCP to diagnose the current policy, find eligible origins and run the nearest-passing-ancestor algorithm. Choose an origin using that evidence, explain why, and launch one 60000-step PPO run. Report the actual Decision and pending session; the worker will run all 180 validation episodes and the fixed gate.">Ask the agent to train <span aria-hidden="true">↗</span></button>
-    <button type="button" class="prompt" data-question="Use lineage and nearest_passing_ancestor for robust-20261016140226-352fd7. Which ancestor passes val-target-v1, how many hops away is it, and what does this say and not say about training?">Find a passing ancestor <span aria-hidden="true">↗</span></button>
-    <button type="button" class="prompt" data-question="Use diagnose_policy and check_gate on scratch~a7ee2c-s7. Explain the failed validation checks without claiming every suite failed.">Explain the rejected checkpoint <span aria-hidden="true">↗</span></button>
-  </div>
-  <form id="investigationForm">
-    <label for="agentTask">Agent task</label><select id="agentTask"><option value="investigate">Explain the graph evidence</option><option value="train">Choose an origin and start training</option></select>
-    <label for="question">Your question</label>
-    <textarea id="question" rows="5" minlength="8" maxlength="800" required>Use the MCP tools to explain the confirmed checkpoint robust-20261016140226-352fd7. Trace its lineage, inspect the nearest passing ancestor and check its exact-artifact validation gate. Keep the frozen studies separate.</textarea>
-    <p class="fine">Keep private information out. Your question and public graph evidence are sent to <span id="providerName">the configured model provider</span>. The server keeps the API key private.</p>
-    <label class="live-consent"><input id="consent" type="checkbox"> <span>I agree to send this question and public graph evidence to the model provider.</span></label>
-    <label class="live-consent"><input id="agentTrainingConsent" type="checkbox"><span>I authorize one agent-chosen 60,000-step training run (seed 29), followed by validation and the fixed gate.</span></label>
-    <button class="btn" id="start" disabled>Ask agent <span aria-hidden="true">→</span></button>
-    <button class="btn ghost" type="button" id="retryConnection" hidden>Reconnect</button>
-    <p id="startError" class="error" role="alert"></p><p class="fine"><a href="evidence.html">Model busy? Inspect the measured attempts and live graph directly →</a></p>
-  </form>
-  <details><summary>Read-only tools available to the agent</summary><p><code>lineage_path</code> runs native <code>algo.SPpaths</code> with resolved policy IDs. Existing diagnosis, origin ranking, outcome, shortestPath and gate-preview tools remain available. <a href="#graph-tools">Try the graph reads without a model call</a>.</p></details>
-  <div class="run-boundaries"><b>What runs here</b><p>The agent discovers tools through MCP, reads FalkorDB, and proposes its own origin. The guardrail can veto it. If the model provider is unavailable, a labelled deterministic MCP fallback can act on an explicitly requested training task. Watch the run above.</p><p id="limits">Up to 6 model turns, 10 tool calls and 2 minutes. One investigation runs at a time.</p><p><a href="#training">Back to simulator</a> · <a href="./#mcp-proof">Recorded MCP run</a> · <a href="guide.html#reproduce">Run full training locally</a></p></div>
-</div>
-<div class="evidence-sheet" aria-labelledby="evidenceTitle">
-  <div class="sheet-head"><div><p class="eyebrow">Tool calls</p><h2 id="evidenceTitle">Agent activity</h2></div><span class="tag" id="runState">Ready when you are</span></div>
-  <p id="runStatus" role="status">Choose a question and agree to send it to the model provider.</p>
-  <p class="fine mono" id="runMeta"></p><p id="agentDecisions" class="fine"></p>
-  <ol id="toolTrace" class="tool-trace" aria-label="Completed live tool calls"></ol>
-  <div class="trace-empty" id="traceEmpty"><span class="mono">Your question and the agent’s tool calls will appear here.</span><p>You can inspect the Cypher queries, source records and test results for each call.</p><a href="./#live">Prefer a direct query? Open the live graph console →</a></div>
-  <section class="agent-answer" id="answerPanel" hidden><h3>Agent report</h3><p class="fine">The report is compiled from completed MCP results. The model's origin proposal and reason are preserved in the Decision; the training panel shows the measured gate.</p><div id="answer"></div><div id="rationaleNotes" role="status"></div><p id="modelRationale"></p></section>
-  <p><button class="btn ghost small" id="resume" type="button" hidden>Resume session status</button><a id="downloadReceipt" class="btn ghost small" hidden download="embodiweave-live-investigation.json">Download agent log</a></p>
-</div>
-</section>
 <section class="graph-checks" id="graph-tools" aria-labelledby="graphChecksTitle">
 <p class="eyebrow">Read-only graph tools</p><h2 id="graphChecksTitle">Inspect the path. Check the sentence.</h2>
 <p>These controls read graph evidence directly. They do not start an agent, training or evaluation.</p>

@@ -12,7 +12,7 @@ async function request(path, options = {}) {
     return result;
   } finally { clearTimeout(timer); }
 }
-function ready() { const train=$("#agentTask").value==="train"; $("#start").disabled = active || !config?.enabled || !$("#consent").checked || (train&&!$("#agentTrainingConsent").checked); $("#start").textContent=train?"Let agent choose and train":"Ask agent"; }
+function ready() { const train=$("#agentTask").value==="train"; $("#agentTrainingConsent").closest("label").hidden=!train; if(!train) $("#agentTrainingConsent").checked=false; $("#start").disabled = active || !config?.enabled || !$("#consent").checked || (train&&!$("#agentTrainingConsent").checked); $("#start").textContent=train?"Let agent choose and train":"Ask agent"; }
 async function connect() {
   $("#retryConnection").hidden = true;
   try {
