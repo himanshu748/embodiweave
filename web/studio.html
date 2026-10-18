@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
-<link rel="stylesheet" href="style.css?v=robust2">
+<link rel="stylesheet" href="style.css?v=judge-robust2">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Ctext y=%2714%27 font-size=%2714%27%3E%E2%97%88%3C/text%3E%3C/svg%3E">
 </head>
 <body>
@@ -28,7 +28,7 @@
 </header>
 <div id="banner" class="banner hidden" role="alert"></div>
 <div id="hostedNote" class="hosted-note hidden" role="note">
-  <strong>Hosted demo.</strong> Browse every recorded run, replay episodes, propose decisions with the frozen rule and try what-ifs on an isolated graph copy.
+  <strong>Recorded replay.</strong> Press Play to watch saved episodes. Reading and replaying them starts no evaluation. <a href="guide.html#walkthrough">Return to the judge route</a>.
   <a href="live.html#training">Run a new bounded PPO trial on the live page</a>. Generic worker actions use the <a href="https://github.com/himanshu748/embodiweave#hosted-demo">local setup</a>.
 </div>
 
@@ -43,29 +43,30 @@
     <div class="panel">
       <div class="panel-head">
         <h2>Arena replay</h2>
-        <span class="hint">Positions come from recorded simulator states of the selected evaluations</span>
+        <span class="hint">Top view and 3D show the same saved 2D simulator states. MuJoCo recordings are separate above.</span>
         <span class="viewtabs" role="group" aria-label="Arena view"><button type="button" data-view="3d" aria-pressed="false">3D</button><button type="button" data-view="top" aria-pressed="true">Top view</button></span>
       </div>
       <div class="arenas">
         <figure class="arena">
           <figcaption>
-            <span class="side">Before</span>
-            <select id="evalA" aria-label="Before evaluation"></select>
+            <span class="side">Comparison A</span>
+            <select id="evalA" aria-label="Comparison A evaluation"></select>
           </figcaption>
-          <canvas id="canA" width="460" height="460" aria-label="Before arena"></canvas>
+          <canvas id="canA" width="460" height="460" aria-label="Comparison A arena"></canvas>
           <div class="stage3d" id="v3A" hidden></div>
           <div class="meta" id="metaA"></div>
         </figure>
         <figure class="arena">
           <figcaption>
-            <span class="side">After</span>
-            <select id="evalB" aria-label="After evaluation"></select>
+            <span class="side">Comparison B</span>
+            <select id="evalB" aria-label="Comparison B evaluation"></select>
           </figcaption>
-          <canvas id="canB" width="460" height="460" aria-label="After arena"></canvas>
+          <canvas id="canB" width="460" height="460" aria-label="Comparison B arena"></canvas>
           <div class="stage3d" id="v3B" hidden></div>
           <div class="meta" id="metaB"></div>
         </figure>
       </div>
+      <p id="replayContext" class="note" role="status">Loading saved validation replays. No new evaluation is running.</p>
       <div id="matchNote" class="note"></div>
       <div class="transport" role="group" aria-label="Playback controls">
         <button id="prevEp" title="Previous episode ( [ )" aria-label="Previous episode">⏮</button>
@@ -87,7 +88,7 @@
       </div>
     </div>
 
-    <div class="panel">
+    <details class="panel" id="scenarioControls" open><summary>Custom evaluation controls <span id="scenarioAvailability"></span></summary>
       <div class="panel-head"><h2>Scenario controls</h2><span class="hint">Runs a real evaluation of a saved checkpoint on the configuration you set</span></div>
       <form id="scenarioForm" class="grid-form">
         <label>Checkpoint <select id="scPolicy"></select></label>
@@ -100,7 +101,7 @@
         <button type="submit" id="scRun" class="primary">Run live evaluation</button>
       </form>
       <div id="scResult" class="note"></div>
-    </div>
+    </details>
   </section>
 
   <section class="col-right" aria-label="Decision and evidence">
@@ -119,7 +120,7 @@
         <span id="decisionMode" class="badge small"></span>
       </div>
       <div id="decisionHead" class="decision-head"></div>
-      <h3>Candidates <span class="hint">all eligible checkpoints, ranked by rule</span></h3>
+      <h3>Candidates <span id="candidateScope" class="hint">recorded ranking</span></h3>
       <table class="tbl" id="rankTbl" aria-label="Ranked candidates"></table>
       <h3>Rejected</h3>
       <ul id="rejected" class="rejected"></ul>
@@ -187,6 +188,6 @@
   <div id="inspKind"></div>
   <pre id="inspBody" class="code"></pre>
 </aside>
-<script src="app.js?v=robust2-search4"></script>
+<script type="module" src="app.js?v=judge-robust2-search4"></script>
 </body>
 </html>

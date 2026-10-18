@@ -113,7 +113,7 @@ RETURN d.id, d.model, d.graph_revision, origin.id,
 </section>
 <section class="start-here band reveal" id="try" aria-labelledby="tryTitle">
   <div class="section-heading"><div><p class="eyebrow">Try it yourself</p><h2 id="tryTitle">Pick how far you want to go.</h2></div><p>You can inspect recorded evidence immediately. A live agent request asks for consent; training is a separate action and can take several minutes.</p></div>
-  <div class="entry-grid"><a href="live.html#investigate"><span class="entry-label">Live agent</span><h3>Ask a question.<br>Follow its evidence.</h3><p>Choose an example question or ask the agent to select a training origin.</p><b>Open the agent <span aria-hidden="true">↗</span></b></a><a href="live.html#training"><span class="entry-label">Live simulator</span><h3>Train a policy.<br>Watch it run.</h3><p>Use a bounded training slot, watch the 2D or 3D view, then inspect the tests.</p><b>Open the simulator <span aria-hidden="true">↗</span></b></a><a href="evidence.html"><span class="entry-label">No waiting</span><h3>Inspect the<br>recorded results.</h3><p>Follow saved decisions and receipts when the trainer or model is busy.</p><b>Browse the evidence <span aria-hidden="true">↗</span></b></a></div>
+  <div class="entry-grid"><a href="live.html#investigate"><span class="entry-label">Live agent</span><h3>Ask a question.<br>Follow its evidence.</h3><p>Choose an example question or ask the agent to select a training origin.</p><b>Open the agent <span aria-hidden="true">↗</span></b></a><a href="live.html#training"><span class="entry-label">Live simulator</span><h3>Train a policy.<br>Watch it run.</h3><p>Use a bounded training slot, watch the 2D or 3D view, then inspect the tests.</p><b>Open the simulator <span aria-hidden="true">↗</span></b></a><a href="guide.html#walkthrough"><span class="entry-label">No waiting</span><h3>Inspect the<br>recorded results.</h3><p>Follow saved decisions and receipts when the trainer or model is busy.</p><b>Browse the evidence <span aria-hidden="true">↗</span></b></a></div>
 </section>
 <details class="history-group agent-history" id="agent-history"><summary><span>All recorded agent attempts</span><small>V2, v3, the retry and v4. Every regression and collision limit.</small></summary>
 <section id="mcp-proof" class="band alt" aria-labelledby="mcpProofTitle">
@@ -203,7 +203,7 @@ RETURN d.id, origin.id, child.id, outcome.suites</pre><p><a href="https://github
 </section>
 
 <section class="band why reveal" aria-label="Design principles">
-  <div><span class="n">01</span><h3>Planning follows connected evidence</h3><p>Remove the transfer history and the decision changes. The no-history arm in exp-1 exists to show it.</p></div>
+  <div><span class="n">01</span><h3>Planning follows connected evidence</h3><p>The earlier exp-1 study includes a no-history arm. Its recorded result is separate from the confirmed checkpoint and the v4 agent attempt.</p></div>
   <div><span class="n">02</span><h3>Results stay tied to their artifacts</h3><p>Final-test suites are invisible to the agent, spent suites are refused in code and every number traces to a record.</p></div>
   <div><span class="n">03</span><h3>Isolated what-ifs</h3><p>Hypothetical evidence runs on a GRAPH.COPY sandbox and can never launch a training job.</p></div>
 </section>

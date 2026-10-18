@@ -151,3 +151,17 @@ def recorded_v4_review():
     return {**checked(decision['explanation'], {'results':results, 'selected_origin':decision['selected']}),
             'source':'evidence/mcp-agent-v4/decision.json', 'decision_id':decision['id'],
             'notice':'Display check of a saved rationale. No model call, training or evaluation; the receipt is unchanged.'}
+
+
+def decision_display(decision):
+    """Check historical model prose for Studio without modifying the source record."""
+    out = copy.deepcopy(decision)
+    if out.get('mode') not in {'llm', 'llm-agent'}:
+        return out
+    results = [call.get('result', {}) for call in out.get('mcp_tool_calls', [])
+               if call.get('tool') != 'start_training']
+    review = checked(out.get('explanation', ''),
+                     {'results': results, 'selected_origin': out.get('selected')})
+    out['explanation'] = review['text']
+    out['rationale_check'] = review
+    return out

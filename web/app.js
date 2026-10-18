@@ -1,3 +1,4 @@
+import { selectReplayPair, decisionMode, candidateLayout } from "./replay-selection.mjs";
 "use strict";
 // EmbodiWeave studio. Every value rendered here comes from the backend's records, jobs, or live graph queries.
 const $ = (s) => document.querySelector(s);
@@ -47,13 +48,15 @@ function setGraphDown(detail) {
 // The hosted studio has no worker or torch. Controls that would train or evaluate are disabled with a reason,
 // so nothing on screen is a dead button.
 const WORKER_ONLY = ["#btnTrain", "#btnEvalMissing", "#scRun"];
-const READONLY_WHY = "Use Live agent → Run full PPO flow for bounded public training. Generic worker actions require the local stack.";
+const READONLY_WHY = "Custom evaluation and generic worker actions require the local setup. The live workbench offers separate bounded training.";
 function enterReadonly() {
   S.readonly = true;
   document.body.classList.add("readonly");
   WORKER_ONLY.forEach((x) => { const b = $(x); if (b) { b.disabled = true; b.title = READONLY_WHY; } });
   const n = $("#hostedNote");
   if (n) n.classList.remove("hidden");
+  $("#scenarioControls").open = false;
+  $("#scenarioAvailability").textContent = "(local setup only)";
 }
 
 // ---------------- status polling ----------------
@@ -175,6 +178,12 @@ function renderArena() {
       r._live ? el("span", { class: "badge small mode live" }, "Live") : el("span", { class: "badge small" }, "Recorded"));
   }
   const a = S.replays.A, b = S.replays.B, note = $("#matchNote");
+  const context = $("#replayContext");
+  if (a || b) {
+    context.textContent = "Recorded evaluation replay. Validation episodes are separate from the fresh confirmation batch reported on the results page. Selecting or playing them starts no new evaluation.";
+    if (a?.policy_id === "P-static-b") context.textContent += " Comparison A is the historical baseline, not necessarily B’s training parent.";
+  } else context.textContent = "No saved replay is selected. Choose an evaluation above.";
+
   if (a && b) {
     const same = a.suite_id === b.suite_id && a.suite_id !== "custom" && a.episodes[S.ep] && b.episodes[S.ep] && a.episodes[S.ep].seed === b.episodes[S.ep].seed;
     note.className = same ? "note" : "note alert";
@@ -232,13 +241,12 @@ async function loadDecisions(selectId) {
   else { $("#decisionHead").innerHTML = "<div class='empty'>No decisions yet. Propose one with the rule.</div>"; }
 }
 async function selectDecision(id) {
-  S.decision = await api(`/api/decisions/${id}`);
+  S.decision = await api(`/api/decisions/${id}/display`);
   setMode(S.decision.mode === "what-if" ? "What-if" : "Recorded");
   renderDecision(); renderQueries(); if (!$("#tab-graph").classList.contains("hidden")) renderGraph();
 }
 function modeBadge(m) {
-  const cls = m === "what-if" ? "hyp" : m === "llm-agent" ? "measured" : "authored";
-  const label = m === "what-if" ? "What-if (hypothetical)" : m === "llm-agent" ? "LLM agent" : "Deterministic rule run";
+  const {label, cls} = decisionMode(m);
   return el("span", { class: "badge small " + cls }, label);
 }
 function childScore(c) {
@@ -253,18 +261,31 @@ function renderDecision() {
   head.append(el("div", {}, el("span", { class: "act" }, d.action.replaceAll("_", " ")), d.selected ? [" → ", el("span", { class: "chip", onclick: () => inspect(d.selected) }, d.selected)] : "",
       `  ·  rule ${d.rule_version} · graph ${d.graph} rev ${d.graph_revision} · budget ${d.request.budget.toLocaleString()}`),
     el("div", { style: "margin-top:6px" }, d.explanation));
+  if (d.rationale_check?.note) head.append(el("p", {class:"note alert"}, d.rationale_check.note));
+  head.append(el("a", {href:`/api/decisions/${encodeURIComponent(d.id)}`, target:"_blank", rel:"noopener"}, "Original decision JSON (unchanged)"));
   if (d.needs_evaluation) head.append(el("div", { class: "note alert" }, "Missing matched validation: " + d.needs_evaluation.join(", ")));
   if (d.launched_trials && d.launched_trials.length) {
-    for (const t of d.launched_trials) head.append(el("div", { style: "margin-top:6px" }, "Outcome: ",
+    for (const t of d.launched_trials) head.append(el("div", { style: "margin-top:6px" }, "Validation trial: ",
       el("span", { class: "chip " + (t.threshold_reached ? "pass" : "fail"), onclick: () => inspect(t.id) }, t.id), " ",
       t.threshold_reached ? `reached threshold at ≤${t.steps_to_threshold.toLocaleString()} steps` : `not reached within ${t.consumed_steps.toLocaleString()} steps (steps-to-threshold unknown)`,
       t.child_policy_id ? [" · child ", el("span", { class: "chip", onclick: () => inspect(t.child_policy_id) }, t.child_policy_id)] : ""));
   }
+  if (d.launched_trials?.length) head.append(el("p", {class:"note"}, "Reaching the validation threshold does not mean a checkpoint was released. ", el("a", {href:"guide.html#walkthrough"}, "Read the recorded result and release comparison.")));
   const tbl = $("#rankTbl"); tbl.innerHTML = "";
-  const search = ["search-v1", "robustness-v2", "physics-adapt-v1", "physics-followup-v1"].includes(d.rule_version);
-  tbl.append(el("tr", {}, ...(search ? ["#", "Checkpoint", "Suites passed", ["robustness-v2", "physics-adapt-v1", "physics-followup-v1"].includes(d.rule_version) ? "Collision clearance deficit" : "Worst deficit", "Validation evidence", "Selection key"] :
+  const layout = candidateLayout(d), search = layout === "study", mcp = layout === "mcp";
+  $("#candidateScope").textContent = mcp ? "saved compatibility ranking; outcome exclusions and the final choice are in the tool records" : "ranked by the recorded rule";
+  tbl.append(el("tr", {}, ...(mcp ? ["#", "Checkpoint", "Suites passed", "Training domain", "Validation evidence", "Recorded ranking key"] : search ? ["#", "Checkpoint", "Suites passed", ["robustness-v2", "physics-adapt-v1", "physics-followup-v1"].includes(d.rule_version) ? "Collision clearance deficit" : "Worst deficit", "Validation evidence", "Selection key"] :
     ["#", "Checkpoint", "Transfer estimate", "Matched validation", "Applicable trials", "Lineage"]).map((h) => el("th", {}, h))));
   for (const c of d.ranking || []) {
+    if (mcp) {
+      tbl.append(el("tr", {class:c.policy_id === d.selected ? "sel" : ""}, el("td", {}, c.rank ?? "not recorded"),
+        el("td", {}, el("span", {class:"chip", onclick:()=>inspect(c.policy_id)}, c.policy_id)),
+        el("td", {}, c.passed == null ? "not recorded" : `${c.passed}/4`),
+        el("td", {}, c.training_domain || "not recorded"),
+        el("td", {}, ...Object.values(c.validation || {}).map(v=>el("span", {class:"chip", onclick:()=>inspect(v.evaluation_id)}, v.suite_id))),
+        el("td", {class:"hint"}, JSON.stringify(c.sort_key ?? null))));
+      continue;
+    }
     if (search) {
       tbl.append(el("tr", {class:c.policy_id === d.selected ? "sel" : ""}, el("td", {}, c.rank),
         el("td", {}, el("span", {class:"chip", onclick:()=>inspect(c.policy_id)}, c.policy_id)),
@@ -530,18 +551,12 @@ async function init() {
     }
   } catch (e) { /* graph down: catalog comes from the graph */ }
   await loadEvals();
-  // default matched pair: deployed policy vs the newest child that follows the latest production decision
-  // (a scratch child if the graph recommends scratch, else a child of the selected parent)
-  let last = null;
-  try { const ds = (await api("/api/decisions")).filter((d) => d.mode !== "what-if"); last = ds[ds.length - 1]; } catch (_) {}
-  const prefix = last ? (last.action === "train_from_scratch" ? "scratch~" : last.selected ? last.selected + "~" : null) : null;
-  const dep = S.status?.deployed_policy, tgt = S.evals.filter((e) => e.suite_id === "val-target-v1");
-  const children = tgt.filter((e) => e.policy_id.includes("~"));
-  const before = tgt.filter((e) => e.policy_id === (new URLSearchParams(location.search).has("policy") ? "P-static-b" : dep)).pop();
-  const requestedPolicy = new URLSearchParams(location.search).get("policy");
-  const after = (requestedPolicy && tgt.filter((e) => e.policy_id === requestedPolicy).pop()) || (prefix && children.filter((e) => e.policy_id.startsWith(prefix)).pop()) || children.pop();
+  // Default to the current demo policy; an unknown requested ID must not show a different policy.
+  const pair = selectReplayPair(S.evals, new URLSearchParams(location.search).get("policy"), S.status?.deployed_policy);
+  const {before, after, policy: requestedPolicy} = pair;
   if (before) { $("#evalA").value = before.id; await loadReplay("A", before.id); }
   if (after) { $("#evalB").value = after.id; await loadReplay("B", after.id); }
+  if (!after) $("#replayContext").textContent = `No saved target-validation replay was found for ${requestedPolicy || "the current policy"}. Choose a recorded evaluation above; no replacement policy was selected automatically.`;
   try {
     const trials = requestedPolicy ? await api("/api/trials") : [];
     const associated = trials.filter(t => t.child_policy_id === requestedPolicy).at(-1)?.decision_id;

@@ -133,6 +133,12 @@ def decision(did: str):
     return {**d, "launched_runs": launched, "launched_trials": trials}
 
 
+@app.get("/api/decisions/{did}/display")
+def decision_presentation(did: str):
+    from .rationale import decision_display
+    return decision_display(decision(did))
+
+
 @app.get("/api/evaluations")
 def evaluations(policy: str | None = None, suite: str | None = None):
     out = []
