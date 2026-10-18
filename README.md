@@ -185,6 +185,28 @@ RETURN p.id, p.artifact_hash, s.id, e.id, e.success_rate, e.collision_rate
 
 The backend also verifies the model and normalization hashes and reconciles the immutable episode records. Partial, custom, stale-hash or incompatible-contract evidence cannot promote a checkpoint. Final-test outcomes never enter the planning graph. The thresholds, suite definitions and promotion implementation were unchanged for these attempts.
 
+## Graph model
+
+```mermaid
+graph LR
+  Policy -->|USES_CONTRACT| Contract
+  Policy -->|DERIVED_FROM| Parent[Policy parent]
+  Evaluation -->|ASSESSED| Policy
+  Evaluation -->|ON_SUITE| Suite
+  Failure -->|OBSERVED_IN| Evaluation
+  Decision -->|CONSIDERED, rank| Policy
+  Decision -->|SELECTED| Origin[Policy origin]
+  Decision -->|LAUNCHED| Run
+  Run -->|PRODUCED| Child[Policy child]
+  Promotion -->|FOR| Child
+  Decision -->|HAS_OUTCOME| DecisionOutcome
+  DecisionOutcome -->|ASSESSED| Child
+  Child -->|COMPARED_AGAINST, outcome_id| Origin
+  Child -->|REGRESSED_AGAINST, outcome_id| Origin
+```
+
+These are the core nodes and edges the agent and guardrail read. A `Policy` is one exact checkpoint, identified by its artifact hash. An `Evaluation` counts only when it covers a complete validation `Suite` for that same hash. `Decision` keeps every origin it ranked, the one it picked, the `Run` it launched and the release outcome. `REGRESSED_AGAINST` is the edge v4 reads to exclude an origin's lineage. Ingestion lives in [`ew/graph/ingest.py`](ew/graph/ingest.py) and the read queries in [`ew/graph/queries.py`](ew/graph/queries.py). The trusted trainer writes extra provenance edges (robot, contract and run links) that aren't drawn here.
+
 ## Architecture
 
 ```mermaid
